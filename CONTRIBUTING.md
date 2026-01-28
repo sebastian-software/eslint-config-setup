@@ -5,8 +5,8 @@ Thanks for considering a contribution! Here's how to get started.
 ## Setup
 
 ```bash
-git clone https://github.com/sebastian-software/effective-eslint-cfg.git
-cd effective-eslint-cfg
+git clone https://github.com/sebastian-software/eslint-config-setup.git
+cd eslint-config-setup
 pnpm install
 ```
 

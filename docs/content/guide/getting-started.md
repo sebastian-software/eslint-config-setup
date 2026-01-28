@@ -1,0 +1,70 @@
+---
+title: Getting Started
+---
+
+# Getting Started
+
+## Installation
+
+```bash
+npm install eslint-config-setup
+# or
+pnpm add eslint-config-setup
+```
+
+**Requirements:**
+- ESLint v9+
+- TypeScript
+- For TypeScript config files (`eslint.config.ts`), also install `jiti`
+
+## Quick Setup
+
+Create an `eslint.config.ts` in your project root:
+
+```typescript
+import { getConfig } from "eslint-config-setup"
+
+export default [
+  { ignores: ["node_modules", "dist"] },
+  ...(await getConfig({ strict: true, react: true }))
+]
+```
+
+That's it. You have a fully configured ESLint setup with:
+- TypeScript type-checked rules
+- React, Hooks, Compiler, and JSX-A11y rules
+- Strict TypeScript rules
+- Vitest and Playwright test rules
+- JSDoc, RegExp, and Prettier compatibility
+
+## Common Setups
+
+### TypeScript Library
+
+```typescript
+await getConfig({ strict: true, node: true })
+```
+
+### React Application
+
+```typescript
+await getConfig({ strict: true, react: true })
+```
+
+### AI-Assisted Development
+
+```typescript
+await getConfig({ strict: true, ai: true })
+```
+
+### Full Stack with AI
+
+```typescript
+await getConfig({ strict: true, node: true, react: true, ai: true })
+```
+
+## Next Steps
+
+- [Configuration Options](/guide/configuration) — Understand the four flags
+- [AI Mode](/guide/ai-mode) — Make AI write better code
+- [Customization](/guide/customization) — Adjust rules to your needs

@@ -1,6 +1,6 @@
 {
-  "name": "@effective/eslint-cfg",
-  "version": "0.8.3",
+  "name": "eslint-config-setup",
+  "version": "0.0.1",
   "private": false,
   "description": "Pre-generated, opinionated ESLint configurations for TypeScript projects. Zero runtime overhead. Full type-checking. AI-ready.",
   "keywords": [
@@ -24,11 +24,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sebastian-software/effective-eslint-cfg.git"
+    "url": "https://github.com/sebastian-software/eslint-config-setup.git"
   },
-  "homepage": "https://github.com/sebastian-software/effective-eslint-cfg#readme",
+  "homepage": "https://github.com/sebastian-software/eslint-config-setup#readme",
   "bugs": {
-    "url": "https://github.com/sebastian-software/effective-eslint-cfg/issues"
+    "url": "https://github.com/sebastian-software/eslint-config-setup/issues"
   },
   "funding": {
     "type": "github",
@@ -54,9 +54,6 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "prepublishOnly": "npm run build",
-    "release": "git push && release-it --ci patch",
-    "release:major": "git push && release-it --ci major",
-    "release:minor": "git push && release-it --ci minor",
     "test": "vitest",
     "update": "ncu -ui"
   },
@@ -85,8 +82,7 @@
     "npm-check-updates": "^19.3.2",
     "prettier": "^3.8.1",
     "prettier-plugin-packagejson": "^3.0.0",
-    "release-it": "^19.2.4",
-    "tsx": "^4.21.0",
+"tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
@@ -94,9 +90,7 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "publishConfig": {},
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"

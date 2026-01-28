@@ -26,7 +26,7 @@ What actually happened. Include the ESLint error output if applicable.
 
 ## Environment
 
-- `@effective/eslint-cfg` version:
+- `eslint-config-setup` version:
 - ESLint version:
 - TypeScript version:
 - Node.js version:

@@ -4,8 +4,7 @@
 
 | Version | Supported |
 |---------|-----------|
-| 0.8.x   | Yes       |
-| < 0.8   | No        |
+| 0.0.x   | Yes       |
 
 ## Reporting a Vulnerability
 
