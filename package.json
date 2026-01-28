@@ -1,0 +1,99 @@
+{
+  "name": "eslint-config-setup",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Pre-generated, opinionated ESLint configurations for TypeScript projects. Zero runtime overhead. Full type-checking. AI-ready.",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "eslint-flat-config",
+    "typescript",
+    "react",
+    "vitest",
+    "playwright",
+    "storybook",
+    "ai",
+    "linting",
+    "type-checking"
+  ],
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Sebastian Werner",
+    "email": "s.werner@sebastian-software.de",
+    "url": "http://sebastian-software.de/werner"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastian-software/eslint-config-setup.git"
+  },
+  "homepage": "https://github.com/sebastian-software/eslint-config-setup#readme",
+  "bugs": {
+    "url": "https://github.com/sebastian-software/eslint-config-setup/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/sebastian-software"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsx src/build.ts && tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit",
+    "fix": "eslint --fix .; prettier --write .",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "update": "ncu -ui"
+  },
+  "dependencies": {
+    "eslint-plugin-jsdoc": "^62.4.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-n": "^17.23.2",
+    "eslint-plugin-playwright": "^2.5.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-compiler": "19.1.0-rc.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-regexp": "^3.0.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-sonarjs": "^3.0.6",
+    "eslint-plugin-storybook": "^10.2.1",
+    "eslint-plugin-testing-library": "^7.15.4",
+    "typescript-eslint": "^8.54.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.10",
+    "@vitest/eslint-plugin": "^1.6.6",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "jiti": "^2.6.1",
+    "npm-check-updates": "^19.3.2",
+    "prettier": "^3.8.1",
+    "prettier-plugin-packagejson": "^3.0.0",
+"tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "publishConfig": {},
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
