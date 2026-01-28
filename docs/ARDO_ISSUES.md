@@ -33,17 +33,18 @@ But the published build (`ardo@1.0.2`, `dist/chunk-EME22RC7.js`) does not contai
 
 This means `vite build` fails with `Cannot resolve entry module index.html` because TanStack Start's entry point handling is missing.
 
-**Workaround:** Add the plugins manually in `vite.config.ts`:
+**Workaround:** Add `tanstackStart` manually in `vite.config.ts` (no separate `react()` plugin needed — `tanstackStart` handles JSX transformation):
 
 ```typescript
+import { ardoPlugin } from "ardo/vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
-import react from "@vitejs/plugin-react"
 
 export default defineConfig({
   plugins: [
-    tanstackStart({ prerender: { enabled: true, crawlLinks: true } }),
-    react(),
     ardoPlugin({ ... }),
+    tanstackStart({ prerender: { enabled: true, crawlLinks: true } }),
   ],
 })
 ```
+
+**Important:** `ardoPlugin` must come before `tanstackStart` so dynamic routes are generated before TanStack processes them.

@@ -1,21 +1,12 @@
 import { defineConfig } from "vite"
 import { ardoPlugin } from "ardo/vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
-import react from "@vitejs/plugin-react"
 
 export default defineConfig({
   base: "/eslint-config-setup/",
 
   plugins: [
-    // Workaround: ardo@1.0.2 doesn't bundle tanstackStart + react plugins.
-    // Remove these when ardo ships a fix.
-    tanstackStart({
-      prerender: {
-        enabled: true,
-        crawlLinks: true,
-      },
-    }),
-    react(),
+    // Ardo must come first to generate dynamic routes before TanStack processes them.
     ardoPlugin({
       title: "eslint-config-setup",
       description:
@@ -88,6 +79,15 @@ export default defineConfig({
             link: "https://www.npmjs.com/package/eslint-config-setup",
           },
         ],
+      },
+    }),
+
+    // Workaround: ardo@1.0.2 doesn't bundle tanstackStart internally.
+    // Remove when ardo ships a fix.
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
       },
     }),
   ],
