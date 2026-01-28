@@ -1,0 +1,59 @@
+---
+title: Configuration Options
+---
+
+# Configuration Options
+
+Four flags. Each one is intentional.
+
+## Options
+
+| Option | What You Get |
+|--------|--------------|
+| `strict` | Stricter TypeScript rules via `strictTypeChecked` (recommended) |
+| `node` | Node.js rules for ESM modules, imports, and built-ins |
+| `react` | React, Hooks, Compiler, JSX-A11y, and Storybook rules |
+| `ai` | Maintainability rules + stylistic consistency for AI workflows |
+
+All flags are optional and default to `false`. You can combine them freely — that's where the 16 pre-generated configurations come from (2^4 = 16 permutations).
+
+## `strict`
+
+Enables `typescript-eslint`'s `strictTypeChecked` preset instead of the default `recommendedTypeChecked`. This adds stricter rules around type safety, including:
+
+- Stricter `any` handling
+- Stricter boolean expressions
+- Stricter promise handling
+
+**Recommendation:** Always enable `strict`. If a rule is too noisy for your project, you can selectively downgrade it using [`setRuleSeverity`](/guide/customization).
+
+## `node`
+
+Adds `eslint-plugin-n` rules for Node.js projects. This covers:
+
+- Proper ESM module usage
+- Import/require conventions
+- Node.js built-in API best practices
+
+Enable this for backend projects, CLI tools, and Node.js libraries. Skip it for browser-only React apps.
+
+## `react`
+
+Enables the full React ecosystem:
+
+- **React recommended** — Core React rules
+- **React Hooks** — All 18 rules from `recommended-latest`
+- **React Compiler** — Future-proof optimization rules
+- **JSX-A11y** — Accessibility rules for JSX
+- **Storybook** — Story file linting
+
+## `ai`
+
+The most opinionated flag. Designed to create a strict feedback loop for AI-assisted development. See the [AI Mode](/guide/ai-mode) page for details.
+
+This flag enables:
+- Complexity and size limits
+- Code quality rules (SonarJS)
+- TypeScript stylistic rules
+- Import sorting
+- JSDoc `require-*` rules

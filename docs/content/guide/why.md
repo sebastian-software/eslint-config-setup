@@ -1,0 +1,49 @@
+---
+title: Why This Exists
+---
+
+# Why This Exists
+
+Setting up ESLint for a modern TypeScript project is surprisingly painful. You need to:
+
+- **Choose between dozens of plugins** — JSDoc, React, Hooks, Compiler, A11y, Storybook, Vitest, Playwright, SonarJS, RegExp, Node.js...
+- **Figure out which rules overlap or conflict** — Many plugins define similar rules with different names and behaviors.
+- **Configure TypeScript parser settings correctly** — `projectService`, `tsconfig`, parser options — getting type-aware rules to work is not trivial.
+- **Wait for config generation on every lint run** — Most config packages generate rules at runtime. Every. Single. Time.
+
+## The Problem with Runtime Generation
+
+Most ESLint config packages work like this:
+
+1. You import their config function
+2. It loads plugins, parses presets, merges rule sets
+3. It resolves conflicts between overlapping rules
+4. It returns the final configuration
+5. **This happens on every single lint run**
+
+That means your editor startup, your CI pipeline, your pre-commit hook — they all pay the cost of config generation. For a complex setup with 12+ plugins, that's not free.
+
+## Our Approach
+
+We do the heavy lifting **once at publish time**. All 16 possible configurations ship as static JavaScript modules. When you import them, they're just... there.
+
+```ts
+import { getConfig } from "eslint-config-setup"
+
+export default [
+  { ignores: ["node_modules", "dist"] },
+  ...(await getConfig({ strict: true, react: true }))
+]
+```
+
+That's your entire ESLint config. One function call. Zero runtime overhead.
+
+## The Numbers
+
+| Metric | Value |
+|--------|-------|
+| Plugins integrated | 12+ |
+| Rules configured | 200+ |
+| Pre-generated configs | 16 |
+| Configuration options | 4 |
+| Function calls needed | 1 |

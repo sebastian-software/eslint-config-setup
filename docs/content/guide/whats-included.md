@@ -1,0 +1,58 @@
+---
+title: What's Included
+---
+
+# What's Included
+
+Every configuration includes a carefully curated set of plugins and rules. No runtime resolution — everything is pre-generated.
+
+## Always Included
+
+These plugins are active in every configuration, regardless of flags:
+
+| Plugin | What It Does |
+|--------|--------------|
+| **ESLint recommended** | The foundation — core JavaScript rules |
+| **TypeScript-ESLint type-checked** | Full type-aware rules using `projectService` |
+| **JSDoc** | Documentation quality checks (TypeScript-aware) |
+| **RegExp** | Regex best practices and optimization |
+| **Vitest + Testing Library** | Test file rules (also works with Bun Test) |
+| **Playwright** | E2E test file rules |
+| **Prettier compat** | Rules that conflict with Prettier are disabled |
+
+## With `react: true`
+
+| Plugin | What It Does |
+|--------|--------------|
+| **React recommended** | Core React rules |
+| **React Hooks** | All 18 rules from `recommended-latest` |
+| **React Compiler** | Future-proof optimization rules |
+| **JSX-A11y** | Accessibility rules for JSX elements |
+| **Storybook** | Story file linting |
+
+## With `node: true`
+
+| Plugin | What It Does |
+|--------|--------------|
+| **Node.js ESM** | Proper module resolution and import rules |
+
+## With `ai: true`
+
+| Plugin | What It Does |
+|--------|--------------|
+| **SonarJS** | Cognitive complexity and code smell detection |
+| **TypeScript stylistic** | Consistent TypeScript idioms |
+| **simple-import-sort** | Automatic, deterministic import ordering |
+
+See the [AI Mode](/guide/ai-mode) page for the full list of rules and limits.
+
+## Full Type-Checking
+
+Every configuration uses TypeScript's `projectService` for full type information. This means rules like these actually work:
+
+- `@typescript-eslint/no-floating-promises` — Catch unhandled promises
+- `@typescript-eslint/await-thenable` — Don't await non-promises
+- `@typescript-eslint/no-misused-promises` — Prevent promise misuse in conditions
+- `@typescript-eslint/no-unnecessary-type-assertion` — Remove redundant casts
+
+These rules require type information that most ESLint configs skip because it's hard to set up. We handle it for you.
