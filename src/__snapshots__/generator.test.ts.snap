@@ -635,10 +635,11 @@ exports[`createConfig > combines ai with react and node 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unneeded-ternary": [
       "error",
       {
@@ -654,6 +655,7 @@ exports[`createConfig > combines ai with react and node 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -689,6 +691,12 @@ exports[`createConfig > combines ai with react and node 1`] = `
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "prefer-template": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "react-compiler/react-compiler": "error",
     "react-hooks/component-hook-factories": "error",
     "react-hooks/config": "error",
@@ -1426,10 +1434,11 @@ exports[`createConfig > combines all options 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -1439,6 +1448,7 @@ exports[`createConfig > combines all options 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -1462,6 +1472,12 @@ exports[`createConfig > combines all options 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "react-compiler/react-compiler": "error",
     "react-hooks/component-hook-factories": "error",
     "react-hooks/config": "error",
@@ -1858,10 +1874,11 @@ exports[`createConfig > enables strict rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -1871,6 +1888,7 @@ exports[`createConfig > enables strict rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -1894,6 +1912,12 @@ exports[`createConfig > enables strict rules 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "regexp/confusing-quantifier": "warn",
     "regexp/control-character-escape": "error",
     "regexp/match-any": "error",
@@ -2192,10 +2216,11 @@ exports[`createConfig > generates a base configuration 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -2205,6 +2230,7 @@ exports[`createConfig > generates a base configuration 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -2228,6 +2254,12 @@ exports[`createConfig > generates a base configuration 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "regexp/confusing-quantifier": "warn",
     "regexp/control-character-escape": "error",
     "regexp/match-any": "error",
@@ -2623,10 +2655,11 @@ exports[`createConfig > includes AI maintainability rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unneeded-ternary": [
       "error",
       {
@@ -2642,6 +2675,7 @@ exports[`createConfig > includes AI maintainability rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -2677,6 +2711,12 @@ exports[`createConfig > includes AI maintainability rules 1`] = `
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "prefer-template": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "regexp/confusing-quantifier": "warn",
     "regexp/control-character-escape": "error",
     "regexp/match-any": "error",
@@ -3157,10 +3197,11 @@ exports[`createConfig > includes NodeJS specific rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -3170,6 +3211,7 @@ exports[`createConfig > includes NodeJS specific rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -3193,6 +3235,12 @@ exports[`createConfig > includes NodeJS specific rules 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "regexp/confusing-quantifier": "warn",
     "regexp/control-character-escape": "error",
     "regexp/match-any": "error",
@@ -3620,10 +3668,11 @@ exports[`createConfig > includes Playwright specific rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -3633,6 +3682,7 @@ exports[`createConfig > includes Playwright specific rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -3684,6 +3734,12 @@ exports[`createConfig > includes Playwright specific rules 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "regexp/confusing-quantifier": "warn",
     "regexp/control-character-escape": "error",
     "regexp/match-any": "error",
@@ -4141,10 +4197,11 @@ exports[`createConfig > includes React specific rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -4154,6 +4211,7 @@ exports[`createConfig > includes React specific rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -4177,6 +4235,12 @@ exports[`createConfig > includes React specific rules 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "react-compiler/react-compiler": "error",
     "react-hooks/component-hook-factories": "error",
     "react-hooks/config": "error",
@@ -4723,10 +4787,11 @@ exports[`createConfig > includes Storybook specific rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -4736,6 +4801,7 @@ exports[`createConfig > includes Storybook specific rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -4759,6 +4825,12 @@ exports[`createConfig > includes Storybook specific rules 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "react-compiler/react-compiler": "error",
     "react-hooks/component-hook-factories": "error",
     "react-hooks/config": "error",
@@ -5157,10 +5229,11 @@ exports[`createConfig > includes Test specific rules 1`] = `
     "no-shadow-restricted-names": [
       "error",
       {
-        "reportGlobalThis": false,
+        "reportGlobalThis": true,
       },
     ],
     "no-sparse-arrays": "error",
+    "no-unassigned-vars": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-optional-chaining": [
       "error",
@@ -5170,6 +5243,7 @@ exports[`createConfig > includes Test specific rules 1`] = `
     ],
     "no-unused-labels": "error",
     "no-unused-private-class-members": "error",
+    "no-useless-assignment": "error",
     "no-useless-catch": "error",
     "no-useless-escape": [
       "error",
@@ -5193,6 +5267,12 @@ exports[`createConfig > includes Test specific rules 1`] = `
     ],
     "prefer-rest-params": "error",
     "prefer-spread": "error",
+    "preserve-caught-error": [
+      "error",
+      {
+        "requireCatchParameter": false,
+      },
+    ],
     "regexp/confusing-quantifier": "warn",
     "regexp/control-character-escape": "error",
     "regexp/match-any": "error",
@@ -5305,21 +5385,54 @@ exports[`createConfig > includes Test specific rules 1`] = `
       },
     ],
     "vitest/no-commented-out-tests": "error",
-    "vitest/no-conditional-expect": "error",
+    "vitest/no-conditional-expect": [
+      "error",
+      {
+        "expectAssertions": false,
+      },
+    ],
     "vitest/no-disabled-tests": "warn",
-    "vitest/no-focused-tests": "error",
+    "vitest/no-focused-tests": [
+      "error",
+      {
+        "fixable": true,
+      },
+    ],
     "vitest/no-identical-title": "error",
     "vitest/no-import-node-test": "error",
     "vitest/no-interpolation-in-snapshots": "error",
     "vitest/no-mocks-import": "error",
-    "vitest/no-standalone-expect": "error",
+    "vitest/no-standalone-expect": [
+      "error",
+      {
+        "additionalTestBlockFunctions": [],
+      },
+    ],
     "vitest/no-unneeded-async-expect-function": "error",
     "vitest/prefer-called-exactly-once-with": "error",
     "vitest/require-local-test-context-for-concurrent-snapshots": "error",
     "vitest/valid-describe-callback": "error",
-    "vitest/valid-expect": "error",
+    "vitest/valid-expect": [
+      "error",
+      {
+        "alwaysAwait": false,
+        "asyncMatchers": [
+          "toReject",
+          "toResolve",
+        ],
+        "maxArgs": 1,
+        "minArgs": 1,
+      },
+    ],
     "vitest/valid-expect-in-promise": "error",
-    "vitest/valid-title": "error",
+    "vitest/valid-title": [
+      "error",
+      {
+        "allowArguments": false,
+        "disallowedWords": [],
+        "ignoreTypeOfDescribeName": false,
+      },
+    ],
   },
 }
 `;
