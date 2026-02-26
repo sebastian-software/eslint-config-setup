@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-setup",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": false,
   "description": "Pre-generated, opinionated ESLint configurations for TypeScript projects. Zero runtime overhead. Full type-checking. AI-ready.",
   "keywords": [
