@@ -21,6 +21,7 @@ import { storiesOverride } from "../overrides/stories.ts"
 import { testsOverride } from "../overrides/tests.ts"
 import { standardComplexity } from "../presets/standard.ts"
 import { strictComplexity } from "../presets/strict.ts"
+import { oxlintIntegration } from "../oxlint/integration.ts"
 import type { ConfigOptions, FlatConfigArray } from "../types.ts"
 
 /**
@@ -97,6 +98,11 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
 
   // 17. Prettier compat (always last for TS/JS rules)
   config.push(...prettierCompatConfig())
+
+  // 18. OxLint (absolute last — disables rules OxLint already covers)
+  if (opts.oxlint) {
+    config.push(...oxlintIntegration(opts))
+  }
 
   return config
 }
