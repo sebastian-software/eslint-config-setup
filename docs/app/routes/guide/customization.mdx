@@ -2,7 +2,7 @@
 title: Helper Functions
 ---
 
-# Helper Functions
+import { Tip } from "ardo/ui"
 
 The config is yours to customize. We provide helper functions that make ESLint rule manipulation straightforward.
 
@@ -20,9 +20,9 @@ setRuleSeverity(config, "@typescript-eslint/no-unused-vars", "warn")
 setRuleSeverity(config, "complexity", "off")
 ```
 
-::: tip Why this matters
+<Tip title="Why this matters">
 In ESLint, a rule like `no-unused-vars` has detailed configuration (which patterns to ignore, how to handle destructuring, etc.). If you just want to downgrade it from "error" to "warn", you'd normally have to re-specify the entire configuration. `setRuleSeverity` does this for you.
-:::
+</Tip>
 
 ## `configureRule(config, ruleName, options)`
 

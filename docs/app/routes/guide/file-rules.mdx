@@ -2,7 +2,7 @@
 title: File-Specific Rules
 ---
 
-# File-Specific Rules
+import { Info } from "ardo/ui"
 
 Different files need different rules. We automatically detect file types by name patterns and adjust rules accordingly.
 
@@ -18,9 +18,9 @@ Unit test files get Vitest and Testing Library rules. Size limits are disabled b
 | `max-lines-per-function` | off | Test suites have many cases |
 | `max-statements` | off | Setup + assertions add up |
 
-::: info
+<Info>
 Vitest rules are also compatible with Bun Test, which uses the same API.
-:::
+</Info>
 
 ## E2E Test Files (`**/*.spec.ts`)
 

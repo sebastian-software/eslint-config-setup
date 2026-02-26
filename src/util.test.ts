@@ -59,8 +59,8 @@ describe("numberToShortHash", () => {
 
 describe("getConfigObject", () => {
   const mockConfig = [
-    { name: "effective/base", rules: { "no-console": "warn" } },
-    { name: "effective/test", rules: { "no-console": "off" } },
+    { name: "effective/base", rules: { "no-console": "warn" as const } },
+    { name: "effective/test", rules: { "no-console": "off" as const } },
     { name: "effective/e2e", rules: {} },
     { name: "effective/storybook", rules: {} }
   ]

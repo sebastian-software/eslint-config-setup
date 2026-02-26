@@ -2,7 +2,7 @@
 title: AI Mode
 ---
 
-# AI Mode
+import { Tip } from "ardo/ui"
 
 The `ai` flag isn't about validating code after it's written. It's about **making AI iterate until the code is good**.
 
@@ -38,9 +38,9 @@ This pushes AI to write smaller functions, simpler logic, and more maintainable 
 | `max-statements` | 15 | Fewer statements = clearer logic |
 | `max-statements-per-line` | 1 | One thing per line |
 
-::: tip
+<Tip>
 Size limits are automatically disabled for test files, E2E specs, and config files. You don't need to configure overrides for those.
-:::
+</Tip>
 
 ## Code Quality (SonarJS)
 
