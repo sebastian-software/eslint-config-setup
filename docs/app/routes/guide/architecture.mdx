@@ -1,0 +1,61 @@
+---
+title: Architecture
+---
+
+import { FileTree } from "ardo/ui"
+
+# Architecture
+
+## Why pre-generate?
+
+1. **No startup cost.** The config file is a static array of objects. Nothing gets composed, resolved, or merged at runtime.
+2. **Deterministic.** The same hash always loads the same config. No plugin loading order surprises.
+3. **Snapshot-testable.** Generated configs are snapshotted. When a plugin update changes rule defaults, the diff shows exactly what moved.
+4. **Inspectable.** Open `dist/configs/{hash}.js` and read what's active. No guessing.
+
+## Project structure
+
+<FileTree>
+
+- src/
+  - index.ts — Public API (getConfig, rule helpers, hash utils)
+  - modules.ts — Modular exports for power users
+  - loader.ts — Dynamic config loader
+  - hash.ts — Deterministic bitmask → SHA-1 hash
+  - types.ts — Shared TypeScript types
+  - configs/ — Individual config building blocks
+    - base.ts — ESLint recommended + best practices
+    - typescript.ts — typescript-eslint (strictTypeChecked)
+    - ai.ts — AI mode rules + per-file relaxations
+    - react.ts — React 19+, Hooks, Compiler, JSX-A11y
+    - node.ts — Node.js rules and globals
+    - imports.ts — import-x + simple-import-sort
+    - unicorn.ts — Modern JS patterns
+    - regexp.ts — RegExp quality
+    - jsdoc.ts — JSDoc validation
+    - cspell.ts — Spell checking
+    - sonarjs.ts — Code quality
+    - security.ts — Security rules
+    - json.ts — JSON/JSONC validation
+    - markdown.ts — Markdown linting
+    - prettier.ts — Prettier conflict removal
+  - overrides/ — File-pattern-specific rule overrides
+    - tests.ts — *.test.\{ts,tsx\}
+    - e2e.ts — *.spec.ts
+    - stories.ts — *.stories.\{ts,tsx\}
+    - config-files.ts — *.config.*
+    - declarations.ts — *.d.ts
+    - scripts.ts — scripts/**/*
+  - presets/ — Complexity level presets
+    - standard.ts — Default limits
+  - api/
+    - rule-helpers.ts — Runtime rule manipulation functions
+  - build/
+    - config-builder.ts — Validated config builder
+    - compose.ts — Assembles full config from options
+    - serialize.ts — Serializes config to JS module
+    - generate.ts — Generates all 16 permutations
+  - oxlint/
+    - integration.ts — eslint-plugin-oxlint rule disabling
+
+</FileTree>

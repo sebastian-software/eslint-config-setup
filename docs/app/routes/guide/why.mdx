@@ -1,0 +1,39 @@
+---
+title: Why This Exists
+---
+
+# Why This Exists
+
+## The problem
+
+Every TypeScript project needs ESLint. And every team ends up in the same place: 15+ plugins, dozens of config blocks, file-pattern overrides for tests vs. stories vs. e2e, and a config file that nobody fully understands anymore. Someone adds a plugin, it conflicts with an existing rule, three people spend an afternoon debugging why their editor shows different warnings than CI.
+
+Most teams deal with this in one of two ways. They copy-paste configs between repos and watch them drift apart within weeks. Or they use a shared config that's either too loose to catch anything useful or too strict for half their codebase.
+
+And now there's a third pressure: AI writes more and more of your code. Cursor, Copilot, Claude Code — they all produce working code, but without strict lint rules, each tool has its own style. One function uses `any`, the next has magic numbers, a third nests five levels deep. The codebase looks like it was written by a different person every hour. Because it was.
+
+## The solution
+
+This package solves both problems at once. A complete, pre-generated ESLint config that works out of the box — and an AI mode that turns the linter into the single most effective quality gate for generated code.
+
+## How it works
+
+Four boolean flags. Sixteen combinations. All pre-generated at build time.
+
+```
+Build Time                          Runtime
+─────────                           ───────
+ConfigOptions → Bitmask → SHA-1     getConfig(opts) → same hash
+                            │                            │
+                            ▼                            ▼
+                   dist/configs/{hash}.js ◄──── dynamic import
+```
+
+When you call `getConfig({ react: true })`, it computes a hash and loads a static JS file. No composition logic runs. No plugins get resolved. The config is just there — a plain array of objects, ready to go.
+
+This means:
+
+- **Instant editor feedback** — no multi-second config build delay
+- **Deterministic** — the exact same config loads every time, no plugin-loading-order surprises
+- **Inspectable** — open `dist/configs/{hash}.js` to see exactly what's active
+- **Snapshot-testable** — rule changes from plugin updates show up as clear diffs

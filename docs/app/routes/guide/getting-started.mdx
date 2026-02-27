@@ -2,37 +2,108 @@
 title: Getting Started
 ---
 
+import { Steps, Tabs, TabList, Tab, TabPanel, TabPanels, Note } from "ardo/ui"
+
 # Getting Started
 
-Welcome to your new documentation site!
+Get a complete ESLint setup in under a minute.
 
-## Development
+## Installation
 
-```bash
-# Start development server
-pnpm dev
+<Steps>
 
-# Build for production
-pnpm build
+1. Install the package and its peer dependencies:
 
-# Preview production build
-pnpm preview
+   <Tabs>
+   <TabList>
+   <Tab>npm</Tab>
+   <Tab>pnpm</Tab>
+   <Tab>bun</Tab>
+   </TabList>
+   <TabPanels>
+   <TabPanel>
+   ```bash
+   npm install -D @effective/eslint-config eslint typescript
+   ```
+   </TabPanel>
+   <TabPanel>
+   ```bash
+   pnpm add -D @effective/eslint-config eslint typescript
+   ```
+   </TabPanel>
+   <TabPanel>
+   ```bash
+   bun add -D @effective/eslint-config eslint typescript
+   ```
+   </TabPanel>
+   </TabPanels>
+   </Tabs>
+
+2. Create your ESLint config file:
+
+   ```typescript
+   // eslint.config.ts
+   import { getConfig } from "@effective/eslint-config"
+
+   export default await getConfig({ react: true })
+   ```
+
+3. Run ESLint:
+
+   ```bash
+   npx eslint .
+   ```
+
+</Steps>
+
+<Note>
+Requires ESLint >= 9.22 and TypeScript >= 5.0.
+</Note>
+
+## What you get
+
+That single `getConfig()` call gives you:
+
+- Type-checked TypeScript with `strictTypeChecked`
+- React 19 with Hooks, Compiler, and JSX-A11y
+- Import cycle detection and auto-sorted imports
+- Code quality analysis via SonarJS
+- Security rules
+- Spell checking in code
+- JSON and Markdown linting
+- Vitest and Playwright overrides
+- Prettier compatibility
+
+No plugin juggling. No copy-pasted config blocks.
+
+## Configuration flags
+
+Enable features by setting flags to `true`:
+
+```typescript
+export default await getConfig({
+  react: true,   // React 19+, Hooks, JSX-A11y, Storybook, Testing Library
+  node: true,    // Node.js globals and rules
+  ai: true,      // Strict rules for AI-assisted development
+  oxlint: true,  // Disable rules covered by OxLint
+})
 ```
 
-## Adding Content
+Flags are independent — combine them however you need. See [Configuration](/guide/configuration) for details.
 
-Create `.md` or `.mdx` files in the `app/routes/` directory. They will automatically become pages.
+## Customizing rules
 
-## Configuration
+Every config is fully customizable:
 
-Edit `vite.config.ts` to customize your site:
+```typescript
+import { getConfig, disableRule, addRule } from "@effective/eslint-config"
 
-- Navigation links
-- Sidebar structure
-- Site title and description
-- Theme options
+const config = await getConfig({ react: true, ai: true })
 
-## Learn More
+disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })
+addRule(config, "no-console", "off", { scope: "scripts" })
 
-- [Ardo Documentation](https://ardo-docs.dev)
-- [GitHub Repository](https://github.com/sebastian-software/ardo)
+export default config
+```
+
+See the [Rule API](/guide/rule-api) for the full set of manipulation functions.

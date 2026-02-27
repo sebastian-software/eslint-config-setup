@@ -1,0 +1,54 @@
+---
+title: Modular Imports
+---
+
+import { Info } from "ardo/ui"
+
+# Modular Imports
+
+For teams that want full control, every building block is available individually.
+
+## Individual imports
+
+```typescript
+import {
+  base, typescript, imports, unicorn, regexp, jsdoc, sonarjs,
+  react, node, ai, json, markdown, prettier,
+  tests, e2e, stories, configFiles, declarations, scripts,
+  standardComplexity,
+  oxlint,
+} from "@effective/eslint-config/modules"
+
+export default [
+  ...base(),
+  ...typescript(),
+  ...imports(),
+  ...unicorn(),
+  ...regexp(),
+  ...sonarjs(),
+  ...react(),
+  ...ai(),
+  ...tests({ react: true }),
+  ...e2e(),
+  ...stories(),
+  ...configFiles(),
+  ...declarations(),
+  ...json(),
+  ...markdown(),
+  ...prettier(),
+]
+```
+
+## `composeConfig()`
+
+Or use `composeConfig()` — the same function the build system uses — to get the full config at runtime:
+
+```typescript
+import { composeConfig } from "@effective/eslint-config/modules"
+
+export default composeConfig({ react: true, ai: true })
+```
+
+<Info>
+The modular approach gives you full control over which config blocks to include. The trade-off is that you lose the pre-built config optimization — composition happens at runtime instead of being loaded from a static file.
+</Info>

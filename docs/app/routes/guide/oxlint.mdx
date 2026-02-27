@@ -1,0 +1,66 @@
+---
+title: OxLint Integration
+---
+
+import { Steps, Tip } from "ardo/ui"
+
+# OxLint Integration
+
+[OxLint](https://oxc.rs) is a Rust-based linter that's 50-100x faster than ESLint. It already covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively.
+
+With `oxlint: true`, this config automatically disables every ESLint rule that OxLint handles (via [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint)). No manual config, no rule conflicts, no guesswork about which linter covers what.
+
+Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS analysis, cspell, Storybook, Testing Library — keeps running through ESLint. You get the full rule set at the same severity, just split across two linters for maximum speed.
+
+## Setup
+
+<Steps>
+
+1. Install `oxlint` as a dev dependency:
+
+   ```bash
+   npm install -D oxlint
+   ```
+
+2. Enable it in your ESLint config:
+
+   ```typescript
+   // eslint.config.ts
+   import { getConfig } from "@effective/eslint-config"
+
+   export default await getConfig({ react: true, ai: true, oxlint: true })
+   ```
+
+3. Run both linters in sequence — OxLint first for instant feedback, ESLint second for deep analysis:
+
+   ```jsonc
+   // package.json
+   {
+     "scripts": {
+       "lint": "oxlint && eslint"
+     }
+   }
+   ```
+
+</Steps>
+
+## Generating `oxlint.config.ts`
+
+For a fully synced OxLint config that mirrors your ESLint rules, use [`@oxlint/migrate`](https://www.npmjs.com/package/@oxlint/migrate) — the official migration tool from the OxC team:
+
+```bash
+npm install -D oxlint @oxlint/migrate
+```
+
+```typescript
+// oxlint.config.ts
+import { defineConfig } from "oxlint"
+import migrate from "@oxlint/migrate"
+import { getConfig } from "@effective/eslint-config"
+
+export default defineConfig(await migrate(getConfig({ react: true, ai: true })))
+```
+
+<Tip>
+Same rules, same severity — automatically derived from your ESLint config.
+</Tip>

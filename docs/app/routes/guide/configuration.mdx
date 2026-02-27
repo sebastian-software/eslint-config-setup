@@ -1,0 +1,112 @@
+---
+title: Configuration
+---
+
+import { Tabs, TabList, Tab, TabPanel, TabPanels, Note, Tip } from "ardo/ui"
+
+# Configuration
+
+## Flags
+
+| Flag | Default | What it does |
+|------|---------|--------------|
+| `react` | `false` | React 19+ with Server Components, Hooks, Compiler, JSX-A11y, Storybook, Testing Library |
+| `node` | `false` | Node.js globals, `eslint-plugin-n` rules, promise-based API preferences |
+| `ai` | `false` | Enforces a consistent standard across human and AI contributors (see [AI Mode](/guide/ai-mode)) |
+| `oxlint` | `false` | Disables ESLint rules that OxLint already covers (see [OxLint Integration](/guide/oxlint)) |
+
+Flags are independent. Combine them however you need. `2^4 = 16` configs exist, all pre-built.
+
+<Note>
+TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint preset. No "recommended" fallback. This matches TypeScript's own direction toward strict-by-default.
+</Note>
+
+## Usage examples
+
+<Tabs>
+<TabList>
+<Tab>React</Tab>
+<Tab>Full-stack</Tab>
+<Tab>AI-assisted</Tab>
+<Tab>With OxLint</Tab>
+<Tab>Custom rules</Tab>
+</TabList>
+<TabPanels>
+<TabPanel>
+
+```typescript
+// eslint.config.ts
+import { getConfig } from "@effective/eslint-config"
+
+export default await getConfig({ react: true })
+```
+
+</TabPanel>
+<TabPanel>
+
+```typescript
+// eslint.config.ts
+import { getConfig } from "@effective/eslint-config"
+
+export default await getConfig({ react: true, node: true })
+```
+
+</TabPanel>
+<TabPanel>
+
+For teams where AI writes a significant share of the code:
+
+```typescript
+// eslint.config.ts
+import { getConfig } from "@effective/eslint-config"
+
+export default await getConfig({ react: true, ai: true })
+```
+
+</TabPanel>
+<TabPanel>
+
+For 50-100x faster linting with [OxLint](https://oxc.rs):
+
+```typescript
+// eslint.config.ts
+import { getConfig } from "@effective/eslint-config"
+
+export default await getConfig({ react: true, oxlint: true })
+```
+
+```jsonc
+// package.json
+{
+  "scripts": {
+    "lint": "oxlint && eslint"
+  }
+}
+```
+
+</TabPanel>
+<TabPanel>
+
+```typescript
+// eslint.config.ts
+import {
+  getConfig, disableRule, setRuleSeverity, configureRule, addRule
+} from "@effective/eslint-config"
+
+const config = await getConfig({ react: true, ai: true })
+
+disableRule(config, "unicorn/no-null")
+setRuleSeverity(config, "no-console", "warn")
+configureRule(config, "complexity", [20])
+addRule(config, "no-alert", "error")
+
+export default config
+```
+
+</TabPanel>
+</TabPanels>
+</Tabs>
+
+<Tip>
+See the [Rule API](/guide/rule-api) for the full set of rule manipulation functions and scoped rules.
+</Tip>

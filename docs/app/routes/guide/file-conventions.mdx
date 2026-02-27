@@ -1,0 +1,40 @@
+---
+title: File Conventions
+---
+
+# File Conventions
+
+The config applies different rules based on file patterns. Each pattern matches the default convention of its tool — follow these patterns and the linter applies the right rules per file type without any configuration.
+
+## File patterns
+
+| Pattern | Purpose | Convention source |
+|---------|---------|-------------------|
+| `*.test.{ts,tsx}`, `__tests__/**` | Unit/integration tests | Vitest default |
+| `*.spec.ts` | E2E tests | Playwright default |
+| `*.stories.{ts,tsx}` | Component stories | Storybook default |
+| `*.config.*` | Tool configs | Vite, Next.js, Tailwind convention |
+| `*.d.ts` | Type declarations | TypeScript convention |
+| `scripts/**` | Build/dev scripts | Common project convention |
+
+## Config blocks
+
+Each generated config contains named blocks. Rules only apply to matching files:
+
+| Block | Files | Purpose |
+|-------|-------|---------|
+| `@effective/eslint/base` | `**/*.{ts,tsx}` | ESLint recommended + best practices |
+| `@effective/eslint/typescript` | `**/*.{ts,tsx}` | Type-checked TypeScript rules |
+| `@effective/eslint/react` | `**/*.{ts,tsx}` | React, Hooks, Compiler, JSX-A11y |
+| `@effective/eslint/node` | `**/*.{ts,tsx}` | Node.js globals and rules |
+| `@effective/eslint/tests` | `**/*.test.{ts,tsx}` | Vitest rules, relaxed complexity |
+| `@effective/eslint/tests-react` | `**/*.test.{ts,tsx}` | Testing Library rules |
+| `@effective/eslint/e2e` | `**/*.spec.ts` | Playwright rules |
+| `@effective/eslint/stories` | `**/*.stories.{ts,tsx}` | Storybook rules |
+| `@effective/eslint/config-files` | `**/*.config.*` | Relaxed rules for config files |
+| `@effective/eslint/declarations` | `**/*.d.ts` | Minimal rules for type declarations |
+| `@effective/eslint/scripts` | `**/scripts/**` | Console and process.exit allowed |
+| `@effective/eslint/json` | `**/*.json` | JSON syntax validation |
+| `@effective/eslint/jsonc` | `**/tsconfig.json`, etc. | JSONC with comments |
+| `@effective/eslint/markdown` | `**/*.md` | Markdown code block validation |
+| `@effective/eslint/prettier` | all | Disables Prettier-conflicting rules |

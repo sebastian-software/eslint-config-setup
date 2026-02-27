@@ -1,0 +1,93 @@
+---
+title: AI Mode
+---
+
+import { Note, Tip } from "ardo/ui"
+
+# AI Mode
+
+In a growing number of teams, AI assistants already write more code than humans do. Cursor, Copilot, Claude Code, Windsurf — they produce functional code fast, but each with its own habits. Without guardrails, your codebase accumulates stylistic debt at machine speed: inconsistent naming, implicit types, magic numbers scattered everywhere, functions that grow unchecked.
+
+The fix isn't more code review. The fix is a linter that's strict enough to enforce a single standard across every contributor, human or AI. Rules that humans find tedious — explicit return types, strict naming conventions, no magic numbers — are trivial for an AI to follow. The AI doesn't mind. It just fixes the code and moves on.
+
+```typescript
+export default await getConfig({ react: true, ai: true })
+```
+
+<Note>
+The base config (without `ai: true`) already includes solid code quality rules — strict equality checks, modern JS patterns, dangerous pattern detection, and more. AI mode builds on top of that with additional strictness that makes the most sense when machines are writing your code.
+</Note>
+
+## What AI mode adds
+
+### Consistent code structure
+
+AI-generated code often takes different paths to the same result. One function uses an early return, the next wraps everything in nested if/else. AI mode enforces a single structural style:
+
+- **Always use braces** — even for single-line `if` statements, preventing bugs from accidental additions
+- **Return early** — no `else` after `return`, encouraging flat code over deep nesting
+- **No nested ternaries** — keeps conditional logic readable
+- **No parameter reassignment** — prevents subtle mutation bugs, especially in React components
+- **No implicit type coercion** — write `String(x)` instead of `"" + x`
+- **Use shorthand syntax** — object shorthand, arrow functions, logical assignment operators (`??=`, `||=`)
+
+### Explicit TypeScript
+
+AI tools tend to be loose with types — `any` everywhere, no return types, inconsistent import styles. AI mode closes those gaps:
+
+- **Explicit return types** on functions — makes interfaces clear without reading the implementation
+- **No `any`** — forces `unknown` where the type isn't known, which is almost always the right choice
+- **Strict naming conventions** — camelCase for variables, PascalCase for types, `is`/`has` prefixes for booleans
+- **Consistent type imports/exports** — always `import type { T }` when only the type is used
+- **Readonly by default** — class properties that aren't reassigned are marked `readonly`
+- **Exhaustive switches** — every case in a union type must be handled
+- **No unsafe type assertions** — prevents `as` casts that lie about the actual type
+
+### No magic values
+
+AI loves to scatter unnamed numbers and repeated strings through code. These make refactoring dangerous and intent unclear:
+
+- **No magic numbers** — numeric literals (except -1, 0, 1, 2) must be named constants
+- **No duplicate strings** — strings repeated 3+ times must be extracted into a variable
+
+### Modern idioms
+
+Enforces consistent, modern JavaScript patterns that AI tools don't always follow:
+
+- **Early returns** over deeply nested if/else chains
+- **Functions in the smallest scope** — no hoisting helpers to module level when they're only used once
+- **`for...of` over `.forEach()`** — cleaner iteration with proper `break`/`continue` support
+- **No `.reduce()`** — prefer explicit loops that are easier to read and debug
+- **No abbreviations** — write `button` not `btn`, `error` not `err`
+- **Consistent file naming** — camelCase or PascalCase only
+
+### Code quality analysis
+
+Catches structural issues that tend to accumulate fast with AI-generated code:
+
+- **No copy-pasted functions** — detects identical function bodies that should be extracted
+- **Merge nested conditions** — `if (a) { if (b) { ... } }` becomes `if (a && b) { ... }`
+- **Simplify boolean returns** — `if (x) return true; return false;` becomes `return x`
+- **Return values directly** — no pointless temporary variables before an immediate return
+
+### Async discipline
+
+AI-generated async code frequently mishandles promises:
+
+- **No `await` in loops** — prevents sequential execution of independent async operations
+- **No floating promises** — every Promise must be awaited, returned, or explicitly voided
+
+## Automatic relaxations
+
+Strict rules don't belong everywhere. The config automatically relaxes AI rules based on file type:
+
+- **Test files** (`*.test.{ts,tsx}`) — drop size limits, magic number checks, and return type requirements. Tests need flexibility.
+- **E2E files** (`*.spec.ts`) — drop size limits and magic numbers. Playwright tests are naturally longer.
+- **Config files** (`*.config.*`) — drop complexity limits, magic numbers, and naming conventions. Config files play by different rules.
+- **Type declarations** (`*.d.ts`) — disable most AI rules entirely. You can't control what ambient types look like.
+
+No manual overrides needed — the file pattern handles it. See [File Conventions](/guide/file-conventions) for the full list.
+
+<Tip>
+If a specific AI rule is too strict for your project, you can disable or reconfigure it with the [Rule API](/guide/rule-api). For example, to allow magic numbers in tests: `disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })`.
+</Tip>

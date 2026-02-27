@@ -1,0 +1,51 @@
+---
+title: Contributing
+---
+
+import { Steps, Note } from "ardo/ui"
+
+# Contributing
+
+## Development setup
+
+<Steps>
+
+1. Clone the repository and install dependencies:
+
+   ```bash
+   git clone https://github.com/sebastian-software/effective-eslint-config.git
+   cd effective-eslint-config
+   npm install
+   ```
+
+2. Run the tests:
+
+   ```bash
+   npm test
+   ```
+
+3. Generate all 16 config permutations:
+
+   ```bash
+   npm run generate
+   ```
+
+4. Build for distribution:
+
+   ```bash
+   npm run build
+   ```
+
+</Steps>
+
+## Updating snapshots
+
+When you intentionally change rules or update plugins:
+
+```bash
+npx vitest run --update
+```
+
+<Note>
+Review the snapshot diff carefully. It shows exactly which rules changed.
+</Note>
