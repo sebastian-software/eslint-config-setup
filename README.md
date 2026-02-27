@@ -298,19 +298,24 @@ Run both linters in sequence — OxLint first for instant feedback, ESLint secon
 }
 ```
 
-### Generating `oxlintrc.json`
+### Generating `oxlint.config.ts`
 
-The config includes a generator that produces an `oxlintrc.json` from your ESLint ruleset. Same rules, same severity, no manual sync.
+For a fully synced OxLint config that mirrors your ESLint rules, use [`@oxlint/migrate`](https://www.npmjs.com/package/@oxlint/migrate) — the official migration tool from the OxC team:
 
-```typescript
-import { generateOxlintConfig } from "@effective/eslint-config"
-import { writeFileSync } from "node:fs"
-
-const oxlintrc = generateOxlintConfig({ react: true, ai: true })
-writeFileSync("oxlintrc.json", JSON.stringify(oxlintrc, null, 2))
+```bash
+npm install -D oxlint @oxlint/migrate
 ```
 
-The generated config only includes rules OxLint supports, preserves your severity and options, maps file-pattern overrides correctly, and derives the plugin list from rule prefixes automatically.
+```typescript
+// oxlint.config.ts
+import { defineConfig } from "oxlint"
+import migrate from "@oxlint/migrate"
+import { getConfig } from "@effective/eslint-config"
+
+export default defineConfig(await migrate(getConfig({ react: true, ai: true })))
+```
+
+Same rules, same severity — automatically derived from your ESLint config.
 
 ---
 

@@ -10,9 +10,6 @@ export {
 
 export { optionsToFilename, optionsToBitmask, bitmaskToHash } from "./hash.ts"
 
-export { generateOxlintConfig } from "./build/oxlint-generator.ts"
-export type { OxlintConfig } from "./build/oxlint-generator.ts"
-
 export type {
   ConfigOptions,
   FlatConfigArray,
