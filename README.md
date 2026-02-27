@@ -13,6 +13,19 @@ export default await getConfig({ react: true })
 
 That single line gives you type-checked TypeScript, React 19 with Hooks and JSX-A11y, import cycle detection, code quality analysis, JSON/Markdown linting, Vitest and Playwright overrides, and Prettier compatibility. No plugin juggling. No copy-pasted config blocks.
 
+Need to tweak a rule? Every config is fully customizable — disable rules globally or target specific file types like tests, scripts, or config files:
+
+```typescript
+import { getConfig, disableRule, addRule } from "@effective/eslint-config"
+
+const config = await getConfig({ react: true, ai: true })
+
+disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })
+addRule(config, "no-console", "off", { scope: "scripts" })
+
+export default config
+```
+
 ---
 
 ## The problem
@@ -127,11 +140,41 @@ Every function operates on the config array in-place:
 
 | Function | Description |
 |----------|-------------|
-| `setRuleSeverity(config, rule, severity)` | Change `"off"` / `"warn"` / `"error"` while preserving options |
-| `configureRule(config, rule, options)` | Replace options while preserving severity |
-| `disableRule(config, rule)` | Set to `"off"` across all config blocks |
-| `addRule(config, rule, severity, options?)` | Add a rule to the base config block |
+| `setRuleSeverity(config, rule, severity, options?)` | Change `"off"` / `"warn"` / `"error"` while preserving options |
+| `configureRule(config, rule, options, ruleOptions?)` | Replace options while preserving severity |
+| `disableRule(config, rule, options?)` | Set to `"off"` across all config blocks |
+| `addRule(config, rule, severity, options?, ruleOptions?)` | Add a rule to the base config block |
 | `disableAllRulesBut(config, rule)` | Debug helper — disable everything except one rule |
+
+### Scoped rules
+
+All four main functions accept an optional `{ scope }` parameter to target specific file types instead of the entire config. The scope matches config block names by prefix:
+
+```typescript
+import {
+  getConfig, disableRule, setRuleSeverity, configureRule, addRule
+} from "@effective/eslint-config"
+
+const config = await getConfig({ react: true, ai: true })
+
+// Disable magic number checks in tests only
+disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })
+
+// Allow console in scripts
+addRule(config, "no-console", "off", { scope: "scripts" })
+
+// Relax complexity only in test files
+configureRule(config, "complexity", [25], { scope: "tests" })
+
+// Downgrade a rule to warning in config files
+setRuleSeverity(config, "import-x/no-default-export", "warn", { scope: "configs" })
+
+export default config
+```
+
+Available scopes: `"tests"`, `"e2e"`, `"stories"`, `"configs"`, `"declarations"`, `"scripts"`.
+
+Each scope matches blocks whose name is `@effective/eslint/{scope}` or starts with `@effective/eslint/{scope}-` (e.g. `"tests"` matches both `tests` and `tests-react`).
 
 ### Why not just spread?
 

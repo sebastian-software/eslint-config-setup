@@ -14,3 +14,15 @@ export interface ConfigOptions {
 export type FlatConfig = Linter.Config
 export type FlatConfigArray = Linter.Config[]
 export type RuleSeverity = "off" | "warn" | "error"
+
+export type RuleScope =
+  | "tests"
+  | "e2e"
+  | "stories"
+  | "configs"
+  | "declarations"
+  | "scripts"
+
+export interface RuleOptions {
+  scope?: RuleScope
+}

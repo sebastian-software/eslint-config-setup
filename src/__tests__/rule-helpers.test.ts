@@ -256,6 +256,160 @@ describe("disableAllRulesBut", () => {
   })
 })
 
+// --- Scoped operations ---
+
+function makeScopedConfig(): FlatConfigArray {
+  return [
+    {
+      name: "@effective/eslint/base",
+      rules: {
+        "no-console": "error",
+        complexity: ["error", 10],
+      },
+    },
+    {
+      name: "@effective/eslint/tests",
+      rules: {
+        "no-console": "warn",
+      },
+    },
+    {
+      name: "@effective/eslint/tests-react",
+      rules: {
+        "testing-library/no-unnecessary-act": "error",
+      },
+    },
+    {
+      name: "@effective/eslint/scripts",
+      rules: {
+        "no-console": "off",
+      },
+    },
+  ]
+}
+
+describe("scoped setRuleSeverity", () => {
+  it("changes severity only in matching scope", () => {
+    const config = makeScopedConfig()
+    setRuleSeverity(config, "no-console", "off", { scope: "tests" })
+    // tests block changed
+    expect(config[1].rules!["no-console"]).toBe("off")
+    // base block unchanged
+    expect(config[0].rules!["no-console"]).toBe("error")
+    // scripts block unchanged
+    expect(config[3].rules!["no-console"]).toBe("off") // was already off
+  })
+
+  it("matches prefix blocks (tests matches tests-react)", () => {
+    const config = makeScopedConfig()
+    setRuleSeverity(config, "testing-library/no-unnecessary-act", "warn", {
+      scope: "tests",
+    })
+    expect(config[2].rules!["testing-library/no-unnecessary-act"]).toBe("warn")
+  })
+
+  it("does nothing if scope has no matching blocks", () => {
+    const config = makeScopedConfig()
+    const before = JSON.stringify(config)
+    setRuleSeverity(config, "no-console", "off", { scope: "e2e" })
+    expect(JSON.stringify(config)).toBe(before)
+  })
+})
+
+describe("scoped configureRule", () => {
+  it("updates options only in matching scope", () => {
+    const config = makeScopedConfig()
+    configureRule(config, "no-console", [{ allow: ["warn"] }], {
+      scope: "tests",
+    })
+    expect(config[1].rules!["no-console"]).toEqual([
+      "warn",
+      { allow: ["warn"] },
+    ])
+    // base unchanged
+    expect(config[0].rules!["no-console"]).toBe("error")
+  })
+
+  it("ignores non-matching blocks", () => {
+    const config = makeScopedConfig()
+    configureRule(config, "no-console", [{ allow: ["warn"] }], {
+      scope: "scripts",
+    })
+    expect(config[3].rules!["no-console"]).toEqual([
+      "off",
+      { allow: ["warn"] },
+    ])
+    // base unchanged
+    expect(config[0].rules!["no-console"]).toBe("error")
+  })
+
+  it("maps configs scope to config-files blocks", () => {
+    const config: FlatConfigArray = [
+      {
+        name: "@effective/eslint/base",
+        rules: { complexity: ["error", 10] },
+      },
+      {
+        name: "@effective/eslint/config-files",
+        rules: { complexity: ["error", 10] },
+      },
+    ]
+    configureRule(config, "complexity", [50], { scope: "configs" })
+    expect(config[1].rules!.complexity).toEqual(["error", 50])
+    // base unchanged
+    expect(config[0].rules!.complexity).toEqual(["error", 10])
+  })
+})
+
+describe("scoped disableRule", () => {
+  it("disables rule in first matching block", () => {
+    const config = makeScopedConfig()
+    disableRule(config, "no-console", { scope: "tests" })
+    expect(config[1].rules!["no-console"]).toBe("off")
+    // base unchanged
+    expect(config[0].rules!["no-console"]).toBe("error")
+  })
+
+  it("creates rule entry if block doesn't have it", () => {
+    const config = makeScopedConfig()
+    disableRule(config, "complexity", { scope: "tests" })
+    expect(config[1].rules!.complexity).toBe("off")
+  })
+
+  it("creates rules object if block has none", () => {
+    const config: FlatConfigArray = [
+      { name: "@effective/eslint/e2e" },
+    ]
+    disableRule(config, "no-console", { scope: "e2e" })
+    expect(config[0].rules!["no-console"]).toBe("off")
+  })
+})
+
+describe("scoped addRule", () => {
+  it("adds rule to first matching block instead of base", () => {
+    const config = makeScopedConfig()
+    addRule(config, "vitest/no-focused-tests", "error", { scope: "tests" })
+    expect(config[1].rules!["vitest/no-focused-tests"]).toBe("error")
+    expect(config[0].rules!["vitest/no-focused-tests"]).toBeUndefined()
+  })
+
+  it("adds rule with options to scoped block", () => {
+    const config = makeScopedConfig()
+    addRule(config, "no-restricted-syntax", "error", [{ selector: "ForInStatement" }], { scope: "scripts" })
+    expect(config[3].rules!["no-restricted-syntax"]).toEqual([
+      "error",
+      { selector: "ForInStatement" },
+    ])
+  })
+
+  it("does nothing if scope has no matching blocks", () => {
+    const config = makeScopedConfig()
+    const before = JSON.stringify(config)
+    addRule(config, "new-rule", "error", { scope: "e2e" })
+    expect(JSON.stringify(config)).toBe(before)
+  })
+})
+
 // --- Integration: Helpers on real composed configs ---
 
 describe("rule helpers on composed configs", () => {
