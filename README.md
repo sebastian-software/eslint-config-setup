@@ -1,23 +1,51 @@
 # @effective/eslint-config
 
-A pre-generated, permutation-based ESLint flat config for modern TypeScript and React projects. One import, zero runtime overhead, full control when you need it.
+Stop managing ESLint configs. Start shipping.
+
+One import. 25+ plugins. TypeScript, React, Node.js, AI-assisted code, OxLint — all handled. Every combination pre-built at compile time, so your editor never waits.
+
+```typescript
+// eslint.config.ts
+import { getConfig } from "@effective/eslint-config"
+
+export default await getConfig({ react: true })
+```
+
+That single line gives you type-checked TypeScript, React 19 with Hooks and JSX-A11y, import cycle detection, code quality analysis, JSON/Markdown linting, Vitest and Playwright overrides, and Prettier compatibility. No plugin juggling. No copy-pasted config blocks.
 
 ---
 
-## Why This Exists
+## The problem
 
-Setting up ESLint in a modern TypeScript project means juggling 15+ plugins, dozens of config blocks, file-pattern overrides for tests vs. stories vs. e2e, and keeping it all in sync. Most teams either copy-paste configs between repos or use a shared config that doesn't quite fit.
+Every TypeScript project needs ESLint. And every team ends up in the same place: 15+ plugins, dozens of config blocks, file-pattern overrides for tests vs. stories vs. e2e, and a config file that nobody fully understands anymore. Someone adds a plugin, it conflicts with an existing rule, three people spend an afternoon debugging why their editor shows different warnings than CI.
 
-This package takes a different approach: **all permutations are pre-generated at build time.** You declare what your project needs, and you get a single, optimized flat config array — instantly, with zero composition overhead at runtime.
+Most teams deal with this in one of two ways. They copy-paste configs between repos and watch them drift apart within weeks. Or they use a shared config that's either too loose to catch anything useful or too strict for half their codebase.
 
-### Key Advantages
+And now there's a third pressure: AI writes more and more of your code. Cursor, Copilot, Claude Code — they all produce working code, but without strict lint rules, each tool has its own style. One function uses `any`, the next has magic numbers, a third nests five levels deep. The codebase looks like it was written by a different person every hour. Because it was.
 
-- **Zero runtime cost** — Configs are pre-built JS files, not composed at startup. Your editor gets lint results instantly.
-- **Permutation-based** — 4 boolean flags produce 16 purpose-built configs. No unused plugins, no dead rules.
-- **File-pattern aware** — Tests, stories, e2e specs, config files, and type declarations each get appropriate rules automatically. No manual overrides needed.
-- **AI-first mode** — A dedicated `ai` flag enables strict clean-code rules that AI assistants can trivially follow, producing measurably better code.
-- **OxLint compatible** — A single flag disables all rules OxLint already covers, letting you run `oxlint && eslint` for maximum performance.
-- **Escape hatches** — Runtime helpers let you tweak any rule after loading. A modular export path lets power users compose from scratch.
+This package solves both problems at once. A complete, pre-generated ESLint config that works out of the box — and an AI mode that turns the linter into the single most effective quality gate for generated code.
+
+## How it works
+
+Four boolean flags. Sixteen combinations. All pre-generated at build time.
+
+```
+Build Time                          Runtime
+─────────                           ───────
+ConfigOptions → Bitmask → SHA-1     getConfig(opts) → same hash
+                            │                            │
+                            ▼                            ▼
+                   dist/configs/{hash}.js ◄──── dynamic import
+```
+
+When you call `getConfig({ react: true })`, it computes a hash and loads a static JS file. No composition logic runs. No plugins get resolved. The config is just there — a plain array of objects, ready to go.
+
+This means:
+
+- Your editor gets lint results instantly, not after a multi-second config build
+- The exact same config loads every time — no plugin-loading-order surprises
+- You can inspect `dist/configs/{hash}.js` to see exactly what's active
+- Snapshot tests catch any rule changes when plugins update
 
 ---
 
@@ -27,43 +55,28 @@ This package takes a different approach: **all permutations are pre-generated at
 npm install -D @effective/eslint-config eslint typescript
 ```
 
-ESLint >= 9.22 and TypeScript >= 5.0 are required as peer dependencies.
+Requires ESLint >= 9.22 and TypeScript >= 5.0.
 
 ---
 
-## Quick Start
+## Configuration flags
 
-```typescript
-// eslint.config.ts
-import { getConfig } from "@effective/eslint-config"
-
-export default await getConfig({
-  react: true,
-})
-```
-
-That's it. This gives you a complete config with TypeScript type-checking, React + Hooks + JSX-A11y, import validation, code quality rules, JSON/Markdown linting, Vitest and Playwright overrides, and Prettier compatibility — all in one line.
-
----
-
-## Configuration Flags
-
-| Flag | Default | What It Enables |
-|------|---------|-----------------|
+| Flag | Default | What it does |
+|------|---------|--------------|
 | `react` | `false` | React 19+ with Server Components, Hooks, Compiler, JSX-A11y, Storybook, Testing Library |
 | `node` | `false` | Node.js globals, `eslint-plugin-n` rules, promise-based API preferences |
-| `ai` | `false` | Strict clean-code rules for AI-generated code (see [AI Mode](#ai-mode) below) |
-| `oxlint` | `false` | Disables all ESLint rules that OxLint already covers (see [OxLint Integration](#oxlint-integration)) |
+| `ai` | `false` | Enforces a consistent standard across human and AI contributors (see [AI mode](#ai-mode)) |
+| `oxlint` | `false` | Disables ESLint rules that OxLint already covers (see [OxLint integration](#oxlint-integration)) |
 
-Flags are independent and combinable. `2^4 = 16` permutations are generated at build time.
+Flags are independent. Combine them however you need. `2^4 = 16` configs exist, all pre-built.
 
-> **Note:** TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint preset. There is no "recommended" fallback. This aligns with TypeScript's direction towards strict-by-default (TypeScript 6).
+> TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint preset. No "recommended" fallback. This matches TypeScript's own direction toward strict-by-default.
 
 ---
 
-## Usage Examples
+## Usage examples
 
-### Standard React Project
+### React project
 
 ```typescript
 import { getConfig } from "@effective/eslint-config"
@@ -71,7 +84,7 @@ import { getConfig } from "@effective/eslint-config"
 export default await getConfig({ react: true })
 ```
 
-### Full-Stack (React + Node)
+### Full-stack (React + Node)
 
 ```typescript
 import { getConfig } from "@effective/eslint-config"
@@ -79,9 +92,9 @@ import { getConfig } from "@effective/eslint-config"
 export default await getConfig({ react: true, node: true })
 ```
 
-### AI-Assisted Development
+### AI-assisted development
 
-For projects where most code is written by AI assistants (Cursor, Copilot, Claude Code):
+For teams where AI writes a significant share of the code:
 
 ```typescript
 import { getConfig } from "@effective/eslint-config"
@@ -89,7 +102,7 @@ import { getConfig } from "@effective/eslint-config"
 export default await getConfig({ react: true, ai: true })
 ```
 
-### With Customizations
+### With customizations
 
 ```typescript
 import {
@@ -98,7 +111,6 @@ import {
 
 const config = await getConfig({ react: true, ai: true })
 
-// Tweak individual rules after loading
 disableRule(config, "unicorn/no-null")
 setRuleSeverity(config, "no-console", "warn")
 configureRule(config, "complexity", [20])
@@ -109,29 +121,35 @@ export default config
 
 ---
 
-## Rule Manipulation API
+## Rule manipulation API
 
-Every function operates on the loaded config array in-place:
+Every function operates on the config array in-place:
 
 | Function | Description |
 |----------|-------------|
-| `setRuleSeverity(config, rule, severity)` | Change `"off"` / `"warn"` / `"error"` while preserving rule options |
-| `configureRule(config, rule, options)` | Replace rule options while preserving severity |
+| `setRuleSeverity(config, rule, severity)` | Change `"off"` / `"warn"` / `"error"` while preserving options |
+| `configureRule(config, rule, options)` | Replace options while preserving severity |
 | `disableRule(config, rule)` | Set to `"off"` across all config blocks |
-| `addRule(config, rule, severity, options?)` | Add a new rule to the base config block |
-| `disableAllRulesBut(config, rule)` | Debug helper — disable every rule except one |
+| `addRule(config, rule, severity, options?)` | Add a rule to the base config block |
+| `disableAllRulesBut(config, rule)` | Debug helper — disable everything except one rule |
 
-### Why Not Just Spread?
+### Why not just spread?
 
-ESLint flat configs are arrays of objects. A rule like `complexity` might appear in multiple blocks (base, AI, complexity). Manually finding and modifying it is error-prone. These helpers iterate all blocks and modify the rule consistently.
+ESLint flat configs are arrays of objects. A rule like `complexity` might appear in multiple blocks (base, AI, complexity). Finding and modifying it by hand is error-prone. These helpers walk all blocks and apply the change consistently.
 
 ---
 
-## AI Mode
+## AI mode
 
-The `ai` flag is based on a simple observation: **most code in 2025+ is written by AI assistants.** Rules that humans find tedious are trivial for AI to follow. The linter becomes the single most effective mechanism to enforce AI output quality — an AI can ignore documentation, but it cannot ignore a failing CI lint.
+The balance has shifted. In a growing number of teams, AI assistants already write more code than humans do. And that trend is accelerating. Cursor, Copilot, Claude Code, Windsurf — they produce functional code fast, but each with its own habits. Without guardrails, your codebase accumulates stylistic debt at machine speed: inconsistent naming, implicit types, magic numbers scattered everywhere, functions that grow unchecked.
 
-### What `ai: true` Enables
+The fix isn't more code review. Reviewers can't keep up with the volume, and style consistency is exactly the kind of thing humans stop noticing after the third file.
+
+The fix is a linter that's strict enough to enforce a single standard across every contributor, human or AI. Rules that humans find tedious — explicit return types, strict naming conventions, no magic numbers — are trivial for an AI to follow. The AI doesn't mind. It doesn't argue in PRs about whether `any` is acceptable "just this once." It just fixes the code and moves on.
+
+That's what `ai: true` is for. It turns your linter into the quality gate that scales with AI-generated output. An AI assistant can ignore your style guide. It can't ignore a failing lint.
+
+### What `ai: true` enables
 
 **Structural clarity:**
 `curly: "all"`, `no-else-return`, `no-nested-ternary`, `no-param-reassign`, `no-implicit-coercion`, `eqeqeq`, `object-shorthand`, `arrow-body-style`, `logical-assignment-operators`
@@ -151,7 +169,7 @@ The `ai` flag is based on a simple observation: **most code in 2025+ is written 
 **Async hygiene:**
 `no-await-in-loop`, `no-floating-promises`, `no-promise-executor-return`
 
-### Complexity Limits by Mode
+### Complexity limits
 
 | Rule | Default | `ai` |
 |------|---------|------|
@@ -162,24 +180,26 @@ The `ai` flag is based on a simple observation: **most code in 2025+ is written 
 | `max-lines` | 300 | 300 |
 | `cognitive-complexity` | 10 | 10 |
 
-Both modes use the same numeric limits. The difference is that AI mode adds many additional structural and naming rules on top (see above).
+Both modes use the same numeric limits. AI mode adds the structural and naming rules on top.
 
-### Automatic Relaxations
+### Automatic relaxations
 
-AI rules are automatically relaxed for files where they don't make sense:
+Strict rules don't belong everywhere. The config knows that:
 
-- **Test files** (`*.test.{ts,tsx}`) — no size limits, no magic numbers, no explicit return types
-- **E2E files** (`*.spec.ts`) — no size limits, no magic numbers
-- **Config files** (`*.config.*`) — no complexity limits, no magic numbers, no naming conventions
-- **Declarations** (`*.d.ts`) — most AI rules disabled
+- **Test files** (`*.test.{ts,tsx}`) drop size limits, magic number checks, and return type requirements
+- **E2E files** (`*.spec.ts`) drop size limits and magic numbers
+- **Config files** (`*.config.*`) drop complexity limits, magic numbers, and naming conventions
+- **Declarations** (`*.d.ts`) disable most AI rules entirely
+
+No manual overrides needed. The file pattern handles it.
 
 ---
 
-## OxLint Integration
+## OxLint integration
 
-[OxLint](https://oxc.rs) is a Rust-based linter that runs 50-100x faster than ESLint. It covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively.
+[OxLint](https://oxc.rs) is a Rust-based linter that runs 50-100x faster than ESLint. It already covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively.
 
-With `oxlint: true`, this config automatically disables all ESLint rules that OxLint already handles (via [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint)). What remains are rules that only ESLint can provide: type-aware TypeScript checks, SonarJS quality rules, cspell, Storybook, Testing Library, etc.
+With `oxlint: true`, this config disables every ESLint rule that OxLint handles (via [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint)). What remains are rules only ESLint can provide: type-aware TypeScript checks, SonarJS analysis, cspell, Storybook, Testing Library, and so on.
 
 ```typescript
 // eslint.config.ts
@@ -196,11 +216,11 @@ export default await getConfig({ react: true, ai: true, oxlint: true })
 }
 ```
 
-Run OxLint first for fast feedback on common issues, then ESLint for the deep analysis.
+OxLint runs first for fast feedback. ESLint follows for the deep analysis. Both enforce the same rules at the same severity.
 
 ### Generating `oxlintrc.json`
 
-The config also includes a generator that produces an `oxlintrc.json` from your ruleset. This ensures OxLint runs the **same rules at the same severity** as your ESLint config — no manual sync needed.
+The config includes a generator that produces an `oxlintrc.json` from your ESLint ruleset. Same rules, same severity, no manual sync.
 
 ```typescript
 import { generateOxlintConfig } from "@effective/eslint-config"
@@ -210,58 +230,54 @@ const oxlintrc = generateOxlintConfig({ react: true, ai: true })
 writeFileSync("oxlintrc.json", JSON.stringify(oxlintrc, null, 2))
 ```
 
-The generated config:
-- Only includes rules OxLint supports (via `eslint-plugin-oxlint`'s rule index)
-- Preserves severity and options from your ESLint config
-- Maps file-pattern overrides to OxLint's `overrides` format
-- Derives the plugin list automatically from rule prefixes (`@typescript-eslint/*` → `"typescript"`, `import/*` → `"import"`, etc.)
+The generated config only includes rules OxLint supports, preserves your severity and options, maps file-pattern overrides correctly, and derives the plugin list from rule prefixes automatically.
 
 ---
 
-## File Conventions
+## File conventions
 
-This config uses file patterns to apply the right rules automatically. These aren't arbitrary — each matches the default convention of its respective tool:
+The config applies different rules based on file patterns. Each pattern matches the default convention of its tool:
 
-| Pattern | Tool / Purpose | Why this convention |
-|---------|---------------|---------------------|
-| `*.test.{ts,tsx}`, `__tests__/**` | Vitest (unit/integration) | Vitest default discovery pattern |
-| `*.spec.ts` | Playwright (E2E) | Playwright default discovery pattern |
-| `*.stories.{ts,tsx}` | Storybook | Storybook default discovery pattern |
-| `*.config.*` | Tool configs | Convention for Vite, Next.js, Tailwind, etc. |
+| Pattern | Purpose | Convention source |
+|---------|---------|-------------------|
+| `*.test.{ts,tsx}`, `__tests__/**` | Unit/integration tests | Vitest default |
+| `*.spec.ts` | E2E tests | Playwright default |
+| `*.stories.{ts,tsx}` | Component stories | Storybook default |
+| `*.config.*` | Tool configs | Vite, Next.js, Tailwind convention |
 | `*.d.ts` | Type declarations | TypeScript convention |
-| `scripts/**` | Build/dev scripts | Relaxed rules for CLI tools |
+| `scripts/**` | Build/dev scripts | Common project convention |
 
-> **Tip:** Following these conventions means zero configuration — the linter automatically applies appropriate rules per file type.
+Follow these patterns and the linter applies the right rules per file type without any configuration.
 
 ---
 
-## File-Pattern Overrides
+## Config blocks
 
-Each generated config contains multiple named blocks. Rules only apply to matching files:
+Each generated config contains named blocks. Rules only apply to matching files:
 
-| Block Name | Files | Purpose |
-|------------|-------|---------|
-| `@effective/eslint/base` | `**/*.{ts,tsx}` | Core rules (ESLint recommended, best practices) |
+| Block | Files | Purpose |
+|-------|-------|---------|
+| `@effective/eslint/base` | `**/*.{ts,tsx}` | ESLint recommended + best practices |
 | `@effective/eslint/typescript` | `**/*.{ts,tsx}` | Type-checked TypeScript rules |
-| `@effective/eslint/react` | `**/*.{ts,tsx}` | React, Hooks, Compiler, JSX-A11y (only with `react: true`) |
-| `@effective/eslint/node` | `**/*.{ts,tsx}` | Node.js globals and rules (only with `node: true`) |
+| `@effective/eslint/react` | `**/*.{ts,tsx}` | React, Hooks, Compiler, JSX-A11y |
+| `@effective/eslint/node` | `**/*.{ts,tsx}` | Node.js globals and rules |
 | `@effective/eslint/tests` | `**/*.test.{ts,tsx}` | Vitest rules, relaxed complexity |
-| `@effective/eslint/tests-react` | `**/*.test.{ts,tsx}` | Testing Library rules (only with `react: true`) |
+| `@effective/eslint/tests-react` | `**/*.test.{ts,tsx}` | Testing Library rules |
 | `@effective/eslint/e2e` | `**/*.spec.ts` | Playwright rules |
-| `@effective/eslint/stories` | `**/*.stories.{ts,tsx}` | Storybook rules (only with `react: true`) |
+| `@effective/eslint/stories` | `**/*.stories.{ts,tsx}` | Storybook rules |
 | `@effective/eslint/config-files` | `**/*.config.*` | Relaxed rules for config files |
 | `@effective/eslint/declarations` | `**/*.d.ts` | Minimal rules for type declarations |
 | `@effective/eslint/scripts` | `**/scripts/**` | Console and process.exit allowed |
 | `@effective/eslint/json` | `**/*.json` | JSON syntax validation |
-| `@effective/eslint/jsonc` | `**/tsconfig.json`, etc. | JSONC with comments allowed |
+| `@effective/eslint/jsonc` | `**/tsconfig.json`, etc. | JSONC with comments |
 | `@effective/eslint/markdown` | `**/*.md` | Markdown code block validation |
-| `@effective/eslint/prettier` | all | Disables rules that conflict with Prettier |
+| `@effective/eslint/prettier` | all | Disables Prettier-conflicting rules |
 
 ---
 
-## Included Plugins
+## Included plugins
 
-### Always Active (14 plugins)
+### Always active (14 plugins)
 
 | Plugin | Purpose |
 |--------|---------|
@@ -297,9 +313,9 @@ Each generated config contains multiple named blocks. Rules only apply to matchi
 
 ---
 
-## Power User: Modular Imports
+## Modular imports
 
-For teams that need full control over composition, every building block is available individually:
+For teams that want full control, every building block is available individually:
 
 ```typescript
 import {
@@ -330,7 +346,7 @@ export default [
 ]
 ```
 
-You can also use `composeConfig()` — the same function the build system uses — to get the full composed config at runtime instead of loading a pre-generated file:
+Or use `composeConfig()` — the same function the build system uses — to get the full config at runtime:
 
 ```typescript
 import { composeConfig } from "@effective/eslint-config/modules"
@@ -342,34 +358,21 @@ export default composeConfig({ react: true, ai: true })
 
 ## Architecture
 
-### Pre-Generation with Deterministic Hashing
+### Why pre-generate?
 
-```
-                    Build Time                          Runtime
-                    ─────────                           ───────
-  ConfigOptions ──→ Bitmask (4 bits) ──→ SHA-1 hash    getConfig(opts) ──→ same hash
-                                              │                                │
-                                              ▼                                ▼
-                                     dist/configs/{hash}.js ◄──── dynamic import
-```
+1. **No startup cost.** The config file is a static array of objects. Nothing gets composed, resolved, or merged at runtime.
+2. **Deterministic.** The same hash always loads the same config. No plugin loading order surprises.
+3. **Snapshot-testable.** Generated configs are snapshotted. When a plugin update changes rule defaults, the diff shows exactly what moved.
+4. **Inspectable.** Open `dist/configs/{hash}.js` and read what's active. No guessing.
 
-Each combination of flags produces a deterministic 8-character hash. The same algorithm runs at build time (when `npm run generate` writes the files) and at runtime (when `getConfig()` loads them). This guarantees the correct file is always loaded without a lookup table.
-
-### Why Pre-Generate?
-
-1. **Performance** — No composition logic runs at startup. The config file is a static array of objects.
-2. **Predictability** — The exact same config is loaded every time. No plugin loading order surprises.
-3. **Snapshot testing** — Generated configs can be snapshotted to detect when plugin updates change rule values.
-4. **Debuggability** — You can inspect `dist/configs/{hash}.js` to see exactly what rules are active.
-
-### Project Structure
+### Project structure
 
 ```
 src/
   index.ts              Public API (getConfig, rule helpers, hash utils)
   modules.ts            Modular exports for power users
   loader.ts             Dynamic config loader
-  hash.ts               Deterministic bitmask → SHA-1 hash
+  hash.ts               Deterministic bitmask -> SHA-1 hash
   types.ts              Shared TypeScript types
 
   configs/              Individual config building blocks
@@ -418,28 +421,21 @@ src/
 ## Contributing
 
 ```bash
-# Install dependencies
 npm install
-
-# Run tests
 npm test
-
-# Generate all 16 config permutations
-npm run generate
-
-# Build for distribution
-npm run build
+npm run generate   # Build all 16 config permutations
+npm run build      # Build for distribution
 ```
 
-### Updating Snapshots
+### Updating snapshots
 
-When intentionally changing rules or updating plugins:
+When you intentionally change rules or update plugins:
 
 ```bash
 npx vitest run --update
 ```
 
-Review the snapshot diff carefully — it shows exactly which rules changed.
+Review the snapshot diff carefully. It shows exactly which rules changed.
 
 ---
 
