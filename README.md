@@ -13,7 +13,7 @@ This package takes a different approach: **all permutations are pre-generated at
 ### Key Advantages
 
 - **Zero runtime cost** — Configs are pre-built JS files, not composed at startup. Your editor gets lint results instantly.
-- **Permutation-based** — 5 boolean flags produce 32 purpose-built configs. No unused plugins, no dead rules.
+- **Permutation-based** — 4 boolean flags produce 16 purpose-built configs. No unused plugins, no dead rules.
 - **File-pattern aware** — Tests, stories, e2e specs, config files, and type declarations each get appropriate rules automatically. No manual overrides needed.
 - **AI-first mode** — A dedicated `ai` flag enables strict clean-code rules that AI assistants can trivially follow, producing measurably better code.
 - **OxLint compatible** — A single flag disables all rules OxLint already covers, letting you run `oxlint && eslint` for maximum performance.
@@ -52,11 +52,12 @@ That's it. This gives you a complete config with TypeScript type-checking, React
 |------|---------|-----------------|
 | `react` | `false` | React 19+ with Server Components, Hooks, Compiler, JSX-A11y, Storybook, Testing Library |
 | `node` | `false` | Node.js globals, `eslint-plugin-n` rules, promise-based API preferences |
-| `strict` | `false` | `strictTypeChecked` (instead of `recommended`), tighter complexity limits (10/3/2 instead of 15/4/3) |
 | `ai` | `false` | Strict clean-code rules for AI-generated code (see [AI Mode](#ai-mode) below) |
 | `oxlint` | `false` | Disables all ESLint rules that OxLint already covers (see [OxLint Integration](#oxlint-integration)) |
 
-Flags are independent and combinable. `2^5 = 32` permutations are generated at build time.
+Flags are independent and combinable. `2^4 = 16` permutations are generated at build time.
+
+> **Note:** TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint preset. There is no "recommended" fallback. This aligns with TypeScript's direction towards strict-by-default (TypeScript 6).
 
 ---
 
@@ -70,12 +71,12 @@ import { getConfig } from "@effective/eslint-config"
 export default await getConfig({ react: true })
 ```
 
-### Full-Stack (React + Node) with Strict TypeScript
+### Full-Stack (React + Node)
 
 ```typescript
 import { getConfig } from "@effective/eslint-config"
 
-export default await getConfig({ react: true, node: true, strict: true })
+export default await getConfig({ react: true, node: true })
 ```
 
 ### AI-Assisted Development
@@ -86,14 +87,6 @@ For projects where most code is written by AI assistants (Cursor, Copilot, Claud
 import { getConfig } from "@effective/eslint-config"
 
 export default await getConfig({ react: true, ai: true })
-```
-
-### Maximum Strictness (AI + Strict)
-
-```typescript
-import { getConfig } from "@effective/eslint-config"
-
-export default await getConfig({ react: true, ai: true, strict: true })
 ```
 
 ### With Customizations
@@ -130,7 +123,7 @@ Every function operates on the loaded config array in-place:
 
 ### Why Not Just Spread?
 
-ESLint flat configs are arrays of objects. A rule like `complexity` might appear in multiple blocks (base, AI, strict). Manually finding and modifying it is error-prone. These helpers iterate all blocks and modify the rule consistently.
+ESLint flat configs are arrays of objects. A rule like `complexity` might appear in multiple blocks (base, AI, complexity). Manually finding and modifying it is error-prone. These helpers iterate all blocks and modify the rule consistently.
 
 ---
 
@@ -160,14 +153,16 @@ The `ai` flag is based on a simple observation: **most code in 2025+ is written 
 
 ### Complexity Limits by Mode
 
-| Rule | Default | `strict` | `ai` | `ai + strict` |
-|------|---------|----------|------|---------------|
-| `complexity` | 15 | 10 | 10 | 8 |
-| `max-depth` | 4 | 3 | 3 | 2 |
-| `max-params` | 4 | 3 | 3 | 2 |
-| `max-lines-per-function` | 80 | 50 | 50 | 35 |
-| `max-lines` | 500 | 300 | 300 | 200 |
-| `cognitive-complexity` | 15 | 10 | 10 | 8 |
+| Rule | Default | `ai` |
+|------|---------|------|
+| `complexity` | 10 | 10 |
+| `max-depth` | 3 | 3 |
+| `max-params` | 3 | 3 |
+| `max-lines-per-function` | 50 | 50 |
+| `max-lines` | 300 | 300 |
+| `cognitive-complexity` | 10 | 10 |
+
+Both modes use the same numeric limits. The difference is that AI mode adds many additional structural and naming rules on top (see above).
 
 ### Automatic Relaxations
 
@@ -276,19 +271,19 @@ import {
   base, typescript, imports, unicorn, regexp, jsdoc, sonarjs,
   react, node, ai, json, markdown, prettier,
   tests, e2e, stories, configFiles, declarations, scripts,
-  standardComplexity, strictComplexity,
+  standardComplexity,
   oxlint,
 } from "@effective/eslint-config/modules"
 
 export default [
   ...base(),
-  ...typescript({ strict: true }),
+  ...typescript(),
   ...imports(),
   ...unicorn(),
   ...regexp(),
   ...sonarjs(),
   ...react(),
-  ...ai({ strict: true }),
+  ...ai(),
   ...tests({ react: true }),
   ...e2e(),
   ...stories(),
@@ -317,7 +312,7 @@ export default composeConfig({ react: true, ai: true })
 ```
                     Build Time                          Runtime
                     ─────────                           ───────
-  ConfigOptions ──→ Bitmask (5 bits) ──→ SHA-1 hash    getConfig(opts) ──→ same hash
+  ConfigOptions ──→ Bitmask (4 bits) ──→ SHA-1 hash    getConfig(opts) ──→ same hash
                                               │                                │
                                               ▼                                ▼
                                      dist/configs/{hash}.js ◄──── dynamic import
@@ -344,7 +339,7 @@ src/
 
   configs/              Individual config building blocks
     base.ts             ESLint recommended + best practices
-    typescript.ts       typescript-eslint (recommended or strict)
+    typescript.ts       typescript-eslint (strictTypeChecked)
     ai.ts               AI mode rules + per-file relaxations
     react.ts            React 19+, Hooks, Compiler, JSX-A11y
     node.ts             Node.js rules and globals
@@ -369,15 +364,15 @@ src/
 
   presets/              Complexity level presets
     standard.ts         Default limits
-    strict.ts           Strict limits
 
   api/
     rule-helpers.ts     Runtime rule manipulation functions
 
   build/
+    config-builder.ts   Validated config builder (addRule/overrideRule with preset checks)
     compose.ts          Assembles full config from options
     serialize.ts        Serializes config to JS module
-    generate.ts         Generates all 32 permutations
+    generate.ts         Generates all 16 permutations
 
   oxlint/
     integration.ts      eslint-plugin-oxlint rule disabling
@@ -394,7 +389,7 @@ npm install
 # Run tests
 npm test
 
-# Generate all 32 config permutations
+# Generate all 16 config permutations
 npm run generate
 
 # Build for distribution
