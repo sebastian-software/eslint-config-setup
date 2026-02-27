@@ -1,5 +1,6 @@
 import prettierConfig from "eslint-config-prettier"
 
+import { createConfig } from "../build/config-builder.ts"
 import type { FlatConfigArray } from "../types.ts"
 
 /**
@@ -10,10 +11,8 @@ import type { FlatConfigArray } from "../types.ts"
  * @see https://github.com/prettier/eslint-config-prettier#readme
  */
 export function prettierCompatConfig(): FlatConfigArray {
-  return [
-    {
-      ...prettierConfig,
-      name: "@effective/eslint/prettier",
-    },
-  ]
+  return createConfig({
+    name: "@effective/eslint/prettier",
+    presets: [prettierConfig],
+  }).build()
 }

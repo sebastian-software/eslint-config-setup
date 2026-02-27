@@ -1,5 +1,6 @@
 import regexpPlugin from "eslint-plugin-regexp"
 
+import { createConfig } from "../build/config-builder.ts"
 import type { FlatConfigArray } from "../types.ts"
 
 /**
@@ -12,10 +13,8 @@ import type { FlatConfigArray } from "../types.ts"
  * @see https://ota-meshi.github.io/eslint-plugin-regexp/rules/
  */
 export function regexpConfig(): FlatConfigArray {
-  return [
-    {
-      ...regexpPlugin.configs["flat/recommended"],
-      name: "@effective/eslint/regexp",
-    },
-  ]
+  return createConfig({
+    name: "@effective/eslint/regexp",
+    presets: [regexpPlugin.configs["flat/recommended"]],
+  }).build()
 }

@@ -1,5 +1,6 @@
 import jsdocPlugin from "eslint-plugin-jsdoc"
 
+import { createConfig } from "../build/config-builder.ts"
 import type { FlatConfigArray } from "../types.ts"
 
 /**
@@ -15,42 +16,29 @@ import type { FlatConfigArray } from "../types.ts"
  * @see https://github.com/gajus/eslint-plugin-jsdoc#rules
  */
 export function jsdocConfig(): FlatConfigArray {
-  return [
-    {
-      ...jsdocPlugin.configs["flat/recommended-typescript-error"],
-      name: "@effective/eslint/jsdoc",
-      rules: {
-        // Include all preset rules
-        ...jsdocPlugin.configs["flat/recommended-typescript-error"].rules,
+  return createConfig({
+    name: "@effective/eslint/jsdoc",
+    presets: [jsdocPlugin.configs["flat/recommended-typescript-error"]],
+  })
+    // OFF: Don't require JSDoc on everything — only validate what exists
+    // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md
+    .overrideRule("jsdoc/require-jsdoc", "off")
 
-        // OFF: Don't require JSDoc on everything — only validate what exists
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md
-        "jsdoc/require-jsdoc": "off",
+    // Warn if @param descriptions are missing — helpful but not blocking
+    // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-description.md
+    .overrideRule("jsdoc/require-param-description", "warn")
 
-        // Warn if @param descriptions are missing — helpful but not blocking
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-description.md
-        "jsdoc/require-param-description": "warn",
+    // Warn if @returns description is missing — helpful but not blocking
+    // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns-description.md
+    .overrideRule("jsdoc/require-returns-description", "warn")
 
-        // Warn if @returns description is missing — helpful but not blocking
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns-description.md
-        "jsdoc/require-returns-description": "warn",
+    // Override preset's typed option — use plain error without options
+    // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-tag-names.md
+    .overrideRule("jsdoc/check-tag-names", "error")
 
-        // Validate JSDoc tag names — catches typos like @retuns or @parma
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-tag-names.md
-        "jsdoc/check-tag-names": "error",
+    // Enable detection of references to undefined types in JSDoc (off in preset)
+    // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-undefined-types.md
+    .overrideRule("jsdoc/no-undefined-types", "error")
 
-        // Validate JSDoc types syntax — catches malformed type expressions
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-types.md
-        "jsdoc/check-types": "error",
-
-        // Detect references to undefined types in JSDoc
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-undefined-types.md
-        "jsdoc/no-undefined-types": "error",
-
-        // Validate JSDoc type syntax is well-formed
-        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/valid-types.md
-        "jsdoc/valid-types": "error",
-      },
-    },
-  ]
+    .build()
 }

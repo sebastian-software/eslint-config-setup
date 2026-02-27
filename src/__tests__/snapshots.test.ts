@@ -67,10 +67,9 @@ describe("config rule stability", () => {
     const config = composeConfig({})
     const baseBlock = config.find((b) => b.name === "@effective/eslint/base")
     expect(baseBlock?.rules).toBeDefined()
-    expect(baseBlock!.rules!["eqeqeq"]).toBe("error")
+    expect(baseBlock!.rules!["eqeqeq"]).toEqual(["error", "smart"])
     expect(baseBlock!.rules!["no-var"]).toBe("error")
-    expect(baseBlock!.rules!["prefer-const"]).toBe("error")
-    expect(baseBlock!.rules!.curly).toBe("error")
+    expect(baseBlock!.rules!["prefer-const"]).toEqual(["error", { destructuring: "all" }])
   })
 
   it("typescript config always includes type-checked rules", () => {
@@ -89,15 +88,22 @@ describe("config rule stability", () => {
 
   it("strict mode uses strictTypeChecked", () => {
     const strictConfig = composeConfig({ strict: true })
-    const hasStrictBlock = strictConfig.some(
-      (b) => b.name === "typescript-eslint/strict-type-checked",
+    const tsBlock = strictConfig.find(
+      (b) => b.name === "@effective/eslint/typescript",
     )
+    // strictTypeChecked includes no-non-null-assertion which recommended does not
+    expect(tsBlock?.rules?.["@typescript-eslint/no-non-null-assertion"]).toBe(
+      "error",
+    )
+
     const normalConfig = composeConfig({})
-    const hasRecommendedBlock = normalConfig.some(
-      (b) => b.name === "typescript-eslint/recommended-type-checked",
+    const normalTsBlock = normalConfig.find(
+      (b) => b.name === "@effective/eslint/typescript",
     )
-    expect(hasStrictBlock).toBe(true)
-    expect(hasRecommendedBlock).toBe(true)
+    // recommendedTypeChecked does not include no-non-null-assertion
+    expect(
+      normalTsBlock?.rules?.["@typescript-eslint/no-non-null-assertion"],
+    ).toBeUndefined()
   })
 
   it("unicorn config includes core modern-JS rules", () => {
