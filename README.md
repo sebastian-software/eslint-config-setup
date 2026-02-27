@@ -26,6 +26,8 @@ addRule(config, "no-console", "off", { scope: "scripts" })
 export default config
 ```
 
+Want it even faster? Enable [OxLint integration](#oxlint-integration) for 50-100x faster linting on the rules OxLint supports — with zero config and no quality loss.
+
 ---
 
 ## The problem
@@ -131,6 +133,28 @@ addRule(config, "no-alert", "error")
 
 export default config
 ```
+
+### With OxLint
+
+For 50-100x faster linting, run [OxLint](https://oxc.rs) alongside ESLint. One flag is all it takes — the config automatically disables every ESLint rule that OxLint already covers:
+
+```typescript
+// eslint.config.ts
+import { getConfig } from "@effective/eslint-config"
+
+export default await getConfig({ react: true, oxlint: true })
+```
+
+```jsonc
+// package.json
+{
+  "scripts": {
+    "lint": "oxlint && eslint"
+  }
+}
+```
+
+OxLint runs first for instant feedback on the rules it supports. ESLint follows for everything else — type-aware checks, SonarJS, import cycles, and more. Same rules, same severity, no gaps.
 
 ---
 
@@ -240,9 +264,21 @@ No manual overrides needed. The file pattern handles it.
 
 ## OxLint integration
 
-[OxLint](https://oxc.rs) is a Rust-based linter that runs 50-100x faster than ESLint. It already covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively.
+Most ESLint configs ignore OxLint entirely. This one has first-class support built in — a single flag gives you 50-100x faster linting with no manual rule management.
 
-With `oxlint: true`, this config disables every ESLint rule that OxLint handles (via [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint)). What remains are rules only ESLint can provide: type-aware TypeScript checks, SonarJS analysis, cspell, Storybook, Testing Library, and so on.
+[OxLint](https://oxc.rs) is a Rust-based linter that already covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively. With `oxlint: true`, this config automatically disables every ESLint rule that OxLint handles (via [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint)). No manual config, no rule conflicts, no guesswork about which linter covers what.
+
+Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS analysis, cspell, Storybook, Testing Library — keeps running through ESLint. You get the full rule set at the same severity, just split across two linters for maximum speed.
+
+### Setup
+
+Install `oxlint` as a dev dependency alongside your existing setup:
+
+```bash
+npm install -D oxlint
+```
+
+Enable it in your ESLint config:
 
 ```typescript
 // eslint.config.ts
@@ -251,15 +287,16 @@ import { getConfig } from "@effective/eslint-config"
 export default await getConfig({ react: true, ai: true, oxlint: true })
 ```
 
-```json
+Run both linters in sequence — OxLint first for instant feedback, ESLint second for the deep analysis:
+
+```jsonc
+// package.json
 {
   "scripts": {
     "lint": "oxlint && eslint"
   }
 }
 ```
-
-OxLint runs first for fast feedback. ESLint follows for the deep analysis. Both enforce the same rules at the same severity.
 
 ### Generating `oxlintrc.json`
 
