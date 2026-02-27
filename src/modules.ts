@@ -7,7 +7,7 @@
  *
  * export default [
  *   ...configs.base(),
- *   ...configs.typescript({ strict: true }),
+ *   ...configs.typescript(),
  *   ...configs.imports(),
  *   ...configs.unicorn(),
  *   ...overrides.tests({ react: true }),
@@ -41,9 +41,8 @@ export { configFilesOverride as configFiles } from "./overrides/config-files.ts"
 export { declarationsOverride as declarations } from "./overrides/declarations.ts"
 export { scriptsOverride as scripts } from "./overrides/scripts.ts"
 
-// Complexity presets
+// Complexity preset
 export { standardComplexity } from "./presets/standard.ts"
-export { strictComplexity } from "./presets/strict.ts"
 
 // OxLint integration
 export { oxlintIntegration as oxlint } from "./oxlint/integration.ts"

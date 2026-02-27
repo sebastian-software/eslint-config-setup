@@ -1,15 +1,14 @@
 import tseslint from "typescript-eslint"
 
 import { createConfig } from "../build/config-builder.ts"
-import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types.ts"
+import type { FlatConfig, FlatConfigArray } from "../types.ts"
 
 /**
- * TypeScript config — extends typescript-eslint presets with project-wide type checking.
+ * TypeScript config — extends typescript-eslint strict presets with project-wide type checking.
  *
- * Presets used (depending on strict flag):
- * - strict:  `tseslint.configs.strictTypeChecked` — all recommended + strict rules with type info
- * - default: `tseslint.configs.recommendedTypeChecked` — recommended rules with type info
- * - always:  `tseslint.configs.stylisticTypeChecked` — consistent code style with type info
+ * Presets used:
+ * - `tseslint.configs.strictTypeChecked` — all recommended + strict rules with type info
+ * - `tseslint.configs.stylisticTypeChecked` — consistent code style with type info
  *
  * The presets already handle many core ESLint rules by disabling them and enabling
  * TS-aware equivalents (no-implied-eval, dot-notation, no-throw-literal, etc.).
@@ -17,11 +16,8 @@ import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types.ts"
  * @see https://typescript-eslint.io/getting-started/
  * @see https://typescript-eslint.io/rules/
  */
-export function typescriptConfig(opts: ConfigOptions): FlatConfigArray {
-  const typeChecked = opts.strict
-    ? tseslint.configs.strictTypeChecked
-    : tseslint.configs.recommendedTypeChecked
-
+export function typescriptConfig(): FlatConfigArray {
+  const typeChecked = tseslint.configs.strictTypeChecked
   const stylistic = tseslint.configs.stylisticTypeChecked
 
   // Blocks 0+1: parser setup + ESLint-core replacements (structural, not validated)
@@ -68,35 +64,16 @@ export function typescriptConfig(opts: ConfigOptions): FlatConfigArray {
     { default: "array-simple" },
   ])
 
-  // ── Rules that differ between strict and recommended presets ───
-  // strictTypeChecked includes return-await and no-deprecated;
-  // recommendedTypeChecked does not.
+  // Override return-await from "error-handling-correctness-only" to "in-try-catch"
+  // https://typescript-eslint.io/rules/return-await
+  builder.overrideRule("@typescript-eslint/return-await", [
+    "error",
+    "in-try-catch",
+  ])
 
-  if (opts.strict) {
-    // Override return-await from "error-handling-correctness-only" to "in-try-catch"
-    // https://typescript-eslint.io/rules/return-await
-    builder.overrideRule("@typescript-eslint/return-await", [
-      "error",
-      "in-try-catch",
-    ])
-
-    // Downgrade from error to warn — stay current but don't block
-    // https://typescript-eslint.io/rules/no-deprecated
-    builder.overrideRule("@typescript-eslint/no-deprecated", "warn")
-  } else {
-    // Require `return await` in try/catch — correct error stack traces
-    // https://typescript-eslint.io/rules/return-await
-    builder.addRule("no-return-await", "off")
-    builder.addRule("@typescript-eslint/return-await", [
-      "error",
-      "in-try-catch",
-    ])
-
-    // Flag usage of deprecated APIs — stay current with library updates
-    // Uses type information to detect @deprecated annotations.
-    // https://typescript-eslint.io/rules/no-deprecated
-    builder.addRule("@typescript-eslint/no-deprecated", "warn")
-  }
+  // Downgrade from error to warn — stay current but don't block
+  // https://typescript-eslint.io/rules/no-deprecated
+  builder.overrideRule("@typescript-eslint/no-deprecated", "warn")
 
   // ── Beyond presets: import/export hygiene ──────────────────
 

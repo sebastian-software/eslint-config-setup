@@ -32,23 +32,13 @@ const SNAPSHOT_PERMUTATIONS: Array<{ label: string; opts: ConfigOptions }> = [
   { label: "base (no flags)", opts: {} },
   { label: "react only", opts: { react: true } },
   { label: "node only", opts: { node: true } },
-  { label: "strict only", opts: { strict: true } },
   { label: "ai only", opts: { ai: true } },
   { label: "react + node", opts: { react: true, node: true } },
-  { label: "react + strict", opts: { react: true, strict: true } },
   { label: "react + ai", opts: { react: true, ai: true } },
-  { label: "ai + strict", opts: { ai: true, strict: true } },
-  {
-    label: "react + node + strict + ai",
-    opts: { react: true, node: true, strict: true, ai: true },
-  },
-  {
-    label: "react + oxlint",
-    opts: { react: true, oxlint: true },
-  },
+  { label: "react + oxlint", opts: { react: true, oxlint: true } },
   {
     label: "all flags",
-    opts: { react: true, node: true, strict: true, ai: true, oxlint: true },
+    opts: { react: true, node: true, ai: true, oxlint: true },
   },
 ]
 
@@ -86,24 +76,15 @@ describe("config rule stability", () => {
     ).toBeDefined()
   })
 
-  it("strict mode uses strictTypeChecked", () => {
-    const strictConfig = composeConfig({ strict: true })
-    const tsBlock = strictConfig.find(
+  it("always uses strictTypeChecked rules", () => {
+    const config = composeConfig({})
+    const tsBlock = config.find(
       (b) => b.name === "@effective/eslint/typescript",
     )
-    // strictTypeChecked includes no-non-null-assertion which recommended does not
+    // strictTypeChecked includes no-non-null-assertion (not in recommended)
     expect(tsBlock?.rules?.["@typescript-eslint/no-non-null-assertion"]).toBe(
       "error",
     )
-
-    const normalConfig = composeConfig({})
-    const normalTsBlock = normalConfig.find(
-      (b) => b.name === "@effective/eslint/typescript",
-    )
-    // recommendedTypeChecked does not include no-non-null-assertion
-    expect(
-      normalTsBlock?.rules?.["@typescript-eslint/no-non-null-assertion"],
-    ).toBeUndefined()
   })
 
   it("unicorn config includes core modern-JS rules", () => {
@@ -202,7 +183,6 @@ describe("config block counts per permutation", () => {
     const all = composeConfig({
       react: true,
       node: true,
-      strict: true,
       ai: true,
       oxlint: true,
     })

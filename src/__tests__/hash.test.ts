@@ -18,7 +18,6 @@ describe("optionsToBitmask", () => {
       optionsToBitmask({
         react: false,
         node: false,
-        strict: false,
         ai: false,
         oxlint: false,
       }),
@@ -33,16 +32,12 @@ describe("optionsToBitmask", () => {
     expect(optionsToBitmask({ node: true })).toBe(2)
   })
 
-  it("maps strict to bit 2", () => {
-    expect(optionsToBitmask({ strict: true })).toBe(4)
+  it("maps ai to bit 2", () => {
+    expect(optionsToBitmask({ ai: true })).toBe(4)
   })
 
-  it("maps ai to bit 3", () => {
-    expect(optionsToBitmask({ ai: true })).toBe(8)
-  })
-
-  it("maps oxlint to bit 4", () => {
-    expect(optionsToBitmask({ oxlint: true })).toBe(16)
+  it("maps oxlint to bit 3", () => {
+    expect(optionsToBitmask({ oxlint: true })).toBe(8)
   })
 
   it("combines all flags correctly", () => {
@@ -50,11 +45,10 @@ describe("optionsToBitmask", () => {
       optionsToBitmask({
         react: true,
         node: true,
-        strict: true,
         ai: true,
         oxlint: true,
       }),
-    ).toBe(31)
+    ).toBe(15)
   })
 })
 
@@ -84,16 +78,16 @@ describe("optionsToFilename", () => {
   })
 
   it("is deterministic", () => {
-    const a = optionsToFilename({ react: true, strict: true })
-    const b = optionsToFilename({ react: true, strict: true })
+    const a = optionsToFilename({ react: true, ai: true })
+    const b = optionsToFilename({ react: true, ai: true })
     expect(a).toBe(b)
   })
 })
 
 describe("allPermutations", () => {
-  it("yields exactly 32 permutations", () => {
+  it("yields exactly 16 permutations", () => {
     const perms = [...allPermutations()]
-    expect(perms).toHaveLength(32)
+    expect(perms).toHaveLength(16)
   })
 
   it("first permutation is all-false", () => {
@@ -101,7 +95,6 @@ describe("allPermutations", () => {
     expect(first).toEqual({
       react: false,
       node: false,
-      strict: false,
       ai: false,
       oxlint: false,
     })
@@ -109,10 +102,9 @@ describe("allPermutations", () => {
 
   it("last permutation is all-true", () => {
     const perms = [...allPermutations()]
-    expect(perms[31]).toEqual({
+    expect(perms[15]).toEqual({
       react: true,
       node: true,
-      strict: true,
       ai: true,
       oxlint: true,
     })

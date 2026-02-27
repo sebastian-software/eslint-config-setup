@@ -1,4 +1,4 @@
-import type { ConfigOptions, FlatConfigArray } from "../types.ts"
+import type { FlatConfigArray } from "../types.ts"
 
 /**
  * AI mode rules — strict clean-code rules that are trivial for AI assistants
@@ -13,7 +13,7 @@ import type { ConfigOptions, FlatConfigArray } from "../types.ts"
  *
  * @see ADR-0003: docs/adr/0003-ai-mode-as-dedicated-flag.md
  */
-export function aiConfig(opts: ConfigOptions): FlatConfigArray {
+export function aiConfig(): FlatConfigArray {
   const configs: FlatConfigArray = [
     {
       name: "@effective/eslint/ai-structural",
@@ -76,9 +76,9 @@ export function aiConfig(opts: ConfigOptions): FlatConfigArray {
         // https://eslint.org/docs/latest/rules/prefer-template
         "prefer-template": "error",
 
-        // Require shorthand properties in objects — concise
+        // Require shorthand properties in objects — concise, skip quoted keys
         // https://eslint.org/docs/latest/rules/object-shorthand
-        "object-shorthand": ["error", "always"],
+        "object-shorthand": ["error", "always", { avoidQuotes: true }],
 
         // Prefer concise arrow body: `() => expr` over `() => { return expr }`
         // https://eslint.org/docs/latest/rules/arrow-body-style
@@ -193,6 +193,18 @@ export function aiConfig(opts: ConfigOptions): FlatConfigArray {
             format: ["StrictPascalCase"],
           },
           {
+            // No "I" prefix on interfaces — use descriptive names (XO convention)
+            selector: "interface",
+            format: ["StrictPascalCase"],
+            custom: { regex: "^I[A-Z]", match: false },
+          },
+          {
+            // Type parameters: single uppercase letter (T) or PascalCase (TResult)
+            selector: "typeParameter",
+            format: ["PascalCase"],
+            custom: { regex: "^(T([A-Z][a-zA-Z]*)?|[A-Z])$", match: true },
+          },
+          {
             selector: "variable",
             types: ["boolean"],
             format: ["StrictPascalCase"],
@@ -255,6 +267,68 @@ export function aiConfig(opts: ConfigOptions): FlatConfigArray {
         // Prefer `type` over `interface` — consistent, supports unions/intersections
         // https://typescript-eslint.io/rules/consistent-type-definitions
         "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+
+        // Enforce consistent member ordering in classes and interfaces
+        // Static → fields by visibility → constructors → methods by visibility (XO convention)
+        // https://typescript-eslint.io/rules/member-ordering
+        "@typescript-eslint/member-ordering": [
+          "warn",
+          {
+            default: [
+              // Index signature
+              "signature",
+              "call-signature",
+
+              // Static
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              "#private-static-field",
+              "static-field",
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+              "#private-static-method",
+              "static-method",
+
+              // Fields
+              "public-decorated-field",
+              "protected-decorated-field",
+              "private-decorated-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "private-instance-field",
+              "#private-instance-field",
+              "public-abstract-field",
+              "protected-abstract-field",
+              "field",
+
+              // Constructors
+              "public-constructor",
+              "protected-constructor",
+              "private-constructor",
+              "constructor",
+
+              // Getters/Setters
+              ["public-get", "public-set"],
+              ["protected-get", "protected-set"],
+              ["private-get", "private-set"],
+              ["#private-get", "#private-set"],
+
+              // Methods
+              "public-decorated-method",
+              "protected-decorated-method",
+              "private-decorated-method",
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method",
+              "#private-instance-method",
+              "public-abstract-method",
+              "protected-abstract-method",
+              "method",
+            ],
+          },
+        ],
       },
     },
     {
@@ -343,37 +417,35 @@ export function aiConfig(opts: ConfigOptions): FlatConfigArray {
   ]
 
   // ── G. Tightened complexity limits for AI mode ────────────────────
-  // AI+strict gets the tightest limits (small, focused functions)
-  const isAlsoStrict = opts.strict
   configs.push({
     name: "@effective/eslint/ai-complexity",
     rules: {
       // Cyclomatic complexity limit — max branches per function
       // https://eslint.org/docs/latest/rules/complexity
-      complexity: ["error", isAlsoStrict ? 8 : 10],
+      complexity: ["error", 10],
 
       // Max nesting depth — deep nesting signals need for extraction
       // https://eslint.org/docs/latest/rules/max-depth
-      "max-depth": ["error", isAlsoStrict ? 2 : 3],
+      "max-depth": ["error", 3],
 
       // Max nested callbacks — prevents callback hell
       // https://eslint.org/docs/latest/rules/max-nested-callbacks
-      "max-nested-callbacks": ["error", isAlsoStrict ? 1 : 2],
+      "max-nested-callbacks": ["error", 2],
 
       // Max function parameters — many params suggest a config object
       // https://eslint.org/docs/latest/rules/max-params
-      "max-params": ["error", isAlsoStrict ? 2 : 3],
+      "max-params": ["error", 3],
 
       // Max statements per function — keeps functions focused
       // https://eslint.org/docs/latest/rules/max-statements
-      "max-statements": ["error", isAlsoStrict ? 10 : 15],
+      "max-statements": ["error", 15],
 
       // Max lines per function — encourages extraction of helpers
       // https://eslint.org/docs/latest/rules/max-lines-per-function
       "max-lines-per-function": [
         "error",
         {
-          max: isAlsoStrict ? 35 : 50,
+          max: 50,
           skipBlankLines: true,
           skipComments: true,
         },
@@ -384,7 +456,7 @@ export function aiConfig(opts: ConfigOptions): FlatConfigArray {
       "max-lines": [
         "error",
         {
-          max: isAlsoStrict ? 200 : 300,
+          max: 300,
           skipBlankLines: true,
           skipComments: true,
         },
@@ -392,7 +464,23 @@ export function aiConfig(opts: ConfigOptions): FlatConfigArray {
 
       // Cognitive complexity — measures how hard a function is to understand
       // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
-      "sonarjs/cognitive-complexity": ["error", isAlsoStrict ? 8 : 10],
+      "sonarjs/cognitive-complexity": ["error", 10],
+    },
+  })
+
+  // ── AI mode: stricter test structure ─────────────────────────────
+  // AI-generated tests should follow strict organizational patterns
+  configs.push({
+    name: "@effective/eslint/ai-tests-strict",
+    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
+    rules: {
+      // Every test must be inside a describe block — organized test suites
+      // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-top-level-describe.md
+      "vitest/require-top-level-describe": "error",
+
+      // Hooks (beforeEach, afterEach) must be at the top of describe — predictable setup
+      // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-hooks-on-top.md
+      "vitest/prefer-hooks-on-top": "error",
     },
   })
 

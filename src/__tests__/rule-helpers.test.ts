@@ -262,16 +262,16 @@ describe("rule helpers on composed configs", () => {
   it("can disable a rule from a real base config", () => {
     const config = composeConfig({})
     const baseBlock = config.find((b) => b.name === "@effective/eslint/base")
-    expect(baseBlock?.rules?.["eqeqeq"]).toBe("error")
+    expect(baseBlock?.rules?.["eqeqeq"]).toEqual(["error", "smart"])
 
     disableRule(config, "eqeqeq")
     expect(baseBlock?.rules?.["eqeqeq"]).toBe("off")
   })
 
-  it("can change complexity severity on a real strict config", () => {
-    const config = composeConfig({ strict: true })
+  it("can change complexity severity on a real config", () => {
+    const config = composeConfig({})
     const complexityBlock = config.find(
-      (b) => b.name === "@effective/eslint/complexity-strict",
+      (b) => b.name === "@effective/eslint/complexity",
     )
     expect(complexityBlock?.rules?.complexity).toEqual(["error", 10])
 

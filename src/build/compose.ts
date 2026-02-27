@@ -20,7 +20,6 @@ import { scriptsOverride } from "../overrides/scripts.ts"
 import { storiesOverride } from "../overrides/stories.ts"
 import { testsOverride } from "../overrides/tests.ts"
 import { standardComplexity } from "../presets/standard.ts"
-import { strictComplexity } from "../presets/strict.ts"
 import { oxlintIntegration } from "../oxlint/integration.ts"
 import type { ConfigOptions, FlatConfigArray } from "../types.ts"
 
@@ -34,8 +33,8 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 1. Base rules (always)
   config.push(...baseConfig())
 
-  // 2. TypeScript (always, strict depends on flag)
-  config.push(...typescriptConfig(opts))
+  // 2. TypeScript (always, uses strictTypeChecked)
+  config.push(...typescriptConfig())
 
   // 3. Imports (always)
   config.push(...importsConfig())
@@ -58,10 +57,8 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 9. Security (always)
   config.push(...securityConfig())
 
-  // 10. Complexity preset (standard or strict, before AI which may override)
-  if (opts.strict && !opts.ai) {
-    config.push(...strictComplexity())
-  } else if (!opts.ai) {
+  // 10. Complexity preset (before AI which may override)
+  if (!opts.ai) {
     config.push(...standardComplexity())
   }
 
@@ -77,7 +74,7 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
 
   // 13. AI mode (conditional — includes its own complexity limits)
   if (opts.ai) {
-    config.push(...aiConfig(opts))
+    config.push(...aiConfig())
   }
 
   // 14. File-pattern overrides (always relevant)

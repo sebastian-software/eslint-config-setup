@@ -81,19 +81,14 @@ describe("composeConfig", () => {
     expect(lastBlock.name).toMatch(/oxlint/)
   })
 
-  it("AI mode tightens complexity when combined with strict", () => {
-    const aiOnly = composeConfig({ ai: true })
-    const aiStrict = composeConfig({ ai: true, strict: true })
+  it("AI mode sets its own complexity limits", () => {
+    const aiConfig = composeConfig({ ai: true })
 
-    const aiComplexity = aiOnly.find(
-      (b) => b.name === "@effective/eslint/ai-complexity",
-    )
-    const aiStrictComplexity = aiStrict.find(
+    const aiComplexity = aiConfig.find(
       (b) => b.name === "@effective/eslint/ai-complexity",
     )
 
     expect(aiComplexity?.rules?.complexity).toEqual(["error", 10])
-    expect(aiStrictComplexity?.rules?.complexity).toEqual(["error", 8])
   })
 
   it("includes testing-library rules only when react is true", () => {

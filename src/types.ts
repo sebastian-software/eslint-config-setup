@@ -5,8 +5,6 @@ export interface ConfigOptions {
   react?: boolean
   /** Enable Node.js-specific rules and globals */
   node?: boolean
-  /** Use strictTypeChecked + tighter complexity limits */
-  strict?: boolean
   /** Enable strict clean-code rules optimized for AI-generated code */
   ai?: boolean
   /** Disable rules already covered by OxLint (use with oxlint && eslint) */

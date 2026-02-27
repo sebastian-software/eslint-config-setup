@@ -10,9 +10,8 @@ export function optionsToBitmask(opts: ConfigOptions): number {
   let mask = 0
   if (opts.react) mask |= 1 << 0
   if (opts.node) mask |= 1 << 1
-  if (opts.strict) mask |= 1 << 2
-  if (opts.ai) mask |= 1 << 3
-  if (opts.oxlint) mask |= 1 << 4
+  if (opts.ai) mask |= 1 << 2
+  if (opts.oxlint) mask |= 1 << 3
   return mask
 }
 
@@ -30,8 +29,8 @@ export function optionsToFilename(opts: ConfigOptions): string {
   return `${bitmaskToHash(optionsToBitmask(opts))}.js`
 }
 
-/** Total number of permutations (2^5 = 32). */
-export const TOTAL_PERMUTATIONS = 32
+/** Total number of permutations (2^4 = 16). */
+export const TOTAL_PERMUTATIONS = 16
 
 /** Iterate all possible option combinations. */
 export function* allPermutations(): Generator<ConfigOptions> {
@@ -39,9 +38,8 @@ export function* allPermutations(): Generator<ConfigOptions> {
     yield {
       react: Boolean(mask & (1 << 0)),
       node: Boolean(mask & (1 << 1)),
-      strict: Boolean(mask & (1 << 2)),
-      ai: Boolean(mask & (1 << 3)),
-      oxlint: Boolean(mask & (1 << 4)),
+      ai: Boolean(mask & (1 << 2)),
+      oxlint: Boolean(mask & (1 << 3)),
     }
   }
 }
