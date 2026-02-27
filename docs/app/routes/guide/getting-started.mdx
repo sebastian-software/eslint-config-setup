@@ -23,17 +23,17 @@ Get a complete ESLint setup in under a minute.
    <TabPanels>
    <TabPanel>
    ```bash
-   npm install -D @effective/eslint-config eslint typescript
+   npm install -D eslint-config-setup eslint typescript
    ```
    </TabPanel>
    <TabPanel>
    ```bash
-   pnpm add -D @effective/eslint-config eslint typescript
+   pnpm add -D eslint-config-setup eslint typescript
    ```
    </TabPanel>
    <TabPanel>
    ```bash
-   bun add -D @effective/eslint-config eslint typescript
+   bun add -D eslint-config-setup eslint typescript
    ```
    </TabPanel>
    </TabPanels>
@@ -43,7 +43,7 @@ Get a complete ESLint setup in under a minute.
 
    ```typescript
    // eslint.config.ts
-   import { getConfig } from "@effective/eslint-config"
+   import { getConfig } from "eslint-config-setup"
 
    export default await getConfig({ react: true })
    ```
@@ -96,7 +96,7 @@ Flags are independent — combine them however you need. See [Configuration](/gu
 Every config is fully customizable:
 
 ```typescript
-import { getConfig, disableRule, addRule } from "@effective/eslint-config"
+import { getConfig, disableRule, addRule } from "eslint-config-setup"
 
 const config = await getConfig({ react: true, ai: true })
 

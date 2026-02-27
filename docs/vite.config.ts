@@ -4,16 +4,16 @@ import { ardo } from 'ardo/vite'
 export default defineConfig({
   plugins: [
     ardo({
-      title: '@effective/eslint-config',
+      title: 'ESLint Config Setup',
       description:
-        'One import. 25+ plugins. TypeScript, React, Node.js, AI-assisted code, OxLint — all handled.',
+        'One import. 25+ plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled.',
 
       typedoc: {
         entryPoints: ["../packages/eslint-config/src/index.ts"],
       },
 
       themeConfig: {
-        siteTitle: '@effective/eslint-config',
+        siteTitle: 'ESLint Config Setup',
 
         nav: [
           { text: 'Guide', link: '/guide/getting-started' },

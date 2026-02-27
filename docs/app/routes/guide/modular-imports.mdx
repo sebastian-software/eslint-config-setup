@@ -17,7 +17,7 @@ import {
   tests, e2e, stories, configFiles, declarations, scripts,
   standardComplexity,
   oxlint,
-} from "@effective/eslint-config/modules"
+} from "eslint-config-setup/modules"
 
 export default [
   ...base(),
@@ -44,7 +44,7 @@ export default [
 Or use `composeConfig()` — the same function the build system uses — to get the full config at runtime:
 
 ```typescript
-import { composeConfig } from "@effective/eslint-config/modules"
+import { composeConfig } from "eslint-config-setup/modules"
 
 export default composeConfig({ react: true, ai: true })
 ```

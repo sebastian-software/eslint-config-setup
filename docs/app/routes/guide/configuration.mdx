@@ -36,7 +36,7 @@ TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint p
 
 ```typescript
 // eslint.config.ts
-import { getConfig } from "@effective/eslint-config"
+import { getConfig } from "eslint-config-setup"
 
 export default await getConfig({ react: true })
 ```
@@ -46,7 +46,7 @@ export default await getConfig({ react: true })
 
 ```typescript
 // eslint.config.ts
-import { getConfig } from "@effective/eslint-config"
+import { getConfig } from "eslint-config-setup"
 
 export default await getConfig({ react: true, node: true })
 ```
@@ -58,7 +58,7 @@ For teams where AI writes a significant share of the code:
 
 ```typescript
 // eslint.config.ts
-import { getConfig } from "@effective/eslint-config"
+import { getConfig } from "eslint-config-setup"
 
 export default await getConfig({ react: true, ai: true })
 ```
@@ -70,7 +70,7 @@ For 50-100x faster linting with [OxLint](https://oxc.rs):
 
 ```typescript
 // eslint.config.ts
-import { getConfig } from "@effective/eslint-config"
+import { getConfig } from "eslint-config-setup"
 
 export default await getConfig({ react: true, oxlint: true })
 ```
@@ -91,7 +91,7 @@ export default await getConfig({ react: true, oxlint: true })
 // eslint.config.ts
 import {
   getConfig, disableRule, setRuleSeverity, configureRule, addRule
-} from "@effective/eslint-config"
+} from "eslint-config-setup"
 
 const config = await getConfig({ react: true, ai: true })
 

@@ -12,11 +12,11 @@ import {
 import type { MetaFunction } from "react-router"
 
 export const meta: MetaFunction = () => [
-  { title: "@effective/eslint-config" },
+  { title: "ESLint Config Setup" },
   {
     name: "description",
     content:
-      "One import. 25+ plugins. TypeScript, React, Node.js, AI-assisted code, OxLint — all handled.",
+      "One import. 25+ plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled.",
   },
 ]
 
@@ -24,9 +24,9 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        name="@effective/eslint-config"
+        name="ESLint Config Setup"
         text="Stop managing ESLint configs. Start shipping."
-        tagline="One import. 25+ plugins. TypeScript, React, Node.js, AI-assisted code, OxLint — all handled. Every combination pre-built at compile time, so your editor never waits."
+        tagline="One import. 25+ plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled. Every combination pre-built at compile time, so your editor never waits."
         actions={[
           {
             text: "Get Started",
@@ -36,7 +36,7 @@ export default function HomePage() {
           },
           {
             text: "GitHub",
-            link: "https://github.com/sebastian-software/effective-eslint-config",
+            link: "https://github.com/sebastian-software/eslint-config-setup",
             theme: "alt",
             icon: <Github size={16} />,
           },

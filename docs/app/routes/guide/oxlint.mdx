@@ -26,7 +26,7 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
    ```typescript
    // eslint.config.ts
-   import { getConfig } from "@effective/eslint-config"
+   import { getConfig } from "eslint-config-setup"
 
    export default await getConfig({ react: true, ai: true, oxlint: true })
    ```
@@ -56,7 +56,7 @@ npm install -D oxlint @oxlint/migrate
 // oxlint.config.ts
 import { defineConfig } from "oxlint"
 import migrate from "@oxlint/migrate"
-import { getConfig } from "@effective/eslint-config"
+import { getConfig } from "eslint-config-setup"
 
 export default defineConfig(await migrate(getConfig({ react: true, ai: true })))
 ```

@@ -1,4 +1,4 @@
-# @effective/eslint-config
+# ESLint Config Setup
 
 Stop managing ESLint configs. Start shipping.
 
@@ -7,12 +7,12 @@ One import. 25+ plugins. TypeScript, React, Node.js, AI-assisted code, OxLint �
 ## Quick Start
 
 ```bash
-npm install -D @effective/eslint-config eslint typescript
+npm install -D eslint-config-setup eslint typescript
 ```
 
 ```typescript
 // eslint.config.ts
-import { getConfig } from "@effective/eslint-config"
+import { getConfig } from "eslint-config-setup"
 
 export default await getConfig({ react: true })
 ```
@@ -31,7 +31,7 @@ Flags are independent. Combine them however you need.
 ## Customizing rules
 
 ```typescript
-import { getConfig, disableRule, addRule } from "@effective/eslint-config"
+import { getConfig, disableRule, addRule } from "eslint-config-setup"
 
 const config = await getConfig({ react: true, ai: true })
 
@@ -43,15 +43,15 @@ export default config
 
 ## Documentation
 
-Visit the [documentation site](https://sebastian-software.github.io/effective-eslint-config/) for full details:
+Visit the [documentation site](https://sebastian-software.github.io/eslint-config-setup/) for full details:
 
-- [Getting Started](https://sebastian-software.github.io/effective-eslint-config/guide/getting-started) — installation and basic usage
-- [Configuration](https://sebastian-software.github.io/effective-eslint-config/guide/configuration) — flags and usage examples
-- [Rule API](https://sebastian-software.github.io/effective-eslint-config/guide/rule-api) — rule manipulation and scoped rules
-- [AI Mode](https://sebastian-software.github.io/effective-eslint-config/guide/ai-mode) — strict rules for AI-generated code
-- [OxLint Integration](https://sebastian-software.github.io/effective-eslint-config/guide/oxlint) — 50-100x faster linting
-- [Included Plugins](https://sebastian-software.github.io/effective-eslint-config/guide/plugins) — all 25+ plugins listed
-- [Architecture](https://sebastian-software.github.io/effective-eslint-config/guide/architecture) — how pre-generation works
+- [Getting Started](https://sebastian-software.github.io/eslint-config-setup/guide/getting-started) — installation and basic usage
+- [Configuration](https://sebastian-software.github.io/eslint-config-setup/guide/configuration) — flags and usage examples
+- [Rule API](https://sebastian-software.github.io/eslint-config-setup/guide/rule-api) — rule manipulation and scoped rules
+- [AI Mode](https://sebastian-software.github.io/eslint-config-setup/guide/ai-mode) — strict rules for AI-generated code
+- [OxLint Integration](https://sebastian-software.github.io/eslint-config-setup/guide/oxlint) — 50-100x faster linting
+- [Included Plugins](https://sebastian-software.github.io/eslint-config-setup/guide/plugins) — all 25+ plugins listed
+- [Architecture](https://sebastian-software.github.io/eslint-config-setup/guide/architecture) — how pre-generation works
 
 ## License
 
