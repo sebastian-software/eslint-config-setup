@@ -103,6 +103,18 @@ export function typescriptConfig(): FlatConfigArray {
   // https://typescript-eslint.io/rules/no-useless-empty-export
   builder.addRule("@typescript-eslint/no-useless-empty-export", "error")
 
+  // Detect redundant `this.x = x` after constructor parameter property
+  // https://typescript-eslint.io/rules/no-unnecessary-parameter-property-assignment
+  builder.addRule(
+    "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+    "error",
+  )
+
+  // Void-returning callbacks must not accidentally return values
+  // Catches: `forEach(x => map.set(x, 1))` — .set() returns the map, but forEach expects void
+  // https://typescript-eslint.io/rules/strict-void-return
+  builder.addRule("@typescript-eslint/strict-void-return", "error")
+
   // ── Beyond presets: safety & correctness ──────────────────────
 
   // Prevent variable shadowing — catches bugs where inner var hides outer

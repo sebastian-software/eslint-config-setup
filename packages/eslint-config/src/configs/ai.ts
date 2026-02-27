@@ -104,6 +104,18 @@ export function aiConfig(): FlatConfigArray {
         // https://eslint.org/docs/latest/rules/max-statements-per-line
         "max-statements-per-line": ["error", { max: 1 }],
 
+        // Prefer `x ** 2` over `Math.pow(x, 2)` — modern operator syntax
+        // https://eslint.org/docs/latest/rules/prefer-exponentiation-operator
+        "prefer-exponentiation-operator": "error",
+
+        // Require named capture groups in regex — self-documenting patterns
+        // https://eslint.org/docs/latest/rules/prefer-named-capture-group
+        "prefer-named-capture-group": "error",
+
+        // Require Unicode-aware regex (`u` or `v` flag) — correct string handling
+        // https://eslint.org/docs/latest/rules/require-unicode-regexp
+        "require-unicode-regexp": "error",
+
         // ── B. Magic numbers & constants — no unexplained code ────────
 
         // No magic numbers — extract to named constants (allows -1, 0, 1, 2)
@@ -263,6 +275,18 @@ export function aiConfig(): FlatConfigArray {
           "error",
           { ignoreStringArrays: true },
         ],
+
+        // Require explicit `public`/`private`/`protected` on class members
+        // https://typescript-eslint.io/rules/explicit-member-accessibility
+        "@typescript-eslint/explicit-member-accessibility": "error",
+
+        // Enforce property style for method signatures — prevents bivariance issues
+        // https://typescript-eslint.io/rules/method-signature-style
+        "@typescript-eslint/method-signature-style": ["error", "property"],
+
+        // Require explicit values for enum members — prevents accidental shifts on reorder
+        // https://typescript-eslint.io/rules/prefer-enum-initializers
+        "@typescript-eslint/prefer-enum-initializers": "error",
 
         // Prefer `type` over `interface` — consistent, supports unions/intersections
         // https://typescript-eslint.io/rules/consistent-type-definitions
