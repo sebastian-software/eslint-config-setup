@@ -2,7 +2,31 @@
 title: Included Plugins
 ---
 
+import { Tip } from "ardo/ui"
+
 # Included Plugins
+
+## Curated, not copy-pasted
+
+Most shared configs slap `recommended` on every plugin and call it a day. That gives you whatever the plugin author thought was a good default — including rules that overlap, contradict each other, or don't apply to your stack.
+
+This config takes a different approach. Every rule from every plugin was reviewed individually. Some plugins use their official preset as a starting point. Others are entirely hand-picked:
+
+| Plugin | Approach | Why |
+|--------|----------|-----|
+| **React** | Hand-picked | The `recommended` preset still ships `react-in-jsx-scope` — unnecessary since React 17. Hooks, Compiler, and JSX-A11y rules are selected individually. |
+| **Unicorn** | Hand-picked | `flat/recommended` includes highly opinionated rules that clash with common patterns. We pick the ones that catch real bugs and enforce modern syntax. |
+| **SonarJS** | Hand-picked | Many SonarJS rules duplicate what typescript-eslint and unicorn already cover. Only non-overlapping rules are enabled. |
+| **Security** | Hand-picked | The default preset enables `detect-object-injection`, which flags every bracket access — too many false positives for real-world code. |
+| **Node.js** | Hand-picked | Module resolution rules (`no-missing-import`, `no-unpublished-import`) conflict with TypeScript's own resolution. Only the rules TypeScript doesn't cover are included. |
+| **AI mode** | Hand-picked | Not a plugin preset at all — rules from across all plugins, tightened beyond their defaults for AI-generated code. |
+| **TypeScript** | `strictTypeChecked` | The strictest official preset. No `recommended` fallback. |
+| **RegExp** | `flat/recommended` | The preset is well-scoped and doesn't need trimming. |
+| **JSDoc** | `flat/recommended-typescript-error` | TypeScript-aware preset with errors instead of warnings. |
+
+<Tip>
+The result: no duplicate rules, no conflicting severities, no rules that fire on files where they don't belong. Just one coherent rule set.
+</Tip>
 
 ## Always active (13 plugins)
 
