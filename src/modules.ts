@@ -49,3 +49,7 @@ export { oxlintIntegration as oxlint } from "./oxlint/integration.ts"
 
 // Compose utility (same as used in build)
 export { composeConfig } from "./build/compose.ts"
+
+// OxLint config generator
+export { generateOxlintConfig } from "./build/oxlint-generator.ts"
+export type { OxlintConfig } from "./build/oxlint-generator.ts"
