@@ -15,7 +15,7 @@ export function importsConfig(): FlatConfigArray {
     {
       name: "@effective/eslint/imports",
       plugins: {
-        get "import-x"() {
+        get "import"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
           return require("eslint-plugin-import-x")
         },
@@ -42,39 +42,39 @@ export function importsConfig(): FlatConfigArray {
         // ── Validation (import-x) ────────────────────────────────────
 
         // Merge duplicate import paths into one statement — reduces noise
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
-        "import-x/no-duplicates": ["error", { "prefer-inline": true }],
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
+        "import/no-duplicates": ["error", { "prefer-inline": true }],
 
         // Forbid a module from importing itself — always a bug
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-self-import.md
-        "import-x/no-self-import": "error",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-self-import.md
+        "import/no-self-import": "error",
 
         // Detect circular dependencies — limited to depth 3 for performance
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-cycle.md
-        "import-x/no-cycle": ["error", { maxDepth: 3 }],
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-cycle.md
+        "import/no-cycle": ["error", { maxDepth: 3 }],
 
         // Remove unnecessary path segments (e.g., ./foo/../foo → ./foo)
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-useless-path-segments.md
-        "import-x/no-useless-path-segments": "error",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-useless-path-segments.md
+        "import/no-useless-path-segments": "error",
 
         // Forbid mutable export bindings — prevents shared mutable state
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-mutable-exports.md
-        "import-x/no-mutable-exports": "error",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md
+        "import/no-mutable-exports": "error",
 
         // Imports must come before other statements — consistent module structure
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/first.md
-        "import-x/first": "error",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/first.md
+        "import/first": "error",
 
         // Require blank line after import block — visual separation
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/newline-after-import.md
-        "import-x/newline-after-import": "error",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/newline-after-import.md
+        "import/newline-after-import": "error",
 
         // ── Disabled: ordering handled by simple-import-sort ──────────
 
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/order.md
-        "import-x/order": "off",
-        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/sort-imports.md
-        "import-x/sort-imports": "off",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/order.md
+        "import/order": "off",
+        // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/sort-imports.md
+        "import/sort-imports": "off",
 
         // ── Unused import removal ─────────────────────────────────────
 

@@ -64,7 +64,7 @@ export function storiesOverride(): FlatConfigArray {
         // ── Relaxed rules for stories ─────────────────────────────────
 
         // Stories require default exports (meta object)
-        "import-x/no-default-export": "off",
+        "import/no-default-export": "off",
 
         // Stories can be long (many variants of a component)
         "max-lines": "off",

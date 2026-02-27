@@ -198,6 +198,41 @@ export default await getConfig({ react: true, ai: true, oxlint: true })
 
 Run OxLint first for fast feedback on common issues, then ESLint for the deep analysis.
 
+### Generating `oxlintrc.json`
+
+The config also includes a generator that produces an `oxlintrc.json` from your ruleset. This ensures OxLint runs the **same rules at the same severity** as your ESLint config — no manual sync needed.
+
+```typescript
+import { generateOxlintConfig } from "@effective/eslint-config"
+import { writeFileSync } from "node:fs"
+
+const oxlintrc = generateOxlintConfig({ react: true, ai: true })
+writeFileSync("oxlintrc.json", JSON.stringify(oxlintrc, null, 2))
+```
+
+The generated config:
+- Only includes rules OxLint supports (via `eslint-plugin-oxlint`'s rule index)
+- Preserves severity and options from your ESLint config
+- Maps file-pattern overrides to OxLint's `overrides` format
+- Derives the plugin list automatically from rule prefixes (`@typescript-eslint/*` → `"typescript"`, `import/*` → `"import"`, etc.)
+
+---
+
+## File Conventions
+
+This config uses file patterns to apply the right rules automatically. These aren't arbitrary — each matches the default convention of its respective tool:
+
+| Pattern | Tool / Purpose | Why this convention |
+|---------|---------------|---------------------|
+| `*.test.{ts,tsx}`, `__tests__/**` | Vitest (unit/integration) | Vitest default discovery pattern |
+| `*.spec.ts` | Playwright (E2E) | Playwright default discovery pattern |
+| `*.stories.{ts,tsx}` | Storybook | Storybook default discovery pattern |
+| `*.config.*` | Tool configs | Convention for Vite, Next.js, Tailwind, etc. |
+| `*.d.ts` | Type declarations | TypeScript convention |
+| `scripts/**` | Build/dev scripts | Relaxed rules for CLI tools |
+
+> **Tip:** Following these conventions means zero configuration — the linter automatically applies appropriate rules per file type.
+
 ---
 
 ## File-Pattern Overrides

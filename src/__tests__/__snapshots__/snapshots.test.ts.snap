@@ -431,25 +431,25 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -1248,7 +1248,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -1270,7 +1270,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -1285,8 +1285,8 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -2128,25 +2128,25 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -2413,34 +2413,34 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "@effective/eslint/node",
     "rules": {
-      "n/no-deprecated-api": "error",
-      "n/no-exports-assign": "error",
-      "n/no-missing-import": "off",
-      "n/no-missing-require": "off",
-      "n/no-process-exit": "warn",
-      "n/no-unpublished-import": "off",
-      "n/prefer-global/buffer": [
+      "node/no-deprecated-api": "error",
+      "node/no-exports-assign": "error",
+      "node/no-missing-import": "off",
+      "node/no-missing-require": "off",
+      "node/no-process-exit": "warn",
+      "node/no-unpublished-import": "off",
+      "node/prefer-global/buffer": [
         "error",
         "always",
       ],
-      "n/prefer-global/console": [
+      "node/prefer-global/console": [
         "error",
         "always",
       ],
-      "n/prefer-global/process": [
+      "node/prefer-global/process": [
         "error",
         "always",
       ],
-      "n/prefer-global/url": [
+      "node/prefer-global/url": [
         "error",
         "always",
       ],
-      "n/prefer-global/url-search-params": [
+      "node/prefer-global/url-search-params": [
         "error",
         "always",
       ],
-      "n/prefer-promises/dns": "error",
-      "n/prefer-promises/fs": "error",
+      "node/prefer-promises/dns": "error",
+      "node/prefer-promises/fs": "error",
     },
   },
   {
@@ -3091,7 +3091,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -3113,7 +3113,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -3128,8 +3128,8 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -3139,7 +3139,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     ],
     "name": "@effective/eslint/stories",
     "rules": {
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "storybook/await-interactions": "error",
@@ -4016,25 +4016,25 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -4422,7 +4422,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -4444,7 +4444,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -4459,8 +4459,8 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -5302,25 +5302,25 @@ exports[`config snapshots > snapshot: node only 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -5632,34 +5632,34 @@ exports[`config snapshots > snapshot: node only 1`] = `
   {
     "name": "@effective/eslint/node",
     "rules": {
-      "n/no-deprecated-api": "error",
-      "n/no-exports-assign": "error",
-      "n/no-missing-import": "off",
-      "n/no-missing-require": "off",
-      "n/no-process-exit": "warn",
-      "n/no-unpublished-import": "off",
-      "n/prefer-global/buffer": [
+      "node/no-deprecated-api": "error",
+      "node/no-exports-assign": "error",
+      "node/no-missing-import": "off",
+      "node/no-missing-require": "off",
+      "node/no-process-exit": "warn",
+      "node/no-unpublished-import": "off",
+      "node/prefer-global/buffer": [
         "error",
         "always",
       ],
-      "n/prefer-global/console": [
+      "node/prefer-global/console": [
         "error",
         "always",
       ],
-      "n/prefer-global/process": [
+      "node/prefer-global/process": [
         "error",
         "always",
       ],
-      "n/prefer-global/url": [
+      "node/prefer-global/url": [
         "error",
         "always",
       ],
-      "n/prefer-global/url-search-params": [
+      "node/prefer-global/url-search-params": [
         "error",
         "always",
       ],
-      "n/prefer-promises/dns": "error",
-      "n/prefer-promises/fs": "error",
+      "node/prefer-promises/dns": "error",
+      "node/prefer-promises/fs": "error",
     },
   },
   {
@@ -5741,7 +5741,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -5763,7 +5763,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -5778,8 +5778,8 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -6621,25 +6621,25 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -7551,7 +7551,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -7573,7 +7573,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -7588,8 +7588,8 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -7599,7 +7599,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     ],
     "name": "@effective/eslint/stories",
     "rules": {
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "storybook/await-interactions": "error",
@@ -8452,25 +8452,25 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -8782,34 +8782,34 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   {
     "name": "@effective/eslint/node",
     "rules": {
-      "n/no-deprecated-api": "error",
-      "n/no-exports-assign": "error",
-      "n/no-missing-import": "off",
-      "n/no-missing-require": "off",
-      "n/no-process-exit": "warn",
-      "n/no-unpublished-import": "off",
-      "n/prefer-global/buffer": [
+      "node/no-deprecated-api": "error",
+      "node/no-exports-assign": "error",
+      "node/no-missing-import": "off",
+      "node/no-missing-require": "off",
+      "node/no-process-exit": "warn",
+      "node/no-unpublished-import": "off",
+      "node/prefer-global/buffer": [
         "error",
         "always",
       ],
-      "n/prefer-global/console": [
+      "node/prefer-global/console": [
         "error",
         "always",
       ],
-      "n/prefer-global/process": [
+      "node/prefer-global/process": [
         "error",
         "always",
       ],
-      "n/prefer-global/url": [
+      "node/prefer-global/url": [
         "error",
         "always",
       ],
-      "n/prefer-global/url-search-params": [
+      "node/prefer-global/url-search-params": [
         "error",
         "always",
       ],
-      "n/prefer-promises/dns": "error",
-      "n/prefer-promises/fs": "error",
+      "node/prefer-promises/dns": "error",
+      "node/prefer-promises/fs": "error",
     },
   },
   {
@@ -9004,7 +9004,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -9026,7 +9026,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -9041,8 +9041,8 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -9052,7 +9052,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     ],
     "name": "@effective/eslint/stories",
     "rules": {
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "storybook/await-interactions": "error",
@@ -9905,25 +9905,25 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -10424,7 +10424,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -10446,7 +10446,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -10461,8 +10461,8 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -10472,7 +10472,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     ],
     "name": "@effective/eslint/stories",
     "rules": {
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "storybook/await-interactions": "error",
@@ -11346,25 +11346,25 @@ exports[`config snapshots > snapshot: react only 1`] = `
   {
     "name": "@effective/eslint/imports",
     "rules": {
-      "import-x/first": "error",
-      "import-x/newline-after-import": "error",
-      "import-x/no-cycle": [
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-cycle": [
         "error",
         {
           "maxDepth": 3,
         },
       ],
-      "import-x/no-duplicates": [
+      "import/no-duplicates": [
         "error",
         {
           "prefer-inline": true,
         },
       ],
-      "import-x/no-mutable-exports": "error",
-      "import-x/no-self-import": "error",
-      "import-x/no-useless-path-segments": "error",
-      "import-x/order": "off",
-      "import-x/sort-imports": "off",
+      "import/no-mutable-exports": "error",
+      "import/no-self-import": "error",
+      "import/no-useless-path-segments": "error",
+      "import/order": "off",
+      "import/sort-imports": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
@@ -11865,7 +11865,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
       "complexity": "off",
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",
@@ -11887,7 +11887,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import-x/no-duplicates": "off",
+      "import/no-duplicates": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unused-imports/no-unused-imports": "off",
@@ -11902,8 +11902,8 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
-      "n/no-process-exit": "off",
       "no-console": "off",
+      "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
     },
   },
@@ -11913,7 +11913,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     ],
     "name": "@effective/eslint/stories",
     "rules": {
-      "import-x/no-default-export": "off",
+      "import/no-default-export": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "storybook/await-interactions": "error",

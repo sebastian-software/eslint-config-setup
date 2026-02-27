@@ -21,7 +21,7 @@ export function configFilesOverride(): FlatConfigArray {
       ],
       rules: {
         // Config files often require default exports (Vite, Next.js, Tailwind)
-        "import-x/no-default-export": "off",
+        "import/no-default-export": "off",
 
         // Config files can have complex configuration objects
         complexity: "off",

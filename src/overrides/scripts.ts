@@ -17,7 +17,7 @@ export function scriptsOverride(): FlatConfigArray {
 
         // Scripts use process.exit for clean termination
         // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-process-exit.md
-        "n/no-process-exit": "off",
+        "node/no-process-exit": "off",
 
         // Scripts can be long (build pipelines, code generators)
         "max-lines": "off",

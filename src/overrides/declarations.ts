@@ -32,7 +32,7 @@ export function declarationsOverride(): FlatConfigArray {
         "@typescript-eslint/no-namespace": "off",
 
         // Duplicate imports happen with declaration merging
-        "import-x/no-duplicates": "off",
+        "import/no-duplicates": "off",
 
         // Unused imports are common in re-export declaration files
         "unused-imports/no-unused-imports": "off",
