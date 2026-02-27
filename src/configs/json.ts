@@ -22,6 +22,18 @@ export function jsonConfig(): FlatConfigArray {
         // Detect duplicate keys in JSON — last-write-wins is confusing
         // https://github.com/eslint/json#rules
         "json/no-duplicate-keys": "error",
+
+        // Detect empty string keys — likely a mistake
+        // https://github.com/eslint/json#rules
+        "json/no-empty-keys": "error",
+
+        // Detect unsafe values (NaN, Infinity, lone surrogates) — invalid JSON
+        // https://github.com/eslint/json#rules
+        "json/no-unsafe-values": "error",
+
+        // Detect unnormalized Unicode keys — prevents invisible key mismatches
+        // https://github.com/eslint/json#rules
+        "json/no-unnormalized-keys": "error",
       },
     },
     {
@@ -40,6 +52,18 @@ export function jsonConfig(): FlatConfigArray {
         // Detect duplicate keys in JSONC — same rationale as JSON
         // https://github.com/eslint/json#rules
         "json/no-duplicate-keys": "error",
+
+        // Detect empty string keys — likely a mistake
+        // https://github.com/eslint/json#rules
+        "json/no-empty-keys": "error",
+
+        // Detect unsafe values (NaN, Infinity, lone surrogates) — invalid JSON
+        // https://github.com/eslint/json#rules
+        "json/no-unsafe-values": "error",
+
+        // Detect unnormalized Unicode keys — prevents invisible key mismatches
+        // https://github.com/eslint/json#rules
+        "json/no-unnormalized-keys": "error",
       },
     },
   ]

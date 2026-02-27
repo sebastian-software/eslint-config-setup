@@ -59,6 +59,30 @@ export function testsOverride(opts: ConfigOptions): FlatConfigArray {
         // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-title.md
         "vitest/valid-title": "error",
 
+        // No conditional logic (if/else) inside tests — split into separate tests
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-conditional-in-test.md
+        "vitest/no-conditional-in-test": "error",
+
+        // No expect() inside conditional blocks — always assert unconditionally
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-conditional-expect.md
+        "vitest/no-conditional-expect": "error",
+
+        // No standalone expect() outside test blocks — always wrap in it/test
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-standalone-expect.md
+        "vitest/no-standalone-expect": "error",
+
+        // Prefer .toStrictEqual() over .toEqual() — catches undefined vs missing
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-strict-equal.md
+        "vitest/prefer-strict-equal": "error",
+
+        // Prefer vi.spyOn() over vi.fn() for method mocks — preserves original
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-spy-on.md
+        "vitest/prefer-spy-on": "error",
+
+        // Require message argument in toThrow/toThrowError — verify correct error
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-to-throw-message.md
+        "vitest/require-to-throw-message": "error",
+
         // ── Relaxed rules for tests ───────────────────────────────────
         // Tests are naturally verbose and use patterns banned in prod code
 
