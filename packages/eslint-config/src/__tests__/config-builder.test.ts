@@ -1,15 +1,18 @@
 import { describe, expect, it } from "vitest"
 import eslint from "@eslint/js"
+import type { ESLint, Linter } from "eslint"
 
 import { createConfig } from "../build/config-builder"
 
+const fakePlugin: ESLint.Plugin = { meta: { name: "fake-plugin" } }
+
 describe("createConfig", () => {
-  const fakePreset = {
-    plugins: { "fake-plugin": {} },
+  const fakePreset: Linter.Config = {
+    plugins: { "fake-plugin": fakePlugin },
     rules: {
-      "fake/rule-a": "error" as const,
-      "fake/rule-b": ["warn", { option: true }] as const,
-      "fake/rule-c": "error" as const,
+      "fake/rule-a": "error",
+      "fake/rule-b": ["warn", { option: true }],
+      "fake/rule-c": "error",
     },
   }
 
@@ -133,7 +136,7 @@ describe("createConfig", () => {
       const result = createConfig({
         name: "test",
         presets: [fakePreset],
-        plugins: { "my-plugin": {} },
+        plugins: { "my-plugin": fakePlugin },
       }).build()
 
       expect(result[0].plugins).toHaveProperty("fake-plugin")
@@ -202,8 +205,8 @@ describe("createConfig", () => {
     })
 
     it("merges plugins from multiple presets", () => {
-      const preset1 = { plugins: { a: {} }, rules: {} }
-      const preset2 = { plugins: { b: {} }, rules: {} }
+      const preset1 = { plugins: { a: fakePlugin }, rules: {} }
+      const preset2 = { plugins: { b: fakePlugin }, rules: {} }
 
       const result = createConfig({
         name: "test",

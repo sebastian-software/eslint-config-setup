@@ -8,7 +8,7 @@ interface ConfigBuilderOptions {
   name: string
   presets?: FlatConfig[]
   passthrough?: FlatConfigArray
-  plugins?: Record<string, unknown>
+  plugins?: FlatConfig["plugins"]
   languageOptions?: FlatConfig["languageOptions"]
   settings?: FlatConfig["settings"]
   files?: FlatConfig["files"]
@@ -37,7 +37,7 @@ interface ConfigBuilder {
 export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
   // Expand presets: merge all rules from preset objects into one map
   const presetRules = new Map<string, RuleValue>()
-  const presetPlugins: Record<string, unknown> = {}
+  const presetPlugins: NonNullable<FlatConfig["plugins"]> = {}
 
   if (options.presets) {
     for (const preset of options.presets) {
