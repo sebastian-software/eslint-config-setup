@@ -1,4 +1,4 @@
-export { getConfig } from "./loader"
+export { getEslintConfig, getOxlintConfig } from "./loader"
 
 export {
   addRule,
@@ -13,6 +13,7 @@ export { optionsToFilename, optionsToBitmask, bitmaskToHash } from "./hash"
 export type {
   ConfigOptions,
   FlatConfigArray,
+  OxlintConfigOptions,
   RuleOptions,
   RuleScope,
   RuleSeverity,

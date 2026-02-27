@@ -12,9 +12,9 @@ npm install -D eslint-config-setup eslint typescript
 
 ```typescript
 // eslint.config.ts
-import { getConfig } from "eslint-config-setup"
+import { getEslintConfig } from "eslint-config-setup"
 
-export default await getConfig({ react: true })
+export default await getEslintConfig({ react: true })
 ```
 
 ## Configuration flags
@@ -31,9 +31,9 @@ Flags are independent. Combine them however you need.
 ## Customizing rules
 
 ```typescript
-import { getConfig, disableRule, addRule } from "eslint-config-setup"
+import { getEslintConfig, disableRule, addRule } from "eslint-config-setup"
 
-const config = await getConfig({ react: true, ai: true })
+const config = await getEslintConfig({ react: true, ai: true })
 
 disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })
 addRule(config, "no-console", "off", { scope: "scripts" })

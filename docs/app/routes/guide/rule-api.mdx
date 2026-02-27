@@ -24,10 +24,10 @@ All four main functions accept an optional `{ scope }` parameter to target speci
 
 ```typescript
 import {
-  getConfig, disableRule, setRuleSeverity, configureRule, addRule
+  getEslintConfig, disableRule, setRuleSeverity, configureRule, addRule
 } from "eslint-config-setup"
 
-const config = await getConfig({ react: true, ai: true })
+const config = await getEslintConfig({ react: true, ai: true })
 
 // Disable magic number checks in tests only
 disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })

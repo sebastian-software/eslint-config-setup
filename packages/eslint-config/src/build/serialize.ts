@@ -15,6 +15,13 @@ export function serializeConfig(config: FlatConfigArray): string {
   return lines.join("\n")
 }
 
+/**
+ * Serializes an OxLint config object to a JSON string.
+ */
+export function serializeOxlintConfig(config: unknown): string {
+  return JSON.stringify(config, null, 2) + "\n"
+}
+
 function createReplacer(): (key: string, value: unknown) => unknown {
   const seen = new WeakSet()
   return function replacer(_key: string, value: unknown): unknown {

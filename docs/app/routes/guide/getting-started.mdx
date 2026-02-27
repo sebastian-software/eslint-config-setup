@@ -43,9 +43,9 @@ Get a complete ESLint setup in under a minute.
 
    ```typescript
    // eslint.config.ts
-   import { getConfig } from "eslint-config-setup"
+   import { getEslintConfig } from "eslint-config-setup"
 
-   export default await getConfig({ react: true })
+   export default await getEslintConfig({ react: true })
    ```
 
 3. Run ESLint:
@@ -62,7 +62,7 @@ Requires ESLint >= 9.22 and TypeScript >= 5.0.
 
 ## What you get
 
-That single `getConfig()` call gives you:
+That single `getEslintConfig()` call gives you:
 
 - Type-checked TypeScript with `strictTypeChecked`
 - React 19 with Hooks, Compiler, and JSX-A11y
@@ -81,7 +81,7 @@ No plugin juggling. No copy-pasted config blocks.
 Enable features by setting flags to `true`:
 
 ```typescript
-export default await getConfig({
+export default await getEslintConfig({
   react: true,   // React 19+, Hooks, JSX-A11y, Storybook, Testing Library
   node: true,    // Node.js globals and rules
   ai: true,      // Strict rules for AI-assisted development
@@ -96,9 +96,9 @@ Flags are independent — combine them however you need. See [Configuration](/gu
 Every config is fully customizable:
 
 ```typescript
-import { getConfig, disableRule, addRule } from "eslint-config-setup"
+import { getEslintConfig, disableRule, addRule } from "eslint-config-setup"
 
-const config = await getConfig({ react: true, ai: true })
+const config = await getEslintConfig({ react: true, ai: true })
 
 disableRule(config, "@typescript-eslint/no-magic-numbers", { scope: "tests" })
 addRule(config, "no-console", "off", { scope: "scripts" })

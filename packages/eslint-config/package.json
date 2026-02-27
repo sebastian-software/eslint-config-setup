@@ -67,8 +67,10 @@
     "typescript-eslint": "^8.20.0"
   },
   "devDependencies": {
+    "@oxlint/migrate": "^1.50.0",
     "@types/node": "^25.3.2",
     "eslint": "^9.22.0",
+    "oxlint": "^1.50.0",
     "tsup": "^8.3.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",

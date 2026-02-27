@@ -11,6 +11,9 @@ export interface ConfigOptions {
   oxlint?: boolean
 }
 
+/** Options for pre-generated OxLint configs (oxlint flag is irrelevant here). */
+export type OxlintConfigOptions = Omit<ConfigOptions, "oxlint">
+
 export type FlatConfig = Linter.Config
 export type FlatConfigArray = Linter.Config[]
 export type RuleSeverity = "off" | "warn" | "error"

@@ -26,12 +26,21 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
    ```typescript
    // eslint.config.ts
-   import { getConfig } from "eslint-config-setup"
+   import { getEslintConfig } from "eslint-config-setup"
 
-   export default await getConfig({ react: true, ai: true, oxlint: true })
+   export default await getEslintConfig({ react: true, ai: true, oxlint: true })
    ```
 
-3. Run both linters in sequence — OxLint first for instant feedback, ESLint second for deep analysis:
+3. Generate a matching OxLint config:
+
+   ```typescript
+   // oxlint.config.ts
+   import { getOxlintConfig } from "eslint-config-setup"
+
+   export default await getOxlintConfig({ react: true, ai: true })
+   ```
+
+4. Run both linters in sequence — OxLint first for instant feedback, ESLint second for deep analysis:
 
    ```jsonc
    // package.json
@@ -44,23 +53,6 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
 </Steps>
 
-## Generating `oxlint.config.ts`
-
-For a fully synced OxLint config that mirrors your ESLint rules, use [`@oxlint/migrate`](https://www.npmjs.com/package/@oxlint/migrate) — the official migration tool from the OxC team:
-
-```bash
-npm install -D oxlint @oxlint/migrate
-```
-
-```typescript
-// oxlint.config.ts
-import { defineConfig } from "oxlint"
-import migrate from "@oxlint/migrate"
-import { getConfig } from "eslint-config-setup"
-
-export default defineConfig(await migrate(getConfig({ react: true, ai: true })))
-```
-
 <Tip>
-Same rules, same severity — automatically derived from your ESLint config.
+`getOxlintConfig()` loads a pre-generated OxLint config that mirrors your ESLint rules — same rules, same severity, zero runtime overhead.
 </Tip>
