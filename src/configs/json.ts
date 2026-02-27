@@ -2,6 +2,12 @@ import jsonPlugin from "@eslint/json"
 
 import type { FlatConfigArray } from "../types.ts"
 
+/**
+ * JSON/JSONC config — native JSON linting using the official @eslint/json plugin.
+ * Two blocks: strict JSON for most files, JSONC (with comments) for tsconfig etc.
+ *
+ * @see https://github.com/eslint/json#rules
+ */
 export function jsonConfig(): FlatConfigArray {
   return [
     {
@@ -13,6 +19,8 @@ export function jsonConfig(): FlatConfigArray {
         json: jsonPlugin,
       },
       rules: {
+        // Detect duplicate keys in JSON — last-write-wins is confusing
+        // https://github.com/eslint/json#rules
         "json/no-duplicate-keys": "error",
       },
     },
@@ -29,6 +37,8 @@ export function jsonConfig(): FlatConfigArray {
         json: jsonPlugin,
       },
       rules: {
+        // Detect duplicate keys in JSONC — same rationale as JSON
+        // https://github.com/eslint/json#rules
         "json/no-duplicate-keys": "error",
       },
     },
