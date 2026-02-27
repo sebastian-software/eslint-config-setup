@@ -22,11 +22,11 @@ title: Included Plugins
 | [`@eslint/json`](https://eslint.org/blog/2025/02/eslint-css-support/) | Native JSON/JSONC linting |
 | [`@eslint/markdown`](https://github.com/eslint/markdown) | Markdown code block linting |
 
-## Compatibility
+## Formatting
 
-| Package | Purpose |
-|---------|---------|
-| [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) | Disables all formatting rules that conflict with Prettier |
+This config does not handle code formatting. Following [ESLint's own recommendation](https://eslint.org/blog/2023/10/deprecating-formatting-rules/), formatting is a separate concern best handled by a dedicated tool — [Prettier](https://prettier.dev), [Biome](https://biomejs.dev), or [oxfmt](https://oxc.rs).
+
+All formatting-related ESLint rules are disabled at build time so they never conflict with your formatter of choice.
 
 ## Conditional
 
