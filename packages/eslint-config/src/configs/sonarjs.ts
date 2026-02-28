@@ -53,6 +53,46 @@ export function sonarjsConfig(): FlatConfigArray {
         // Detect size/length comparisons that are always true/false
         // https://sonarsource.github.io/rspec/#/rspec/S3981/javascript
         "sonarjs/no-collection-size-mischeck": "error",
+
+        // Detect duplicate conditions in if/else-if chains — copy-paste bug
+        // https://sonarsource.github.io/rspec/#/rspec/S1862/javascript
+        "sonarjs/no-identical-conditions": "error",
+
+        // Detect identical code in if and else branches — refactoring leftover
+        // https://sonarsource.github.io/rspec/#/rspec/S1871/javascript
+        "sonarjs/no-duplicated-branches": "error",
+
+        // Detect .filter()/.map()/.slice() called without using the result
+        // https://sonarsource.github.io/rspec/#/rspec/S2201/javascript
+        "sonarjs/no-ignored-return": "error",
+
+        // Detect redundant return/break/continue at end of block
+        // https://sonarsource.github.io/rspec/#/rspec/S3626/javascript
+        "sonarjs/no-redundant-jump": "error",
+
+        // Prevent .only() from being committed — blocks CI for others
+        // https://sonarsource.github.io/rspec/#/rspec/S6426/javascript
+        "sonarjs/no-exclusive-tests": "error",
+
+        // Detect `const sorted = arr.sort()` — .sort() mutates the original
+        // https://sonarsource.github.io/rspec/#/rspec/S4043/javascript
+        "sonarjs/no-misleading-array-reverse": "error",
+
+        // Require initial value for .reduce() — crashes on empty arrays without it
+        // https://sonarsource.github.io/rspec/#/rspec/S6959/javascript
+        "sonarjs/reduce-initial-value": "error",
+
+        // Disallow async operations in constructors — use factory methods
+        // https://sonarsource.github.io/rspec/#/rspec/S7059/javascript
+        "sonarjs/no-async-constructor": "error",
+
+        // Detect `field?: string | undefined` — the `?` already implies undefined
+        // https://sonarsource.github.io/rspec/#/rspec/S4782/javascript
+        "sonarjs/no-redundant-optional": "error",
+
+        // Detect `string | number | string` — duplicate constituents in unions
+        // https://sonarsource.github.io/rspec/#/rspec/S4621/javascript
+        "sonarjs/no-duplicate-in-composite": "error",
       },
     },
   ]

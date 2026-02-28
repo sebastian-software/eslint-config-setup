@@ -476,6 +476,26 @@ export function aiConfig(): FlatConfigArray {
         // Simplify negated boolean checks — `!a !== b` → `a === b`
         // https://sonarsource.github.io/rspec/#/rspec/S1940/javascript
         "sonarjs/no-inverted-boolean-check": "error",
+
+        // Disallow nested switch statements — extract to function
+        // https://sonarsource.github.io/rspec/#/rspec/S1821/javascript
+        "sonarjs/no-nested-switch": "error",
+
+        // Disallow nested template literals — unreadable
+        // https://sonarsource.github.io/rspec/#/rspec/S4624/javascript
+        "sonarjs/no-nested-template-literals": "error",
+
+        // Limit union type size — too many members signals missing abstraction
+        // https://sonarsource.github.io/rspec/#/rspec/S4622/javascript
+        "sonarjs/max-union-size": ["error", { max: 5 }],
+
+        // Prefer type predicates for type narrowing — safer than assertions
+        // https://sonarsource.github.io/rspec/#/rspec/S4322/javascript
+        "sonarjs/prefer-type-guard": "error",
+
+        // Public static fields should be readonly — prevents accidental mutation
+        // https://sonarsource.github.io/rspec/#/rspec/S1444/javascript
+        "sonarjs/public-static-readonly": "error",
       },
     },
   ]
