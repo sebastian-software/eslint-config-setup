@@ -500,7 +500,37 @@ export function aiConfig(): FlatConfigArray {
     },
   ]
 
-  // ── G. Tightened complexity limits for AI mode ────────────────────
+  // ── G. Regex — self-documenting, modern patterns ──────────────────
+  configs.push({
+    name: "@effective/eslint/ai-regexp",
+    rules: {
+      // Prefer lookarounds over capturing groups used only for context
+      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-lookaround.html
+      "regexp/prefer-lookaround": "error",
+
+      // Prefer named backreferences — \k<quote> over \1
+      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-backreference.html
+      "regexp/prefer-named-backreference": "error",
+
+      // Prefer named replacement — $<name> over $1
+      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-replacement.html
+      "regexp/prefer-named-replacement": "error",
+
+      // Prefer quantifier shorthand — a{3} over aaa
+      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-quantifier.html
+      "regexp/prefer-quantifier": "error",
+
+      // Prefer match.groups.name over match[1] — consistent named groups usage
+      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-result-array-groups.html
+      "regexp/prefer-result-array-groups": "error",
+
+      // Require v flag (unicode sets) over u flag — stricter ES2024 superset
+      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/require-unicode-sets-regexp.html
+      "regexp/require-unicode-sets-regexp": "error",
+    },
+  })
+
+  // ── H. Tightened complexity limits for AI mode ────────────────────
   configs.push({
     name: "@effective/eslint/ai-complexity",
     rules: {
