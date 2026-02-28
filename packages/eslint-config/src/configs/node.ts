@@ -50,6 +50,14 @@ export function nodeConfig(): FlatConfigArray {
         // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-unpublished-import.md
         "node/no-unpublished-import": "off",
 
+        // Validate hashbang lines — correct syntax, Unix linebreaks, only in entry files
+        // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/hashbang.md
+        "node/hashbang": "error",
+
+        // Detect `__dirname + '/foo'` — use path.join() instead (breaks on Windows)
+        // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-path-concat.md
+        "node/no-path-concat": "error",
+
         // ── Prefer global builtins ────────────────────────────────────
 
         // Use global Buffer instead of require('buffer').Buffer

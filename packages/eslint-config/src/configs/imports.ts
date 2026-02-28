@@ -69,6 +69,22 @@ export function importsConfig(): FlatConfigArray {
         // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/newline-after-import.md
         "import/newline-after-import": "error",
 
+        // Detect `import Foo from './Foo'` when Foo is also a named export — likely wrong
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-named-as-default.md
+        "import/no-named-as-default": "error",
+
+        // Detect `Foo.bar` when `bar` is a named export — use `import { bar }` instead
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-named-as-default-member.md
+        "import/no-named-as-default-member": "error",
+
+        // Detect empty `import {} from 'foo'` — leftover after refactoring
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-empty-named-blocks.md
+        "import/no-empty-named-blocks": "error",
+
+        // Forbid absolute file paths in imports — not portable across machines
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-absolute-path.md
+        "import/no-absolute-path": "error",
+
         // ── Disabled: ordering handled by simple-import-sort ──────────
 
         // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/order.md

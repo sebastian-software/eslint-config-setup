@@ -530,7 +530,53 @@ export function aiConfig(): FlatConfigArray {
     },
   })
 
-  // ── H. Tightened complexity limits for AI mode ────────────────────
+  // ── H. JSDoc — prevent meaningless AI-generated docs ──────────────
+  configs.push({
+    name: "@effective/eslint/ai-jsdoc",
+    rules: {
+      // Prevent comments that just repeat the name — `/** The name */ name: string`
+      // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/informative-docs.md
+      "jsdoc/informative-docs": "error",
+    },
+  })
+
+  // ── I. Node — stricter API usage ─────────────────────────────────
+  configs.push({
+    name: "@effective/eslint/ai-node",
+    rules: {
+      // Warn when using Node.js builtins not available in the target version
+      // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-unsupported-features/node-builtins.md
+      "node/no-unsupported-features/node-builtins": "error",
+    },
+  })
+
+  // ── J. React — stricter component patterns ───────────────────────
+  configs.push({
+    name: "@effective/eslint/ai-react",
+    rules: {
+      // Max one component per file — clear module boundaries
+      // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
+      "react/no-multi-comp": "error",
+
+      // No inline function creation in JSX props — extract to variable or useCallback
+      // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md
+      "react/jsx-no-bind": "error",
+
+      // No click handlers on static elements without role — use semantic HTML
+      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-static-element-interactions.md
+      "jsx-a11y/no-static-element-interactions": "error",
+
+      // No event handlers on non-interactive elements — use button/link instead
+      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-noninteractive-element-interactions.md
+      "jsx-a11y/no-noninteractive-element-interactions": "error",
+
+      // Interactive elements (role="button") must be focusable
+      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/interactive-supports-focus.md
+      "jsx-a11y/interactive-supports-focus": "error",
+    },
+  })
+
+  // ── K. Tightened complexity limits for AI mode ────────────────────
   configs.push({
     name: "@effective/eslint/ai-complexity",
     rules: {

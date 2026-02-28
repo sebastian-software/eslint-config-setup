@@ -157,6 +157,46 @@ export function reactConfig(): FlatConfigArray {
         // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/iframe-missing-sandbox.md
         "react/iframe-missing-sandbox": "error",
 
+        // Prevent using array index as key — breaks reconciliation on reorder
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+        "react/no-array-index-key": "error",
+
+        // Prevent object/array literals as default props — creates new reference every render
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-object-type-as-default-prop.md
+        "react/no-object-type-as-default-prop": "error",
+
+        // Prevent `{count && <Foo />}` — renders "0" when count is 0
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-leaked-render.md
+        "react/jsx-no-leaked-render": "error",
+
+        // Prevent inline object creation in context providers — causes re-renders
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-constructed-context-values.md
+        "react/jsx-no-constructed-context-values": "error",
+
+        // Prevent `this.setState({ count: this.state.count + 1 })` — race condition
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md
+        "react/no-access-state-in-setstate": "error",
+
+        // Detect state properties that are set but never read — dead code
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unused-state.md
+        "react/no-unused-state": "error",
+
+        // Prevent `style="color: red"` — must be an object in React
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md
+        "react/style-prop-object": "error",
+
+        // No string refs — deprecated since React 16.3, use useRef
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md
+        "react/no-string-refs": "error",
+
+        // Require explicit type on <button> — prevents unintended form submits
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/button-has-type.md
+        "react/button-has-type": "error",
+
+        // Prevent dangerouslySetInnerHTML + children at the same time — conflict
+        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md
+        "react/no-danger-with-children": "error",
+
         // ── React Hooks ───────────────────────────────────────────────
 
         // Enforce Rules of Hooks — hooks must be called at the top level
@@ -262,6 +302,14 @@ export function reactConfig(): FlatConfigArray {
         // No positive tabIndex values — disrupts natural tab order
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/tabindex-no-positive.md
         "jsx-a11y/tabindex-no-positive": "error",
+
+        // Validate lang attribute values — e.g. "de" ok, "deutsch" not
+        // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/lang.md
+        "jsx-a11y/lang": "error",
+
+        // Validate autocomplete attribute values on form elements
+        // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/autocomplete-valid.md
+        "jsx-a11y/autocomplete-valid": "error",
       },
     },
   ]
