@@ -398,6 +398,46 @@ export function aiConfig(): FlatConfigArray {
         // Prevent abbreviated variable names (e → error, btn → button) — readable
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md
         "unicorn/prevent-abbreviations": "error",
+
+        // Detect useless switch cases that fall through to the next case
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-switch-case.md
+        "unicorn/no-useless-switch-case": "error",
+
+        // Enforce correct Error subclassing (name, constructor pattern)
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/custom-error-definition.md
+        "unicorn/custom-error-definition": "error",
+
+        // Prefer default parameters over manual reassignment
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-default-parameters.md
+        "unicorn/prefer-default-parameters": "error",
+
+        // Prefer `a || b` over `a ? a : b` — simpler when equivalent
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-logical-operator-over-ternary.md
+        "unicorn/prefer-logical-operator-over-ternary": "error",
+
+        // Prefer Math.min()/Math.max() over ternaries for clamping
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-math-min-max.md
+        "unicorn/prefer-math-min-max": "error",
+
+        // Prefer Set#size over converting to array — direct and correct
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-set-size.md
+        "unicorn/prefer-set-size": "error",
+
+        // Enforce explicit `.length > 0` / `.length === 0` checks
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/explicit-length-check.md
+        "unicorn/explicit-length-check": "error",
+
+        // Prefer for-of over C-style for loops — no off-by-one risk
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-for-loop.md
+        "unicorn/no-for-loop": "error",
+
+        // Enforce braces in switch cases — prevents scope leakage
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/switch-case-braces.md
+        "unicorn/switch-case-braces": "error",
+
+        // Combine multiple .push() calls into one — cleaner
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-push-push.md
+        "unicorn/no-array-push-push": "error",
       },
     },
     {

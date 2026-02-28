@@ -24,13 +24,17 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-abusive-eslint-disable.md
         "unicorn/no-abusive-eslint-disable": "error",
 
-        // Use Array.isArray() instead of instanceof Array — works across realms
-        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-instanceof-array.md
-        "unicorn/no-instanceof-array": "error",
+        // Disallow `instanceof` with built-in objects — use proper checks instead
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-instanceof-builtins.md
+        "unicorn/no-instanceof-builtins": "error",
 
         // Prevent passing non-function to removeEventListener — common mistake
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-invalid-remove-event-listener.md
         "unicorn/no-invalid-remove-event-listener": "error",
+
+        // Disallow invalid fetch() options — catches typos at lint time
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-invalid-fetch-options.md
+        "unicorn/no-invalid-fetch-options": "error",
 
         // Prefer direct undefined checks over typeof — cleaner with strict mode
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-typeof-undefined.md
@@ -56,6 +60,55 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-undefined.md
         "unicorn/no-useless-undefined": "error",
 
+        // Disallow `await` in Promise.all/race arguments — already a promise
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-in-promise-methods.md
+        "unicorn/no-await-in-promise-methods": "error",
+
+        // Catch `!a === b` bugs — use `a !== b` instead
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-negation-in-equality-check.md
+        "unicorn/no-negation-in-equality-check": "error",
+
+        // Disallow objects with `.then` property — prevents accidental thenables
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-thenable.md
+        "unicorn/no-thenable": "error",
+
+        // Disallow `(await foo).bar` — assign to variable first for clarity
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-expression-member.md
+        "unicorn/no-await-expression-member": "error",
+
+        // Disallow `const self = this` — use arrow functions instead
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-this-assignment.md
+        "unicorn/no-this-assignment": "error",
+
+        // Disallow `await` on non-promise values — unnecessary overhead
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-await.md
+        "unicorn/no-unnecessary-await": "error",
+
+        // Disallow `.length` as slice end argument — it's the default
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-length-as-slice-end.md
+        "unicorn/no-length-as-slice-end": "error",
+
+        // Disallow recursive access in getters/setters — infinite loop risk
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-accessor-recursion.md
+        "unicorn/no-accessor-recursion": "error",
+
+        // Disallow anonymous default exports — hard to find and refactor
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-anonymous-default-export.md
+        "unicorn/no-anonymous-default-export": "error",
+
+        // Disallow `this` argument in array methods — use arrow functions
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-method-this-argument.md
+        "unicorn/no-array-method-this-argument": "error",
+
+        // Disallow passing function references directly to iterator methods
+        // Prevents bugs like `['1','2'].map(parseInt)` → [1, NaN]
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-callback-reference.md
+        "unicorn/no-array-callback-reference": "error",
+
+        // Disallow unreadable IIFEs — extract to named function
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unreadable-iife.md
+        "unicorn/no-unreadable-iife": "error",
+
         // Require Error messages — aids debugging
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/error-message.md
         "unicorn/error-message": "error",
@@ -63,6 +116,18 @@ export function unicornConfig(): FlatConfigArray {
         // Require `new` keyword when throwing errors — consistent pattern
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/throw-new-error.md
         "unicorn/throw-new-error": "error",
+
+        // Prefer consistent types when spreading a ternary in an array literal
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-empty-array-spread.md
+        "unicorn/consistent-empty-array-spread": "error",
+
+        // Prefer passing Date directly to constructor when cloning
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-date-clone.md
+        "unicorn/consistent-date-clone": "error",
+
+        // Enforce consistent style for indexOf/findIndex existence checks
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-existence-index-check.md
+        "unicorn/consistent-existence-index-check": "error",
 
         // ── Modern API preferences ────────────────────────────────────
 
@@ -205,6 +270,26 @@ export function unicornConfig(): FlatConfigArray {
         // Prefer relative URLs over absolute same-origin URLs
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/relative-url-style.md
         "unicorn/relative-url-style": "error",
+
+        // Prefer `node:fs` over `fs` — explicit built-in module protocol
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-node-protocol.md
+        "unicorn/prefer-node-protocol": "error",
+
+        // Prefer `globalThis` over `window`/`self`/`global` — universal
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-global-this.md
+        "unicorn/prefer-global-this": "error",
+
+        // Prefer omitting unused catch binding — cleaner syntax
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-optional-catch-binding.md
+        "unicorn/prefer-optional-catch-binding": "error",
+
+        // Prefer `Date.now()` over `new Date().getTime()` — direct and readable
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-date-now.md
+        "unicorn/prefer-date-now": "error",
+
+        // Enforce consistent `utf-8` casing for text encoding identifiers
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/text-encoding-identifier-case.md
+        "unicorn/text-encoding-identifier-case": "error",
       },
     },
   ]
