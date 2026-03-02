@@ -37,11 +37,33 @@ Use the plugin (`@next/eslint-plugin-next`), not the full config (`eslint-config
 |--------|---------|
 | [`@tanstack/eslint-plugin-query`](https://tanstack.com/query/latest/docs/eslint/eslint-plugin-query) | Query key conventions, exhaustive deps for queries, stable query function references |
 
-## Tailwind CSS
+## CSS & Styling
 
 | Plugin | Purpose |
 |--------|---------|
-| [`eslint-plugin-tailwindcss`](https://github.com/francoismassart/eslint-plugin-tailwindcss) | Class ordering, contradicting class detection, enforcing utility classes over custom CSS |
+| [`eslint-plugin-tailwindcss`](https://github.com/francoismassart/eslint-plugin-tailwindcss) | Tailwind class ordering, contradicting class detection, enforcing utility classes over custom CSS |
+| [`@unocss/eslint-plugin`](https://unocss.dev/integrations/eslint) | UnoCSS class ordering and blocklist enforcement |
+| [`@stylexjs/eslint-plugin`](https://github.com/facebook/stylex) | StyleX (Meta's CSS-in-JS) — validates style definitions and prop usage |
+
+## Internationalization
+
+| Plugin | Purpose |
+|--------|---------|
+| [`eslint-plugin-i18next`](https://github.com/edvardchen/eslint-plugin-i18next) | Detects hardcoded user-facing strings in JSX and enforces translation function usage (`t()`, `<Trans>`) |
+
+## Config File Linting
+
+This config already lints JSON via `@eslint/json`. For other config file formats, ESLint can serve as a unified linter — one tool, one config, inline directives (`# eslint-disable`), and editor integration for free. All three plugins below are from the same author (ota-meshi), actively maintained, and support ESLint flat config.
+
+| Plugin | Rules | Downloads/week | Formats |
+|--------|-------|----------------|---------|
+| [`eslint-plugin-jsonc`](https://github.com/ota-meshi/eslint-plugin-jsonc) | 50 | ~1M | JSON, JSONC, JSON5 — more comprehensive than `@eslint/json`, with comment and trailing comma support |
+| [`eslint-plugin-yml`](https://github.com/ota-meshi/eslint-plugin-yml) | 27 | ~272K | YAML — CI configs, Docker Compose, Kubernetes manifests, pnpm-workspace.yaml |
+| [`eslint-plugin-toml`](https://github.com/ota-meshi/eslint-plugin-toml) | 23 | ~67K | TOML — primarily relevant for Rust (Cargo.toml) and Python (pyproject.toml) projects |
+
+<Tip>
+The alternative is dedicated format-specific tools: [yamllint](https://github.com/adrienverge/yamllint) for YAML, [taplo](https://taplo.tamasfe.dev/) for TOML. These are faster and more format-aware, but require separate tool setup and configuration. ESLint plugins trade depth for consolidation.
+</Tip>
 
 ## Barrel Files
 
@@ -51,13 +73,14 @@ Barrel files (`index.ts` that re-export from many modules) hurt tree-shaking, sl
 |--------|---------|
 | [`eslint-plugin-barrel-files`](https://github.com/thepassle/eslint-plugin-barrel-files) | Detects barrel files, flags imports from them (with module graph analysis via `oxc-resolver`), prevents `export *` patterns |
 
-## Monorepo Boundaries
+## Monorepo Hygiene
 
 In monorepos, it's easy to accidentally import from another package's internals or forget to declare a dependency in `package.json`. This config doesn't include monorepo rules because workspace setups vary too much — pnpm strict, yarn PnP, npm hoisted — and the right boundaries are project-specific.
 
 | Plugin | Purpose |
 |--------|---------|
 | [`eslint-plugin-workspaces`](https://github.com/joshuajaco/eslint-plugin-workspaces) | Prevents cross-package internal imports, phantom dependencies, and wrong relative/absolute paths across workspace boundaries |
+| [`eslint-plugin-pnpm`](https://github.com/antfu/pnpm-workspace-utils) | pnpm catalog validation — enforces catalog usage, detects unused/duplicate catalog items, validates workspace patterns. Requires `jsonc-eslint-parser` and `yaml-eslint-parser`. |
 
 ## Markdown Structure
 
