@@ -1,5 +1,6 @@
 import { aiConfig } from "../configs/ai"
 import { baseConfig } from "../configs/base"
+import { compatConfig } from "../configs/compat"
 import { cspellConfig } from "../configs/cspell"
 import { importsConfig } from "../configs/imports"
 import { jsdocConfig } from "../configs/jsdoc"
@@ -57,46 +58,51 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 9. Security (always)
   config.push(...securityConfig())
 
-  // 10. Complexity preset (before AI which may override)
+  // 10. Browser compat (when not a Node.js project)
+  if (!opts.node) {
+    config.push(...compatConfig())
+  }
+
+  // 11. Complexity preset (before AI which may override)
   if (!opts.ai) {
     config.push(...standardComplexity())
   }
 
-  // 11. Node.js (conditional)
+  // 12. Node.js (conditional)
   if (opts.node) {
     config.push(...nodeConfig())
   }
 
-  // 12. React (conditional)
+  // 13. React (conditional)
   if (opts.react) {
     config.push(...reactConfig())
   }
 
-  // 13. AI mode (conditional — includes its own complexity limits)
+  // 14. AI mode (conditional — includes its own complexity limits)
   if (opts.ai) {
     config.push(...aiConfig())
   }
 
-  // 14. File-pattern overrides (always relevant)
+  // 15. File-pattern overrides (always relevant)
   config.push(...testsOverride(opts))
   config.push(...e2eOverride())
   config.push(...configFilesOverride())
   config.push(...declarationsOverride())
   config.push(...scriptsOverride())
 
-  // 15. Stories (only with React)
+  // 16. Stories (only with React)
   if (opts.react) {
     config.push(...storiesOverride())
   }
 
-  // 16. JSON & Markdown (always)
+  // 17. JSON & Markdown (always)
   config.push(...jsonConfig())
   config.push(...markdownConfig())
 
-  // 17. Prettier compat (always last for TS/JS rules)
+  // 18. Prettier compat (always last for TS/JS rules)
   config.push(...prettierCompatConfig())
 
-  // 18. OxLint (absolute last — disables rules OxLint already covers)
+  // 19. OxLint (absolute last — disables rules OxLint already covers)
   if (opts.oxlint) {
     config.push(...oxlintIntegration(opts))
   }
