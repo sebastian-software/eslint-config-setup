@@ -3,7 +3,7 @@ import globals from "globals"
 import type { FlatConfigArray } from "../types"
 
 /**
- * React config — React 19+, Hooks, Compiler (Server Components), and JSX accessibility.
+ * React config — React 19+, Hooks (incl. Compiler), and JSX accessibility.
  *
  * We hand-pick rules instead of using plugin presets because:
  * - `eslint-plugin-react`'s recommended preset includes `react-in-jsx-scope` which
@@ -11,9 +11,11 @@ import type { FlatConfigArray } from "../types"
  * - We want explicit control over each rule and its severity
  * - jsx-a11y has no flat config preset yet
  *
+ * Since React Compiler v1.0, compiler rules are included in eslint-plugin-react-hooks
+ * (>= 7.0.0). The standalone eslint-plugin-react-compiler is deprecated.
+ *
  * @see https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules
  * @see https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks
- * @see https://react.dev/learn/react-compiler
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
 export function reactConfig(): FlatConfigArray {
@@ -38,10 +40,6 @@ export function reactConfig(): FlatConfigArray {
         get "react-hooks"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
           return require("eslint-plugin-react-hooks")
-        },
-        get "react-compiler"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-react-compiler")
         },
         get "jsx-a11y"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -207,11 +205,12 @@ export function reactConfig(): FlatConfigArray {
         // https://react.dev/reference/react/useEffect#specifying-reactive-dependencies
         "react-hooks/exhaustive-deps": "error",
 
-        // ── React Compiler (React 19+) ────────────────────────────────
+        // ── React Compiler (via react-hooks >= 7.0) ─────────────────────
 
         // Validates code is compatible with React Compiler's auto-memoization
+        // Merged into react-hooks since React Compiler v1.0 (Oct 2025)
         // https://react.dev/learn/react-compiler
-        "react-compiler/react-compiler": "error",
+        "react-hooks/react-compiler": "error",
 
         // ── JSX Accessibility (a11y) ──────────────────────────────────
 

@@ -2738,8 +2738,8 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "jsx-a11y/role-supports-aria-props": "error",
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
-      "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
+      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/button-has-type": "error",
       "react/function-component-definition": [
@@ -7607,8 +7607,8 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "jsx-a11y/role-supports-aria-props": "error",
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
-      "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
+      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/button-has-type": "error",
       "react/function-component-definition": [
@@ -9675,8 +9675,8 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "jsx-a11y/role-supports-aria-props": "error",
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
-      "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
+      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/button-has-type": "error",
       "react/function-component-definition": [
@@ -11181,8 +11181,8 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "jsx-a11y/role-supports-aria-props": "error",
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
-      "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
+      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/button-has-type": "error",
       "react/function-component-definition": [
@@ -12708,8 +12708,8 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "jsx-a11y/role-supports-aria-props": "error",
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
-      "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
+      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/button-has-type": "error",
       "react/function-component-definition": [
