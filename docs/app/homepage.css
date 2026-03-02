@@ -472,12 +472,14 @@
   display: contents;
 }
 
-/* Remove default margins/borders from Ardo code blocks inside our panels */
+/* Remove default margins/borders/background from Ardo code blocks inside our panels */
 .hp-ba-code-wrap .ardo-code-block,
 .hp-showcase-panel .ardo-code-block {
   margin: 0;
   border: none;
   border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .hp-ba-code-wrap .ardo-code-wrapper,
@@ -488,9 +490,16 @@
 .hp-ba-code-wrap .shiki,
 .hp-showcase-panel .shiki {
   margin: 0;
+  padding: 20px;
   border-radius: 0;
   font-size: 0.85rem;
   line-height: 1.75;
+  background: var(--shiki-light-bg, var(--hp-surface-code)) !important;
+}
+
+.dark .hp-ba-code-wrap .shiki,
+.dark .hp-showcase-panel .shiki {
+  background: var(--shiki-dark-bg, var(--hp-surface-code)) !important;
 }
 
 /* Hide copy button in before/after panels */
