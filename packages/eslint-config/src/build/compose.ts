@@ -7,6 +7,7 @@ import { jsdocConfig } from "../configs/jsdoc"
 import { jsonConfig } from "../configs/json"
 import { markdownConfig } from "../configs/markdown"
 import { nodeConfig } from "../configs/node"
+import { perfectionistAiConfig, perfectionistConfig } from "../configs/perfectionist"
 import { prettierCompatConfig } from "../configs/prettier"
 import { reactConfig } from "../configs/react"
 import { regexpConfig } from "../configs/regexp"
@@ -40,7 +41,10 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 3. Imports (always)
   config.push(...importsConfig())
 
-  // 4. Unicorn (always)
+  // 4. Perfectionist — mechanical sorting (always)
+  config.push(...perfectionistConfig())
+
+  // 5. Unicorn (always)
   config.push(...unicornConfig())
 
   // 5. Regexp (always)
@@ -81,6 +85,7 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 14. AI mode (conditional — includes its own complexity limits)
   if (opts.ai) {
     config.push(...aiConfig())
+    config.push(...perfectionistAiConfig())
   }
 
   // 15. File-pattern overrides (always relevant)

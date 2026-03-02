@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `22`;
+exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `25`;
 
 exports[`config snapshots > snapshot: ai only 1`] = `
 [
@@ -443,6 +443,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -455,14 +456,26 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -757,6 +770,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "security/detect-possible-timing-attacks": "warn",
       "security/detect-pseudoRandomBytes": "error",
       "security/detect-unsafe-regex": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/compat",
+    "rules": {
+      "compat/compat": "warn",
     },
   },
   {
@@ -1138,6 +1157,28 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/ai-jsdoc",
+    "rules": {
+      "jsdoc/informative-docs": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/ai-node",
+    "rules": {
+      "node/no-unsupported-features/node-builtins": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/ai-react",
+    "rules": {
+      "jsx-a11y/interactive-supports-focus": "error",
+      "jsx-a11y/no-noninteractive-element-interactions": "error",
+      "jsx-a11y/no-static-element-interactions": "error",
+      "react/jsx-no-bind": "error",
+      "react/no-multi-comp": "error",
+    },
+  },
+  {
     "name": "@effective/eslint/ai-complexity",
     "rules": {
       "complexity": [
@@ -1253,6 +1294,21 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist-ai",
+    "rules": {
+      "perfectionist/sort-array-includes": "error",
+      "perfectionist/sort-classes": "error",
+      "perfectionist/sort-enums": "error",
+      "perfectionist/sort-interfaces": "error",
+      "perfectionist/sort-jsx-props": "error",
+      "perfectionist/sort-maps": "error",
+      "perfectionist/sort-object-types": "error",
+      "perfectionist/sort-objects": "error",
+      "perfectionist/sort-sets": "error",
+      "perfectionist/sort-switch-case": "error",
     },
   },
   {
@@ -1407,16 +1463,29 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -2226,6 +2295,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -2238,14 +2308,26 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -2545,10 +2627,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "@effective/eslint/node",
     "rules": {
+      "node/hashbang": "error",
       "node/no-deprecated-api": "error",
       "node/no-exports-assign": "error",
       "node/no-missing-import": "off",
       "node/no-missing-require": "off",
+      "node/no-path-concat": "error",
       "node/no-process-exit": "warn",
       "node/no-unpublished-import": "off",
       "node/prefer-global/buffer": [
@@ -2586,11 +2670,13 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "jsx-a11y/aria-proptypes": "error",
       "jsx-a11y/aria-role": "error",
       "jsx-a11y/aria-unsupported-elements": "error",
+      "jsx-a11y/autocomplete-valid": "error",
       "jsx-a11y/click-events-have-key-events": "error",
       "jsx-a11y/heading-has-content": "error",
       "jsx-a11y/html-has-lang": "error",
       "jsx-a11y/img-redundant-alt": "error",
       "jsx-a11y/label-has-associated-control": "error",
+      "jsx-a11y/lang": "error",
       "jsx-a11y/mouse-events-have-key-events": "error",
       "jsx-a11y/no-access-key": "error",
       "jsx-a11y/no-autofocus": [
@@ -2608,6 +2694,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
         {
@@ -2635,7 +2722,9 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         },
       ],
       "react/jsx-no-comment-textnodes": "error",
+      "react/jsx-no-constructed-context-values": "error",
       "react/jsx-no-duplicate-props": "error",
+      "react/jsx-no-leaked-render": "error",
       "react/jsx-no-target-blank": "error",
       "react/jsx-no-undef": "error",
       "react/jsx-no-useless-fragment": [
@@ -2646,15 +2735,22 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       ],
       "react/jsx-pascal-case": "error",
       "react/jsx-uses-react": "off",
+      "react/no-access-state-in-setstate": "error",
+      "react/no-array-index-key": "error",
       "react/no-children-prop": "error",
       "react/no-danger": "warn",
+      "react/no-danger-with-children": "error",
       "react/no-deprecated": "error",
       "react/no-direct-mutation-state": "error",
+      "react/no-object-type-as-default-prop": "error",
+      "react/no-string-refs": "error",
       "react/no-unknown-property": "error",
       "react/no-unstable-nested-components": "error",
+      "react/no-unused-state": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "react/self-closing-comp": "error",
+      "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
     },
   },
@@ -3037,6 +3133,28 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/ai-jsdoc",
+    "rules": {
+      "jsdoc/informative-docs": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/ai-node",
+    "rules": {
+      "node/no-unsupported-features/node-builtins": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/ai-react",
+    "rules": {
+      "jsx-a11y/interactive-supports-focus": "error",
+      "jsx-a11y/no-noninteractive-element-interactions": "error",
+      "jsx-a11y/no-static-element-interactions": "error",
+      "react/jsx-no-bind": "error",
+      "react/no-multi-comp": "error",
+    },
+  },
+  {
     "name": "@effective/eslint/ai-complexity",
     "rules": {
       "complexity": [
@@ -3152,6 +3270,21 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist-ai",
+    "rules": {
+      "perfectionist/sort-array-includes": "error",
+      "perfectionist/sort-classes": "error",
+      "perfectionist/sort-enums": "error",
+      "perfectionist/sort-interfaces": "error",
+      "perfectionist/sort-jsx-props": "error",
+      "perfectionist/sort-maps": "error",
+      "perfectionist/sort-object-types": "error",
+      "perfectionist/sort-objects": "error",
+      "perfectionist/sort-sets": "error",
+      "perfectionist/sort-switch-case": "error",
     },
   },
   {
@@ -3357,16 +3490,29 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -4200,6 +4346,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -4212,14 +4359,26 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -4517,6 +4676,12 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/compat",
+    "rules": {
+      "compat/compat": "warn",
+    },
+  },
+  {
     "name": "@effective/eslint/complexity",
     "rules": {
       "complexity": [
@@ -4713,16 +4878,29 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -5532,6 +5710,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -5544,14 +5723,26 @@ exports[`config snapshots > snapshot: node only 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -5896,10 +6087,12 @@ exports[`config snapshots > snapshot: node only 1`] = `
   {
     "name": "@effective/eslint/node",
     "rules": {
+      "node/hashbang": "error",
       "node/no-deprecated-api": "error",
       "node/no-exports-assign": "error",
       "node/no-missing-import": "off",
       "node/no-missing-require": "off",
+      "node/no-path-concat": "error",
       "node/no-process-exit": "warn",
       "node/no-unpublished-import": "off",
       "node/prefer-global/buffer": [
@@ -6078,16 +6271,29 @@ exports[`config snapshots > snapshot: node only 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -6897,6 +7103,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -6909,14 +7116,26 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -7214,6 +7433,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/compat",
+    "rules": {
+      "compat/compat": "warn",
+    },
+  },
+  {
     "name": "@effective/eslint/react",
     "rules": {
       "jsx-a11y/alt-text": "error",
@@ -7224,11 +7449,13 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "jsx-a11y/aria-proptypes": "error",
       "jsx-a11y/aria-role": "error",
       "jsx-a11y/aria-unsupported-elements": "error",
+      "jsx-a11y/autocomplete-valid": "error",
       "jsx-a11y/click-events-have-key-events": "error",
       "jsx-a11y/heading-has-content": "error",
       "jsx-a11y/html-has-lang": "error",
       "jsx-a11y/img-redundant-alt": "error",
       "jsx-a11y/label-has-associated-control": "error",
+      "jsx-a11y/lang": "error",
       "jsx-a11y/mouse-events-have-key-events": "error",
       "jsx-a11y/no-access-key": "error",
       "jsx-a11y/no-autofocus": [
@@ -7246,6 +7473,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
         {
@@ -7273,7 +7501,9 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         },
       ],
       "react/jsx-no-comment-textnodes": "error",
+      "react/jsx-no-constructed-context-values": "error",
       "react/jsx-no-duplicate-props": "error",
+      "react/jsx-no-leaked-render": "error",
       "react/jsx-no-target-blank": "error",
       "react/jsx-no-undef": "error",
       "react/jsx-no-useless-fragment": [
@@ -7284,15 +7514,22 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       ],
       "react/jsx-pascal-case": "error",
       "react/jsx-uses-react": "off",
+      "react/no-access-state-in-setstate": "error",
+      "react/no-array-index-key": "error",
       "react/no-children-prop": "error",
       "react/no-danger": "warn",
+      "react/no-danger-with-children": "error",
       "react/no-deprecated": "error",
       "react/no-direct-mutation-state": "error",
+      "react/no-object-type-as-default-prop": "error",
+      "react/no-string-refs": "error",
       "react/no-unknown-property": "error",
       "react/no-unstable-nested-components": "error",
+      "react/no-unused-state": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "react/self-closing-comp": "error",
+      "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
     },
   },
@@ -7675,6 +7912,28 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/ai-jsdoc",
+    "rules": {
+      "jsdoc/informative-docs": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/ai-node",
+    "rules": {
+      "node/no-unsupported-features/node-builtins": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/ai-react",
+    "rules": {
+      "jsx-a11y/interactive-supports-focus": "error",
+      "jsx-a11y/no-noninteractive-element-interactions": "error",
+      "jsx-a11y/no-static-element-interactions": "error",
+      "react/jsx-no-bind": "error",
+      "react/no-multi-comp": "error",
+    },
+  },
+  {
     "name": "@effective/eslint/ai-complexity",
     "rules": {
       "complexity": [
@@ -7790,6 +8049,21 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-magic-numbers": "off",
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist-ai",
+    "rules": {
+      "perfectionist/sort-array-includes": "error",
+      "perfectionist/sort-classes": "error",
+      "perfectionist/sort-enums": "error",
+      "perfectionist/sort-interfaces": "error",
+      "perfectionist/sort-jsx-props": "error",
+      "perfectionist/sort-maps": "error",
+      "perfectionist/sort-object-types": "error",
+      "perfectionist/sort-objects": "error",
+      "perfectionist/sort-sets": "error",
+      "perfectionist/sort-switch-case": "error",
     },
   },
   {
@@ -7995,16 +8269,29 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -8814,6 +9101,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -8826,14 +9114,26 @@ exports[`config snapshots > snapshot: react + node 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -9178,10 +9478,12 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   {
     "name": "@effective/eslint/node",
     "rules": {
+      "node/hashbang": "error",
       "node/no-deprecated-api": "error",
       "node/no-exports-assign": "error",
       "node/no-missing-import": "off",
       "node/no-missing-require": "off",
+      "node/no-path-concat": "error",
       "node/no-process-exit": "warn",
       "node/no-unpublished-import": "off",
       "node/prefer-global/buffer": [
@@ -9219,11 +9521,13 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "jsx-a11y/aria-proptypes": "error",
       "jsx-a11y/aria-role": "error",
       "jsx-a11y/aria-unsupported-elements": "error",
+      "jsx-a11y/autocomplete-valid": "error",
       "jsx-a11y/click-events-have-key-events": "error",
       "jsx-a11y/heading-has-content": "error",
       "jsx-a11y/html-has-lang": "error",
       "jsx-a11y/img-redundant-alt": "error",
       "jsx-a11y/label-has-associated-control": "error",
+      "jsx-a11y/lang": "error",
       "jsx-a11y/mouse-events-have-key-events": "error",
       "jsx-a11y/no-access-key": "error",
       "jsx-a11y/no-autofocus": [
@@ -9241,6 +9545,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
         {
@@ -9268,7 +9573,9 @@ exports[`config snapshots > snapshot: react + node 1`] = `
         },
       ],
       "react/jsx-no-comment-textnodes": "error",
+      "react/jsx-no-constructed-context-values": "error",
       "react/jsx-no-duplicate-props": "error",
+      "react/jsx-no-leaked-render": "error",
       "react/jsx-no-target-blank": "error",
       "react/jsx-no-undef": "error",
       "react/jsx-no-useless-fragment": [
@@ -9279,15 +9586,22 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       ],
       "react/jsx-pascal-case": "error",
       "react/jsx-uses-react": "off",
+      "react/no-access-state-in-setstate": "error",
+      "react/no-array-index-key": "error",
       "react/no-children-prop": "error",
       "react/no-danger": "warn",
+      "react/no-danger-with-children": "error",
       "react/no-deprecated": "error",
       "react/no-direct-mutation-state": "error",
+      "react/no-object-type-as-default-prop": "error",
+      "react/no-string-refs": "error",
       "react/no-unknown-property": "error",
       "react/no-unstable-nested-components": "error",
+      "react/no-unused-state": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "react/self-closing-comp": "error",
+      "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
     },
   },
@@ -9494,16 +9808,29 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -10313,6 +10640,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -10325,14 +10653,26 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -10630,6 +10970,12 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/compat",
+    "rules": {
+      "compat/compat": "warn",
+    },
+  },
+  {
     "name": "@effective/eslint/complexity",
     "rules": {
       "complexity": [
@@ -10685,11 +11031,13 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "jsx-a11y/aria-proptypes": "error",
       "jsx-a11y/aria-role": "error",
       "jsx-a11y/aria-unsupported-elements": "error",
+      "jsx-a11y/autocomplete-valid": "error",
       "jsx-a11y/click-events-have-key-events": "error",
       "jsx-a11y/heading-has-content": "error",
       "jsx-a11y/html-has-lang": "error",
       "jsx-a11y/img-redundant-alt": "error",
       "jsx-a11y/label-has-associated-control": "error",
+      "jsx-a11y/lang": "error",
       "jsx-a11y/mouse-events-have-key-events": "error",
       "jsx-a11y/no-access-key": "error",
       "jsx-a11y/no-autofocus": [
@@ -10707,6 +11055,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
         {
@@ -10734,7 +11083,9 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
         },
       ],
       "react/jsx-no-comment-textnodes": "error",
+      "react/jsx-no-constructed-context-values": "error",
       "react/jsx-no-duplicate-props": "error",
+      "react/jsx-no-leaked-render": "error",
       "react/jsx-no-target-blank": "error",
       "react/jsx-no-undef": "error",
       "react/jsx-no-useless-fragment": [
@@ -10745,15 +11096,22 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       ],
       "react/jsx-pascal-case": "error",
       "react/jsx-uses-react": "off",
+      "react/no-access-state-in-setstate": "error",
+      "react/no-array-index-key": "error",
       "react/no-children-prop": "error",
       "react/no-danger": "warn",
+      "react/no-danger-with-children": "error",
       "react/no-deprecated": "error",
       "react/no-direct-mutation-state": "error",
+      "react/no-object-type-as-default-prop": "error",
+      "react/no-string-refs": "error",
       "react/no-unknown-property": "error",
       "react/no-unstable-nested-components": "error",
+      "react/no-unused-state": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "react/self-closing-comp": "error",
+      "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
     },
   },
@@ -10960,16 +11318,29 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {
@@ -11800,6 +12171,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
+      "import/no-absolute-path": "error",
       "import/no-cycle": [
         "error",
         {
@@ -11812,14 +12184,26 @@ exports[`config snapshots > snapshot: react only 1`] = `
           "prefer-inline": true,
         },
       ],
+      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
+      "import/no-named-as-default": "error",
+      "import/no-named-as-default-member": "error",
       "import/no-self-import": "error",
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
-      "simple-import-sort/exports": "error",
-      "simple-import-sort/imports": "error",
       "unused-imports/no-unused-imports": "error",
+    },
+  },
+  {
+    "name": "@effective/eslint/perfectionist",
+    "rules": {
+      "perfectionist/sort-exports": "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-intersection-types": "error",
+      "perfectionist/sort-named-exports": "error",
+      "perfectionist/sort-named-imports": "error",
+      "perfectionist/sort-union-types": "error",
     },
   },
   {
@@ -12117,6 +12501,12 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
+    "name": "@effective/eslint/compat",
+    "rules": {
+      "compat/compat": "warn",
+    },
+  },
+  {
     "name": "@effective/eslint/complexity",
     "rules": {
       "complexity": [
@@ -12172,11 +12562,13 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "jsx-a11y/aria-proptypes": "error",
       "jsx-a11y/aria-role": "error",
       "jsx-a11y/aria-unsupported-elements": "error",
+      "jsx-a11y/autocomplete-valid": "error",
       "jsx-a11y/click-events-have-key-events": "error",
       "jsx-a11y/heading-has-content": "error",
       "jsx-a11y/html-has-lang": "error",
       "jsx-a11y/img-redundant-alt": "error",
       "jsx-a11y/label-has-associated-control": "error",
+      "jsx-a11y/lang": "error",
       "jsx-a11y/mouse-events-have-key-events": "error",
       "jsx-a11y/no-access-key": "error",
       "jsx-a11y/no-autofocus": [
@@ -12194,6 +12586,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "react-compiler/react-compiler": "error",
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
         {
@@ -12221,7 +12614,9 @@ exports[`config snapshots > snapshot: react only 1`] = `
         },
       ],
       "react/jsx-no-comment-textnodes": "error",
+      "react/jsx-no-constructed-context-values": "error",
       "react/jsx-no-duplicate-props": "error",
+      "react/jsx-no-leaked-render": "error",
       "react/jsx-no-target-blank": "error",
       "react/jsx-no-undef": "error",
       "react/jsx-no-useless-fragment": [
@@ -12232,15 +12627,22 @@ exports[`config snapshots > snapshot: react only 1`] = `
       ],
       "react/jsx-pascal-case": "error",
       "react/jsx-uses-react": "off",
+      "react/no-access-state-in-setstate": "error",
+      "react/no-array-index-key": "error",
       "react/no-children-prop": "error",
       "react/no-danger": "warn",
+      "react/no-danger-with-children": "error",
       "react/no-deprecated": "error",
       "react/no-direct-mutation-state": "error",
+      "react/no-object-type-as-default-prop": "error",
+      "react/no-string-refs": "error",
       "react/no-unknown-property": "error",
       "react/no-unstable-nested-components": "error",
+      "react/no-unused-state": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "react/self-closing-comp": "error",
+      "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
     },
   },
@@ -12447,16 +12849,29 @@ exports[`config snapshots > snapshot: react only 1`] = `
   },
   {
     "files": [
-      "**/*.md",
+      "**/*.{md,mdx}",
     ],
-    "language": "markdown/commonmark",
-    "name": "@effective/eslint/markdown",
+    "name": "(unnamed)",
     "rules": {
-      "markdown/fenced-code-language": "error",
-      "markdown/heading-increment": "error",
-      "markdown/no-duplicate-headings": "warn",
-      "markdown/no-empty-links": "error",
-      "markdown/no-html": "off",
+      "mdx/remark": "warn",
+      "no-unused-expressions": "error",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    "files": [
+      "**/*.{md,mdx}/**",
+    ],
+    "name": "(unnamed)",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "off",
+      "eol-last": "off",
+      "no-undef": "off",
+      "no-unused-expressions": "off",
+      "no-unused-vars": "off",
+      "padded-blocks": "off",
+      "strict": "off",
+      "unicode-bom": "off",
     },
   },
   {

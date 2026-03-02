@@ -1,12 +1,12 @@
 import type { FlatConfigArray } from "../types"
 
 /**
- * Import/export config — three plugins with clear separation of concerns:
- * - `simple-import-sort` handles deterministic **ordering** (auto-fixable)
+ * Import/export config — two plugins with clear separation of concerns:
  * - `import-x` handles import **validation** (cycles, duplicates, etc.)
  * - `unused-imports` handles **removal** of unused imports (auto-fixable)
  *
- * @see https://github.com/lydell/eslint-plugin-simple-import-sort
+ * Import/export **ordering** is handled by perfectionist (see perfectionist.ts).
+ *
  * @see https://github.com/un-ts/eslint-plugin-import-x
  * @see https://github.com/sweepline/eslint-plugin-unused-imports
  */
@@ -19,26 +19,12 @@ export function importsConfig(): FlatConfigArray {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
           return require("eslint-plugin-import-x")
         },
-        get "simple-import-sort"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-simple-import-sort")
-        },
-        get "unused-imports"() {
+get "unused-imports"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
           return require("eslint-plugin-unused-imports")
         },
       },
       rules: {
-        // ── Ordering (simple-import-sort) ─────────────────────────────
-
-        // Auto-sort import statements — deterministic ordering regardless of input
-        // https://github.com/lydell/eslint-plugin-simple-import-sort#usage
-        "simple-import-sort/imports": "error",
-
-        // Auto-sort export statements — deterministic ordering
-        // https://github.com/lydell/eslint-plugin-simple-import-sort#usage
-        "simple-import-sort/exports": "error",
-
         // ── Validation (import-x) ────────────────────────────────────
 
         // Merge duplicate import paths into one statement — reduces noise
@@ -85,7 +71,7 @@ export function importsConfig(): FlatConfigArray {
         // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-absolute-path.md
         "import/no-absolute-path": "error",
 
-        // ── Disabled: ordering handled by simple-import-sort ──────────
+        // ── Disabled: ordering handled by perfectionist ────────────────
 
         // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/order.md
         "import/order": "off",

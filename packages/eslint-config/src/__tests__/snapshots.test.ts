@@ -145,13 +145,13 @@ describe("config rule stability", () => {
     expect(jsoncBlock?.language).toBe("json/jsonc")
   })
 
-  it("markdown config targets .md files", () => {
+  it("markdown/mdx config targets .md and .mdx files", () => {
     const config = composeConfig({})
     const mdBlock = config.find(
-      (b) => b.name === "@effective/eslint/markdown",
+      (b) => Array.isArray(b.files) && b.files.includes("**/*.{md,mdx}"),
     )
-    expect(mdBlock?.files).toEqual(["**/*.md"])
-    expect(mdBlock?.language).toBe("markdown/commonmark")
+    expect(mdBlock).toBeDefined()
+    expect(mdBlock?.files).toEqual(["**/*.{md,mdx}"])
   })
 })
 

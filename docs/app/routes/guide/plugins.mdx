@@ -23,6 +23,7 @@ This config takes a different approach. Every rule from every plugin was reviewe
 | **Security** | Hand-picked | The default preset enables `detect-object-injection`, which flags every bracket access — too many false positives for real-world code. |
 | **Node.js** | Hand-picked | Module resolution rules (`no-missing-import`, `no-unpublished-import`) conflict with TypeScript's own resolution. Only the rules TypeScript doesn't cover are included. |
 | **Import** | Hand-picked | TypeScript handles missing imports and duplicate exports. Import-x fills the gaps TypeScript doesn't cover: cycles, self-imports, mutable exports, and path hygiene. |
+| **Perfectionist** | Hand-picked | Mechanical sorting (imports, exports, types) always on. Structural sorting (objects, interfaces, classes) only in AI mode. |
 | **AI mode** | Hand-picked | Not a plugin preset at all — rules from across all plugins, tightened beyond their defaults for AI-generated code. |
 
 <Tip>
@@ -41,14 +42,14 @@ These plugins run on every project, regardless of flags.
 | [`eslint-plugin-regexp`](https://github.com/ota-meshi/eslint-plugin-regexp) | RegExp quality, optimization, and ReDoS prevention |
 | [`eslint-plugin-jsdoc`](https://github.com/gajus/eslint-plugin-jsdoc) | JSDoc validation (validates existing annotations, doesn't require them) |
 | [`eslint-plugin-import-x`](https://github.com/un-ts/eslint-plugin-import-x) | Import validation — cycles, duplicates, self-imports, mutable exports |
-| [`eslint-plugin-simple-import-sort`](https://github.com/lydell/eslint-plugin-simple-import-sort) | Deterministic import/export ordering (auto-fixable) |
+| [`eslint-plugin-perfectionist`](https://perfectionist.dev) | Deterministic sorting of imports, exports, union types, and more (auto-fixable) |
 | [`eslint-plugin-unused-imports`](https://github.com/sweepline/eslint-plugin-unused-imports) | Auto-remove unused imports |
 | [`eslint-plugin-sonarjs`](https://github.com/SonarSource/eslint-plugin-sonarjs) | Code quality — duplicate detection, cognitive complexity, dead code |
 | [`eslint-plugin-security`](https://github.com/eslint-community/eslint-plugin-security) | Security patterns — eval, regex DoS, command injection, timing attacks |
 | [`@cspell/eslint-plugin`](https://github.com/streetsidesoftware/cspell) | Spell checking in identifiers and comments |
 | [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) | Disables formatting rules that conflict with your formatter |
 | [`@eslint/json`](https://github.com/eslint/json) | JSON/JSONC linting — duplicate keys, unsafe values |
-| [`@eslint/markdown`](https://github.com/eslint/markdown) | Lints code blocks inside Markdown files with your ESLint rules |
+| [`eslint-plugin-mdx`](https://github.com/mdx-js/eslint-mdx) | Lints code blocks inside Markdown and MDX files with your ESLint rules |
 
 ## Formatting
 
@@ -70,6 +71,7 @@ These plugins activate based on your configuration flags or file patterns.
 | [`eslint-plugin-jsx-a11y`](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) | `react: true` | JSX accessibility — ARIA validation, keyboard navigation, alt text |
 | [`eslint-plugin-n`](https://github.com/eslint-community/eslint-plugin-n) | `node: true` | Node.js APIs — deprecated API detection, path handling, hashbang validation |
 | [`eslint-plugin-compat`](https://github.com/amilajack/eslint-plugin-compat) | `node: false` | Browser API compatibility against your [browserslist](https://browsersl.ist/) targets |
+| [`eslint-plugin-perfectionist`](https://perfectionist.dev) | `ai: true` | Structural sorting — objects, interfaces, enums, JSX props, classes, switch cases |
 | [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint) | `oxlint: true` | Disables ESLint rules that OxLint already covers |
 
 ### By file pattern

@@ -30,6 +30,7 @@ export { nodeConfig as node } from "./configs/node"
 export { reactConfig as react } from "./configs/react"
 export { jsonConfig as json } from "./configs/json"
 export { markdownConfig as markdown } from "./configs/markdown"
+export { perfectionistConfig as perfectionist, perfectionistAiConfig as perfectionistAi } from "./configs/perfectionist"
 export { prettierCompatConfig as prettier } from "./configs/prettier"
 export { aiConfig as ai } from "./configs/ai"
 
