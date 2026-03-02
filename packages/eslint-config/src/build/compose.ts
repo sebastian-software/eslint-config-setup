@@ -2,14 +2,17 @@ import { aiConfig } from "../configs/ai"
 import { baseConfig } from "../configs/base"
 import { compatConfig } from "../configs/compat"
 import { cspellConfig } from "../configs/cspell"
+import { deMorganConfig } from "../configs/de-morgan"
 import { importsConfig } from "../configs/imports"
 import { jsdocConfig } from "../configs/jsdoc"
 import { jsonConfig } from "../configs/json"
 import { markdownConfig } from "../configs/markdown"
 import { nodeConfig } from "../configs/node"
+import { packageJsonAiConfig, packageJsonConfig } from "../configs/package-json"
 import { perfectionistAiConfig, perfectionistConfig } from "../configs/perfectionist"
 import { prettierCompatConfig } from "../configs/prettier"
 import { reactConfig } from "../configs/react"
+import { reactEffectConfig } from "../configs/react-effect"
 import { regexpConfig } from "../configs/regexp"
 import { securityConfig } from "../configs/security"
 import { sonarjsConfig } from "../configs/sonarjs"
@@ -62,7 +65,10 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 9. Security (always)
   config.push(...securityConfig())
 
-  // 10. Browser compat (when not a Node.js project)
+  // 10. De Morgan (always)
+  config.push(...deMorganConfig())
+
+  // 11. Browser compat (when not a Node.js project)
   if (!opts.node) {
     config.push(...compatConfig())
   }
@@ -80,12 +86,14 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 13. React (conditional)
   if (opts.react) {
     config.push(...reactConfig())
+    config.push(...reactEffectConfig())
   }
 
   // 14. AI mode (conditional — includes its own complexity limits)
   if (opts.ai) {
     config.push(...aiConfig())
     config.push(...perfectionistAiConfig())
+    config.push(...packageJsonAiConfig())
   }
 
   // 15. File-pattern overrides (always relevant — no-op if files don't exist)
@@ -96,8 +104,9 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   config.push(...declarationsOverride())
   config.push(...scriptsOverride())
 
-  // 16. JSON & Markdown (always)
+  // 16. JSON, Package.json & Markdown (always)
   config.push(...jsonConfig())
+  config.push(...packageJsonConfig())
   config.push(...markdownConfig())
 
   // 18. Prettier compat (always last for TS/JS rules)
