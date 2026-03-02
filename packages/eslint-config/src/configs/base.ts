@@ -56,10 +56,6 @@ export function baseConfig(): FlatConfigArray {
     // https://eslint.org/docs/latest/rules/no-unmodified-loop-condition
     .addRule("no-unmodified-loop-condition", "error")
 
-    // Detect dead stores — variable is written but never read
-    // https://eslint.org/docs/latest/rules/no-useless-assignment
-    .addRule("no-useless-assignment", "error")
-
     // Keep getter/setter pairs adjacent — easier to find related logic
     // https://eslint.org/docs/latest/rules/grouped-accessor-pairs
     .addRule("grouped-accessor-pairs", ["error", "getBeforeSet"])
@@ -71,10 +67,6 @@ export function baseConfig(): FlatConfigArray {
     // Remove unnecessary computed keys — `{ ["key"]: value }` → `{ key: value }`
     // https://eslint.org/docs/latest/rules/no-useless-computed-key
     .addRule("no-useless-computed-key", "error")
-
-    // Prevent catch blocks from swallowing errors silently
-    // https://eslint.org/docs/latest/rules/preserve-caught-error
-    .addRule("preserve-caught-error", "error")
 
     // ── Dangerous patterns ────────────────────────────────────────
 

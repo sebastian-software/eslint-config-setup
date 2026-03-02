@@ -56,12 +56,12 @@
   "license": "MIT",
   "sideEffects": false,
   "peerDependencies": {
-    "eslint": ">= 9.22",
+    "eslint": ">= 9.22 || >= 10",
     "typescript": ">= 5.0"
   },
   "dependencies": {
     "@cspell/eslint-plugin": "^9.7.0",
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.0.1",
     "@vitest/eslint-plugin": "^1.6.9",
     "eslint-config-prettier": "^10.1.8",
@@ -92,7 +92,7 @@
   "devDependencies": {
     "@oxlint/migrate": "^1.51.0",
     "@types/node": "^25.3.3",
-    "eslint": "^9.39.3",
+    "eslint": "^10.0.2",
     "eslint-plugin-compat": "^7.0.0",
     "oxlint": "^1.51.0",
     "tsup": "^8.5.1",
