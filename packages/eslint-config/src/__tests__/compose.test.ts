@@ -51,15 +51,15 @@ describe("composeConfig", () => {
     expect(noAiBlocks.length).toBe(0)
   })
 
-  it("includes storybook override only when react is true", () => {
+  it("includes storybook override regardless of react flag", () => {
     const withReact = composeConfig({ react: true })
     const withoutReact = composeConfig({})
 
-    const storyBlocks = withReact.filter((b) => b.name?.includes("stories"))
-    const noStoryBlocks = withoutReact.filter((b) => b.name?.includes("stories"))
+    const storyBlocksWithReact = withReact.filter((b) => b.name?.includes("stories"))
+    const storyBlocksWithoutReact = withoutReact.filter((b) => b.name?.includes("stories"))
 
-    expect(storyBlocks.length).toBeGreaterThan(0)
-    expect(noStoryBlocks.length).toBe(0)
+    expect(storyBlocksWithReact.length).toBeGreaterThan(0)
+    expect(storyBlocksWithoutReact.length).toBeGreaterThan(0)
   })
 
   it("always ends with prettier as the last TS/JS config", () => {

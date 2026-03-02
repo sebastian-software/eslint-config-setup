@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `25`;
+exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `26`;
 
 exports[`config snapshots > snapshot: ai only 1`] = `
 [
@@ -1374,6 +1374,27 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "playwright/no-wait-for-timeout": "error",
       "playwright/prefer-web-first-assertions": "error",
       "playwright/valid-expect": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -3384,6 +3405,27 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   },
   {
     "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.config.{ts,mts,cts,js,mjs,cjs}",
       "**/vite.config.*",
       "**/vitest.config.*",
@@ -3436,27 +3478,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-console": "off",
       "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
-    },
-  },
-  {
-    "files": [
-      "**/*.stories.{ts,tsx}",
-    ],
-    "name": "@effective/eslint/stories",
-    "rules": {
-      "import/no-default-export": "off",
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "storybook/await-interactions": "error",
-      "storybook/default-exports": "error",
-      "storybook/hierarchy-separator": "error",
-      "storybook/no-redundant-story-name": "error",
-      "storybook/no-stories-of": "error",
-      "storybook/no-title-property-in-meta": "warn",
-      "storybook/prefer-pascal-case": "error",
-      "storybook/story-exports": "error",
-      "storybook/use-storybook-expect": "error",
-      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -4789,6 +4810,27 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "playwright/no-wait-for-timeout": "error",
       "playwright/prefer-web-first-assertions": "error",
       "playwright/valid-expect": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -6182,6 +6224,27 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "playwright/no-wait-for-timeout": "error",
       "playwright/prefer-web-first-assertions": "error",
       "playwright/valid-expect": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -8163,6 +8226,27 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   },
   {
     "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.config.{ts,mts,cts,js,mjs,cjs}",
       "**/vite.config.*",
       "**/vitest.config.*",
@@ -8215,27 +8299,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-console": "off",
       "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
-    },
-  },
-  {
-    "files": [
-      "**/*.stories.{ts,tsx}",
-    ],
-    "name": "@effective/eslint/stories",
-    "rules": {
-      "import/no-default-export": "off",
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "storybook/await-interactions": "error",
-      "storybook/default-exports": "error",
-      "storybook/hierarchy-separator": "error",
-      "storybook/no-redundant-story-name": "error",
-      "storybook/no-stories-of": "error",
-      "storybook/no-title-property-in-meta": "warn",
-      "storybook/prefer-pascal-case": "error",
-      "storybook/story-exports": "error",
-      "storybook/use-storybook-expect": "error",
-      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -9702,6 +9765,27 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   },
   {
     "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.config.{ts,mts,cts,js,mjs,cjs}",
       "**/vite.config.*",
       "**/vitest.config.*",
@@ -9754,27 +9838,6 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "no-console": "off",
       "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
-    },
-  },
-  {
-    "files": [
-      "**/*.stories.{ts,tsx}",
-    ],
-    "name": "@effective/eslint/stories",
-    "rules": {
-      "import/no-default-export": "off",
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "storybook/await-interactions": "error",
-      "storybook/default-exports": "error",
-      "storybook/hierarchy-separator": "error",
-      "storybook/no-redundant-story-name": "error",
-      "storybook/no-stories-of": "error",
-      "storybook/no-title-property-in-meta": "warn",
-      "storybook/prefer-pascal-case": "error",
-      "storybook/story-exports": "error",
-      "storybook/use-storybook-expect": "error",
-      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -11212,6 +11275,27 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
   },
   {
     "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.config.{ts,mts,cts,js,mjs,cjs}",
       "**/vite.config.*",
       "**/vitest.config.*",
@@ -11264,27 +11348,6 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "no-console": "off",
       "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
-    },
-  },
-  {
-    "files": [
-      "**/*.stories.{ts,tsx}",
-    ],
-    "name": "@effective/eslint/stories",
-    "rules": {
-      "import/no-default-export": "off",
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "storybook/await-interactions": "error",
-      "storybook/default-exports": "error",
-      "storybook/hierarchy-separator": "error",
-      "storybook/no-redundant-story-name": "error",
-      "storybook/no-stories-of": "error",
-      "storybook/no-title-property-in-meta": "warn",
-      "storybook/prefer-pascal-case": "error",
-      "storybook/story-exports": "error",
-      "storybook/use-storybook-expect": "error",
-      "storybook/use-storybook-testing-library": "error",
     },
   },
   {
@@ -12743,6 +12806,27 @@ exports[`config snapshots > snapshot: react only 1`] = `
   },
   {
     "files": [
+      "**/*.stories.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/stories",
+    "rules": {
+      "import/no-default-export": "off",
+      "max-lines": "off",
+      "max-lines-per-function": "off",
+      "storybook/await-interactions": "error",
+      "storybook/default-exports": "error",
+      "storybook/hierarchy-separator": "error",
+      "storybook/no-redundant-story-name": "error",
+      "storybook/no-stories-of": "error",
+      "storybook/no-title-property-in-meta": "warn",
+      "storybook/prefer-pascal-case": "error",
+      "storybook/story-exports": "error",
+      "storybook/use-storybook-expect": "error",
+      "storybook/use-storybook-testing-library": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.config.{ts,mts,cts,js,mjs,cjs}",
       "**/vite.config.*",
       "**/vitest.config.*",
@@ -12795,27 +12879,6 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "no-console": "off",
       "node/no-process-exit": "off",
       "unicorn/no-process-exit": "off",
-    },
-  },
-  {
-    "files": [
-      "**/*.stories.{ts,tsx}",
-    ],
-    "name": "@effective/eslint/stories",
-    "rules": {
-      "import/no-default-export": "off",
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "storybook/await-interactions": "error",
-      "storybook/default-exports": "error",
-      "storybook/hierarchy-separator": "error",
-      "storybook/no-redundant-story-name": "error",
-      "storybook/no-stories-of": "error",
-      "storybook/no-title-property-in-meta": "warn",
-      "storybook/prefer-pascal-case": "error",
-      "storybook/story-exports": "error",
-      "storybook/use-storybook-expect": "error",
-      "storybook/use-storybook-testing-library": "error",
     },
   },
   {

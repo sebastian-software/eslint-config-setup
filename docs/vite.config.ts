@@ -42,6 +42,7 @@ export default defineConfig({
               { text: 'AI Mode', link: '/guide/ai-mode' },
               { text: 'OxLint Integration', link: '/guide/oxlint' },
               { text: 'Included Plugins', link: '/guide/plugins' },
+              { text: 'Recommended Addons', link: '/guide/addons' },
             ],
           },
           {

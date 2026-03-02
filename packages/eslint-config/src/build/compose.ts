@@ -88,19 +88,15 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
     config.push(...perfectionistAiConfig())
   }
 
-  // 15. File-pattern overrides (always relevant)
+  // 15. File-pattern overrides (always relevant — no-op if files don't exist)
   config.push(...testsOverride(opts))
   config.push(...e2eOverride())
+  config.push(...storiesOverride())
   config.push(...configFilesOverride())
   config.push(...declarationsOverride())
   config.push(...scriptsOverride())
 
-  // 16. Stories (only with React)
-  if (opts.react) {
-    config.push(...storiesOverride())
-  }
-
-  // 17. JSON & Markdown (always)
+  // 16. JSON & Markdown (always)
   config.push(...jsonConfig())
   config.push(...markdownConfig())
 

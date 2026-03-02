@@ -1,0 +1,74 @@
+---
+title: Recommended Addons
+---
+
+import { Tip } from "ardo/ui"
+
+# Recommended Addons
+
+This config covers TypeScript, React, Node.js, testing, and code quality — but intentionally stops at the framework boundary. Everything below works alongside `@effective/eslint-config` — just append it to the flat config array:
+
+```typescript
+// eslint.config.ts
+import { getEslintConfig } from "@effective/eslint-config"
+import someAddon from "some-addon-plugin"
+
+export default [
+  ...(await getEslintConfig({ react: true })),
+  ...someAddon.configs.recommended,
+]
+```
+
+## Next.js
+
+Next.js ships `eslint-config-next`, but it bundles older versions of plugins this config already includes (import-x, react, jsx-a11y). Using the plugin directly avoids version conflicts:
+
+| Plugin | Purpose |
+|--------|---------|
+| [`@next/eslint-plugin-next`](https://nextjs.org/docs/app/api-reference/config/eslint) | Image optimization, metadata, font loading, script placement, App Router conventions |
+
+<Tip>
+Use the plugin (`@next/eslint-plugin-next`), not the full config (`eslint-config-next`). The full config re-adds plugins you already have — with potentially different versions and rule settings.
+</Tip>
+
+## TanStack Query
+
+| Plugin | Purpose |
+|--------|---------|
+| [`@tanstack/eslint-plugin-query`](https://tanstack.com/query/latest/docs/eslint/eslint-plugin-query) | Query key conventions, exhaustive deps for queries, stable query function references |
+
+## Tailwind CSS
+
+| Plugin | Purpose |
+|--------|---------|
+| [`eslint-plugin-tailwindcss`](https://github.com/francoismassart/eslint-plugin-tailwindcss) | Class ordering, contradicting class detection, enforcing utility classes over custom CSS |
+
+## Barrel Files
+
+Barrel files (`index.ts` that re-export from many modules) hurt tree-shaking, slow down tests, and amplify circular dependencies. This config doesn't enforce a stance on them because many codebases use barrels intentionally — especially for public API surfaces of libraries.
+
+| Plugin | Purpose |
+|--------|---------|
+| [`eslint-plugin-barrel-files`](https://github.com/thepassle/eslint-plugin-barrel-files) | Detects barrel files, flags imports from them (with module graph analysis via `oxc-resolver`), prevents `export *` patterns |
+
+## Monorepo Boundaries
+
+In monorepos, it's easy to accidentally import from another package's internals or forget to declare a dependency in `package.json`. This config doesn't include monorepo rules because workspace setups vary too much — pnpm strict, yarn PnP, npm hoisted — and the right boundaries are project-specific.
+
+| Plugin | Purpose |
+|--------|---------|
+| [`eslint-plugin-workspaces`](https://github.com/joshuajaco/eslint-plugin-workspaces) | Prevents cross-package internal imports, phantom dependencies, and wrong relative/absolute paths across workspace boundaries |
+
+## Markdown Structure
+
+This config lints **code blocks** inside Markdown and MDX files via `eslint-plugin-mdx`. It does not lint Markdown structure itself (heading levels, link syntax, list formatting). For that, use a dedicated tool:
+
+| Tool | Purpose |
+|------|---------|
+| [`markdownlint-cli2`](https://github.com/DavidAnson/markdownlint-cli2) | Structural Markdown linting — heading hierarchy, link validation, list consistency, trailing whitespace |
+
+## Other Frameworks
+
+The base config — TypeScript, imports, security, code quality, sorting, spelling — is fully framework-agnostic. If you use Vue, Svelte, Astro, or Solid, skip the `react: true` flag and add your framework's ESLint plugin on top.
+
+Note that **jsx-a11y** accessibility rules currently only activate with `react: true`. If you use JSX outside of React, you'll need to add `eslint-plugin-jsx-a11y` manually. Storybook rules activate automatically for `*.stories.*` files regardless of framework.
