@@ -1,3 +1,5 @@
+import { CodeBlock } from "ardo/ui"
+
 export function BeforeAfterSection() {
   return (
     <section className="hp-section">
@@ -14,17 +16,17 @@ export function BeforeAfterSection() {
             <div className="hp-ba-header hp-ba-header-before">
               <span>&#x2717;</span> Before — typical setup
             </div>
-            <pre className="hp-ba-code">
-              <code>{beforeCode}</code>
-            </pre>
+            <div className="hp-ba-code-wrap">
+              <CodeBlock code={beforeCode} language="javascript" />
+            </div>
           </div>
           <div className="hp-ba-panel hp-animate">
             <div className="hp-ba-header hp-ba-header-after">
               <span>&#x2713;</span> After — eslint-config-setup
             </div>
-            <pre className="hp-ba-code">
-              <code>{afterCode}</code>
-            </pre>
+            <div className="hp-ba-code-wrap">
+              <CodeBlock code={afterCode} language="javascript" />
+            </div>
           </div>
         </div>
       </div>

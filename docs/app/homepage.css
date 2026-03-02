@@ -310,28 +310,6 @@
   background: rgba(16, 185, 129, 0.1);
 }
 
-.hp-ba-code {
-  padding: 20px;
-  font-family: var(--hp-font-mono);
-  font-size: 0.82rem;
-  line-height: 1.7;
-  background: var(--hp-surface-code);
-  overflow-x: auto;
-  margin: 0;
-}
-
-.hp-ba-code code {
-  font-family: inherit;
-}
-
-.hp-ba-line-muted {
-  color: var(--hp-text-faint);
-}
-
-.hp-ba-line-highlight {
-  color: #10b981;
-  font-weight: 500;
-}
 
 /* --- Feature Grid --- */
 .hp-feature-categories {
@@ -461,37 +439,21 @@
   opacity: 0.4;
 }
 
-.hp-code-content {
-  padding: 24px;
-  font-family: var(--hp-font-mono);
-  font-size: 0.85rem;
-  line-height: 1.75;
-  overflow-x: auto;
+/* Ardo CodeBlock overrides when nested in homepage panels */
+.hp-ba-code-wrap .ardo-code,
+.hp-showcase-panel .ardo-code {
+  border: none;
+  border-radius: 0;
   margin: 0;
 }
 
-.hp-code-content code {
-  font-family: inherit;
+.hp-ba-code-wrap .ardo-code pre,
+.hp-showcase-panel .ardo-code pre {
+  border-radius: 0;
 }
 
-.hp-code-comment {
-  color: var(--hp-text-faint);
-}
-
-.hp-code-keyword {
-  color: var(--hp-accent-violet);
-}
-
-.hp-code-string {
-  color: #10b981;
-}
-
-.hp-code-fn {
-  color: var(--hp-accent-teal);
-}
-
-.hp-code-punct {
-  color: var(--hp-text-faint);
+.hp-showcase-panel .ardo-code-copy-btn {
+  display: none;
 }
 
 /* --- Plugin Ecosystem — Grouped Tile Layout --- */

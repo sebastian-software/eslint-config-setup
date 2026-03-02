@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { CodeBlock } from "ardo/ui"
 
 interface Tab {
   label: string
@@ -72,7 +73,6 @@ export default config`,
 
 export function CodeShowcase() {
   const [active, setActive] = useState(0)
-  const tab = tabs[active]
 
   return (
     <section className="hp-section">
@@ -101,11 +101,18 @@ export function CodeShowcase() {
             <span className="hp-code-dot" />
             <span className="hp-code-dot" />
             <span className="hp-code-dot" />
-            <span>{tab.file}</span>
+            <span>{tabs[active].file}</span>
           </div>
-          <pre className="hp-code-content">
-            <code>{tab.code}</code>
-          </pre>
+          {/* Render all tabs so Shiki highlights at prerender time; hide inactive */}
+          {tabs.map((t, i) => (
+            <div
+              key={t.label}
+              className="hp-showcase-panel"
+              style={{ display: i === active ? "block" : "none" }}
+            >
+              <CodeBlock code={t.code} language="javascript" />
+            </div>
+          ))}
         </div>
       </div>
     </section>
