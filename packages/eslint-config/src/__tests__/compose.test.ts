@@ -12,8 +12,8 @@ describe("composeConfig", () => {
     const config = composeConfig({ react: true, node: true, ai: true })
     for (const block of config) {
       // Our blocks are named; third-party blocks (typescript-eslint, regexp, etc.) have their own names
-      if (block.name?.startsWith("@effective/")) {
-        expect(block.name).toMatch(/^@effective\/eslint\//)
+      if (block.name?.startsWith("eslint-config-setup/")) {
+        expect(block.name).toMatch(/^eslint-config-setup\//)
       }
     }
   })
@@ -72,7 +72,7 @@ describe("composeConfig", () => {
         !b.name?.includes("oxlint"),
     )
     const last = tsJsBlocks[tsJsBlocks.length - 1]
-    expect(last.name).toBe("@effective/eslint/prettier")
+    expect(last.name).toBe("eslint-config-setup/prettier")
   })
 
   it("places oxlint configs at the very end when enabled", () => {
@@ -85,7 +85,7 @@ describe("composeConfig", () => {
     const aiConfig = composeConfig({ ai: true })
 
     const aiComplexity = aiConfig.find(
-      (b) => b.name === "@effective/eslint/ai-complexity",
+      (b) => b.name === "eslint-config-setup/ai-complexity",
     )
 
     expect(aiComplexity?.rules?.complexity).toEqual(["error", 10])

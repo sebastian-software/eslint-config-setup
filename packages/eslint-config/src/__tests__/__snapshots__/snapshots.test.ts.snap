@@ -1,11 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `27`;
+exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `29`;
 
 exports[`config snapshots > snapshot: ai only 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -182,7 +182,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -373,7 +373,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -439,7 +439,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -468,7 +468,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -479,7 +479,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -560,7 +560,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -637,7 +637,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -717,7 +717,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -731,7 +731,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -755,7 +755,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -773,13 +773,20 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/compat",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
     },
   },
   {
-    "name": "@effective/eslint/ai-structural",
+    "name": "eslint-config-setup/ai-structural",
     "rules": {
       "@typescript-eslint/no-floating-promises": [
         "error",
@@ -888,7 +895,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-typescript",
+    "name": "eslint-config-setup/ai-typescript",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": [
         "error",
@@ -1083,7 +1090,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-unicorn",
+    "name": "eslint-config-setup/ai-unicorn",
     "rules": {
       "unicorn/consistent-function-scoping": "error",
       "unicorn/custom-error-definition": "error",
@@ -1123,7 +1130,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-sonarjs",
+    "name": "eslint-config-setup/ai-sonarjs",
     "rules": {
       "sonarjs/max-union-size": [
         "error",
@@ -1146,7 +1153,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-regexp",
+    "name": "eslint-config-setup/ai-regexp",
     "rules": {
       "regexp/prefer-lookaround": "error",
       "regexp/prefer-named-backreference": "error",
@@ -1157,19 +1164,19 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-jsdoc",
+    "name": "eslint-config-setup/ai-jsdoc",
     "rules": {
       "jsdoc/informative-docs": "error",
     },
   },
   {
-    "name": "@effective/eslint/ai-node",
+    "name": "eslint-config-setup/ai-node",
     "rules": {
       "node/no-unsupported-features/node-builtins": "error",
     },
   },
   {
-    "name": "@effective/eslint/ai-react",
+    "name": "eslint-config-setup/ai-react",
     "rules": {
       "jsx-a11y/interactive-supports-focus": "error",
       "jsx-a11y/no-noninteractive-element-interactions": "error",
@@ -1179,7 +1186,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-complexity",
+    "name": "eslint-config-setup/ai-complexity",
     "rules": {
       "complexity": [
         "error",
@@ -1228,7 +1235,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/ai-tests-strict",
+    "name": "eslint-config-setup/ai-tests-strict",
     "rules": {
       "vitest/prefer-hooks-on-top": "error",
       "vitest/require-top-level-describe": "error",
@@ -1239,7 +1246,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/ai-tests-relaxed",
+    "name": "eslint-config-setup/ai-tests-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -1255,7 +1262,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/ai-e2e-relaxed",
+    "name": "eslint-config-setup/ai-e2e-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-magic-numbers": "off",
@@ -1271,7 +1278,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/vitest.config.*",
       "**/next.config.*",
     ],
-    "name": "@effective/eslint/ai-config-relaxed",
+    "name": "eslint-config-setup/ai-config-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -1286,7 +1293,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/ai-declarations-relaxed",
+    "name": "eslint-config-setup/ai-declarations-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -1297,7 +1304,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist-ai",
+    "name": "eslint-config-setup/perfectionist-ai",
     "rules": {
       "perfectionist/sort-array-includes": "error",
       "perfectionist/sort-classes": "error",
@@ -1313,10 +1320,20 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   },
   {
     "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json-ai",
+    "rules": {
+      "package-json/order-properties": "error",
+      "package-json/sort-collections": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -1347,7 +1364,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -1372,7 +1389,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -1406,7 +1423,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -1432,7 +1449,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -1449,7 +1466,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -1469,7 +1486,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -1484,7 +1501,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -1500,12 +1517,69 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -1536,7 +1610,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -1904,7 +1978,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
 exports[`config snapshots > snapshot: all flags 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -2081,7 +2155,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -2272,7 +2346,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -2338,7 +2412,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -2367,7 +2441,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -2378,7 +2452,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -2459,7 +2533,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -2536,7 +2610,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -2616,7 +2690,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -2630,7 +2704,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -2654,7 +2728,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -2672,7 +2746,14 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/node",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/node",
     "rules": {
       "node/hashbang": "error",
       "node/no-deprecated-api": "error",
@@ -2707,7 +2788,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/react",
+    "name": "eslint-config-setup/react",
     "rules": {
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
@@ -2808,7 +2889,21 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-structural",
+    "name": "eslint-config-setup/react-effect",
+    "rules": {
+      "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
+      "react-you-might-not-need-an-effect/no-chain-state-updates": "error",
+      "react-you-might-not-need-an-effect/no-derived-state": "error",
+      "react-you-might-not-need-an-effect/no-empty-effect": "error",
+      "react-you-might-not-need-an-effect/no-event-handler": "error",
+      "react-you-might-not-need-an-effect/no-initialize-state": "error",
+      "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/ai-structural",
     "rules": {
       "@typescript-eslint/no-floating-promises": [
         "error",
@@ -2917,7 +3012,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-typescript",
+    "name": "eslint-config-setup/ai-typescript",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": [
         "error",
@@ -3112,7 +3207,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-unicorn",
+    "name": "eslint-config-setup/ai-unicorn",
     "rules": {
       "unicorn/consistent-function-scoping": "error",
       "unicorn/custom-error-definition": "error",
@@ -3152,7 +3247,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-sonarjs",
+    "name": "eslint-config-setup/ai-sonarjs",
     "rules": {
       "sonarjs/max-union-size": [
         "error",
@@ -3175,7 +3270,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-regexp",
+    "name": "eslint-config-setup/ai-regexp",
     "rules": {
       "regexp/prefer-lookaround": "error",
       "regexp/prefer-named-backreference": "error",
@@ -3186,19 +3281,19 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-jsdoc",
+    "name": "eslint-config-setup/ai-jsdoc",
     "rules": {
       "jsdoc/informative-docs": "error",
     },
   },
   {
-    "name": "@effective/eslint/ai-node",
+    "name": "eslint-config-setup/ai-node",
     "rules": {
       "node/no-unsupported-features/node-builtins": "error",
     },
   },
   {
-    "name": "@effective/eslint/ai-react",
+    "name": "eslint-config-setup/ai-react",
     "rules": {
       "jsx-a11y/interactive-supports-focus": "error",
       "jsx-a11y/no-noninteractive-element-interactions": "error",
@@ -3208,7 +3303,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-complexity",
+    "name": "eslint-config-setup/ai-complexity",
     "rules": {
       "complexity": [
         "error",
@@ -3257,7 +3352,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/ai-tests-strict",
+    "name": "eslint-config-setup/ai-tests-strict",
     "rules": {
       "vitest/prefer-hooks-on-top": "error",
       "vitest/require-top-level-describe": "error",
@@ -3268,7 +3363,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/ai-tests-relaxed",
+    "name": "eslint-config-setup/ai-tests-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -3284,7 +3379,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/ai-e2e-relaxed",
+    "name": "eslint-config-setup/ai-e2e-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-magic-numbers": "off",
@@ -3300,7 +3395,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/vitest.config.*",
       "**/next.config.*",
     ],
-    "name": "@effective/eslint/ai-config-relaxed",
+    "name": "eslint-config-setup/ai-config-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -3315,7 +3410,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/ai-declarations-relaxed",
+    "name": "eslint-config-setup/ai-declarations-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -3326,7 +3421,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist-ai",
+    "name": "eslint-config-setup/perfectionist-ai",
     "rules": {
       "perfectionist/sort-array-includes": "error",
       "perfectionist/sort-classes": "error",
@@ -3342,10 +3437,20 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   },
   {
     "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json-ai",
+    "rules": {
+      "package-json/order-properties": "error",
+      "package-json/sort-collections": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -3376,7 +3481,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -3401,7 +3506,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -3435,7 +3540,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -3461,7 +3566,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -3478,7 +3583,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -3498,7 +3603,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -3513,7 +3618,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -3529,12 +3634,69 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -3565,7 +3727,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -3928,28 +4090,28 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/oxlint",
+    "name": "eslint-config-setup/oxlint",
   },
   {
-    "name": "@effective/eslint/oxlint-react",
+    "name": "eslint-config-setup/oxlint-react",
   },
   {
-    "name": "@effective/eslint/oxlint-jsx-a11y",
+    "name": "eslint-config-setup/oxlint-jsx-a11y",
   },
   {
-    "name": "@effective/eslint/oxlint-node",
+    "name": "eslint-config-setup/oxlint-node",
   },
   {
-    "name": "@effective/eslint/oxlint-typescript",
+    "name": "eslint-config-setup/oxlint-typescript",
   },
   {
-    "name": "@effective/eslint/oxlint-unicorn",
+    "name": "eslint-config-setup/oxlint-unicorn",
   },
   {
-    "name": "@effective/eslint/oxlint-import",
+    "name": "eslint-config-setup/oxlint-import",
   },
   {
-    "name": "@effective/eslint/oxlint-jsdoc",
+    "name": "eslint-config-setup/oxlint-jsdoc",
   },
 ]
 `;
@@ -3957,7 +4119,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
 exports[`config snapshots > snapshot: base (no flags) 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -4134,7 +4296,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -4325,7 +4487,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -4391,7 +4553,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -4420,7 +4582,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -4431,7 +4593,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -4512,7 +4674,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -4589,7 +4751,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -4669,7 +4831,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -4683,7 +4845,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -4707,7 +4869,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -4725,13 +4887,20 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/compat",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
     },
   },
   {
-    "name": "@effective/eslint/complexity",
+    "name": "eslint-config-setup/complexity",
     "rules": {
       "complexity": [
         "error",
@@ -4780,7 +4949,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -4811,7 +4980,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -4836,7 +5005,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -4870,7 +5039,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -4896,7 +5065,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -4913,7 +5082,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -4933,7 +5102,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -4948,7 +5117,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -4964,12 +5133,69 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -5000,7 +5226,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -5368,7 +5594,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
 exports[`config snapshots > snapshot: node only 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -5545,7 +5771,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -5736,7 +5962,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -5802,7 +6028,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -5831,7 +6057,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -5842,7 +6068,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -5923,7 +6149,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -6000,7 +6226,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -6080,7 +6306,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -6094,7 +6320,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -6118,7 +6344,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -6136,7 +6362,14 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/complexity",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/complexity",
     "rules": {
       "complexity": [
         "error",
@@ -6181,7 +6414,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/node",
+    "name": "eslint-config-setup/node",
     "rules": {
       "node/hashbang": "error",
       "node/no-deprecated-api": "error",
@@ -6220,7 +6453,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -6251,7 +6484,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -6276,7 +6509,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -6310,7 +6543,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -6336,7 +6569,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -6353,7 +6586,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -6373,7 +6606,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -6388,7 +6621,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -6404,12 +6637,69 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -6440,7 +6730,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -6808,7 +7098,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
 exports[`config snapshots > snapshot: react + ai 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -6985,7 +7275,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -7176,7 +7466,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -7242,7 +7532,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -7271,7 +7561,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -7282,7 +7572,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -7363,7 +7653,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -7440,7 +7730,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -7520,7 +7810,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -7534,7 +7824,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -7558,7 +7848,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -7576,13 +7866,20 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/compat",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
     },
   },
   {
-    "name": "@effective/eslint/react",
+    "name": "eslint-config-setup/react",
     "rules": {
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
@@ -7683,7 +7980,21 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-structural",
+    "name": "eslint-config-setup/react-effect",
+    "rules": {
+      "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
+      "react-you-might-not-need-an-effect/no-chain-state-updates": "error",
+      "react-you-might-not-need-an-effect/no-derived-state": "error",
+      "react-you-might-not-need-an-effect/no-empty-effect": "error",
+      "react-you-might-not-need-an-effect/no-event-handler": "error",
+      "react-you-might-not-need-an-effect/no-initialize-state": "error",
+      "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/ai-structural",
     "rules": {
       "@typescript-eslint/no-floating-promises": [
         "error",
@@ -7792,7 +8103,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-typescript",
+    "name": "eslint-config-setup/ai-typescript",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": [
         "error",
@@ -7987,7 +8298,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-unicorn",
+    "name": "eslint-config-setup/ai-unicorn",
     "rules": {
       "unicorn/consistent-function-scoping": "error",
       "unicorn/custom-error-definition": "error",
@@ -8027,7 +8338,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-sonarjs",
+    "name": "eslint-config-setup/ai-sonarjs",
     "rules": {
       "sonarjs/max-union-size": [
         "error",
@@ -8050,7 +8361,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-regexp",
+    "name": "eslint-config-setup/ai-regexp",
     "rules": {
       "regexp/prefer-lookaround": "error",
       "regexp/prefer-named-backreference": "error",
@@ -8061,19 +8372,19 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-jsdoc",
+    "name": "eslint-config-setup/ai-jsdoc",
     "rules": {
       "jsdoc/informative-docs": "error",
     },
   },
   {
-    "name": "@effective/eslint/ai-node",
+    "name": "eslint-config-setup/ai-node",
     "rules": {
       "node/no-unsupported-features/node-builtins": "error",
     },
   },
   {
-    "name": "@effective/eslint/ai-react",
+    "name": "eslint-config-setup/ai-react",
     "rules": {
       "jsx-a11y/interactive-supports-focus": "error",
       "jsx-a11y/no-noninteractive-element-interactions": "error",
@@ -8083,7 +8394,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/ai-complexity",
+    "name": "eslint-config-setup/ai-complexity",
     "rules": {
       "complexity": [
         "error",
@@ -8132,7 +8443,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/ai-tests-strict",
+    "name": "eslint-config-setup/ai-tests-strict",
     "rules": {
       "vitest/prefer-hooks-on-top": "error",
       "vitest/require-top-level-describe": "error",
@@ -8143,7 +8454,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/ai-tests-relaxed",
+    "name": "eslint-config-setup/ai-tests-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -8159,7 +8470,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/ai-e2e-relaxed",
+    "name": "eslint-config-setup/ai-e2e-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-magic-numbers": "off",
@@ -8175,7 +8486,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/vitest.config.*",
       "**/next.config.*",
     ],
-    "name": "@effective/eslint/ai-config-relaxed",
+    "name": "eslint-config-setup/ai-config-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -8190,7 +8501,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/ai-declarations-relaxed",
+    "name": "eslint-config-setup/ai-declarations-relaxed",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/naming-convention": "off",
@@ -8201,7 +8512,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist-ai",
+    "name": "eslint-config-setup/perfectionist-ai",
     "rules": {
       "perfectionist/sort-array-includes": "error",
       "perfectionist/sort-classes": "error",
@@ -8217,10 +8528,20 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   },
   {
     "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json-ai",
+    "rules": {
+      "package-json/order-properties": "error",
+      "package-json/sort-collections": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -8251,7 +8572,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -8276,7 +8597,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -8310,7 +8631,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -8336,7 +8657,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -8353,7 +8674,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -8373,7 +8694,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -8388,7 +8709,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -8404,12 +8725,69 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -8440,7 +8818,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -8808,7 +9186,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
 exports[`config snapshots > snapshot: react + node 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -8985,7 +9363,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -9176,7 +9554,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -9242,7 +9620,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -9271,7 +9649,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -9282,7 +9660,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -9363,7 +9741,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -9440,7 +9818,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -9520,7 +9898,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -9534,7 +9912,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -9558,7 +9936,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -9576,7 +9954,14 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/complexity",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/complexity",
     "rules": {
       "complexity": [
         "error",
@@ -9621,7 +10006,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/node",
+    "name": "eslint-config-setup/node",
     "rules": {
       "node/hashbang": "error",
       "node/no-deprecated-api": "error",
@@ -9656,7 +10041,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/react",
+    "name": "eslint-config-setup/react",
     "rules": {
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
@@ -9757,11 +10142,25 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
+    "name": "eslint-config-setup/react-effect",
+    "rules": {
+      "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
+      "react-you-might-not-need-an-effect/no-chain-state-updates": "error",
+      "react-you-might-not-need-an-effect/no-derived-state": "error",
+      "react-you-might-not-need-an-effect/no-empty-effect": "error",
+      "react-you-might-not-need-an-effect/no-event-handler": "error",
+      "react-you-might-not-need-an-effect/no-initialize-state": "error",
+      "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
+    },
+  },
+  {
     "files": [
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -9792,7 +10191,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -9817,7 +10216,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -9851,7 +10250,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -9877,7 +10276,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -9894,7 +10293,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -9914,7 +10313,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -9929,7 +10328,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -9945,12 +10344,69 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -9981,7 +10437,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -10349,7 +10805,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
 exports[`config snapshots > snapshot: react + oxlint 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -10526,7 +10982,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -10717,7 +11173,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -10783,7 +11239,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -10812,7 +11268,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -10823,7 +11279,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -10904,7 +11360,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -10981,7 +11437,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -11061,7 +11517,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -11075,7 +11531,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -11099,7 +11555,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -11117,13 +11573,20 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/compat",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
     },
   },
   {
-    "name": "@effective/eslint/complexity",
+    "name": "eslint-config-setup/complexity",
     "rules": {
       "complexity": [
         "error",
@@ -11168,7 +11631,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/react",
+    "name": "eslint-config-setup/react",
     "rules": {
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
@@ -11269,11 +11732,25 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
+    "name": "eslint-config-setup/react-effect",
+    "rules": {
+      "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
+      "react-you-might-not-need-an-effect/no-chain-state-updates": "error",
+      "react-you-might-not-need-an-effect/no-derived-state": "error",
+      "react-you-might-not-need-an-effect/no-empty-effect": "error",
+      "react-you-might-not-need-an-effect/no-event-handler": "error",
+      "react-you-might-not-need-an-effect/no-initialize-state": "error",
+      "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
+    },
+  },
+  {
     "files": [
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -11304,7 +11781,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -11329,7 +11806,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -11363,7 +11840,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -11389,7 +11866,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -11406,7 +11883,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -11426,7 +11903,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -11441,7 +11918,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -11457,12 +11934,69 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -11493,7 +12027,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",
@@ -11856,25 +12390,25 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/oxlint",
+    "name": "eslint-config-setup/oxlint",
   },
   {
-    "name": "@effective/eslint/oxlint-react",
+    "name": "eslint-config-setup/oxlint-react",
   },
   {
-    "name": "@effective/eslint/oxlint-jsx-a11y",
+    "name": "eslint-config-setup/oxlint-jsx-a11y",
   },
   {
-    "name": "@effective/eslint/oxlint-typescript",
+    "name": "eslint-config-setup/oxlint-typescript",
   },
   {
-    "name": "@effective/eslint/oxlint-unicorn",
+    "name": "eslint-config-setup/oxlint-unicorn",
   },
   {
-    "name": "@effective/eslint/oxlint-import",
+    "name": "eslint-config-setup/oxlint-import",
   },
   {
-    "name": "@effective/eslint/oxlint-jsdoc",
+    "name": "eslint-config-setup/oxlint-jsdoc",
   },
 ]
 `;
@@ -11882,7 +12416,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
 exports[`config snapshots > snapshot: react only 1`] = `
 [
   {
-    "name": "@effective/eslint/base",
+    "name": "eslint-config-setup/base",
     "rules": {
       "accessor-pairs": [
         "error",
@@ -12059,7 +12593,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/typescript",
+    "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
       "@typescript-eslint/array-type": [
@@ -12250,7 +12784,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "files": [
       "**/*.{js,mjs,cjs}",
     ],
-    "name": "@effective/eslint/typescript-js-compat",
+    "name": "eslint-config-setup/typescript-js-compat",
     "rules": {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/consistent-return": "off",
@@ -12316,7 +12850,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/imports",
+    "name": "eslint-config-setup/imports",
     "rules": {
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -12345,7 +12879,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/perfectionist",
+    "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
       "perfectionist/sort-imports": "error",
@@ -12356,7 +12890,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/unicorn",
+    "name": "eslint-config-setup/unicorn",
     "rules": {
       "unicorn/better-regex": "error",
       "unicorn/catch-error-name": [
@@ -12437,7 +12971,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/regexp",
+    "name": "eslint-config-setup/regexp",
     "rules": {
       "no-control-regex": "error",
       "no-empty-character-class": "off",
@@ -12514,7 +13048,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/jsdoc",
+    "name": "eslint-config-setup/jsdoc",
     "rules": {
       "jsdoc/check-access": "error",
       "jsdoc/check-alignment": "error",
@@ -12594,7 +13128,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/cspell",
+    "name": "eslint-config-setup/cspell",
     "rules": {
       "@cspell/spellchecker": [
         "warn",
@@ -12608,7 +13142,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/sonarjs",
+    "name": "eslint-config-setup/sonarjs",
     "rules": {
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
@@ -12632,7 +13166,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/security",
+    "name": "eslint-config-setup/security",
     "rules": {
       "security/detect-buffer-noassert": "error",
       "security/detect-child-process": "error",
@@ -12650,13 +13184,20 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/compat",
+    "name": "eslint-config-setup/de-morgan",
+    "rules": {
+      "de-morgan/no-negated-conjunction": "error",
+      "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
     },
   },
   {
-    "name": "@effective/eslint/complexity",
+    "name": "eslint-config-setup/complexity",
     "rules": {
       "complexity": [
         "error",
@@ -12701,7 +13242,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/react",
+    "name": "eslint-config-setup/react",
     "rules": {
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
@@ -12802,11 +13343,25 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
+    "name": "eslint-config-setup/react-effect",
+    "rules": {
+      "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
+      "react-you-might-not-need-an-effect/no-chain-state-updates": "error",
+      "react-you-might-not-need-an-effect/no-derived-state": "error",
+      "react-you-might-not-need-an-effect/no-empty-effect": "error",
+      "react-you-might-not-need-an-effect/no-event-handler": "error",
+      "react-you-might-not-need-an-effect/no-initialize-state": "error",
+      "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
+      "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
+    },
+  },
+  {
     "files": [
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests",
+    "name": "eslint-config-setup/tests",
     "rules": {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -12837,7 +13392,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-testing-library",
+    "name": "eslint-config-setup/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -12862,7 +13417,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "files": [
       "**/*.spec.ts",
     ],
-    "name": "@effective/eslint/e2e",
+    "name": "eslint-config-setup/e2e",
     "rules": {
       "max-lines": "off",
       "max-lines-per-function": "off",
@@ -12896,7 +13451,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "files": [
       "**/*.stories.{ts,tsx}",
     ],
-    "name": "@effective/eslint/stories",
+    "name": "eslint-config-setup/stories",
     "rules": {
       "import/no-default-export": "off",
       "max-lines": "off",
@@ -12922,7 +13477,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "**/tailwind.config.*",
       "**/postcss.config.*",
     ],
-    "name": "@effective/eslint/config-files",
+    "name": "eslint-config-setup/config-files",
     "rules": {
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/no-require-imports": "off",
@@ -12939,7 +13494,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "files": [
       "**/*.d.ts",
     ],
-    "name": "@effective/eslint/declarations",
+    "name": "eslint-config-setup/declarations",
     "rules": {
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -12959,7 +13514,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "files": [
       "**/scripts/**/*.{ts,mts,js,mjs}",
     ],
-    "name": "@effective/eslint/scripts",
+    "name": "eslint-config-setup/scripts",
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "max-lines": "off",
@@ -12974,7 +13529,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "**/*.json",
     ],
     "language": "json/json",
-    "name": "@effective/eslint/json",
+    "name": "eslint-config-setup/json",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
@@ -12990,12 +13545,69 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "**/turbo.json",
     ],
     "language": "json/jsonc",
-    "name": "@effective/eslint/jsonc",
+    "name": "eslint-config-setup/jsonc",
     "rules": {
       "json/no-duplicate-keys": "error",
       "json/no-empty-keys": "error",
       "json/no-unnormalized-keys": "error",
       "json/no-unsafe-values": "error",
+    },
+  },
+  {
+    "files": [
+      "**/package.json",
+    ],
+    "name": "eslint-config-setup/package-json",
+    "rules": {
+      "package-json/no-empty-fields": "error",
+      "package-json/no-redundant-files": "error",
+      "package-json/no-redundant-publishConfig": "error",
+      "package-json/repository-shorthand": "error",
+      "package-json/require-attribution": "error",
+      "package-json/require-description": "error",
+      "package-json/require-exports": "error",
+      "package-json/require-files": "error",
+      "package-json/require-license": "error",
+      "package-json/require-name": "error",
+      "package-json/require-repository": "error",
+      "package-json/require-sideEffects": "error",
+      "package-json/require-type": "error",
+      "package-json/require-version": "error",
+      "package-json/sort-collections": "error",
+      "package-json/specify-peers-locally": "error",
+      "package-json/unique-dependencies": "error",
+      "package-json/valid-author": "error",
+      "package-json/valid-bin": "error",
+      "package-json/valid-bundleDependencies": "error",
+      "package-json/valid-config": "error",
+      "package-json/valid-contributors": "error",
+      "package-json/valid-cpu": "error",
+      "package-json/valid-dependencies": "error",
+      "package-json/valid-description": "error",
+      "package-json/valid-devDependencies": "error",
+      "package-json/valid-directories": "error",
+      "package-json/valid-engines": "error",
+      "package-json/valid-exports": "error",
+      "package-json/valid-files": "error",
+      "package-json/valid-homepage": "error",
+      "package-json/valid-keywords": "error",
+      "package-json/valid-license": "error",
+      "package-json/valid-main": "error",
+      "package-json/valid-man": "error",
+      "package-json/valid-module": "error",
+      "package-json/valid-name": "error",
+      "package-json/valid-optionalDependencies": "error",
+      "package-json/valid-os": "error",
+      "package-json/valid-peerDependencies": "error",
+      "package-json/valid-private": "error",
+      "package-json/valid-publishConfig": "error",
+      "package-json/valid-repository": "error",
+      "package-json/valid-repository-directory": "error",
+      "package-json/valid-scripts": "error",
+      "package-json/valid-sideEffects": "error",
+      "package-json/valid-type": "error",
+      "package-json/valid-version": "error",
+      "package-json/valid-workspaces": "error",
     },
   },
   {
@@ -13026,7 +13638,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
-    "name": "@effective/eslint/prettier",
+    "name": "eslint-config-setup/prettier",
     "rules": {
       "@babel/object-curly-spacing": "off",
       "@babel/semi": "off",

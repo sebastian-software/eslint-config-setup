@@ -261,26 +261,26 @@ describe("disableAllRulesBut", () => {
 function makeScopedConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/base",
+      name: "eslint-config-setup/base",
       rules: {
         "no-console": "error",
         complexity: ["error", 10],
       },
     },
     {
-      name: "@effective/eslint/tests",
+      name: "eslint-config-setup/tests",
       rules: {
         "no-console": "warn",
       },
     },
     {
-      name: "@effective/eslint/tests-react",
+      name: "eslint-config-setup/tests-react",
       rules: {
         "testing-library/no-unnecessary-act": "error",
       },
     },
     {
-      name: "@effective/eslint/scripts",
+      name: "eslint-config-setup/scripts",
       rules: {
         "no-console": "off",
       },
@@ -346,11 +346,11 @@ describe("scoped configureRule", () => {
   it("maps configs scope to config-files blocks", () => {
     const config: FlatConfigArray = [
       {
-        name: "@effective/eslint/base",
+        name: "eslint-config-setup/base",
         rules: { complexity: ["error", 10] },
       },
       {
-        name: "@effective/eslint/config-files",
+        name: "eslint-config-setup/config-files",
         rules: { complexity: ["error", 10] },
       },
     ]
@@ -378,7 +378,7 @@ describe("scoped disableRule", () => {
 
   it("creates rules object if block has none", () => {
     const config: FlatConfigArray = [
-      { name: "@effective/eslint/e2e" },
+      { name: "eslint-config-setup/e2e" },
     ]
     disableRule(config, "no-console", { scope: "e2e" })
     expect(config[0].rules!["no-console"]).toBe("off")
@@ -415,7 +415,7 @@ describe("scoped addRule", () => {
 describe("rule helpers on composed configs", () => {
   it("can disable a rule from a real base config", () => {
     const config = composeConfig({})
-    const baseBlock = config.find((b) => b.name === "@effective/eslint/base")
+    const baseBlock = config.find((b) => b.name === "eslint-config-setup/base")
     expect(baseBlock?.rules?.["eqeqeq"]).toEqual(["error", "smart"])
 
     disableRule(config, "eqeqeq")
@@ -425,7 +425,7 @@ describe("rule helpers on composed configs", () => {
   it("can change complexity severity on a real config", () => {
     const config = composeConfig({})
     const complexityBlock = config.find(
-      (b) => b.name === "@effective/eslint/complexity",
+      (b) => b.name === "eslint-config-setup/complexity",
     )
     expect(complexityBlock?.rules?.complexity).toEqual(["error", 10])
 
@@ -436,7 +436,7 @@ describe("rule helpers on composed configs", () => {
   it("can reconfigure complexity limits on an AI config", () => {
     const config = composeConfig({ ai: true })
     const aiComplexity = config.find(
-      (b) => b.name === "@effective/eslint/ai-complexity",
+      (b) => b.name === "eslint-config-setup/ai-complexity",
     )
     expect(aiComplexity?.rules?.complexity).toEqual(["error", 10])
 
@@ -454,7 +454,7 @@ describe("rule helpers on composed configs", () => {
     const config = composeConfig({ ai: true })
 
     const aiTsBlock = config.find(
-      (b) => b.name === "@effective/eslint/ai-typescript",
+      (b) => b.name === "eslint-config-setup/ai-typescript",
     )
     expect(
       aiTsBlock?.rules?.["@typescript-eslint/explicit-function-return-type"],
@@ -488,12 +488,12 @@ describe("rule helpers on composed configs", () => {
 
     // Verify all changes
     const aiUnicorn = config.find(
-      (b) => b.name === "@effective/eslint/ai-unicorn",
+      (b) => b.name === "eslint-config-setup/ai-unicorn",
     )
     expect(aiUnicorn?.rules?.["unicorn/prevent-abbreviations"]).toBe("off")
 
     const aiComplexity = config.find(
-      (b) => b.name === "@effective/eslint/ai-complexity",
+      (b) => b.name === "eslint-config-setup/ai-complexity",
     )
     expect(aiComplexity?.rules?.complexity).toEqual(["error", 20])
 

@@ -55,7 +55,7 @@ describe("config snapshots", () => {
 describe("config rule stability", () => {
   it("base config always includes eslint:recommended core rules", () => {
     const config = composeConfig({})
-    const baseBlock = config.find((b) => b.name === "@effective/eslint/base")
+    const baseBlock = config.find((b) => b.name === "eslint-config-setup/base")
     expect(baseBlock?.rules).toBeDefined()
     expect(baseBlock!.rules!["eqeqeq"]).toEqual(["error", "smart"])
     expect(baseBlock!.rules!["no-var"]).toBe("error")
@@ -65,7 +65,7 @@ describe("config rule stability", () => {
   it("typescript config always includes type-checked rules", () => {
     const config = composeConfig({})
     const tsBlock = config.find(
-      (b) => b.name === "@effective/eslint/typescript",
+      (b) => b.name === "eslint-config-setup/typescript",
     )
     expect(tsBlock?.rules).toBeDefined()
     expect(
@@ -79,7 +79,7 @@ describe("config rule stability", () => {
   it("always uses strictTypeChecked rules", () => {
     const config = composeConfig({})
     const tsBlock = config.find(
-      (b) => b.name === "@effective/eslint/typescript",
+      (b) => b.name === "eslint-config-setup/typescript",
     )
     // strictTypeChecked includes no-non-null-assertion (not in recommended)
     expect(tsBlock?.rules?.["@typescript-eslint/no-non-null-assertion"]).toBe(
@@ -90,7 +90,7 @@ describe("config rule stability", () => {
   it("unicorn config includes core modern-JS rules", () => {
     const config = composeConfig({})
     const unicornBlock = config.find(
-      (b) => b.name === "@effective/eslint/unicorn",
+      (b) => b.name === "eslint-config-setup/unicorn",
     )
     expect(unicornBlock?.rules).toBeDefined()
     expect(unicornBlock!.rules!["unicorn/prefer-array-flat-map"]).toBe("error")
@@ -103,7 +103,7 @@ describe("config rule stability", () => {
   it("sonarjs config includes quality rules", () => {
     const config = composeConfig({})
     const sonarBlock = config.find(
-      (b) => b.name === "@effective/eslint/sonarjs",
+      (b) => b.name === "eslint-config-setup/sonarjs",
     )
     expect(sonarBlock?.rules).toBeDefined()
     expect(sonarBlock!.rules!["sonarjs/no-identical-functions"]).toBe("error")
@@ -113,7 +113,7 @@ describe("config rule stability", () => {
   it("react config includes hooks, compiler, and a11y rules", () => {
     const config = composeConfig({ react: true })
     const reactBlock = config.find(
-      (b) => b.name === "@effective/eslint/react",
+      (b) => b.name === "eslint-config-setup/react",
     )
     expect(reactBlock?.rules).toBeDefined()
     expect(reactBlock!.rules!["react-hooks/rules-of-hooks"]).toBe("error")
@@ -126,7 +126,7 @@ describe("config rule stability", () => {
   it("security config includes critical rules", () => {
     const config = composeConfig({})
     const secBlock = config.find(
-      (b) => b.name === "@effective/eslint/security",
+      (b) => b.name === "eslint-config-setup/security",
     )
     expect(secBlock?.rules).toBeDefined()
     expect(secBlock!.rules!["security/detect-eval-with-expression"]).toBe(
@@ -137,11 +137,11 @@ describe("config rule stability", () => {
 
   it("json config targets .json files with correct language", () => {
     const config = composeConfig({})
-    const jsonBlock = config.find((b) => b.name === "@effective/eslint/json")
+    const jsonBlock = config.find((b) => b.name === "eslint-config-setup/json")
     expect(jsonBlock?.files).toEqual(["**/*.json"])
     expect(jsonBlock?.language).toBe("json/json")
 
-    const jsoncBlock = config.find((b) => b.name === "@effective/eslint/jsonc")
+    const jsoncBlock = config.find((b) => b.name === "eslint-config-setup/jsonc")
     expect(jsoncBlock?.language).toBe("json/jsonc")
   })
 
