@@ -1,5 +1,14 @@
 # ESLint Config Setup
 
+[![CI](https://github.com/sebastian-software/eslint-config-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/sebastian-software/eslint-config-setup/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/eslint-config-setup.svg)](https://www.npmjs.com/package/eslint-config-setup)
+[![npm downloads](https://img.shields.io/npm/dm/eslint-config-setup.svg)](https://www.npmjs.com/package/eslint-config-setup)
+[![Codecov](https://img.shields.io/codecov/c/github/sebastian-software/eslint-config-setup)](https://codecov.io/gh/sebastian-software/eslint-config-setup)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/node/v/eslint-config-setup.svg)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org)
+[![ESLint](https://img.shields.io/badge/ESLint-9.22+-4B32C3.svg)](https://eslint.org)
+
 The ESLint config for teams that ship with AI and want to move fast.
 
 Most ESLint configs were built for a world where humans write all the code and ESLint is the only linter. That world is over. Today, AI writes a growing share of your code — and tools like OxLint are replacing ESLint for the rules they can handle 100x faster. Your config should reflect that.
@@ -64,6 +73,10 @@ export default config
 - [Rule API](https://sebastian-software.github.io/eslint-config-setup/guide/rule-api) — rule manipulation and scoped overrides
 - [Architecture](https://sebastian-software.github.io/eslint-config-setup/guide/architecture) — how pre-generation works
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, architecture overview, and PR guidelines.
+
 ## License
 
-MIT
+[MIT](LICENSE) — Copyright (c) 2025 [Sebastian Software GmbH](https://sebastian-software.com)
