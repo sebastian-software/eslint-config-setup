@@ -1,12 +1,38 @@
 {
-  "name": "@effective/monorepo",
+  "name": "eslint-config-setup",
   "private": true,
   "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Sebastian Software GmbH",
+    "url": "https://sebastian-software.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastian-software/eslint-config-setup.git"
+  },
+  "homepage": "https://github.com/sebastian-software/eslint-config-setup",
+  "bugs": {
+    "url": "https://github.com/sebastian-software/eslint-config-setup/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/sebastian-software"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
-    "build": "pnpm --filter @effective/eslint-config build",
-    "generate": "pnpm --filter @effective/eslint-config generate",
-    "test": "pnpm --filter @effective/eslint-config test",
+    "build": "pnpm --filter eslint-config-setup build",
+    "check": "pnpm --filter eslint-config-setup exec tsc --noEmit",
+    "generate": "pnpm --filter eslint-config-setup generate",
+    "test": "pnpm --filter eslint-config-setup test",
+    "test:coverage": "pnpm --filter eslint-config-setup test:coverage",
     "docs:dev": "pnpm --filter docs dev",
     "docs:build": "pnpm --filter docs build"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
   }
 }
