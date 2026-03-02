@@ -1,3 +1,5 @@
+import securityPlugin from "eslint-plugin-security"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -12,10 +14,7 @@ export function securityConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/security",
       plugins: {
-        get security() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-security")
-        },
+        security: securityPlugin,
       },
       rules: {
         // ── Errors: dangerous patterns that should never appear ────────
@@ -69,6 +68,10 @@ export function securityConfig(): FlatConfigArray {
         // Detect string comparisons that may leak timing info — side-channel risk
         // https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/rules/detect-possible-timing-attacks.md
         "security/detect-possible-timing-attacks": "warn",
+
+        // Detect Unicode bidirectional control characters — source code trojan attack
+        // https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/rules/detect-bidi-characters.md
+        "security/detect-bidi-characters": "error",
 
         // ── Disabled: too many false positives ────────────────────────
 

@@ -93,6 +93,10 @@ export function sonarjsConfig(): FlatConfigArray {
         // Detect `string | number | string` — duplicate constituents in unions
         // https://sonarsource.github.io/rspec/#/rspec/S4621/javascript
         "sonarjs/no-duplicate-in-composite": "error",
+
+        // Detect hardcoded secrets (API keys, passwords, tokens) in source code
+        // https://sonarsource.github.io/rspec/#/rspec/S6418/javascript
+        "sonarjs/no-hardcoded-secrets": "warn",
       },
     },
   ]

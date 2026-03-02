@@ -84,9 +84,13 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-await.md
         "unicorn/no-unnecessary-await": "error",
 
-        // Disallow `.length` as slice end argument — it's the default
-        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-length-as-slice-end.md
-        "unicorn/no-length-as-slice-end": "error",
+        // Disallow unnecessary slice end argument — `.length` is the default
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-slice-end.md
+        "unicorn/no-unnecessary-slice-end": "error",
+
+        // Disallow mutating object/array immediately after creation — likely a bug
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-immediate-mutation.md
+        "unicorn/no-immediate-mutation": "error",
 
         // Disallow recursive access in getters/setters — infinite loop risk
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-accessor-recursion.md
@@ -290,6 +294,14 @@ export function unicornConfig(): FlatConfigArray {
         // Enforce consistent `utf-8` casing for text encoding identifiers
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/text-encoding-identifier-case.md
         "unicorn/text-encoding-identifier-case": "error",
+
+        // Prefer `import.meta.url`/`import.meta.dirname` over `__filename`/`__dirname`
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-import-meta-properties.md
+        "unicorn/prefer-import-meta-properties": "error",
+
+        // Prefer single `.add()`/`.push()`/`.append()` with multiple args over multiple calls
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-single-call.md
+        "unicorn/prefer-single-call": "error",
       },
     },
   ]
