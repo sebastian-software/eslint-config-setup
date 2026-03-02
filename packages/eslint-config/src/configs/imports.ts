@@ -13,7 +13,7 @@ import type { FlatConfigArray } from "../types"
 export function importsConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/imports",
+      name: "eslint-config-setup/imports",
       plugins: {
         get "import"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports

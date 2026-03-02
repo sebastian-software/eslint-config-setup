@@ -22,7 +22,7 @@ import type { FlatConfigArray } from "../types"
 export function reactConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/react",
+      name: "eslint-config-setup/react",
       languageOptions: {
         globals: {
           ...globals.browser,

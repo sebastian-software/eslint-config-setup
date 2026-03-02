@@ -16,7 +16,7 @@ import type { FlatConfigArray } from "../types"
 export function aiConfig(): FlatConfigArray {
   const configs: FlatConfigArray = [
     {
-      name: "@effective/eslint/ai-structural",
+      name: "eslint-config-setup/ai-structural",
       rules: {
         // ── A. Structural clarity — always explicit, never ambiguous ──
 
@@ -162,7 +162,7 @@ export function aiConfig(): FlatConfigArray {
       },
     },
     {
-      name: "@effective/eslint/ai-typescript",
+      name: "eslint-config-setup/ai-typescript",
       rules: {
         // ── C. TypeScript strictness — explicit types, safe patterns ──
 
@@ -356,7 +356,7 @@ export function aiConfig(): FlatConfigArray {
       },
     },
     {
-      name: "@effective/eslint/ai-unicorn",
+      name: "eslint-config-setup/ai-unicorn",
       rules: {
         // ── D. Unicorn — modern, idiomatic patterns ───────────────────
 
@@ -441,7 +441,7 @@ export function aiConfig(): FlatConfigArray {
       },
     },
     {
-      name: "@effective/eslint/ai-sonarjs",
+      name: "eslint-config-setup/ai-sonarjs",
       rules: {
         // ── E. SonarJS — code quality and duplicates ──────────────────
 
@@ -502,7 +502,7 @@ export function aiConfig(): FlatConfigArray {
 
   // ── G. Regex — self-documenting, modern patterns ──────────────────
   configs.push({
-    name: "@effective/eslint/ai-regexp",
+    name: "eslint-config-setup/ai-regexp",
     rules: {
       // Prefer lookarounds over capturing groups used only for context
       // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-lookaround.html
@@ -532,7 +532,7 @@ export function aiConfig(): FlatConfigArray {
 
   // ── H. JSDoc — prevent meaningless AI-generated docs ──────────────
   configs.push({
-    name: "@effective/eslint/ai-jsdoc",
+    name: "eslint-config-setup/ai-jsdoc",
     rules: {
       // Prevent comments that just repeat the name — `/** The name */ name: string`
       // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/informative-docs.md
@@ -542,7 +542,7 @@ export function aiConfig(): FlatConfigArray {
 
   // ── I. Node — stricter API usage ─────────────────────────────────
   configs.push({
-    name: "@effective/eslint/ai-node",
+    name: "eslint-config-setup/ai-node",
     rules: {
       // Warn when using Node.js builtins not available in the target version
       // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-unsupported-features/node-builtins.md
@@ -552,7 +552,7 @@ export function aiConfig(): FlatConfigArray {
 
   // ── J. React — stricter component patterns ───────────────────────
   configs.push({
-    name: "@effective/eslint/ai-react",
+    name: "eslint-config-setup/ai-react",
     rules: {
       // Max one component per file — clear module boundaries
       // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
@@ -578,7 +578,7 @@ export function aiConfig(): FlatConfigArray {
 
   // ── K. Tightened complexity limits for AI mode ────────────────────
   configs.push({
-    name: "@effective/eslint/ai-complexity",
+    name: "eslint-config-setup/ai-complexity",
     rules: {
       // Cyclomatic complexity limit — max branches per function
       // https://eslint.org/docs/latest/rules/complexity
@@ -631,7 +631,7 @@ export function aiConfig(): FlatConfigArray {
   // ── AI mode: stricter test structure ─────────────────────────────
   // AI-generated tests should follow strict organizational patterns
   configs.push({
-    name: "@effective/eslint/ai-tests-strict",
+    name: "eslint-config-setup/ai-tests-strict",
     files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
     rules: {
       // Every test must be inside a describe block — organized test suites
@@ -647,7 +647,7 @@ export function aiConfig(): FlatConfigArray {
   // ── AI mode relaxations for test files ────────────────────────────
   // Tests are naturally verbose (setup, assertions, descriptions)
   configs.push({
-    name: "@effective/eslint/ai-tests-relaxed",
+    name: "eslint-config-setup/ai-tests-relaxed",
     files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
     rules: {
       "max-lines": "off",
@@ -664,7 +664,7 @@ export function aiConfig(): FlatConfigArray {
   // ── AI mode relaxations for E2E test files ────────────────────────
   // E2E tests are long procedural scripts with page interactions
   configs.push({
-    name: "@effective/eslint/ai-e2e-relaxed",
+    name: "eslint-config-setup/ai-e2e-relaxed",
     files: ["**/*.spec.ts"],
     rules: {
       "max-lines": "off",
@@ -678,7 +678,7 @@ export function aiConfig(): FlatConfigArray {
   // ── AI mode relaxations for config files ──────────────────────────
   // Config files (vite, vitest, next, etc.) have their own patterns
   configs.push({
-    name: "@effective/eslint/ai-config-relaxed",
+    name: "eslint-config-setup/ai-config-relaxed",
     files: [
       "**/*.config.{ts,mts,cts,js,mjs,cjs}",
       "**/vite.config.*",
@@ -699,7 +699,7 @@ export function aiConfig(): FlatConfigArray {
   // ── AI mode relaxations for .d.ts files ───────────────────────────
   // Declaration files follow their own patterns (ambient types, namespaces)
   configs.push({
-    name: "@effective/eslint/ai-declarations-relaxed",
+    name: "eslint-config-setup/ai-declarations-relaxed",
     files: ["**/*.d.ts"],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",

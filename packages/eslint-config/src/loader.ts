@@ -24,7 +24,7 @@ export async function getEslintConfig(
     return [...module.default]
   } catch {
     throw new Error(
-      `@effective/eslint-config: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
+      `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
         `Expected file: configs/${filename}. Run "npm run generate" in the package to build configs.`,
     )
   }
@@ -46,7 +46,7 @@ export async function getOxlintConfig(
     return JSON.parse(content) as unknown
   } catch {
     throw new Error(
-      `@effective/eslint-config: No pre-generated OxLint config found for options ${JSON.stringify(opts)}. ` +
+      `eslint-config-setup: No pre-generated OxLint config found for options ${JSON.stringify(opts)}. ` +
         `Expected file: oxlint-configs/${filename}. Run "npm run generate" in the package to build configs.`,
     )
   }

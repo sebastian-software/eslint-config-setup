@@ -3,7 +3,7 @@
  *
  * Usage:
  * ```ts
- * import { configs, overrides } from "@effective/eslint-config/modules"
+ * import { configs, overrides } from "eslint-config-setup/modules"
  *
  * export default [
  *   ...configs.base(),
@@ -26,9 +26,12 @@ export { jsdocConfig as jsdoc } from "./configs/jsdoc"
 export { cspellConfig as cspell } from "./configs/cspell"
 export { sonarjsConfig as sonarjs } from "./configs/sonarjs"
 export { securityConfig as security } from "./configs/security"
+export { deMorganConfig as deMorgan } from "./configs/de-morgan"
 export { nodeConfig as node } from "./configs/node"
 export { reactConfig as react } from "./configs/react"
+export { reactEffectConfig as reactEffect } from "./configs/react-effect"
 export { jsonConfig as json } from "./configs/json"
+export { packageJsonConfig as packageJson, packageJsonAiConfig as packageJsonAi } from "./configs/package-json"
 export { markdownConfig as markdown } from "./configs/markdown"
 export { perfectionistConfig as perfectionist, perfectionistAiConfig as perfectionistAi } from "./configs/perfectionist"
 export { prettierCompatConfig as prettier } from "./configs/prettier"

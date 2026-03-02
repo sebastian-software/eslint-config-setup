@@ -9,7 +9,7 @@ import type { FlatConfigArray } from "../types"
 export function scriptsOverride(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/scripts",
+      name: "eslint-config-setup/scripts",
       files: ["**/scripts/**/*.{ts,mts,js,mjs}"],
       rules: {
         // Scripts use console for user-facing output

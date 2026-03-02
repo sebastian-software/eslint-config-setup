@@ -6,7 +6,7 @@ import type {
   RuleSeverity,
 } from "../types"
 
-const CONFIG_PREFIX = "@effective/eslint/"
+const CONFIG_PREFIX = "eslint-config-setup/"
 
 /** Maps user-facing scope names to config block name segments. */
 const SCOPE_TO_BLOCK: Record<string, string> = {
@@ -15,7 +15,7 @@ const SCOPE_TO_BLOCK: Record<string, string> = {
 
 /**
  * Check if a config block matches a given scope.
- * A block matches if its name is `@effective/eslint/{segment}` or starts with `@effective/eslint/{segment}-`.
+ * A block matches if its name is `eslint-config-setup/{segment}` or starts with `eslint-config-setup/{segment}-`.
  */
 function blockMatchesScope(
   block: Linter.Config,

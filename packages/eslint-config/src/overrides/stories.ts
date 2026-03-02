@@ -10,7 +10,7 @@ import type { FlatConfigArray } from "../types"
 export function storiesOverride(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/stories",
+      name: "eslint-config-setup/stories",
       files: ["**/*.stories.{ts,tsx}"],
       plugins: {
         get storybook() {

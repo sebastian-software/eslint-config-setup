@@ -15,7 +15,7 @@ import type { FlatConfigArray } from "../types"
  */
 export function baseConfig(): FlatConfigArray {
   return createConfig({
-    name: "@effective/eslint/base",
+    name: "eslint-config-setup/base",
     presets: [eslint.configs.recommended],
   })
     // ── Error prevention ──────────────────────────────────────────

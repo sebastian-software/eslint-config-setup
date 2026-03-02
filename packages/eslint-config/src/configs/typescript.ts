@@ -26,7 +26,7 @@ export function typescriptConfig(): FlatConfigArray {
   const ruleBlocks = [typeChecked[2], stylistic[2]] as FlatConfig[]
 
   const builder = createConfig({
-    name: "@effective/eslint/typescript",
+    name: "eslint-config-setup/typescript",
     passthrough: structuralBlocks,
     presets: ruleBlocks,
     languageOptions: {
@@ -144,7 +144,7 @@ export function typescriptConfig(): FlatConfigArray {
   // Disable type-checked rules for plain JS files (no tsconfig coverage)
   // https://typescript-eslint.io/users/configs#disable-type-checked
   builder.addFileOverride(
-    "@effective/eslint/typescript-js-compat",
+    "eslint-config-setup/typescript-js-compat",
     ["**/*.{js,mjs,cjs}"],
     tseslint.configs.disableTypeChecked.rules ?? {},
   )

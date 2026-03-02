@@ -12,7 +12,7 @@ import type { FlatConfigArray } from "../types"
  */
 export function prettierCompatConfig(): FlatConfigArray {
   return createConfig({
-    name: "@effective/eslint/prettier",
+    name: "eslint-config-setup/prettier",
     presets: [prettierConfig],
   }).build()
 }

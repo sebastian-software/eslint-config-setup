@@ -17,7 +17,7 @@ import type { FlatConfigArray } from "../types"
  */
 export function jsdocConfig(): FlatConfigArray {
   return createConfig({
-    name: "@effective/eslint/jsdoc",
+    name: "eslint-config-setup/jsdoc",
     presets: [jsdocPlugin.configs["flat/recommended-typescript-error"]],
   })
     // OFF: Don't require JSDoc on everything — only validate what exists

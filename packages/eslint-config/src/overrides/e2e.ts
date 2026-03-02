@@ -10,7 +10,7 @@ import type { FlatConfigArray } from "../types"
 export function e2eOverride(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/e2e",
+      name: "eslint-config-setup/e2e",
       files: ["**/*.spec.ts"],
       plugins: {
         get playwright() {

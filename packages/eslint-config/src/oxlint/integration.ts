@@ -15,7 +15,7 @@ export function oxlintIntegration(opts: ConfigOptions): FlatConfigArray {
 
   const configs: FlatConfigArray = [
     {
-      name: "@effective/eslint/oxlint",
+      name: "eslint-config-setup/oxlint",
       ...oxlintPlugin.configs["flat/recommended"],
     },
   ]
@@ -23,37 +23,37 @@ export function oxlintIntegration(opts: ConfigOptions): FlatConfigArray {
   // Add plugin-specific oxlint overrides if those plugins are active
   if (opts.react) {
     configs.push({
-      name: "@effective/eslint/oxlint-react",
+      name: "eslint-config-setup/oxlint-react",
       ...oxlintPlugin.configs["flat/react"],
     })
     configs.push({
-      name: "@effective/eslint/oxlint-jsx-a11y",
+      name: "eslint-config-setup/oxlint-jsx-a11y",
       ...oxlintPlugin.configs["flat/jsx-a11y"],
     })
   }
 
   if (opts.node) {
     configs.push({
-      name: "@effective/eslint/oxlint-node",
+      name: "eslint-config-setup/oxlint-node",
       ...oxlintPlugin.configs["flat/node"],
     })
   }
 
   // TypeScript and unicorn overlaps
   configs.push({
-    name: "@effective/eslint/oxlint-typescript",
+    name: "eslint-config-setup/oxlint-typescript",
     ...oxlintPlugin.configs["flat/typescript"],
   })
   configs.push({
-    name: "@effective/eslint/oxlint-unicorn",
+    name: "eslint-config-setup/oxlint-unicorn",
     ...oxlintPlugin.configs["flat/unicorn"],
   })
   configs.push({
-    name: "@effective/eslint/oxlint-import",
+    name: "eslint-config-setup/oxlint-import",
     ...oxlintPlugin.configs["flat/import"],
   })
   configs.push({
-    name: "@effective/eslint/oxlint-jsdoc",
+    name: "eslint-config-setup/oxlint-jsdoc",
     ...oxlintPlugin.configs["flat/jsdoc"],
   })
 

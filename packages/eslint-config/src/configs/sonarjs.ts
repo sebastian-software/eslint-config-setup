@@ -13,7 +13,7 @@ import type { FlatConfigArray } from "../types"
 export function sonarjsConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/sonarjs",
+      name: "eslint-config-setup/sonarjs",
       plugins: {
         sonarjs: sonarjsPlugin as Record<string, unknown>,
       },

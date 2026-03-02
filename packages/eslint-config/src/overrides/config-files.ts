@@ -10,7 +10,7 @@ import type { FlatConfigArray } from "../types"
 export function configFilesOverride(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/config-files",
+      name: "eslint-config-setup/config-files",
       files: [
         "**/*.config.{ts,mts,cts,js,mjs,cjs}",
         "**/vite.config.*",

@@ -25,7 +25,7 @@ import type { FlatConfigArray } from "../types"
 export function perfectionistConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/perfectionist",
+      name: "eslint-config-setup/perfectionist",
       plugins: {
         get perfectionist() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -80,7 +80,7 @@ export function perfectionistConfig(): FlatConfigArray {
 export function perfectionistAiConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/perfectionist-ai",
+      name: "eslint-config-setup/perfectionist-ai",
       rules: {
         // Sort interface members — consistent shape definitions
         // https://perfectionist.dev/rules/sort-interfaces

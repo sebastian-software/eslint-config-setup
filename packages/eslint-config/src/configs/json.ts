@@ -14,7 +14,7 @@ const plugin = jsonPlugin as unknown as ESLint.Plugin
 export function jsonConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/json",
+      name: "eslint-config-setup/json",
       files: ["**/*.json"],
       ignores: ["**/package-lock.json"],
       language: "json/json",
@@ -40,7 +40,7 @@ export function jsonConfig(): FlatConfigArray {
       },
     },
     {
-      name: "@effective/eslint/jsonc",
+      name: "eslint-config-setup/jsonc",
       files: [
         "**/tsconfig.json",
         "**/tsconfig.*.json",

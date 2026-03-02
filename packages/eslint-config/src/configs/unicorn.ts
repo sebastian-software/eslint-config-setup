@@ -13,7 +13,7 @@ import type { FlatConfigArray } from "../types"
 export function unicornConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/unicorn",
+      name: "eslint-config-setup/unicorn",
       plugins: {
         unicorn: unicornPlugin,
       },

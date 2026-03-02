@@ -14,7 +14,7 @@ import type { FlatConfigArray } from "../types"
 export function compatConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/compat",
+      name: "eslint-config-setup/compat",
       plugins: {
         get compat() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports

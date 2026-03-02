@@ -12,7 +12,7 @@ import type { FlatConfigArray } from "../types"
 export function cspellConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/cspell",
+      name: "eslint-config-setup/cspell",
       plugins: {
         "@cspell": cspellPlugin,
       },

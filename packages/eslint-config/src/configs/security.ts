@@ -10,7 +10,7 @@ import type { FlatConfigArray } from "../types"
 export function securityConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/security",
+      name: "eslint-config-setup/security",
       plugins: {
         get security() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports

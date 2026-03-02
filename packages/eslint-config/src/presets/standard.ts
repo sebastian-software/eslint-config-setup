@@ -9,7 +9,7 @@ import type { FlatConfigArray } from "../types"
 export function standardComplexity(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/complexity",
+      name: "eslint-config-setup/complexity",
       rules: {
         // Max cyclomatic complexity per function — 10 branches
         // https://eslint.org/docs/latest/rules/complexity

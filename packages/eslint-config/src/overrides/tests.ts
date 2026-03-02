@@ -11,7 +11,7 @@ import type { FlatConfigArray } from "../types"
 export function testsOverride(): FlatConfigArray {
   const configs: FlatConfigArray = [
     {
-      name: "@effective/eslint/tests",
+      name: "eslint-config-setup/tests",
       files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       plugins: {
         get vitest() {
@@ -100,7 +100,7 @@ export function testsOverride(): FlatConfigArray {
   ]
 
   configs.push({
-      name: "@effective/eslint/tests-testing-library",
+      name: "eslint-config-setup/tests-testing-library",
       files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       plugins: {
         get "testing-library"() {

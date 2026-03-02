@@ -13,7 +13,7 @@ import type { FlatConfigArray } from "../types"
 export function nodeConfig(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/node",
+      name: "eslint-config-setup/node",
       languageOptions: {
         globals: {
           ...globals.node,

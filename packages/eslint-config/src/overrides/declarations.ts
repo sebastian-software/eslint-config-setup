@@ -10,7 +10,7 @@ import type { FlatConfigArray } from "../types"
 export function declarationsOverride(): FlatConfigArray {
   return [
     {
-      name: "@effective/eslint/declarations",
+      name: "eslint-config-setup/declarations",
       files: ["**/*.d.ts"],
       rules: {
         // Declaration files often have unused type parameters/variables
