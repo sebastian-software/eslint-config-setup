@@ -15,12 +15,6 @@ interface Category {
 
 const categories: Category[] = [
   {
-    title: "TypeScript",
-    plugins: [
-      { name: "TypeScript ESLint", label: "TypeScript", color: "#3178c6" },
-    ],
-  },
-  {
     title: "React Ecosystem",
     plugins: [
       { name: "React", color: "#61dafb" },
@@ -42,6 +36,7 @@ const categories: Category[] = [
       { name: "De Morgan", color: "#10b981" },
       { name: "Unused Imports", label: "Unused", color: "#f59e0b" },
       { name: "Security", color: "#ef4444" },
+      { name: "CSpell", color: "#0ea5e9" },
     ],
   },
   {
@@ -66,10 +61,10 @@ const categories: Category[] = [
   {
     title: "File Formats",
     plugins: [
+      { name: "TypeScript ESLint", label: "TypeScript", color: "#3178c6" },
       { name: "JSON", color: "#64748b" },
       { name: "MDX", color: "#fcb32c" },
       { name: "Package JSON", label: "package.json", color: "#64748b" },
-      { name: "CSpell", color: "#0ea5e9" },
     ],
   },
 ]
