@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Docs to GitHub Pages
 
 on:
   push:
@@ -36,13 +36,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build
-        run: pnpm build
+      - name: Build docs
+        run: pnpm --filter docs build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: build/client
+          path: docs/build/client
 
   deploy:
     environment:
