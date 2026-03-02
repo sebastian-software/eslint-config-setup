@@ -1,5 +1,10 @@
 import { defineConfig } from 'vite'
 import { ardo } from 'ardo/vite'
+import { readFileSync } from 'node:fs'
+
+const pkg = JSON.parse(
+  readFileSync(new URL('../packages/eslint-config/package.json', import.meta.url), 'utf-8')
+)
 
 export default defineConfig({
   plugins: [
@@ -7,6 +12,13 @@ export default defineConfig({
       title: 'ESLint Config Setup',
       description:
         'One import. 25+ plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled.',
+
+      project: {
+        name: pkg.name,
+        version: pkg.version,
+        repository: pkg.repository?.url?.replace(/^git\+/, '').replace(/\.git$/, ''),
+        license: pkg.license,
+      },
 
       typedoc: {
         entryPoints: ["../packages/eslint-config/src/index.ts"],
