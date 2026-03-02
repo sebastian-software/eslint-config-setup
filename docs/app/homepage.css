@@ -402,15 +402,39 @@
   color: var(--hp-text);
 }
 
-.hp-tab-active {
+/* --- CSS-only tab switching via radio inputs --- */
+.hp-showcase-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hp-showcase-panel {
+  display: none;
+}
+
+/* Show panel when its corresponding radio is checked */
+.hp-showcase-radio:nth-of-type(1):checked ~ .hp-code-block .hp-showcase-panel:nth-of-type(1),
+.hp-showcase-radio:nth-of-type(2):checked ~ .hp-code-block .hp-showcase-panel:nth-of-type(2),
+.hp-showcase-radio:nth-of-type(3):checked ~ .hp-code-block .hp-showcase-panel:nth-of-type(3),
+.hp-showcase-radio:nth-of-type(4):checked ~ .hp-code-block .hp-showcase-panel:nth-of-type(4),
+.hp-showcase-radio:nth-of-type(5):checked ~ .hp-code-block .hp-showcase-panel:nth-of-type(5) {
+  display: block;
+}
+
+/* Active tab label styling via radio */
+.hp-showcase-radio:nth-of-type(1):checked ~ .hp-tabs .hp-tab:nth-of-type(1),
+.hp-showcase-radio:nth-of-type(2):checked ~ .hp-tabs .hp-tab:nth-of-type(2),
+.hp-showcase-radio:nth-of-type(3):checked ~ .hp-tabs .hp-tab:nth-of-type(3),
+.hp-showcase-radio:nth-of-type(4):checked ~ .hp-tabs .hp-tab:nth-of-type(4),
+.hp-showcase-radio:nth-of-type(5):checked ~ .hp-tabs .hp-tab:nth-of-type(5) {
   background: var(--hp-accent-teal);
   border-color: var(--hp-accent-teal);
   color: #fff;
 }
 
-.hp-tab-active:hover {
-  border-color: var(--hp-accent-teal);
-  color: #fff;
+.hp-showcase {
+  position: relative;
 }
 
 .hp-code-block {

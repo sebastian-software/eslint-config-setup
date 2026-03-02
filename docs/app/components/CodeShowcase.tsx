@@ -1,7 +1,7 @@
-import { useState } from "react"
 import { CodeBlock } from "ardo/ui"
 
 interface Tab {
+  id: string
   label: string
   file: string
   code: string
@@ -9,6 +9,7 @@ interface Tab {
 
 const tabs: Tab[] = [
   {
+    id: "react",
     label: "React",
     file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
@@ -18,6 +19,7 @@ export default await getEslintConfig({
 })`,
   },
   {
+    id: "ai",
     label: "AI Mode",
     file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
@@ -30,6 +32,7 @@ export default await getEslintConfig({
 })`,
   },
   {
+    id: "oxlint",
     label: "OxLint",
     file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
@@ -42,6 +45,7 @@ export default await getEslintConfig({
 })`,
   },
   {
+    id: "fullstack",
     label: "Full-Stack",
     file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
@@ -52,6 +56,7 @@ export default await getEslintConfig({
 })`,
   },
   {
+    id: "custom",
     label: "Custom",
     file: "eslint.config.js",
     code: `import {
@@ -72,8 +77,6 @@ export default config`,
 ]
 
 export function CodeShowcase() {
-  const [active, setActive] = useState(0)
-
   return (
     <section className="hp-section">
       <div className="hp-container">
@@ -84,35 +87,41 @@ export function CodeShowcase() {
           Toggle flags, fine-tune rules with helper functions — the config
           handles the rest.
         </p>
-        <div className="hp-tabs hp-animate">
+        <div className="hp-showcase hp-animate">
           {tabs.map((t, i) => (
-            <button
-              key={t.label}
-              className={`hp-tab ${i === active ? "hp-tab-active" : ""}`}
-              onClick={() => setActive(i)}
-              type="button"
-            >
-              {t.label}
-            </button>
+            <input
+              key={t.id}
+              type="radio"
+              name="hp-showcase-tab"
+              id={`hp-tab-${t.id}`}
+              className="hp-showcase-radio"
+              defaultChecked={i === 0}
+            />
           ))}
-        </div>
-        <div className="hp-code-block hp-animate">
-          <div className="hp-code-header">
-            <span className="hp-code-dot" />
-            <span className="hp-code-dot" />
-            <span className="hp-code-dot" />
-            <span>{tabs[active].file}</span>
+          <div className="hp-tabs">
+            {tabs.map((t) => (
+              <label
+                key={t.id}
+                htmlFor={`hp-tab-${t.id}`}
+                className="hp-tab"
+              >
+                {t.label}
+              </label>
+            ))}
           </div>
-          {/* Render all tabs so Shiki highlights at prerender time; hide inactive */}
-          {tabs.map((t, i) => (
-            <div
-              key={t.label}
-              className="hp-showcase-panel"
-              style={{ display: i === active ? "block" : "none" }}
-            >
-              <CodeBlock code={t.code} language="javascript" />
+          <div className="hp-code-block">
+            <div className="hp-code-header">
+              <span className="hp-code-dot" />
+              <span className="hp-code-dot" />
+              <span className="hp-code-dot" />
+              <span>eslint.config.js</span>
             </div>
-          ))}
+            {tabs.map((t) => (
+              <div key={t.id} className="hp-showcase-panel">
+                <CodeBlock code={t.code} language="javascript" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
