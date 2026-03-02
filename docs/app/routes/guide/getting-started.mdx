@@ -62,19 +62,21 @@ Requires ESLint >= 9.22 and TypeScript >= 5.0.
 
 ## What you get
 
-That single `getEslintConfig()` call gives you:
+That single `getEslintConfig()` call gives you 25 plugins, configured and tested:
 
-- Type-checked TypeScript with `strictTypeChecked`
-- React 19 with Hooks, Compiler, and JSX-A11y
-- Import cycle detection and auto-sorted imports
-- Code quality analysis via SonarJS
-- Security rules
-- Spell checking in code
-- JSON and Markdown linting
-- Vitest and Playwright overrides
-- Prettier compatibility
+- **TypeScript** — `strictTypeChecked`, the strictest preset available
+- **React 19** — Hooks, Compiler, JSX-A11y, Storybook, Testing Library
+- **Imports** — cycle detection, auto-sorted, unused removal
+- **Code quality** — SonarJS duplicate detection, cognitive complexity
+- **Security** — eval, ReDoS, command injection, timing attacks
+- **Browser compat** — warns on APIs your browserslist targets don't support
+- **Spell checking** — catches typos in variable names and comments
+- **RegExp** — syntax validation, ReDoS prevention, modern patterns
+- **JSON & Markdown** — structural linting plus code block validation
+- **Vitest & Playwright** — test-specific rules with automatic relaxations
+- **Prettier compatibility** — formatting rules disabled so your formatter wins
 
-No plugin juggling. No copy-pasted config blocks.
+No plugin juggling. No dependency research. No copy-pasted config blocks.
 
 ## Configuration flags
 
