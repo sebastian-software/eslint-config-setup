@@ -15,7 +15,7 @@ export function storiesOverride(): FlatConfigArray {
       name: "eslint-config-setup/stories",
       files: ["**/*.stories.{ts,tsx}"],
       plugins: {
-        storybook: storybookPlugin,
+        storybook: storybookPlugin as Record<string, unknown>,
       },
       rules: {
         // ── Storybook rules ───────────────────────────────────────────

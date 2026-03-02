@@ -1,3 +1,4 @@
+// @ts-expect-error -- no type declarations available
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
 import reactPlugin from "eslint-plugin-react"
 import reactHooksPlugin from "eslint-plugin-react-hooks"
@@ -39,9 +40,9 @@ export function reactConfig(): FlatConfigArray {
       },
       plugins: {
         react: reactPlugin,
-        "react-hooks": reactHooksPlugin,
+        "react-hooks": reactHooksPlugin as Record<string, unknown>,
         "react-refresh": reactRefreshPlugin,
-        "jsx-a11y": jsxA11yPlugin,
+        "jsx-a11y": jsxA11yPlugin as Record<string, unknown>,
       },
       settings: {
         react: {

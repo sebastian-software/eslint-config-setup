@@ -1,3 +1,4 @@
+// @ts-expect-error -- no type declarations available
 import securityPlugin from "eslint-plugin-security"
 
 import type { FlatConfigArray } from "../types"

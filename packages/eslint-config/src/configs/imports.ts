@@ -18,7 +18,7 @@ export function importsConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/imports",
       plugins: {
-        "import": importXPlugin,
+        "import": importXPlugin as Record<string, unknown>,
         "unused-imports": unusedImportsPlugin,
       },
       rules: {
