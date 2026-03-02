@@ -1,15 +1,14 @@
-import type { ConfigOptions, FlatConfigArray } from "../types"
+import type { FlatConfigArray } from "../types"
 
 /**
- * Test file overrides — Vitest rules + relaxed strictness for unit tests.
- * Conditionally adds Testing Library rules when `react: true`.
+ * Test file overrides — Vitest rules + Testing Library + relaxed strictness.
  *
  * File patterns: *.test.{ts,tsx}, __tests__/*.{ts,tsx}
  *
  * @see https://github.com/vitest-dev/eslint-plugin-vitest#rules
  * @see https://github.com/testing-library/eslint-plugin-testing-library#supported-rules
  */
-export function testsOverride(opts: ConfigOptions): FlatConfigArray {
+export function testsOverride(): FlatConfigArray {
   const configs: FlatConfigArray = [
     {
       name: "@effective/eslint/tests",
@@ -100,9 +99,8 @@ export function testsOverride(opts: ConfigOptions): FlatConfigArray {
     },
   ]
 
-  if (opts.react) {
-    configs.push({
-      name: "@effective/eslint/tests-react",
+  configs.push({
+      name: "@effective/eslint/tests-testing-library",
       files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       plugins: {
         get "testing-library"() {
@@ -140,10 +138,6 @@ export function testsOverride(opts: ConfigOptions): FlatConfigArray {
         // Warn on debug()/prettyDOM() left in tests — debugging artifacts
         // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-debugging-utils.md
         "testing-library/no-debugging-utils": "warn",
-
-        // Import from @testing-library/react, not @testing-library/dom
-        // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-dom-import.md
-        "testing-library/no-dom-import": ["error", "react"],
 
         // Don't access DOM nodes directly — use queries
         // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-node-access.md
@@ -185,8 +179,7 @@ export function testsOverride(opts: ConfigOptions): FlatConfigArray {
         // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/render-result-naming-convention.md
         "testing-library/render-result-naming-convention": "error",
       },
-    })
-  }
+  })
 
   return configs
 }

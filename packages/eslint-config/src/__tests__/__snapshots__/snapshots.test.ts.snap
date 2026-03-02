@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `26`;
+exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `27`;
 
 exports[`config snapshots > snapshot: ai only 1`] = `
 [
@@ -1340,6 +1340,32 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "vitest/require-to-throw-message": "error",
       "vitest/valid-expect": "error",
       "vitest/valid-title": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.test.{ts,tsx}",
+      "**/__tests__/**/*.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/tests-testing-library",
+    "rules": {
+      "testing-library/await-async-events": "error",
+      "testing-library/await-async-queries": "error",
+      "testing-library/await-async-utils": "error",
+      "testing-library/no-await-sync-events": "error",
+      "testing-library/no-await-sync-queries": "error",
+      "testing-library/no-container": "error",
+      "testing-library/no-debugging-utils": "warn",
+      "testing-library/no-node-access": "error",
+      "testing-library/no-render-in-lifecycle": "error",
+      "testing-library/no-unnecessary-act": "error",
+      "testing-library/no-wait-for-multiple-assertions": "error",
+      "testing-library/no-wait-for-side-effects": "error",
+      "testing-library/prefer-find-by": "error",
+      "testing-library/prefer-presence-queries": "error",
+      "testing-library/prefer-query-by-disappearance": "error",
+      "testing-library/prefer-screen-queries": "error",
+      "testing-library/render-result-naming-convention": "error",
     },
   },
   {
@@ -3344,7 +3370,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-react",
+    "name": "@effective/eslint/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -3353,10 +3379,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "testing-library/no-await-sync-queries": "error",
       "testing-library/no-container": "error",
       "testing-library/no-debugging-utils": "warn",
-      "testing-library/no-dom-import": [
-        "error",
-        "react",
-      ],
       "testing-library/no-node-access": "error",
       "testing-library/no-render-in-lifecycle": "error",
       "testing-library/no-unnecessary-act": "error",
@@ -4780,6 +4802,32 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
   },
   {
     "files": [
+      "**/*.test.{ts,tsx}",
+      "**/__tests__/**/*.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/tests-testing-library",
+    "rules": {
+      "testing-library/await-async-events": "error",
+      "testing-library/await-async-queries": "error",
+      "testing-library/await-async-utils": "error",
+      "testing-library/no-await-sync-events": "error",
+      "testing-library/no-await-sync-queries": "error",
+      "testing-library/no-container": "error",
+      "testing-library/no-debugging-utils": "warn",
+      "testing-library/no-node-access": "error",
+      "testing-library/no-render-in-lifecycle": "error",
+      "testing-library/no-unnecessary-act": "error",
+      "testing-library/no-wait-for-multiple-assertions": "error",
+      "testing-library/no-wait-for-side-effects": "error",
+      "testing-library/prefer-find-by": "error",
+      "testing-library/prefer-presence-queries": "error",
+      "testing-library/prefer-query-by-disappearance": "error",
+      "testing-library/prefer-screen-queries": "error",
+      "testing-library/render-result-naming-convention": "error",
+    },
+  },
+  {
+    "files": [
       "**/*.spec.ts",
     ],
     "name": "@effective/eslint/e2e",
@@ -6190,6 +6238,32 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "vitest/require-to-throw-message": "error",
       "vitest/valid-expect": "error",
       "vitest/valid-title": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.test.{ts,tsx}",
+      "**/__tests__/**/*.{ts,tsx}",
+    ],
+    "name": "@effective/eslint/tests-testing-library",
+    "rules": {
+      "testing-library/await-async-events": "error",
+      "testing-library/await-async-queries": "error",
+      "testing-library/await-async-utils": "error",
+      "testing-library/no-await-sync-events": "error",
+      "testing-library/no-await-sync-queries": "error",
+      "testing-library/no-container": "error",
+      "testing-library/no-debugging-utils": "warn",
+      "testing-library/no-node-access": "error",
+      "testing-library/no-render-in-lifecycle": "error",
+      "testing-library/no-unnecessary-act": "error",
+      "testing-library/no-wait-for-multiple-assertions": "error",
+      "testing-library/no-wait-for-side-effects": "error",
+      "testing-library/prefer-find-by": "error",
+      "testing-library/prefer-presence-queries": "error",
+      "testing-library/prefer-query-by-disappearance": "error",
+      "testing-library/prefer-screen-queries": "error",
+      "testing-library/render-result-naming-convention": "error",
     },
   },
   {
@@ -8165,7 +8239,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-react",
+    "name": "@effective/eslint/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -8174,10 +8248,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "testing-library/no-await-sync-queries": "error",
       "testing-library/no-container": "error",
       "testing-library/no-debugging-utils": "warn",
-      "testing-library/no-dom-import": [
-        "error",
-        "react",
-      ],
       "testing-library/no-node-access": "error",
       "testing-library/no-render-in-lifecycle": "error",
       "testing-library/no-unnecessary-act": "error",
@@ -9704,7 +9774,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-react",
+    "name": "@effective/eslint/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -9713,10 +9783,6 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "testing-library/no-await-sync-queries": "error",
       "testing-library/no-container": "error",
       "testing-library/no-debugging-utils": "warn",
-      "testing-library/no-dom-import": [
-        "error",
-        "react",
-      ],
       "testing-library/no-node-access": "error",
       "testing-library/no-render-in-lifecycle": "error",
       "testing-library/no-unnecessary-act": "error",
@@ -11214,7 +11280,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-react",
+    "name": "@effective/eslint/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -11223,10 +11289,6 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "testing-library/no-await-sync-queries": "error",
       "testing-library/no-container": "error",
       "testing-library/no-debugging-utils": "warn",
-      "testing-library/no-dom-import": [
-        "error",
-        "react",
-      ],
       "testing-library/no-node-access": "error",
       "testing-library/no-render-in-lifecycle": "error",
       "testing-library/no-unnecessary-act": "error",
@@ -12745,7 +12807,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "**/*.test.{ts,tsx}",
       "**/__tests__/**/*.{ts,tsx}",
     ],
-    "name": "@effective/eslint/tests-react",
+    "name": "@effective/eslint/tests-testing-library",
     "rules": {
       "testing-library/await-async-events": "error",
       "testing-library/await-async-queries": "error",
@@ -12754,10 +12816,6 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "testing-library/no-await-sync-queries": "error",
       "testing-library/no-container": "error",
       "testing-library/no-debugging-utils": "warn",
-      "testing-library/no-dom-import": [
-        "error",
-        "react",
-      ],
       "testing-library/no-node-access": "error",
       "testing-library/no-render-in-lifecycle": "error",
       "testing-library/no-unnecessary-act": "error",

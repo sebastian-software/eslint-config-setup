@@ -91,18 +91,18 @@ describe("composeConfig", () => {
     expect(aiComplexity?.rules?.complexity).toEqual(["error", 10])
   })
 
-  it("includes testing-library rules only when react is true", () => {
+  it("includes testing-library rules regardless of react flag", () => {
     const withReact = composeConfig({ react: true })
     const withoutReact = composeConfig({})
 
-    const reactTestBlocks = withReact.filter((b) =>
-      b.name?.includes("tests-react"),
+    const tlBlocksWithReact = withReact.filter((b) =>
+      b.name?.includes("tests-testing-library"),
     )
-    const noReactTestBlocks = withoutReact.filter((b) =>
-      b.name?.includes("tests-react"),
+    const tlBlocksWithoutReact = withoutReact.filter((b) =>
+      b.name?.includes("tests-testing-library"),
     )
 
-    expect(reactTestBlocks.length).toBeGreaterThan(0)
-    expect(noReactTestBlocks.length).toBe(0)
+    expect(tlBlocksWithReact.length).toBeGreaterThan(0)
+    expect(tlBlocksWithoutReact.length).toBeGreaterThan(0)
   })
 })

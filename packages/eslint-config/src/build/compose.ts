@@ -89,7 +89,7 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   }
 
   // 15. File-pattern overrides (always relevant — no-op if files don't exist)
-  config.push(...testsOverride(opts))
+  config.push(...testsOverride())
   config.push(...e2eOverride())
   config.push(...storiesOverride())
   config.push(...configFilesOverride())
