@@ -1,3 +1,5 @@
+import storybookPlugin from "eslint-plugin-storybook"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -13,10 +15,7 @@ export function storiesOverride(): FlatConfigArray {
       name: "eslint-config-setup/stories",
       files: ["**/*.stories.{ts,tsx}"],
       plugins: {
-        get storybook() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-storybook")
-        },
+        storybook: storybookPlugin,
       },
       rules: {
         // ── Storybook rules ───────────────────────────────────────────
@@ -60,6 +59,10 @@ export function storiesOverride(): FlatConfigArray {
         // Use Storybook's Testing Library, not direct import
         // https://github.com/storybookjs/eslint-plugin-storybook/blob/main/docs/rules/use-storybook-testing-library.md
         "storybook/use-storybook-testing-library": "error",
+
+        // Enforce `satisfies Meta<typeof Component>` on default export — type-safe meta
+        // https://github.com/storybookjs/eslint-plugin-storybook/blob/main/docs/rules/meta-satisfies-type.md
+        "storybook/meta-satisfies-type": "error",
 
         // ── Relaxed rules for stories ─────────────────────────────────
 

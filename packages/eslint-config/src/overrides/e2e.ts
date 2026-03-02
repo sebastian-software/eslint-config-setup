@@ -1,3 +1,5 @@
+import playwrightPlugin from "eslint-plugin-playwright"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -13,10 +15,7 @@ export function e2eOverride(): FlatConfigArray {
       name: "eslint-config-setup/e2e",
       files: ["**/*.spec.ts"],
       plugins: {
-        get playwright() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-playwright")
-        },
+        playwright: playwrightPlugin,
       },
       rules: {
         // ── Playwright rules ──────────────────────────────────────────

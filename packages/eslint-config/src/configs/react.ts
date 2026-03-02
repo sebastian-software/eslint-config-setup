@@ -1,3 +1,7 @@
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
+import reactPlugin from "eslint-plugin-react"
+import reactHooksPlugin from "eslint-plugin-react-hooks"
+import reactRefreshPlugin from "eslint-plugin-react-refresh"
 import globals from "globals"
 
 import type { FlatConfigArray } from "../types"
@@ -34,22 +38,10 @@ export function reactConfig(): FlatConfigArray {
         },
       },
       plugins: {
-        get react() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-react")
-        },
-        get "react-hooks"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-react-hooks")
-        },
-        get "react-refresh"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-react-refresh")
-        },
-        get "jsx-a11y"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-jsx-a11y")
-        },
+        react: reactPlugin,
+        "react-hooks": reactHooksPlugin,
+        "react-refresh": reactRefreshPlugin,
+        "jsx-a11y": jsxA11yPlugin,
       },
       settings: {
         react: {

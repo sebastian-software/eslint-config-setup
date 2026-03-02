@@ -1,3 +1,5 @@
+import perfectionistPlugin from "eslint-plugin-perfectionist"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -27,10 +29,7 @@ export function perfectionistConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/perfectionist",
       plugins: {
-        get perfectionist() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-perfectionist")
-        },
+        perfectionist: perfectionistPlugin,
       },
       settings: {
         perfectionist: {

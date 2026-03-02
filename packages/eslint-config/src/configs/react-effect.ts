@@ -1,3 +1,5 @@
+import reactEffectPlugin from "eslint-plugin-react-you-might-not-need-an-effect"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -16,10 +18,7 @@ export function reactEffectConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/react-effect",
       plugins: {
-        get "react-you-might-not-need-an-effect"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-react-you-might-not-need-an-effect")
-        },
+        "react-you-might-not-need-an-effect": reactEffectPlugin,
       },
       rules: {
         // Disallow storing derived state in an effect — compute at render time or useMemo

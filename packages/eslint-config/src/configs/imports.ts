@@ -1,3 +1,6 @@
+import importXPlugin from "eslint-plugin-import-x"
+import unusedImportsPlugin from "eslint-plugin-unused-imports"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -15,14 +18,8 @@ export function importsConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/imports",
       plugins: {
-        get "import"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-import-x")
-        },
-get "unused-imports"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-unused-imports")
-        },
+        "import": importXPlugin,
+        "unused-imports": unusedImportsPlugin,
       },
       rules: {
         // ── Validation (import-x) ────────────────────────────────────

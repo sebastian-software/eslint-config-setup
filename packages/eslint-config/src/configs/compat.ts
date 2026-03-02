@@ -1,3 +1,5 @@
+import compatPlugin from "eslint-plugin-compat"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -16,10 +18,7 @@ export function compatConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/compat",
       plugins: {
-        get compat() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-compat")
-        },
+        compat: compatPlugin,
       },
       rules: {
         // Warn when using browser APIs not supported in browserslist targets

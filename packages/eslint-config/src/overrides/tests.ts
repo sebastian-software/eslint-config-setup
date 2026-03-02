@@ -1,3 +1,6 @@
+import vitestPlugin from "@vitest/eslint-plugin"
+import testingLibraryPlugin from "eslint-plugin-testing-library"
+
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -14,10 +17,7 @@ export function testsOverride(): FlatConfigArray {
       name: "eslint-config-setup/tests",
       files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       plugins: {
-        get vitest() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("@vitest/eslint-plugin")
-        },
+        vitest: vitestPlugin,
       },
       rules: {
         // ── Vitest rules ──────────────────────────────────────────────
@@ -103,10 +103,7 @@ export function testsOverride(): FlatConfigArray {
       name: "eslint-config-setup/tests-testing-library",
       files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       plugins: {
-        get "testing-library"() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-testing-library")
-        },
+        "testing-library": testingLibraryPlugin,
       },
       rules: {
         // ── Testing Library rules ───────────────────────────────────

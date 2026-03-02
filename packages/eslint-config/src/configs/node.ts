@@ -1,3 +1,4 @@
+import nodePlugin from "eslint-plugin-n"
 import globals from "globals"
 
 import type { FlatConfigArray } from "../types"
@@ -20,10 +21,7 @@ export function nodeConfig(): FlatConfigArray {
         },
       },
       plugins: {
-        get node() {
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require("eslint-plugin-n")
-        },
+        node: nodePlugin,
       },
       rules: {
         // Detect usage of deprecated Node.js APIs (fs.exists, url.parse, etc.)
