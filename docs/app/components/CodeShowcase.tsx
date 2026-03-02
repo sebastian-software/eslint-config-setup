@@ -1,71 +1,15 @@
-interface Tab {
-  id: string
-  label: string
-  code: string
-}
+import TabReact from "./code-snippets/tab-react.mdx"
+import TabAi from "./code-snippets/tab-ai.mdx"
+import TabOxlint from "./code-snippets/tab-oxlint.mdx"
+import TabFullstack from "./code-snippets/tab-fullstack.mdx"
+import TabCustom from "./code-snippets/tab-custom.mdx"
 
-const tabs: Tab[] = [
-  {
-    id: "react",
-    label: "React",
-    code: `import { getEslintConfig } from "eslint-config-setup"
-
-export default await getEslintConfig({
-  react: true
-})`,
-  },
-  {
-    id: "ai",
-    label: "AI Mode",
-    code: `import { getEslintConfig } from "eslint-config-setup"
-
-// Strict guardrails for AI-generated code:
-// explicit types, no magic values, complexity limits
-export default await getEslintConfig({
-  react: true,
-  ai: true
-})`,
-  },
-  {
-    id: "oxlint",
-    label: "OxLint",
-    code: `import { getEslintConfig } from "eslint-config-setup"
-
-// 50-100x faster — rules OxLint covers are
-// automatically disabled in ESLint
-export default await getEslintConfig({
-  react: true,
-  oxlint: true
-})`,
-  },
-  {
-    id: "fullstack",
-    label: "Full-Stack",
-    code: `import { getEslintConfig } from "eslint-config-setup"
-
-export default await getEslintConfig({
-  react: true,
-  node: true
-})`,
-  },
-  {
-    id: "custom",
-    label: "Custom",
-    code: `import {
-  getEslintConfig,
-  disableRule,
-  setRuleSeverity
-} from "eslint-config-setup"
-
-const config = await getEslintConfig({ react: true })
-
-disableRule(config, "unicorn/no-null")
-setRuleSeverity(config, "no-console", "warn", {
-  scope: "scripts"
-})
-
-export default config`,
-  },
+const tabs = [
+  { id: "react", label: "React", Content: TabReact },
+  { id: "ai", label: "AI Mode", Content: TabAi },
+  { id: "oxlint", label: "OxLint", Content: TabOxlint },
+  { id: "fullstack", label: "Full-Stack", Content: TabFullstack },
+  { id: "custom", label: "Custom", Content: TabCustom },
 ]
 
 export function CodeShowcase() {
@@ -106,9 +50,9 @@ export function CodeShowcase() {
             </div>
             <div className="hp-showcase-panels">
               {tabs.map((t) => (
-                <pre key={t.id} className="hp-showcase-panel hp-code-content">
-                  <code>{t.code}</code>
-                </pre>
+                <div key={t.id} className="hp-showcase-panel">
+                  <t.Content />
+                </div>
               ))}
             </div>
           </div>

@@ -1,0 +1,10 @@
+```javascript
+import { getEslintConfig } from "eslint-config-setup"
+
+// 50-100x faster — rules OxLint covers are
+// automatically disabled in ESLint
+export default await getEslintConfig({
+  react: true,
+  oxlint: true
+})
+```
