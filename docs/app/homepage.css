@@ -517,7 +517,12 @@
   border-left: none;
 }
 
-/* Hide copy button in before/after panels */
+/* Hide Ardo content footer and copy button in embedded panels */
+.hp-ba-code-wrap .ardo-content-footer,
+.hp-showcase-panel .ardo-content-footer {
+  display: none;
+}
+
 .hp-ba-code-wrap .ardo-copy-button {
   display: none;
 }
