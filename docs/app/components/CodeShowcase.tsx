@@ -1,9 +1,6 @@
-import { CodeBlock } from "ardo/ui"
-
 interface Tab {
   id: string
   label: string
-  file: string
   code: string
 }
 
@@ -11,7 +8,6 @@ const tabs: Tab[] = [
   {
     id: "react",
     label: "React",
-    file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
 
 export default await getEslintConfig({
@@ -21,7 +17,6 @@ export default await getEslintConfig({
   {
     id: "ai",
     label: "AI Mode",
-    file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
 
 // Strict guardrails for AI-generated code:
@@ -34,7 +29,6 @@ export default await getEslintConfig({
   {
     id: "oxlint",
     label: "OxLint",
-    file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
 
 // 50-100x faster — rules OxLint covers are
@@ -47,7 +41,6 @@ export default await getEslintConfig({
   {
     id: "fullstack",
     label: "Full-Stack",
-    file: "eslint.config.js",
     code: `import { getEslintConfig } from "eslint-config-setup"
 
 export default await getEslintConfig({
@@ -58,7 +51,6 @@ export default await getEslintConfig({
   {
     id: "custom",
     label: "Custom",
-    file: "eslint.config.js",
     code: `import {
   getEslintConfig,
   disableRule,
@@ -100,11 +92,7 @@ export function CodeShowcase() {
           ))}
           <div className="hp-tabs">
             {tabs.map((t) => (
-              <label
-                key={t.id}
-                htmlFor={`hp-tab-${t.id}`}
-                className="hp-tab"
-              >
+              <label key={t.id} htmlFor={`hp-tab-${t.id}`} className="hp-tab">
                 {t.label}
               </label>
             ))}
@@ -116,11 +104,13 @@ export function CodeShowcase() {
               <span className="hp-code-dot" />
               <span>eslint.config.js</span>
             </div>
-            {tabs.map((t) => (
-              <div key={t.id} className="hp-showcase-panel">
-                <CodeBlock code={t.code} language="javascript" />
-              </div>
-            ))}
+            <div className="hp-showcase-panels">
+              {tabs.map((t) => (
+                <pre key={t.id} className="hp-showcase-panel hp-code-content">
+                  <code>{t.code}</code>
+                </pre>
+              ))}
+            </div>
           </div>
         </div>
       </div>
