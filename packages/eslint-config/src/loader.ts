@@ -21,7 +21,7 @@ export async function getEslintConfig(
       /* webpackIgnore: true */
       `${configPath}?${Date.now()}`
     )) as { default: FlatConfigArray }
-    return [...module.default]
+    return module.default.filter(Boolean) as FlatConfigArray
   } catch {
     throw new Error(
       `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +

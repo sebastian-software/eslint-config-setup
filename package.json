@@ -29,10 +29,14 @@
     "generate": "pnpm --filter eslint-config-setup generate",
     "test": "pnpm --filter eslint-config-setup test",
     "test:coverage": "pnpm --filter eslint-config-setup test:coverage",
+    "lint": "node --import tsx node_modules/eslint/bin/eslint.js .",
     "docs:dev": "pnpm --filter docs dev",
     "docs:build": "pnpm --filter docs build"
   },
   "devDependencies": {
+    "eslint": "^9.22.0",
+    "eslint-config-setup": "workspace:*",
+    "jiti": "^2.6.1",
     "tsx": "^4.21.0"
   }
 }

@@ -42,7 +42,12 @@ export function perfectionistConfig(): FlatConfigArray {
         // Auto-sort import statements — deterministic ordering regardless of input
         // Replaces simple-import-sort/imports
         // https://perfectionist.dev/rules/sort-imports
-        "perfectionist/sort-imports": "error",
+        "perfectionist/sort-imports": [
+          "error",
+          {
+            partitionByNewLine: false,
+          },
+        ],
 
         // Sort specifiers inside `import { a, b, c }` — deterministic
         // https://perfectionist.dev/rules/sort-named-imports
