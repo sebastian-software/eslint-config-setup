@@ -2,11 +2,11 @@
 title: Getting Started
 ---
 
-import { Steps, Tabs, TabList, Tab, TabPanel, TabPanels, Note } from "ardo/ui"
+import { Steps, Tabs, TabList, Tab, TabPanel, TabPanels, Note, Tip } from "ardo/ui"
 
 # Getting Started
 
-Get a complete ESLint setup in under a minute.
+Get a complete ESLint setup in under a minute — with built-in support for AI-generated code and OxLint migration.
 
 ## Installation
 
@@ -77,6 +77,37 @@ That single `getEslintConfig()` call gives you 25 plugins, configured and tested
 - **Prettier compatibility** — formatting rules disabled so your formatter wins
 
 No plugin juggling. No dependency research. No copy-pasted config blocks.
+
+## What makes this different
+
+### Built for AI-generated code
+
+Most ESLint configs assume a human is writing the code. But when Cursor, Copilot, or Claude Code write your functions, the failure modes are different: implicit types, magic numbers, inconsistent naming, functions that grow unchecked — at machine speed.
+
+Enable `ai: true` and the config adds strict guardrails that AI tools follow without complaint: explicit return types, naming conventions, complexity limits, no magic values. Rules that would slow a human down are trivial for an AI to satisfy.
+
+```typescript
+export default await getEslintConfig({ react: true, ai: true })
+```
+
+See [AI Mode](/guide/ai-mode) for the full rule set.
+
+### Ready for OxLint
+
+OxLint rewrites core ESLint rules in Rust — 50 to 100x faster. But migrating means figuring out which rules overlap, which don't, and keeping both configs in sync. Most teams give up and pick one.
+
+This config does the work for you. Enable `oxlint: true` and every ESLint rule that OxLint already covers gets disabled automatically. `getOxlintConfig()` generates a matching OxLint config with the same rules at the same severity. Run both linters, get the full coverage, no conflicts.
+
+```typescript
+// eslint.config.ts
+export default await getEslintConfig({ react: true, oxlint: true })
+
+// oxlint.config.ts
+import { getOxlintConfig } from "eslint-config-setup"
+export default await getOxlintConfig({ react: true })
+```
+
+See [OxLint Integration](/guide/oxlint) for the setup guide.
 
 ## Configuration flags
 
