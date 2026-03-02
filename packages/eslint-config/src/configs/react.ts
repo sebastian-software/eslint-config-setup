@@ -16,6 +16,7 @@ import type { FlatConfigArray } from "../types"
  *
  * @see https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules
  * @see https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks
+ * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
 export function reactConfig(): FlatConfigArray {
@@ -40,6 +41,10 @@ export function reactConfig(): FlatConfigArray {
         get "react-hooks"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
           return require("eslint-plugin-react-hooks")
+        },
+        get "react-refresh"() {
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          return require("eslint-plugin-react-refresh")
         },
         get "jsx-a11y"() {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -204,6 +209,17 @@ export function reactConfig(): FlatConfigArray {
         // Verify dependency arrays in useEffect/useMemo/useCallback
         // https://react.dev/reference/react/useEffect#specifying-reactive-dependencies
         "react-hooks/exhaustive-deps": "error",
+
+        // ── React Refresh (Fast Refresh / HMR) ────────────────────────
+
+        // Ensure components are exported in a way that supports Fast Refresh.
+        // Mixed exports (component + constants) break HMR state preservation.
+        // allowConstantExport: Vite handles constant exports without breaking HMR.
+        // https://github.com/ArnaudBarre/eslint-plugin-react-refresh
+        "react-refresh/only-export-components": [
+          "warn",
+          { allowConstantExport: true },
+        ],
 
         // ── React Compiler (via react-hooks >= 7.0) ─────────────────────
 

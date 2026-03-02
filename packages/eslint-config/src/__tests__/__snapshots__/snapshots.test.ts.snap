@@ -2741,6 +2741,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react-refresh/only-export-components": [
+        "warn",
+        {
+          "allowConstantExport": true,
+        },
+      ],
       "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
@@ -7610,6 +7616,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react-refresh/only-export-components": [
+        "warn",
+        {
+          "allowConstantExport": true,
+        },
+      ],
       "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
@@ -9678,6 +9690,12 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react-refresh/only-export-components": [
+        "warn",
+        {
+          "allowConstantExport": true,
+        },
+      ],
       "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
@@ -11184,6 +11202,12 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react-refresh/only-export-components": [
+        "warn",
+        {
+          "allowConstantExport": true,
+        },
+      ],
       "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
@@ -12711,6 +12735,12 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react-refresh/only-export-components": [
+        "warn",
+        {
+          "allowConstantExport": true,
+        },
+      ],
       "react/button-has-type": "error",
       "react/function-component-definition": [
         "error",
