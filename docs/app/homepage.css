@@ -530,18 +530,15 @@
   flex-shrink: 0;
 }
 
-/* Plugin color categories */
-.hp-plugin-ts { --hp-plugin-color: #3178c6; }
-.hp-plugin-react { --hp-plugin-color: #61dafb; }
-.hp-plugin-quality { --hp-plugin-color: #10b981; }
-.hp-plugin-style { --hp-plugin-color: #f59e0b; }
-.hp-plugin-security { --hp-plugin-color: #ef4444; }
-.hp-plugin-compat { --hp-plugin-color: #8b5cf6; }
-.hp-plugin-format { --hp-plugin-color: #ec4899; }
-.hp-plugin-perf { --hp-plugin-color: #f97316; }
+.hp-plugin-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
 
-.hp-plugin-chip .hp-plugin-dot {
-  background: var(--hp-plugin-color);
+.hp-plugin-chip:hover {
+  border-color: var(--hp-chip-color, var(--hp-border));
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--hp-chip-color, transparent) 15%, transparent);
 }
 
 /* --- CTA Footer --- */

@@ -1,44 +1,46 @@
+import { brandMap } from "./BrandLogos"
+
 interface Plugin {
   name: string
-  category: string
+  color: string
 }
 
 const plugins: Plugin[] = [
   // TypeScript
-  { name: "TypeScript ESLint", category: "hp-plugin-ts" },
+  { name: "TypeScript ESLint", color: "#3178c6" },
   // React
-  { name: "React", category: "hp-plugin-react" },
-  { name: "React Hooks", category: "hp-plugin-react" },
-  { name: "React Refresh", category: "hp-plugin-react" },
-  { name: "No Unnecessary Effect", category: "hp-plugin-react" },
-  { name: "JSX a11y", category: "hp-plugin-react" },
-  { name: "Storybook", category: "hp-plugin-react" },
-  { name: "Testing Library", category: "hp-plugin-react" },
+  { name: "React", color: "#61dafb" },
+  { name: "React Hooks", color: "#61dafb" },
+  { name: "React Refresh", color: "#61dafb" },
+  { name: "No Unnecessary Effect", color: "#61dafb" },
+  { name: "JSX a11y", color: "#61dafb" },
+  { name: "Storybook", color: "#ff4785" },
+  { name: "Testing Library", color: "#e33332" },
   // Quality
-  { name: "Unicorn", category: "hp-plugin-quality" },
-  { name: "SonarJS", category: "hp-plugin-quality" },
-  { name: "RegExp", category: "hp-plugin-quality" },
-  { name: "De Morgan", category: "hp-plugin-quality" },
-  { name: "Unused Imports", category: "hp-plugin-quality" },
+  { name: "Unicorn", color: "#7c3aed" },
+  { name: "SonarJS", color: "#cb3032" },
+  { name: "RegExp", color: "#10b981" },
+  { name: "De Morgan", color: "#10b981" },
+  { name: "Unused Imports", color: "#f59e0b" },
   // Style
-  { name: "Prettier", category: "hp-plugin-style" },
-  { name: "Import-X", category: "hp-plugin-style" },
-  { name: "Perfectionist", category: "hp-plugin-style" },
-  { name: "JSDoc", category: "hp-plugin-style" },
+  { name: "Prettier", color: "#f7b93e" },
+  { name: "Import-X", color: "#8b5cf6" },
+  { name: "Perfectionist", color: "#8b5cf6" },
+  { name: "JSDoc", color: "#006dcc" },
   // Security
-  { name: "Security", category: "hp-plugin-security" },
+  { name: "Security", color: "#ef4444" },
   // Compat
-  { name: "Compat", category: "hp-plugin-compat" },
-  { name: "Node.js", category: "hp-plugin-compat" },
-  { name: "OxLint", category: "hp-plugin-compat" },
-  { name: "Vitest", category: "hp-plugin-compat" },
-  { name: "Playwright", category: "hp-plugin-compat" },
+  { name: "Compat", color: "#0ea5e9" },
+  { name: "Node.js", color: "#5fa04e" },
+  { name: "OxLint", color: "#f97316" },
+  { name: "Vitest", color: "#6e9f18" },
+  { name: "Playwright", color: "#2ead33" },
   // Format
-  { name: "JSON", category: "hp-plugin-format" },
-  { name: "MDX", category: "hp-plugin-format" },
-  { name: "Package JSON", category: "hp-plugin-format" },
+  { name: "JSON", color: "#64748b" },
+  { name: "MDX", color: "#fcb32c" },
+  { name: "Package JSON", color: "#64748b" },
   // Other
-  { name: "CSpell", category: "hp-plugin-perf" },
+  { name: "CSpell", color: "#0ea5e9" },
 ]
 
 export function PluginEcosystem() {
@@ -50,15 +52,28 @@ export function PluginEcosystem() {
           Every plugin pre-configured, conflict-free, and kept up to date.
         </p>
         <div className="hp-plugin-grid hp-stagger">
-          {plugins.map((p) => (
-            <span
-              key={p.name}
-              className={`hp-plugin-chip hp-animate ${p.category}`}
-            >
-              <span className="hp-plugin-dot" />
-              {p.name}
-            </span>
-          ))}
+          {plugins.map((p) => {
+            const brand = brandMap[p.name]
+            return (
+              <span
+                key={p.name}
+                className="hp-plugin-chip hp-animate"
+                style={{ "--hp-chip-color": p.color } as React.CSSProperties}
+              >
+                {brand ? (
+                  <span className="hp-plugin-logo" style={{ color: p.color }}>
+                    <brand.logo size={14} />
+                  </span>
+                ) : (
+                  <span
+                    className="hp-plugin-dot"
+                    style={{ background: p.color }}
+                  />
+                )}
+                {p.name}
+              </span>
+            )
+          })}
         </div>
       </div>
     </section>
