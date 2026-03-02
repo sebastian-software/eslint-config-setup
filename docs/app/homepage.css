@@ -464,27 +464,33 @@
   opacity: 0.4;
 }
 
-/* Strip Ardo article/content wrappers from MDX snippets */
-.hp-ba-code-wrap > .ardo-content-container,
+/* Reset ALL Ardo wrappers from MDX snippets embedded in homepage panels */
+.hp-ba-code-wrap,
+.hp-showcase-panel {
+  /* Flatten everything Ardo adds around the code */
+}
+
+.hp-ba-code-wrap .ardo-content-container,
 .hp-ba-code-wrap .ardo-content-body,
-.hp-showcase-panel > .ardo-content-container,
-.hp-showcase-panel .ardo-content-body {
+.hp-ba-code-wrap .ardo-content,
+.hp-showcase-panel .ardo-content-container,
+.hp-showcase-panel .ardo-content-body,
+.hp-showcase-panel .ardo-content {
+  all: unset;
   display: contents;
 }
 
-/* Remove default margins/borders/background from Ardo code blocks inside our panels */
 .hp-ba-code-wrap .ardo-code-block,
 .hp-showcase-panel .ardo-code-block {
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  all: unset;
+  display: block;
 }
 
 .hp-ba-code-wrap .ardo-code-wrapper,
 .hp-showcase-panel .ardo-code-wrapper {
-  border-radius: 0;
+  all: unset;
+  display: block;
+  position: relative;
 }
 
 .hp-ba-code-wrap .shiki,
@@ -492,14 +498,23 @@
   margin: 0;
   padding: 20px;
   border-radius: 0;
+  font-family: var(--hp-font-mono);
   font-size: 0.85rem;
   line-height: 1.75;
+  overflow-x: auto;
   background: var(--shiki-light-bg, var(--hp-surface-code)) !important;
 }
 
 .dark .hp-ba-code-wrap .shiki,
 .dark .hp-showcase-panel .shiki {
   background: var(--shiki-dark-bg, var(--hp-surface-code)) !important;
+}
+
+.hp-ba-code-wrap .ardo-code-line,
+.hp-showcase-panel .ardo-code-line {
+  margin: 0;
+  padding: 0;
+  border-left: none;
 }
 
 /* Hide copy button in before/after panels */
