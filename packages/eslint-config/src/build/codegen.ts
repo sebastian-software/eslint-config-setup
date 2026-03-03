@@ -32,7 +32,7 @@ const FILE_PROBES = {
  * Generates a complete ES module string for a given set of config options.
  * The module exports a valid ESLint flat config array with real imports.
  */
-export async function generateConfigModule(opts: ConfigOptions): Promise<string> {
+export function generateConfigModule(opts: ConfigOptions): string {
   const config = composeConfig(opts)
   const resolved = resolveRulesForAllProbes(config)
 

@@ -34,9 +34,9 @@ export async function getEslintConfig(
  * Loads a pre-generated OxLint config from the hashed JSON file.
  * Only `react`, `node`, and `ai` flags are relevant — `oxlint` is ignored.
  */
-export async function getOxlintConfig(
+export function getOxlintConfig(
   opts: OxlintConfigOptions = {},
-): Promise<unknown> {
+): unknown {
   const filename = oxlintOptionsToFilename(opts)
   const dirname = import.meta.dirname
   const configPath = path.join(dirname, "oxlint-configs", filename)

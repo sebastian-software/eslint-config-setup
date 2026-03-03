@@ -1,7 +1,11 @@
 // @ts-expect-error -- no type declarations available
 import securityPlugin from "eslint-plugin-security"
 
+import type { ESLint } from "eslint"
+
 import type { FlatConfigArray } from "../types"
+
+const plugin = securityPlugin as unknown as ESLint.Plugin
 
 /**
  * Security config — Node.js security patterns from eslint-plugin-security.
@@ -15,7 +19,7 @@ export function securityConfig(): FlatConfigArray {
     {
       name: "eslint-config-setup/security",
       plugins: {
-        security: securityPlugin,
+        security: plugin,
       },
       rules: {
         // ── Errors: dangerous patterns that should never appear ────────

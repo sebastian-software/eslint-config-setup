@@ -1,4 +1,4 @@
-import regexpPlugin from "eslint-plugin-regexp"
+import { configs as regexpConfigs } from "eslint-plugin-regexp"
 
 import type { FlatConfigArray } from "../types"
 
@@ -16,7 +16,7 @@ import { createConfig } from "../build/config-builder"
 export function regexpConfig(): FlatConfigArray {
   return createConfig({
     name: "eslint-config-setup/regexp",
-    presets: [regexpPlugin.configs["flat/recommended"]],
+    presets: [regexpConfigs["flat/recommended"]],
   })
 
     // ── Beyond recommended ──────────────────────────────────────────

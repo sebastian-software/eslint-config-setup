@@ -41,7 +41,7 @@ async function main(): Promise<void> {
     const filename = `${hash}.js`
     const filepath = path.join(outDir, filename)
 
-    const content = await generateConfigModule(opts)
+    const content = generateConfigModule(opts)
 
     writeFileSync(filepath, content, "utf8")
     eslintCount++
@@ -54,7 +54,8 @@ async function main(): Promise<void> {
   console.log(`\nGenerated ${eslintCount} ESLint config permutations in dist/configs/`)
 
   // --- OxLint configs (8 permutations) ---
-  const migrate = (await import("@oxlint/migrate")).default
+  const migrateModule = await import("@oxlint/migrate")
+  const migrate = migrateModule.default
 
   mkdirSync(oxlintOutDir, { recursive: true })
 
@@ -89,4 +90,4 @@ function describeOxlintOptions(opts: OxlintConfigOptions): string {
   return flags.length > 0 ? flags.join(" + ") : "base"
 }
 
-main()
+await main()

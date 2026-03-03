@@ -10,11 +10,10 @@ describe("composeConfig", () => {
 
   it("every custom config block has a name property", () => {
     const config = composeConfig({ react: true, node: true, ai: true })
-    for (const block of config) {
-      // Our blocks are named; third-party blocks (typescript-eslint, regexp, etc.) have their own names
-      if (block.name?.startsWith("eslint-config-setup/")) {
-        expect(block.name).toMatch(/^eslint-config-setup\//)
-      }
+    const ownBlocks = config.filter((b) => b.name?.startsWith("eslint-config-setup/"))
+    expect(ownBlocks.length).toBeGreaterThan(0)
+    for (const block of ownBlocks) {
+      expect(block.name).toMatch(/^eslint-config-setup\//)
     }
   })
 

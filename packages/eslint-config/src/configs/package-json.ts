@@ -1,4 +1,4 @@
-import packageJsonPlugin from "eslint-plugin-package-json"
+import packageJsonPlugin, { configs as packageJsonConfigs } from "eslint-plugin-package-json"
 
 import type { FlatConfigArray } from "../types"
 
@@ -15,7 +15,7 @@ import type { FlatConfigArray } from "../types"
  * @see https://github.com/JoshuaKGoldberg/eslint-plugin-package-json
  */
 export function packageJsonConfig(): FlatConfigArray {
-  const recommended = packageJsonPlugin.configs.recommended
+  const recommended = packageJsonConfigs.recommended
 
   return [
     {
