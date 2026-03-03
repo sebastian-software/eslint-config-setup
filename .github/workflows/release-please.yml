@@ -7,14 +7,12 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  id-token: write
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs['packages/eslint-config--release_created'] }}
-      tag_name: ${{ steps.release.outputs['packages/eslint-config--tag_name'] }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -22,41 +20,19 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  publish:
+  trigger-publish:
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      id-token: write
+      actions: write
     steps:
-      - uses: actions/checkout@v6
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - uses: actions/github-script@v7
         with:
-          node-version: "24"
-          registry-url: "https://registry.npmjs.org"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check types
-        run: pnpm run check
-
-      - name: Run tests
-        run: pnpm run test
-
-      - name: Build
-        run: pnpm run build
-
-      - name: Generate config permutations
-        run: pnpm run generate
-
-      - name: Publish to npm (OIDC trusted publishing)
-        run: npm publish --provenance --access public
-        working-directory: packages/eslint-config
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'publish.yml',
+              ref: 'main',
+            });
