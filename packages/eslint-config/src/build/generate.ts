@@ -51,7 +51,7 @@ async function main(): Promise<void> {
     console.log(`  [${String(mask).padStart(2, " ")}] ${hash}.js → ${desc} (${size} KB)`)
   }
 
-  console.log(`\nGenerated ${String(eslintCount)} ESLint config permutations in dist/configs/`)
+  console.log(`\nGenerated ${eslintCount} ESLint config permutations in dist/configs/`)
 
   // --- OxLint configs (8 permutations) ---
   const migrate = (await import("@oxlint/migrate")).default
@@ -79,7 +79,7 @@ async function main(): Promise<void> {
     console.log(`  [${String(mask).padStart(2, " ")}] ${hash}.json → ${desc} (${size} KB)`)
   }
 
-  console.log(`\nGenerated ${String(oxlintCount)} OxLint config permutations in dist/oxlint-configs/`)
+  console.log(`\nGenerated ${oxlintCount} OxLint config permutations in dist/oxlint-configs/`)
 }
 
 function describeOxlintOptions(opts: OxlintConfigOptions): string {

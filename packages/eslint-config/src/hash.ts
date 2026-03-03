@@ -20,7 +20,7 @@ export function optionsToBitmask(opts: ConfigOptions): number {
  * The same hash is produced at build-time (generate) and run-time (getConfig).
  */
 export function bitmaskToHash(mask: number): string {
-  const input = `effective-eslint-config:${String(mask)}`
+  const input = `effective-eslint-config:${mask}`
   return createHash("sha1").update(input).digest("hex").slice(0, 8)
 }
 
@@ -57,7 +57,7 @@ export function oxlintOptionsToBitmask(opts: OxlintConfigOptions): number {
 
 /** Deterministic hash for OxLint configs (different salt to avoid collisions). */
 export function oxlintBitmaskToHash(mask: number): string {
-  const input = `eslint-config-setup-oxlint:${String(mask)}`
+  const input = `eslint-config-setup-oxlint:${mask}`
   return createHash("sha1").update(input).digest("hex").slice(0, 8)
 }
 

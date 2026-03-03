@@ -19,7 +19,7 @@ export async function getEslintConfig(
   try {
     const module = (await import(
       /* webpackIgnore: true */
-      `${configPath}?${String(Date.now())}`
+      `${configPath}?${Date.now()}`
     )) as { default: FlatConfigArray }
     return module.default
   } catch {

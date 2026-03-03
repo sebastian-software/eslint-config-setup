@@ -132,6 +132,13 @@ export function typescriptConfig(): FlatConfigArray {
     },
   ])
 
+  // Allow numbers in template literals — `${count}` is idiomatic JS
+  // https://typescript-eslint.io/rules/restrict-template-expressions
+  builder.overrideRule("@typescript-eslint/restrict-template-expressions", [
+    "error",
+    { allowNumber: true },
+  ])
+
   // Require strict boolean expressions — no implicit truthiness checks
   // Prevents bugs like `if (count)` when count is 0 (falsy but valid)
   // https://typescript-eslint.io/rules/strict-boolean-expressions
