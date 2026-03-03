@@ -69,13 +69,10 @@ export function generateConfigModule(opts: ConfigOptions): string {
   const imports = buildImports(requiredNamespaces, { hasReact, hasNode, hasOxlint })
 
   // Build the config blocks
-  const blocks: string[] = [
-    "  // TypeScript parser setup",
-    "  ...tseslint.configs.strictTypeChecked.slice(0, 2),",
-    "",
-    // Main base block — all effective rules for *.ts
-    emitBaseBlock(baseRules, baseNamespaces, { hasReact, hasNode }),
-  ]
+  const blocks: string[] = [ "  // TypeScript parser setup", "  ...tseslint.configs.strictTypeChecked.slice(0, 2),", ""]
+
+  // Main base block — all effective rules for *.ts
+  blocks.push(emitBaseBlock(baseRules, baseNamespaces, { hasReact, hasNode }))
 
   // 3. JS Compat — disable type-checked rules for .js files
   if (Object.keys(jsCompatDiff).length > 0) {
@@ -470,10 +467,8 @@ function emitOverrideBlock(
   rules: Rules,
   plugins?: Map<string, string>,
 ): string {
-  const lines: string[] = [
-    `  // ${name.replace("eslint-config-setup/", "")} override`,
-    "  {",
-  ]
+  const lines: string[] = []
+  lines.push(`  // ${name.replace("eslint-config-setup/", "")} override`, "  {")
   lines.push(`    name: ${JSON.stringify(name)},`)
   lines.push(`    files: ${JSON.stringify(files)},`)
 

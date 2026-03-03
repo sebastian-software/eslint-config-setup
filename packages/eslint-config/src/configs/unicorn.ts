@@ -88,9 +88,9 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unnecessary-slice-end.md
         "unicorn/no-unnecessary-slice-end": "error",
 
-        // Disallow mutating object/array immediately after creation — likely a bug
+        // OFF: Stylistic — developers should decide their own array initialization pattern
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-immediate-mutation.md
-        "unicorn/no-immediate-mutation": "error",
+        "unicorn/no-immediate-mutation": "off",
 
         // Disallow recursive access in getters/setters — infinite loop risk
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-accessor-recursion.md
