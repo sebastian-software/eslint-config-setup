@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.2...eslint-config-setup-v0.2.3) (2026-03-03)
+
+
+### Bug Fixes
+
+* release trigger ([0f064c1](https://github.com/sebastian-software/eslint-config-setup/commit/0f064c18d2a9f555f69d53151c9c06732ce43975))
+
 ## [0.2.2](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.1...eslint-config-setup-v0.2.2) (2026-03-03)
 
 
