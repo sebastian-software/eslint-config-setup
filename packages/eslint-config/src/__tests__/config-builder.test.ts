@@ -154,10 +154,10 @@ describe("createConfig", () => {
         ignores: ["dist/**"],
       }).build()
 
-      expect(result[0].languageOptions).toEqual({ ecmaVersion: 2022 })
-      expect(result[0].settings).toEqual({ react: { version: "19" } })
-      expect(result[0].files).toEqual(["**/*.ts"])
-      expect(result[0].ignores).toEqual(["dist/**"])
+      expect(result[0].languageOptions).toStrictEqual({ ecmaVersion: 2022 })
+      expect(result[0].settings).toStrictEqual({ react: { version: "19" } })
+      expect(result[0].files).toStrictEqual(["**/*.ts"])
+      expect(result[0].ignores).toStrictEqual(["dist/**"])
     })
 
     it("prepends passthrough blocks before main block", () => {
@@ -185,7 +185,7 @@ describe("createConfig", () => {
 
       expect(result).toHaveLength(2)
       expect(result[1].name).toBe("override")
-      expect(result[1].files).toEqual(["**/*.js"])
+      expect(result[1].files).toStrictEqual(["**/*.js"])
       expect(result[1].rules!["fake/rule-a"]).toBe("off")
     })
   })

@@ -92,7 +92,7 @@ describe("allPermutations", () => {
 
   it("first permutation is all-false", () => {
     const [first] = allPermutations()
-    expect(first).toEqual({
+    expect(first).toStrictEqual({
       react: false,
       node: false,
       ai: false,
@@ -102,7 +102,7 @@ describe("allPermutations", () => {
 
   it("last permutation is all-true", () => {
     const perms = [...allPermutations()]
-    expect(perms[15]).toEqual({
+    expect(perms[15]).toStrictEqual({
       react: true,
       node: true,
       ai: true,

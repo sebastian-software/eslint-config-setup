@@ -46,8 +46,8 @@ describe("setRuleSeverity", () => {
   it("changes severity of an array rule, preserving options", () => {
     const config = makeConfig()
     setRuleSeverity(config, "complexity", "off")
-    expect(config[0].rules!.complexity).toEqual(["off", 10])
-    expect(config[1].rules!.complexity).toEqual(["off", 5])
+    expect(config[0].rules!.complexity).toStrictEqual(["off", 10])
+    expect(config[1].rules!.complexity).toStrictEqual(["off", 5])
   })
 
   it("ignores blocks that do not have the rule", () => {
@@ -84,7 +84,7 @@ describe("setRuleSeverity", () => {
       },
     ]
     setRuleSeverity(config, "@typescript-eslint/naming-convention", "warn")
-    expect(config[0].rules!["@typescript-eslint/naming-convention"]).toEqual([
+    expect(config[0].rules!["@typescript-eslint/naming-convention"]).toStrictEqual([
       "warn",
       { selector: "variable", format: ["camelCase"] },
       { selector: "typeLike", format: ["PascalCase"] },
@@ -106,8 +106,8 @@ describe("configureRule", () => {
   it("updates options while preserving severity", () => {
     const config = makeConfig()
     configureRule(config, "complexity", [20])
-    expect(config[0].rules!.complexity).toEqual(["error", 20])
-    expect(config[1].rules!.complexity).toEqual(["warn", 20])
+    expect(config[0].rules!.complexity).toStrictEqual(["error", 20])
+    expect(config[1].rules!.complexity).toStrictEqual(["warn", 20])
   })
 
   it("replaces multiple option entries", () => {
@@ -127,7 +127,7 @@ describe("configureRule", () => {
     ])
     expect(
       config[0].rules!["@typescript-eslint/naming-convention"],
-    ).toEqual([
+    ).toStrictEqual([
       "error",
       { selector: "variable", format: ["snake_case"] },
       { selector: "function", format: ["camelCase"] },
@@ -137,7 +137,7 @@ describe("configureRule", () => {
   it("converts a string-only rule to array format", () => {
     const config = makeConfig()
     configureRule(config, "no-console", [{ allow: ["warn", "error"] }])
-    expect(config[0].rules!["no-console"]).toEqual([
+    expect(config[0].rules!["no-console"]).toStrictEqual([
       "error",
       { allow: ["warn", "error"] },
     ])
@@ -146,7 +146,7 @@ describe("configureRule", () => {
   it("ignores blocks without the rule", () => {
     const config = makeConfig()
     configureRule(config, "no-var", ["always"])
-    expect(config[0].rules!["no-var"]).toEqual(["warn", "always"])
+    expect(config[0].rules!["no-var"]).toStrictEqual(["warn", "always"])
     expect(config[1].rules!["no-var"]).toBeUndefined()
   })
 })
@@ -189,7 +189,7 @@ describe("addRule", () => {
   it("adds a rule with options to the first block", () => {
     const config = makeConfig()
     addRule(config, "max-depth", "error", [3])
-    expect(config[0].rules!["max-depth"]).toEqual(["error", 3])
+    expect(config[0].rules!["max-depth"]).toStrictEqual(["error", 3])
   })
 
   it("adds a rule with complex options", () => {
@@ -197,7 +197,7 @@ describe("addRule", () => {
     addRule(config, "max-lines-per-function", "error", [
       { max: 50, skipBlankLines: true, skipComments: true },
     ])
-    expect(config[0].rules!["max-lines-per-function"]).toEqual([
+    expect(config[0].rules!["max-lines-per-function"]).toStrictEqual([
       "error",
       { max: 50, skipBlankLines: true, skipComments: true },
     ])
@@ -238,8 +238,8 @@ describe("disableAllRulesBut", () => {
   it("handles a rule that exists in multiple blocks", () => {
     const config = makeConfig()
     disableAllRulesBut(config, "complexity")
-    expect(config[0].rules!.complexity).toEqual(["error", 10])
-    expect(config[1].rules!.complexity).toEqual(["warn", 5])
+    expect(config[0].rules!.complexity).toStrictEqual(["error", 10])
+    expect(config[1].rules!.complexity).toStrictEqual(["warn", 5])
     expect(config[0].rules!["no-console"]).toBe("off")
   })
 
@@ -323,7 +323,7 @@ describe("scoped configureRule", () => {
     configureRule(config, "no-console", [{ allow: ["warn"] }], {
       scope: "tests",
     })
-    expect(config[1].rules!["no-console"]).toEqual([
+    expect(config[1].rules!["no-console"]).toStrictEqual([
       "warn",
       { allow: ["warn"] },
     ])
@@ -336,7 +336,7 @@ describe("scoped configureRule", () => {
     configureRule(config, "no-console", [{ allow: ["warn"] }], {
       scope: "scripts",
     })
-    expect(config[3].rules!["no-console"]).toEqual([
+    expect(config[3].rules!["no-console"]).toStrictEqual([
       "off",
       { allow: ["warn"] },
     ])
@@ -356,9 +356,9 @@ describe("scoped configureRule", () => {
       },
     ]
     configureRule(config, "complexity", [50], { scope: "configs" })
-    expect(config[1].rules!.complexity).toEqual(["error", 50])
+    expect(config[1].rules!.complexity).toStrictEqual(["error", 50])
     // base unchanged
-    expect(config[0].rules!.complexity).toEqual(["error", 10])
+    expect(config[0].rules!.complexity).toStrictEqual(["error", 10])
   })
 })
 
@@ -397,7 +397,7 @@ describe("scoped addRule", () => {
   it("adds rule with options to scoped block", () => {
     const config = makeScopedConfig()
     addRule(config, "no-restricted-syntax", "error", [{ selector: "ForInStatement" }], { scope: "scripts" })
-    expect(config[3].rules!["no-restricted-syntax"]).toEqual([
+    expect(config[3].rules!["no-restricted-syntax"]).toStrictEqual([
       "error",
       { selector: "ForInStatement" },
     ])
@@ -417,7 +417,7 @@ describe("rule helpers on composed configs", () => {
   it("can disable a rule from a real base config", () => {
     const config = composeConfig({})
     const baseBlock = config.find((b) => b.name === "eslint-config-setup/base")
-    expect(baseBlock?.rules?.eqeqeq).toEqual(["error", "smart"])
+    expect(baseBlock?.rules?.eqeqeq).toStrictEqual(["error", "smart"])
 
     disableRule(config, "eqeqeq")
     expect(baseBlock?.rules?.eqeqeq).toBe("off")
@@ -428,10 +428,10 @@ describe("rule helpers on composed configs", () => {
     const complexityBlock = config.find(
       (b) => b.name === "eslint-config-setup/complexity",
     )
-    expect(complexityBlock?.rules?.complexity).toEqual(["error", 10])
+    expect(complexityBlock?.rules?.complexity).toStrictEqual(["error", 10])
 
     setRuleSeverity(config, "complexity", "warn")
-    expect(complexityBlock?.rules?.complexity).toEqual(["warn", 10])
+    expect(complexityBlock?.rules?.complexity).toStrictEqual(["warn", 10])
   })
 
   it("can reconfigure complexity limits on an AI config", () => {
@@ -439,10 +439,10 @@ describe("rule helpers on composed configs", () => {
     const aiComplexity = config.find(
       (b) => b.name === "eslint-config-setup/ai-complexity",
     )
-    expect(aiComplexity?.rules?.complexity).toEqual(["error", 10])
+    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 10])
 
     configureRule(config, "complexity", [25])
-    expect(aiComplexity?.rules?.complexity).toEqual(["error", 25])
+    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 25])
   })
 
   it("can add a custom rule to a composed config", () => {
@@ -496,7 +496,7 @@ describe("rule helpers on composed configs", () => {
     const aiComplexity = config.find(
       (b) => b.name === "eslint-config-setup/ai-complexity",
     )
-    expect(aiComplexity?.rules?.complexity).toEqual(["error", 20])
+    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 20])
 
     expect(config[0].rules!["no-alert"]).toBe("error")
   })

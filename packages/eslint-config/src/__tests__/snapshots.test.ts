@@ -58,9 +58,9 @@ describe("config rule stability", () => {
     const config = composeConfig({})
     const baseBlock = config.find((b) => b.name === "eslint-config-setup/base")
     expect(baseBlock?.rules).toBeDefined()
-    expect(baseBlock!.rules!.eqeqeq).toEqual(["error", "smart"])
+    expect(baseBlock!.rules!.eqeqeq).toStrictEqual(["error", "smart"])
     expect(baseBlock!.rules!["no-var"]).toBe("error")
-    expect(baseBlock!.rules!["prefer-const"]).toEqual(["error", { destructuring: "all" }])
+    expect(baseBlock!.rules!["prefer-const"]).toStrictEqual(["error", { destructuring: "all" }])
   })
 
   it("typescript config always includes type-checked rules", () => {
@@ -139,7 +139,7 @@ describe("config rule stability", () => {
   it("json config targets .json files with correct language", () => {
     const config = composeConfig({})
     const jsonBlock = config.find((b) => b.name === "eslint-config-setup/json")
-    expect(jsonBlock?.files).toEqual(["**/*.json"])
+    expect(jsonBlock?.files).toStrictEqual(["**/*.json"])
     expect(jsonBlock?.language).toBe("json/json")
 
     const jsoncBlock = config.find((b) => b.name === "eslint-config-setup/jsonc")
@@ -152,7 +152,7 @@ describe("config rule stability", () => {
       (b) => Array.isArray(b.files) && b.files.includes("**/*.{md,mdx}"),
     )
     expect(mdBlock).toBeDefined()
-    expect(mdBlock?.files).toEqual(["**/*.{md,mdx}"])
+    expect(mdBlock?.files).toStrictEqual(["**/*.{md,mdx}"])
   })
 })
 

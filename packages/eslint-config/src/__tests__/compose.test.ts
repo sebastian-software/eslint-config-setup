@@ -88,7 +88,7 @@ describe("composeConfig", () => {
       (b) => b.name === "eslint-config-setup/ai-complexity",
     )
 
-    expect(aiComplexity?.rules?.complexity).toEqual(["error", 10])
+    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 10])
   })
 
   it("includes testing-library rules regardless of react flag", () => {
