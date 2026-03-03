@@ -16,6 +16,7 @@ jobs:
         node-version: [22, 24]
         include:
           - os: ubuntu-latest
+            node-version: "bun"
             runtime: bun
     steps:
       - uses: actions/checkout@v6
