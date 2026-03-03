@@ -79,8 +79,9 @@ export function disableRule(
   ruleName: string,
   options?: RuleOptions,
 ): void {
-  if (options?.scope) {
-    const block = config.find((b) => blockMatchesScope(b, options.scope!))
+  if (options?.scope != null) {
+    const { scope } = options
+    const block = config.find((b) => blockMatchesScope(b, scope))
     if (!block) return
     block.rules ??= {}
     block.rules[ruleName] = "off"
@@ -119,8 +120,9 @@ export function addRule(
   }
 
   let target: Linter.Config | undefined
-  if (scopeOpts?.scope) {
-    target = config.find((b) => blockMatchesScope(b, scopeOpts.scope!))
+  if (scopeOpts?.scope != null) {
+    const { scope } = scopeOpts
+    target = config.find((b) => blockMatchesScope(b, scope))
   } else {
     target = config[0]
   }

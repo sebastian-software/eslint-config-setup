@@ -297,7 +297,7 @@ function configMatchesFile(block: FlatConfig, filename: string): boolean {
 function filterOffRules(rules: Rules): Rules {
   const filtered: Rules = {}
   for (const [rule, value] of Object.entries(rules)) {
-    const severity = Array.isArray(value) ? value[0] : value
+    const severity: unknown = Array.isArray(value) ? (value as unknown[])[0] : value
     if (severity !== "off" && severity !== 0) {
       filtered[rule] = value
     }
