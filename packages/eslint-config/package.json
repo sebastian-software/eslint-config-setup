@@ -43,7 +43,7 @@
     "url": "https://github.com/sebastian-software/eslint-config-setup.git",
     "directory": "packages/eslint-config"
   },
-  "homepage": "https://github.com/sebastian-software/eslint-config-setup/tree/main/packages/eslint-config",
+  "homepage": "https://sebastian-software.github.io/eslint-config-setup/",
   "bugs": {
     "url": "https://github.com/sebastian-software/eslint-config-setup/issues"
   },
