@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.4](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.3...eslint-config-setup-v0.2.4) (2026-03-03)
+
+
+### Bug Fixes
+
+* copy root README into package before npm publish ([07f38d1](https://github.com/sebastian-software/eslint-config-setup/commit/07f38d1878e32a9d6f6daafed983b7608ff95a22))
+* use root path for release-please so all commits trigger releases ([661a3f7](https://github.com/sebastian-software/eslint-config-setup/commit/661a3f7d165966b4728251787b67f0a176a7add0))
+
 ## [0.2.3](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.2...eslint-config-setup-v0.2.3) (2026-03-03)
 
 
