@@ -34,10 +34,8 @@ import { standardComplexity } from "../presets/standard"
  * This is the core logic used by the build system to generate configs.
  */
 export function composeConfig(opts: ConfigOptions): FlatConfigArray {
-  const config: FlatConfigArray = []
-
   // 1. Base rules (always)
-  config.push(...baseConfig())
+  const config: FlatConfigArray = [...baseConfig()]
 
   // 2. TypeScript (always, uses strictTypeChecked)
   config.push(...typescriptConfig())

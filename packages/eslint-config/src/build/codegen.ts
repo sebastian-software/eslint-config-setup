@@ -69,12 +69,13 @@ export async function generateConfigModule(opts: ConfigOptions): Promise<string>
   const imports = buildImports(requiredNamespaces, { hasReact, hasNode, hasOxlint })
 
   // Build the config blocks
-  const blocks: string[] = [ "  // TypeScript parser setup", "  ...tseslint.configs.strictTypeChecked.slice(0, 2),", ""]
-
-  // 1. TypeScript parser setup (structural blocks)
-
-  // 2. Main base block — all effective rules for *.ts
-  blocks.push(emitBaseBlock(baseRules, baseNamespaces, { hasReact, hasNode }))
+  const blocks: string[] = [
+    "  // TypeScript parser setup",
+    "  ...tseslint.configs.strictTypeChecked.slice(0, 2),",
+    "",
+    // Main base block — all effective rules for *.ts
+    emitBaseBlock(baseRules, baseNamespaces, { hasReact, hasNode }),
+  ]
 
   // 3. JS Compat — disable type-checked rules for .js files
   if (Object.keys(jsCompatDiff).length > 0) {
@@ -360,10 +361,10 @@ function extractNamespace(ruleName: string): null | string {
   // Example: @typescript-eslint/no-unused-vars → @typescript-eslint
   // Example: @cspell/spellchecker → @cspell
   if (ruleName.startsWith("@")) {
-    const slashIndex = ruleName.indexOf("/")
-    if (slashIndex !== -1) {
+    const scopeSlash = ruleName.indexOf("/")
+    if (scopeSlash !== -1) {
       // Check for second slash (e.g. @typescript-eslint/no-unused-vars)
-      return ruleName.slice(0, slashIndex)
+      return ruleName.slice(0, scopeSlash)
     }
     return null
   }
@@ -469,8 +470,10 @@ function emitOverrideBlock(
   rules: Rules,
   plugins?: Map<string, string>,
 ): string {
-  const lines: string[] = []
-  lines.push(`  // ${name.replace("eslint-config-setup/", "")} override`, "  {")
+  const lines: string[] = [
+    `  // ${name.replace("eslint-config-setup/", "")} override`,
+    "  {",
+  ]
   lines.push(`    name: ${JSON.stringify(name)},`)
   lines.push(`    files: ${JSON.stringify(files)},`)
 
@@ -647,10 +650,8 @@ function collectOverridePlugins(
   const plugins = new Map<string, string>()
   for (const ruleName of Object.keys(rules)) {
     const ns = extractNamespace(ruleName)
-    if (ns !== null && !baseNamespaces.has(ns)) {
-      if (ns in pluginRegistry) {
-        plugins.set(ns, pluginRegistry[ns].pluginExpr)
-      }
+    if (ns !== null && !baseNamespaces.has(ns) && ns in pluginRegistry) {
+      plugins.set(ns, pluginRegistry[ns].pluginExpr)
     }
   }
   return plugins
