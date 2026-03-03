@@ -38,5 +38,6 @@
     "eslint-config-setup": "workspace:*",
     "jiti": "^2.6.1",
     "tsx": "^4.21.0"
-  }
+  },
+  "version": "0.2.4"
 }
