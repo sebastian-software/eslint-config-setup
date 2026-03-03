@@ -3,7 +3,6 @@ import type { FlatConfigArray } from "../types"
 /**
  * Complexity preset — limits for production code that encourage small,
  * focused functions and aggressive extraction of helper functions.
- *
  * @see https://eslint.org/docs/latest/rules/#suggestions (complexity rules)
  */
 export function standardComplexity(): FlatConfigArray {
@@ -48,6 +47,16 @@ export function standardComplexity(): FlatConfigArray {
         // Cognitive complexity — measures how hard code is to understand
         // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
         "sonarjs/cognitive-complexity": ["error", 10],
+      },
+    },
+    {
+      name: "eslint-config-setup/complexity-tests-relaxed",
+      files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}", "**/*.spec.ts"],
+      rules: {
+        "max-nested-callbacks": "off",
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "max-statements": "off",
       },
     },
   ]

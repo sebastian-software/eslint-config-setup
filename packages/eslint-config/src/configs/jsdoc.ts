@@ -1,7 +1,8 @@
 import jsdocPlugin from "eslint-plugin-jsdoc"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * JSDoc config — validates existing JSDoc annotations without requiring them.
@@ -12,7 +13,6 @@ import type { FlatConfigArray } from "../types"
  * Overrides:
  * - `require-jsdoc` OFF — we validate existing JSDoc, we don't mandate it
  * - param/return descriptions downgraded to warn — helpful but not blocking
- *
  * @see https://github.com/gajus/eslint-plugin-jsdoc#rules
  */
 export function jsdocConfig(): FlatConfigArray {
@@ -23,6 +23,11 @@ export function jsdocConfig(): FlatConfigArray {
     // OFF: Don't require JSDoc on everything — only validate what exists
     // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md
     .overrideRule("jsdoc/require-jsdoc", "off")
+
+    // OFF: Too strict for normal usage — requiring @param/@returns on every
+    // documented function adds noise. Enabled in AI mode where completeness matters.
+    .overrideRule("jsdoc/require-param", "off")
+    .overrideRule("jsdoc/require-returns", "off")
 
     // Warn if @param descriptions are missing — helpful but not blocking
     // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-description.md
@@ -39,6 +44,10 @@ export function jsdocConfig(): FlatConfigArray {
     // Enable detection of references to undefined types in JSDoc (off in preset)
     // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-undefined-types.md
     .overrideRule("jsdoc/no-undefined-types", "error")
+
+    // OFF: Allow blank lines between description and tags — keeps JSDoc readable
+    // The preset enforces no blank lines before tags, but visual separation helps.
+    .overrideRule("jsdoc/tag-lines", "off")
 
     .build()
 }
