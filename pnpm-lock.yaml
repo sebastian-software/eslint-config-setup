@@ -75,6 +75,9 @@ importers:
       eslint-config-prettier:
         specifier: ^10.1.8
         version: 10.1.8(eslint@10.0.2(jiti@2.6.1))
+      eslint-plugin-compat:
+        specifier: ^7.0.0
+        version: 7.0.0(eslint@10.0.2(jiti@2.6.1))
       eslint-plugin-de-morgan:
         specifier: ^2.1.1
         version: 2.1.1(eslint@10.0.2(jiti@2.6.1))
@@ -160,9 +163,6 @@ importers:
       eslint:
         specifier: ^10.0.2
         version: 10.0.2(jiti@2.6.1)
-      eslint-plugin-compat:
-        specifier: ^7.0.0
-        version: 7.0.0(eslint@10.0.2(jiti@2.6.1))
       oxlint:
         specifier: ^1.51.0
         version: 1.51.0
