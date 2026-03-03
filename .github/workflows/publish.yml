@@ -38,6 +38,9 @@ jobs:
       - name: Generate config permutations
         run: pnpm run generate
 
+      - name: Copy README into package
+        run: cp README.md packages/eslint-config/
+
       - name: Publish to npm (OIDC trusted publishing)
         run: npm publish --provenance --access public
         working-directory: packages/eslint-config
