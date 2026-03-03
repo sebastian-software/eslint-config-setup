@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs"
 import path from "node:path"
-import { fileURLToPath } from "node:url"
+
+import type { ConfigOptions, FlatConfigArray, OxlintConfigOptions } from "./types"
 
 import { optionsToFilename, oxlintOptionsToFilename } from "./hash"
-import type { ConfigOptions, FlatConfigArray, OxlintConfigOptions } from "./types"
 
 /**
  * Loads a pre-generated ESLint config by dynamically importing the hashed file.
@@ -13,7 +13,7 @@ export async function getEslintConfig(
   opts: ConfigOptions = {},
 ): Promise<FlatConfigArray> {
   const filename = optionsToFilename(opts)
-  const dirname = path.dirname(fileURLToPath(import.meta.url))
+  const dirname = import.meta.dirname
   const configPath = path.join(dirname, "configs", filename)
 
   try {
@@ -21,7 +21,7 @@ export async function getEslintConfig(
       /* webpackIgnore: true */
       `${configPath}?${Date.now()}`
     )) as { default: FlatConfigArray }
-    return module.default.filter(Boolean) as FlatConfigArray
+    return module.default
   } catch {
     throw new Error(
       `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
@@ -38,7 +38,7 @@ export async function getOxlintConfig(
   opts: OxlintConfigOptions = {},
 ): Promise<unknown> {
   const filename = oxlintOptionsToFilename(opts)
-  const dirname = path.dirname(fileURLToPath(import.meta.url))
+  const dirname = import.meta.dirname
   const configPath = path.join(dirname, "oxlint-configs", filename)
 
   try {

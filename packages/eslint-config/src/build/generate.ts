@@ -1,10 +1,8 @@
-import { createRequire } from "node:module"
 import { mkdirSync, writeFileSync } from "node:fs"
+import { createRequire } from "node:module"
 import path from "node:path"
-import { fileURLToPath } from "node:url"
 
-// Provide `require` for lazy plugin getters used in config files (ESM has no global require)
-;(globalThis as Record<string, unknown>).require = createRequire(import.meta.url)
+import type { ConfigOptions, OxlintConfigOptions } from "../types"
 
 import {
   allOxlintPermutations,
@@ -14,11 +12,13 @@ import {
   oxlintBitmaskToHash,
   oxlintOptionsToBitmask,
 } from "../hash"
-import type { ConfigOptions, OxlintConfigOptions } from "../types"
+import { generateConfigModule } from "./codegen"
 import { composeConfig } from "./compose"
-import { serializeConfig, serializeOxlintConfig } from "./serialize"
+import { serializeOxlintConfig } from "./serialize"
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
+(globalThis as Record<string, unknown>).require = createRequire(import.meta.url)
+
+const dirname = import.meta.dirname
 const outDir = path.resolve(dirname, "../../dist/configs")
 const oxlintOutDir = path.resolve(dirname, "../../dist/oxlint-configs")
 
@@ -41,8 +41,7 @@ async function main(): Promise<void> {
     const filename = `${hash}.js`
     const filepath = path.join(outDir, filename)
 
-    const config = composeConfig(opts)
-    const content = serializeConfig(config)
+    const content = await generateConfigModule(opts)
 
     writeFileSync(filepath, content, "utf-8")
     eslintCount++
