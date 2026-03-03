@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.7](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.6...eslint-config-setup-v0.2.7) (2026-03-03)
+
+
+### Bug Fixes
+
+* use RELEASE_PLEASE_TOKEN so releases trigger publish workflow ([78838a3](https://github.com/sebastian-software/eslint-config-setup/commit/78838a3ab04aba90e595e4dc4db2ba1cfe25a960))
+
 ## [0.2.6](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.5...eslint-config-setup-v0.2.6) (2026-03-03)
 
 
