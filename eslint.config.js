@@ -13,6 +13,10 @@ config.unshift({
     "**/*.md",
     "**/*.mdx",
     "**/*.json",
+    // Config files outside tsconfig's src/ scope
+    "eslint.config.js",
+    "packages/eslint-config/tsup.config.ts",
+    "packages/eslint-config/vitest.config.ts",
   ],
 })
 
