@@ -1,8 +1,4 @@
-import TabReact from "./code-snippets/tab-react.mdx"
-import TabAi from "./code-snippets/tab-ai.mdx"
-import TabOxlint from "./code-snippets/tab-oxlint.mdx"
-import TabFullstack from "./code-snippets/tab-fullstack.mdx"
-import TabCustom from "./code-snippets/tab-custom.mdx"
+import { CodeBlock } from "ardo"
 
 export function CodeShowcase() {
   return (
@@ -75,19 +71,65 @@ export function CodeShowcase() {
             </div>
             <div className="hp-showcase-panels">
               <div className="hp-showcase-panel">
-                <TabReact />
+                <CodeBlock language="javascript">{`
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  react: true
+})
+                `}</CodeBlock>
               </div>
               <div className="hp-showcase-panel">
-                <TabAi />
+                <CodeBlock language="javascript">{`
+import { getEslintConfig } from "eslint-config-setup"
+
+// Strict guardrails for AI-generated code:
+// explicit types, no magic values, complexity limits
+export default await getEslintConfig({
+  react: true,
+  ai: true
+})
+                `}</CodeBlock>
               </div>
               <div className="hp-showcase-panel">
-                <TabOxlint />
+                <CodeBlock language="javascript">{`
+import { getEslintConfig } from "eslint-config-setup"
+
+// 50-100x faster — rules OxLint covers are
+// automatically disabled in ESLint
+export default await getEslintConfig({
+  react: true,
+  oxlint: true
+})
+                `}</CodeBlock>
               </div>
               <div className="hp-showcase-panel">
-                <TabFullstack />
+                <CodeBlock language="javascript">{`
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  react: true,
+  node: true
+})
+                `}</CodeBlock>
               </div>
               <div className="hp-showcase-panel">
-                <TabCustom />
+                <CodeBlock language="javascript">{`
+import {
+  getEslintConfig,
+  disableRule,
+  setRuleSeverity
+} from "eslint-config-setup"
+
+const config = await getEslintConfig({ react: true })
+
+disableRule(config, "unicorn/no-null")
+setRuleSeverity(config, "no-console", "warn", {
+  scope: "scripts"
+})
+
+export default config
+                `}</CodeBlock>
               </div>
             </div>
           </div>
