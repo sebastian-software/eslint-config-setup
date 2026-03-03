@@ -24,7 +24,7 @@ const oxlintOutDir = path.resolve(dirname, "../../dist/oxlint-configs")
 
 function describeOptions(opts: ConfigOptions): string {
   const flags = Object.entries(opts)
-    .filter(([, v]) => v)
+    .filter(([, v]) => v === true)
     .map(([k]) => k)
   return flags.length > 0 ? flags.join(" + ") : "base"
 }
@@ -84,7 +84,7 @@ async function main(): Promise<void> {
 
 function describeOxlintOptions(opts: OxlintConfigOptions): string {
   const flags = Object.entries(opts)
-    .filter(([, v]) => v)
+    .filter(([, v]) => v === true)
     .map(([k]) => k)
   return flags.length > 0 ? flags.join(" + ") : "base"
 }

@@ -11,12 +11,12 @@ import { composeConfig } from "../build/compose"
  */
 function extractSnapshot(config: FlatConfigArray) {
   return config
-    .filter((block) => block.name || block.rules || block.files)
+    .filter((block) => block.name != null || block.rules != null || block.files != null)
     .map((block) => ({
       name: block.name ?? "(unnamed)",
-      ...(block.files ? { files: block.files } : {}),
-      ...(block.language ? { language: block.language } : {}),
-      ...(block.rules ? { rules: sortRules(block.rules) } : {}),
+      ...(block.files != null ? { files: block.files } : {}),
+      ...(block.language != null ? { language: block.language } : {}),
+      ...(block.rules != null ? { rules: sortRules(block.rules) } : {}),
     }))
 }
 

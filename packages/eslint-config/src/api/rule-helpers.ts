@@ -22,7 +22,7 @@ function blockMatchesScope(
   scope: string,
 ): boolean {
   const name = block.name
-  if (!name) return false
+  if (name == null) return false
   const segment = SCOPE_TO_BLOCK[scope] ?? scope
   const target = `${CONFIG_PREFIX}${segment}`
   return name === target || name.startsWith(`${target}-`)
@@ -38,8 +38,8 @@ export function setRuleSeverity(
   options?: RuleOptions,
 ): void {
   for (const block of config) {
-    if (options?.scope && !blockMatchesScope(block, options.scope)) continue
-    if (!block.rules?.[ruleName]) continue
+    if (options?.scope !== undefined && !blockMatchesScope(block, options.scope)) continue
+    if (block.rules?.[ruleName] == null) continue
 
     const current = block.rules[ruleName]
     if (Array.isArray(current)) {
@@ -60,9 +60,9 @@ export function configureRule(
   ruleOptions?: RuleOptions,
 ): void {
   for (const block of config) {
-    if (ruleOptions?.scope && !blockMatchesScope(block, ruleOptions.scope))
+    if (ruleOptions?.scope !== undefined && !blockMatchesScope(block, ruleOptions.scope))
       continue
-    if (!block.rules?.[ruleName]) continue
+    if (block.rules?.[ruleName] == null) continue
 
     const current = block.rules[ruleName]
     const severity = Array.isArray(current) ? current[0] : current
@@ -88,7 +88,7 @@ export function disableRule(
   }
 
   for (const block of config) {
-    if (!block.rules?.[ruleName]) continue
+    if (block.rules?.[ruleName] == null) continue
     block.rules[ruleName] = "off"
   }
 }

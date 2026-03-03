@@ -223,8 +223,6 @@ function resolveRulesForFile(config: FlatConfigArray, filename: string): Rules {
   const merged: Rules = {}
 
   for (const block of config) {
-    if (!block || typeof block !== "object") continue
-
     // Skip non-JS/TS configs (JSON, markdown, etc.)
     if (hasNonJsFields(block)) continue
 
@@ -392,9 +390,8 @@ function buildImports(
 
   // Plugin imports based on rule namespaces
   for (const ns of namespaces) {
-    const entry = pluginRegistry[ns]
-    if (entry) {
-      imports.add(entry.importStatement)
+    if (ns in pluginRegistry) {
+      imports.add(pluginRegistry[ns].importStatement)
     }
   }
 
@@ -434,9 +431,8 @@ function emitBaseBlock(
 
   // Plugins object
   for (const ns of [...namespaces].sort()) {
-    const entry = pluginRegistry[ns]
-    if (entry) {
-      lines.push(`      ${JSON.stringify(ns)}: ${entry.pluginExpr},`)
+    if (ns in pluginRegistry) {
+      lines.push(`      ${JSON.stringify(ns)}: ${pluginRegistry[ns].pluginExpr},`)
     }
   }
   lines.push("    },", "    languageOptions: {", "      parser: tseslint.parser,", "      parserOptions: {", "        projectService: true,")
@@ -652,9 +648,8 @@ function collectOverridePlugins(
   for (const ruleName of Object.keys(rules)) {
     const ns = extractNamespace(ruleName)
     if (ns !== null && !baseNamespaces.has(ns)) {
-      const entry = pluginRegistry[ns]
-      if (entry) {
-        plugins.set(ns, entry.pluginExpr)
+      if (ns in pluginRegistry) {
+        plugins.set(ns, pluginRegistry[ns].pluginExpr)
       }
     }
   }
