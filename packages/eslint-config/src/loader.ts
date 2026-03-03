@@ -42,7 +42,7 @@ export async function getOxlintConfig(
   const configPath = path.join(dirname, "oxlint-configs", filename)
 
   try {
-    const content = readFileSync(configPath, "utf-8")
+    const content = readFileSync(configPath, "utf8")
     return JSON.parse(content) as unknown
   } catch {
     throw new Error(

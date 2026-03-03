@@ -43,7 +43,7 @@ async function main(): Promise<void> {
 
     const content = await generateConfigModule(opts)
 
-    writeFileSync(filepath, content, "utf-8")
+    writeFileSync(filepath, content, "utf8")
     eslintCount++
 
     const desc = describeOptions(opts)
@@ -71,7 +71,7 @@ async function main(): Promise<void> {
     const oxlintConfig = await migrate(eslintConfig)
     const content = serializeOxlintConfig(oxlintConfig)
 
-    writeFileSync(filepath, content, "utf-8")
+    writeFileSync(filepath, content, "utf8")
     oxlintCount++
 
     const desc = describeOxlintOptions(opts)
