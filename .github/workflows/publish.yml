@@ -36,8 +36,9 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Publish to npm with provenance
+      - name: Generate config permutations
+        run: pnpm run generate
+
+      - name: Publish to npm (OIDC trusted publishing)
         run: npm publish --provenance --access public
         working-directory: packages/eslint-config
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
