@@ -34,7 +34,7 @@
     "docs:build": "pnpm --filter docs build"
   },
   "devDependencies": {
-    "eslint": "^9.22.0",
+    "eslint": "^10.0.2",
     "eslint-config-setup": "workspace:*",
     "jiti": "^2.6.1",
     "tsx": "^4.21.0"
