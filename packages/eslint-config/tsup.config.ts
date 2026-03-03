@@ -9,10 +9,22 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: true,
-  target: "node20",
+  target: "node22",
   outDir: "dist",
   external: [
+    // Peer dependencies
     "eslint",
     "typescript",
+
+    // All plugin dependencies — npm installs them, no need to bundle
+    /^eslint-plugin-/,
+    /^@eslint\//,
+    /^@typescript-eslint\//,
+    /^@cspell\//,
+    /^@vitest\//,
+    /^@oxlint\//,
+    "globals",
+    "typescript-eslint",
+    "eslint-config-prettier",
   ],
 })

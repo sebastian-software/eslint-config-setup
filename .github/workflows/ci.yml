@@ -35,3 +35,5 @@ jobs:
           fail_ci_if_error: false
       - name: Build
         run: pnpm run build
+      - name: Generate config permutations
+        run: pnpm run generate
