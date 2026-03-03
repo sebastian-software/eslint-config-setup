@@ -7,7 +7,7 @@ import type { FlatConfigArray } from "../types"
 const plugin = jsonPlugin as unknown as ESLint.Plugin
 
 /**
- * JSON/JSONC config — native JSON linting using the official @eslint/json plugin.
+ * JSON/JSONC config — native JSON linting using the official `@eslint/json` plugin.
  * Two blocks: strict JSON for most files, JSONC (with comments) for tsconfig etc.
  *
  * @see https://github.com/eslint/json#rules

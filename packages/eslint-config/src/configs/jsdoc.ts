@@ -28,6 +28,7 @@ export function jsdocConfig(): FlatConfigArray {
     // documented function adds noise. Enabled in AI mode where completeness matters.
     .overrideRule("jsdoc/require-param", "off")
     .overrideRule("jsdoc/require-returns", "off")
+    .overrideRule("jsdoc/require-yields", "off")
 
     // Warn if @param descriptions are missing — helpful but not blocking
     // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-description.md

@@ -11,7 +11,7 @@ import { createConfig } from "../build/config-builder"
  * Rules with TypeScript equivalents (no-implied-eval, dot-notation, etc.)
  * are NOT included here — they are handled by the typescript-eslint presets.
  *
- * Preset: @eslint/js recommended
+ * Preset: `@eslint/js` recommended
  * @see https://eslint.org/docs/latest/rules/
  */
 export function baseConfig(): FlatConfigArray {
