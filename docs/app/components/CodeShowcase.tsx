@@ -4,14 +4,6 @@ import TabOxlint from "./code-snippets/tab-oxlint.mdx"
 import TabFullstack from "./code-snippets/tab-fullstack.mdx"
 import TabCustom from "./code-snippets/tab-custom.mdx"
 
-const tabs = [
-  { id: "react", label: "React", Content: TabReact },
-  { id: "ai", label: "AI Mode", Content: TabAi },
-  { id: "oxlint", label: "OxLint", Content: TabOxlint },
-  { id: "fullstack", label: "Full-Stack", Content: TabFullstack },
-  { id: "custom", label: "Custom", Content: TabCustom },
-]
-
 export function CodeShowcase() {
   return (
     <section className="hp-section">
@@ -24,23 +16,56 @@ export function CodeShowcase() {
           handles the rest.
         </p>
         <div className="hp-showcase hp-animate">
-          {tabs.map((t, i) => (
-            <input
-              key={t.id}
-              type="radio"
-              name="hp-showcase-tab"
-              id={`hp-tab-${t.id}`}
-              className="hp-showcase-radio"
-              defaultChecked={i === 0}
-            />
-          ))}
+          <input
+            type="radio"
+            name="hp-showcase-tab"
+            id="hp-tab-react"
+            className="hp-showcase-radio"
+            defaultChecked
+          />
+          <input
+            type="radio"
+            name="hp-showcase-tab"
+            id="hp-tab-ai"
+            className="hp-showcase-radio"
+          />
+          <input
+            type="radio"
+            name="hp-showcase-tab"
+            id="hp-tab-oxlint"
+            className="hp-showcase-radio"
+          />
+          <input
+            type="radio"
+            name="hp-showcase-tab"
+            id="hp-tab-fullstack"
+            className="hp-showcase-radio"
+          />
+          <input
+            type="radio"
+            name="hp-showcase-tab"
+            id="hp-tab-custom"
+            className="hp-showcase-radio"
+          />
+
           <div className="hp-tabs">
-            {tabs.map((t) => (
-              <label key={t.id} htmlFor={`hp-tab-${t.id}`} className="hp-tab">
-                {t.label}
-              </label>
-            ))}
+            <label htmlFor="hp-tab-react" className="hp-tab">
+              React
+            </label>
+            <label htmlFor="hp-tab-ai" className="hp-tab">
+              AI Mode
+            </label>
+            <label htmlFor="hp-tab-oxlint" className="hp-tab">
+              OxLint
+            </label>
+            <label htmlFor="hp-tab-fullstack" className="hp-tab">
+              Full-Stack
+            </label>
+            <label htmlFor="hp-tab-custom" className="hp-tab">
+              Custom
+            </label>
           </div>
+
           <div className="hp-code-block">
             <div className="hp-code-header">
               <span className="hp-code-dot" />
@@ -49,11 +74,21 @@ export function CodeShowcase() {
               <span>eslint.config.js</span>
             </div>
             <div className="hp-showcase-panels">
-              {tabs.map((t) => (
-                <div key={t.id} className="hp-showcase-panel">
-                  <t.Content />
-                </div>
-              ))}
+              <div className="hp-showcase-panel">
+                <TabReact />
+              </div>
+              <div className="hp-showcase-panel">
+                <TabAi />
+              </div>
+              <div className="hp-showcase-panel">
+                <TabOxlint />
+              </div>
+              <div className="hp-showcase-panel">
+                <TabFullstack />
+              </div>
+              <div className="hp-showcase-panel">
+                <TabCustom />
+              </div>
             </div>
           </div>
         </div>
