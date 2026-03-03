@@ -26,7 +26,7 @@ describe("composeConfig", () => {
     const noReactBlocks = withoutReact.filter((b) => b.name?.includes("react"))
 
     expect(reactBlocks.length).toBeGreaterThan(0)
-    expect(noReactBlocks.length).toBe(0)
+    expect(noReactBlocks).toHaveLength(0)
   })
 
   it("includes node blocks only when node is true", () => {
@@ -37,7 +37,7 @@ describe("composeConfig", () => {
     const noNodeBlocks = withoutNode.filter((b) => b.name?.includes("node"))
 
     expect(nodeBlocks.length).toBeGreaterThan(0)
-    expect(noNodeBlocks.length).toBe(0)
+    expect(noNodeBlocks).toHaveLength(0)
   })
 
   it("includes AI blocks only when ai is true", () => {
@@ -48,7 +48,7 @@ describe("composeConfig", () => {
     const noAiBlocks = withoutAi.filter((b) => b.name?.includes("ai"))
 
     expect(aiBlocks.length).toBeGreaterThan(0)
-    expect(noAiBlocks.length).toBe(0)
+    expect(noAiBlocks).toHaveLength(0)
   })
 
   it("includes storybook override regardless of react flag", () => {
@@ -71,13 +71,13 @@ describe("composeConfig", () => {
         !b.name?.includes("markdown") &&
         !b.name?.includes("oxlint"),
     )
-    const last = tsJsBlocks[tsJsBlocks.length - 1]
+    const last = tsJsBlocks.at(-1)
     expect(last.name).toBe("eslint-config-setup/prettier")
   })
 
   it("places oxlint configs at the very end when enabled", () => {
     const config = composeConfig({ react: true, oxlint: true })
-    const lastBlock = config[config.length - 1]
+    const lastBlock = config.at(-1)
     expect(lastBlock.name).toMatch(/oxlint/)
   })
 

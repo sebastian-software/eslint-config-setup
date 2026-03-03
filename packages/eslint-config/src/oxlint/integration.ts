@@ -26,8 +26,7 @@ export function oxlintIntegration(opts: ConfigOptions): FlatConfigArray {
     configs.push({
       name: "eslint-config-setup/oxlint-react",
       ...typedPlugin.configs["flat/react"],
-    })
-    configs.push({
+    }, {
       name: "eslint-config-setup/oxlint-jsx-a11y",
       ...typedPlugin.configs["flat/jsx-a11y"],
     })
@@ -44,16 +43,13 @@ export function oxlintIntegration(opts: ConfigOptions): FlatConfigArray {
   configs.push({
     name: "eslint-config-setup/oxlint-typescript",
     ...typedPlugin.configs["flat/typescript"],
-  })
-  configs.push({
+  }, {
     name: "eslint-config-setup/oxlint-unicorn",
     ...typedPlugin.configs["flat/unicorn"],
-  })
-  configs.push({
+  }, {
     name: "eslint-config-setup/oxlint-import",
     ...typedPlugin.configs["flat/import"],
-  })
-  configs.push({
+  }, {
     name: "eslint-config-setup/oxlint-jsdoc",
     ...typedPlugin.configs["flat/jsdoc"],
   })

@@ -1,7 +1,8 @@
 import regexpPlugin from "eslint-plugin-regexp"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * RegExp config — uses the full `flat/recommended` preset from eslint-plugin-regexp.

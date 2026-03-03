@@ -16,15 +16,15 @@ export type OxlintConfigOptions = Omit<ConfigOptions, "oxlint">
 
 export type FlatConfig = Linter.Config
 export type FlatConfigArray = Linter.Config[]
-export type RuleSeverity = "off" | "warn" | "error"
+export type RuleSeverity = "error" | "off" | "warn"
 
 export type RuleScope =
-  | "tests"
-  | "e2e"
-  | "stories"
   | "configs"
   | "declarations"
+  | "e2e"
   | "scripts"
+  | "stories"
+  | "tests"
 
 export interface RuleOptions {
   scope?: RuleScope

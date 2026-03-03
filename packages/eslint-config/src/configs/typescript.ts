@@ -1,7 +1,8 @@
 import tseslint from "typescript-eslint"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfig, FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * TypeScript config — extends typescript-eslint strict presets with project-wide type checking.

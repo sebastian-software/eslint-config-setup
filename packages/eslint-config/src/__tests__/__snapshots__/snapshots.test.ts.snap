@@ -472,7 +472,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -2452,7 +2457,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -4600,7 +4610,12 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -6082,7 +6097,12 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -7593,7 +7613,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -9688,7 +9713,12 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -11314,7 +11344,12 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",
@@ -12932,7 +12967,12 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "name": "eslint-config-setup/perfectionist",
     "rules": {
       "perfectionist/sort-exports": "error",
-      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-imports": [
+        "error",
+        {
+          "partitionByNewLine": false,
+        },
+      ],
       "perfectionist/sort-intersection-types": "error",
       "perfectionist/sort-named-exports": "error",
       "perfectionist/sort-named-imports": "error",

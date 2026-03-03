@@ -101,26 +101,26 @@ export function addRule(
   config: FlatConfigArray,
   ruleName: string,
   severity: RuleSeverity,
-  options?: unknown[] | RuleOptions,
+  options?: RuleOptions | unknown[],
   ruleOptions?: RuleOptions,
 ): void {
   // Handle overloaded signatures: addRule(config, rule, severity, options?, ruleOptions?)
   // When options is a plain object with scope, it's actually ruleOptions
-  let ruleOpts: unknown[] | undefined
+  let ruleOpts: undefined | unknown[]
   let scopeOpts: RuleOptions | undefined
 
   if (Array.isArray(options)) {
     ruleOpts = options
     scopeOpts = ruleOptions
   } else if (options && typeof options === "object" && "scope" in options) {
-    scopeOpts = options as RuleOptions
+    scopeOpts = options
   } else if (options === undefined) {
     scopeOpts = ruleOptions
   }
 
   let target: Linter.Config | undefined
   if (scopeOpts?.scope) {
-    target = config.find((b) => blockMatchesScope(b, scopeOpts!.scope!))
+    target = config.find((b) => blockMatchesScope(b, scopeOpts.scope!))
   } else {
     target = config[0]
   }

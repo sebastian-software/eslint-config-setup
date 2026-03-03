@@ -97,9 +97,7 @@ export function testsOverride(): FlatConfigArray {
         "@typescript-eslint/no-unsafe-member-access": "off",
       },
     },
-  ]
-
-  configs.push({
+   {
       name: "eslint-config-setup/tests-testing-library",
       files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       plugins: {
@@ -176,7 +174,8 @@ export function testsOverride(): FlatConfigArray {
         // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/render-result-naming-convention.md
         "testing-library/render-result-naming-convention": "error",
       },
-  })
+  }]
+
 
   return configs
 }

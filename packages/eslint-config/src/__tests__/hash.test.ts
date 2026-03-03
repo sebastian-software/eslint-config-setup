@@ -55,7 +55,7 @@ describe("optionsToBitmask", () => {
 describe("bitmaskToHash", () => {
   it("returns a deterministic 8-char hex string", () => {
     const hash = bitmaskToHash(0)
-    expect(hash).toMatch(/^[0-9a-f]{8}$/)
+    expect(hash).toMatch(/^[\da-f]{8}$/)
   })
 
   it("returns the same hash for the same input", () => {
@@ -74,7 +74,7 @@ describe("bitmaskToHash", () => {
 describe("optionsToFilename", () => {
   it("returns a .js filename", () => {
     const filename = optionsToFilename({ react: true })
-    expect(filename).toMatch(/^[0-9a-f]{8}\.js$/)
+    expect(filename).toMatch(/^[\da-f]{8}\.js$/)
   })
 
   it("is deterministic", () => {

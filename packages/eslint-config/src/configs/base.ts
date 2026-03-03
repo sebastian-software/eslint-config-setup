@@ -1,7 +1,8 @@
 import eslint from "@eslint/js"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * Base ESLint config — extends `eslint.configs.recommended` with additional

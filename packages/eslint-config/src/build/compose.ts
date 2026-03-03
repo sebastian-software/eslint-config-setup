@@ -1,3 +1,5 @@
+import type { ConfigOptions, FlatConfigArray } from "../types"
+
 import { aiConfig } from "../configs/ai"
 import { baseConfig } from "../configs/base"
 import { compatConfig } from "../configs/compat"
@@ -24,9 +26,8 @@ import { e2eOverride } from "../overrides/e2e"
 import { scriptsOverride } from "../overrides/scripts"
 import { storiesOverride } from "../overrides/stories"
 import { testsOverride } from "../overrides/tests"
-import { standardComplexity } from "../presets/standard"
 import { oxlintIntegration } from "../oxlint/integration"
-import type { ConfigOptions, FlatConfigArray } from "../types"
+import { standardComplexity } from "../presets/standard"
 
 /**
  * Composes a full flat config array from the given options.

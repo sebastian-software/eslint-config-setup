@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest"
 
-import { composeConfig } from "../build/compose"
 import type { ConfigOptions, FlatConfigArray } from "../types"
+
+import { composeConfig } from "../build/compose"
 
 /**
  * Extracts a stable, snapshotable representation of a config.
@@ -57,7 +58,7 @@ describe("config rule stability", () => {
     const config = composeConfig({})
     const baseBlock = config.find((b) => b.name === "eslint-config-setup/base")
     expect(baseBlock?.rules).toBeDefined()
-    expect(baseBlock!.rules!["eqeqeq"]).toEqual(["error", "smart"])
+    expect(baseBlock!.rules!.eqeqeq).toEqual(["error", "smart"])
     expect(baseBlock!.rules!["no-var"]).toBe("error")
     expect(baseBlock!.rules!["prefer-const"]).toEqual(["error", { destructuring: "all" }])
   })

@@ -1,7 +1,8 @@
 import prettierConfig from "eslint-config-prettier"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * Prettier compat config — disables all ESLint rules that conflict with Prettier.

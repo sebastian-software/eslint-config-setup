@@ -1,5 +1,6 @@
-import jsonPlugin from "@eslint/json"
 import type { ESLint } from "eslint"
+
+import jsonPlugin from "@eslint/json"
 
 import type { FlatConfigArray } from "../types"
 

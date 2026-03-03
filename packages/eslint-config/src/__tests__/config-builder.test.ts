@@ -1,6 +1,7 @@
-import { describe, expect, it } from "vitest"
-import eslint from "@eslint/js"
 import type { ESLint, Linter } from "eslint"
+
+import eslint from "@eslint/js"
+import { describe, expect, it } from "vitest"
 
 import { createConfig } from "../build/config-builder"
 
