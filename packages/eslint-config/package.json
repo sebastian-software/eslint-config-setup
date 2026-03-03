@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-setup",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Pre-generated, permutation-based ESLint flat configs for modern TypeScript & React projects",
   "type": "module",
   "main": "./dist/index.js",
