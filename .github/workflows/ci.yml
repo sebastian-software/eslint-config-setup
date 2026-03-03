@@ -7,33 +7,67 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [22, 24]
+        include:
+          - os: ubuntu-latest
+            runtime: bun
     steps:
       - uses: actions/checkout@v6
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+
+      # Node.js matrix
       - name: Use Node.js ${{ matrix.node-version }}
+        if: matrix.runtime != 'bun'
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
+
+      # Bun
+      - name: Use Bun
+        if: matrix.runtime == 'bun'
+        uses: oven-sh/setup-bun@v2
+
+      - name: Use Node.js for pnpm (Bun)
+        if: matrix.runtime == 'bun'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
       - name: Check types
+        if: matrix.runtime != 'bun'
         run: pnpm run check
-      - name: Run tests with coverage
+
+      - name: Run tests
+        if: matrix.runtime != 'bun'
         run: pnpm run test:coverage
+
+      - name: Run tests (Bun)
+        if: matrix.runtime == 'bun'
+        run: pnpm --filter eslint-config-setup exec bun run vitest run
+
       - name: Upload coverage to Codecov
-        if: matrix.node-version == 24
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == 24 && matrix.runtime != 'bun'
         uses: codecov/codecov-action@v5
         with:
           files: packages/eslint-config/coverage/lcov.info
           fail_ci_if_error: false
+
       - name: Build
         run: pnpm run build
+
       - name: Generate config permutations
+        if: matrix.runtime != 'bun'
         run: pnpm run generate
