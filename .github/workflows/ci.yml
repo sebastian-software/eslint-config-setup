@@ -63,7 +63,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.node-version == 24 && matrix.runtime != 'bun'
         uses: codecov/codecov-action@v5
         with:
-          files: packages/eslint-config/coverage/lcov.info
+          files: packages/eslint-config/coverage/coverage-final.json
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
 
       - name: Build
