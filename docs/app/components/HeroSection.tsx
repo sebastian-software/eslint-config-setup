@@ -1,4 +1,5 @@
 import { ArrowRight, Github } from "ardo/icons"
+import { Link } from "react-router"
 
 export function HeroSection() {
   return (
@@ -20,10 +21,10 @@ export function HeroSection() {
           </code>
         </div>
         <div className="hp-hero-actions hp-animate">
-          <a href="/guide/getting-started" className="hp-btn hp-btn-brand">
+          <Link to="/guide/getting-started" className="hp-btn hp-btn-brand">
             Get Started
             <ArrowRight size={16} />
-          </a>
+          </Link>
           <a
             href="https://github.com/sebastian-software/eslint-config-setup"
             className="hp-btn hp-btn-alt"

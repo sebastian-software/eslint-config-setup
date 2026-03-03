@@ -84,7 +84,7 @@ async function main(): Promise<void> {
 
 function describeOxlintOptions(opts: OxlintConfigOptions): string {
   const flags = Object.entries(opts)
-    .filter(([, v]) => v === true)
+    .filter(([, v]) => v)
     .map(([k]) => k)
   return flags.length > 0 ? flags.join(" + ") : "base"
 }

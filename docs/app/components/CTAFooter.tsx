@@ -1,4 +1,5 @@
 import { ArrowRight } from "ardo/icons"
+import { Link } from "react-router"
 
 export function CTAFooter() {
   return (
@@ -15,9 +16,9 @@ export function CTAFooter() {
           </code>
         </div>
         <div className="hp-animate">
-          <a href="/guide/getting-started" className="hp-cta-link">
+          <Link to="/guide/getting-started" className="hp-cta-link">
             Read the getting started guide <ArrowRight size={14} />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
