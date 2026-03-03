@@ -299,9 +299,10 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-import-meta-properties.md
         "unicorn/prefer-import-meta-properties": "error",
 
-        // Prefer single `.add()`/`.push()`/`.append()` with multiple args over multiple calls
+        // OFF: Sequential .push() is natural in codegen and conditional builders.
+        // No real performance benefit in modern V8 — purely stylistic.
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-single-call.md
-        "unicorn/prefer-single-call": "error",
+        "unicorn/prefer-single-call": "off",
       },
     },
   ]
