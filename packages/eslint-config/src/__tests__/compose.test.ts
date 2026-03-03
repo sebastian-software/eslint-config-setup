@@ -71,13 +71,13 @@ describe("composeConfig", () => {
         !b.name?.includes("oxlint"),
     )
     const last = tsJsBlocks.at(-1)
-    expect(last.name).toBe("eslint-config-setup/prettier")
+    expect(last?.name).toBe("eslint-config-setup/prettier")
   })
 
   it("places oxlint configs at the very end when enabled", () => {
     const config = composeConfig({ react: true, oxlint: true })
     const lastBlock = config.at(-1)
-    expect(lastBlock.name).toMatch(/oxlint/)
+    expect(lastBlock?.name).toMatch(/oxlint/)
   })
 
   it("AI mode sets its own complexity limits", () => {

@@ -25,7 +25,7 @@
   "packageManager": "pnpm@9.15.9",
   "scripts": {
     "build": "pnpm --filter eslint-config-setup build",
-    "check": "pnpm --filter eslint-config-setup exec tsc --noEmit",
+    "check": "pnpm --filter eslint-config-setup check",
     "generate": "pnpm --filter eslint-config-setup generate",
     "test": "pnpm --filter eslint-config-setup test",
     "test:coverage": "pnpm --filter eslint-config-setup test:coverage",

@@ -19,6 +19,7 @@
     "dist/"
   ],
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "tsup",
     "generate": "node --import tsx src/build/generate.ts",
     "prepublishOnly": "npm run build && npm run generate",
