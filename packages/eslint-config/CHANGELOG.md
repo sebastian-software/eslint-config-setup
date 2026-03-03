@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.1...eslint-config-setup-v0.2.2) (2026-03-03)
+
+
+### Bug Fixes
+
+* add publishConfig for npm provenance and public access ([bdb2b03](https://github.com/sebastian-software/eslint-config-setup/commit/bdb2b03978c839ef7b554ebf5b71fe903dc559c3))
+
 ## [0.2.1](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.0...eslint-config-setup-v0.2.1) (2026-03-03)
 
 
