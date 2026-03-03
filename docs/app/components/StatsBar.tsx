@@ -1,6 +1,6 @@
 const stats = [
-  { number: "25+", label: "Plugins" },
-  { number: "500+", label: "Rules" },
+  { number: "27", label: "Plugins" },
+  { number: "400+", label: "Rules" },
   { number: "16", label: "Pre-Built Configs" },
   { number: "2", label: "Lines to Setup" },
 ]

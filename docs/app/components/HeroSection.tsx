@@ -10,9 +10,8 @@ export function HeroSection() {
           <span className="hp-hero-headline-accent">Start shipping.</span>
         </h1>
         <p className="hp-hero-sub hp-animate">
-          The ESLint config for teams that ship with AI and want to move fast.
-          25+ plugins. 500+ rules. One import. AI guardrails and OxLint
-          integration built in.
+          27 plugins. 400+ rules. Every rule pre-resolved. AI guardrails and
+          OxLint integration built in.
         </p>
         <div className="hp-animate">
           <code className="hp-hero-install">

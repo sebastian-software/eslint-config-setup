@@ -11,13 +11,11 @@
 
 The ESLint config for teams that ship with AI and want to move fast.
 
-Most ESLint configs were built for a world where humans write all the code and ESLint is the only linter. That world is over. Today, AI writes a growing share of your code — and tools like OxLint are replacing ESLint for the rules they can handle 100x faster. Your config should reflect that.
-
-**ESLint Config Setup** is the first shared config built for this reality:
+Most ESLint configs compose rules at runtime from dozens of plugins. That means version conflicts, plugin mismatches, and "works on my machine" differences. **ESLint Config Setup** resolves every rule at build time — you get a flat, pre-built config where every rule is already decided. No runtime composition, no surprises.
 
 - **AI guardrails** — a dedicated `ai` mode that enforces what code review can't: explicit types, strict naming, no magic values, complexity limits. Rules that humans find tedious are trivial for an AI to follow. The AI doesn't push back. It just fixes the code.
 - **OxLint-ready** — a single `oxlint` flag disables every ESLint rule that OxLint already covers, and `getOxlintConfig()` generates a matching OxLint config. No manual migration, no rule conflicts, no coverage gaps. Run both linters, get the full rule set at 100x the speed.
-- **25 plugins, one import** — TypeScript (`strictTypeChecked`), React 19, import cycles, security, browser compat, spell checking, and more. Every rule hand-picked, no overlaps, no conflicts.
+- **27 plugins, one import** — TypeScript (`strictTypeChecked`), React 19, import cycles, security, browser compat, spell checking, and more. Every rule pre-resolved at build time. No plugin conflicts, no version mismatches.
 
 ```typescript
 // eslint.config.ts
@@ -68,7 +66,7 @@ export default config
 - [Getting Started](https://sebastian-software.github.io/eslint-config-setup/guide/getting-started) — installation and setup
 - [AI Mode](https://sebastian-software.github.io/eslint-config-setup/guide/ai-mode) — why AI-generated code needs different rules
 - [OxLint Integration](https://sebastian-software.github.io/eslint-config-setup/guide/oxlint) — run ESLint + OxLint without conflicts
-- [All 25 Plugins](https://sebastian-software.github.io/eslint-config-setup/guide/plugins) — what's included and why
+- [All 27 Plugins](https://sebastian-software.github.io/eslint-config-setup/guide/plugins) — what's included and why
 - [Configuration](https://sebastian-software.github.io/eslint-config-setup/guide/configuration) — flags and usage examples
 - [Rule API](https://sebastian-software.github.io/eslint-config-setup/guide/rule-api) — rule manipulation and scoped overrides
 - [Architecture](https://sebastian-software.github.io/eslint-config-setup/guide/architecture) — how pre-generation works

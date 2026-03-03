@@ -36,7 +36,7 @@ const categories: Category[] = [
       {
         icon: <Zap size={20} strokeWidth={1.5} />,
         title: "Fast Feedback Loops",
-        desc: "Pre-built configs load instantly in your editor. AI coding assistants get near-instant lint results for tight iteration cycles.",
+        desc: "Pre-resolved configs load instantly. AI coding assistants get near-instant lint results — every rule already decided, no setup lag.",
       },
     ],
   },
@@ -56,7 +56,7 @@ const categories: Category[] = [
       {
         icon: <Package size={20} strokeWidth={1.5} />,
         title: "Pre-Built Configs",
-        desc: "All 16 flag combinations are pre-generated at build time. No runtime composition — your editor gets results instantly.",
+        desc: "All 16 flag combinations are pre-generated with every rule already resolved. No runtime composition, no plugin conflicts — your editor gets results instantly.",
       },
     ],
   },
@@ -65,8 +65,8 @@ const categories: Category[] = [
     features: [
       {
         icon: <Blocks size={20} strokeWidth={1.5} />,
-        title: "25+ Plugins, Unified",
-        desc: "TypeScript, React, Unicorn, SonarJS, imports, security, spell checking, JSON, MDX — all conflict-free.",
+        title: "27 Plugins, Unified",
+        desc: "TypeScript, React, Unicorn, SonarJS, imports, security, spell checking, JSON, MDX — all pre-resolved and conflict-free.",
       },
       {
         icon: <Zap size={20} strokeWidth={1.5} />,
