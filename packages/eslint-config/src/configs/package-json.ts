@@ -1,4 +1,4 @@
-import packageJsonPlugin, { configs as packageJsonConfigs } from "eslint-plugin-package-json"
+import { configs as packageJsonConfigs } from "eslint-plugin-package-json"
 
 import type { FlatConfigArray } from "../types"
 

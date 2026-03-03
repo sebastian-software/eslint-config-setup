@@ -1,7 +1,7 @@
+import type { ESLint } from "eslint"
+
 // @ts-expect-error -- no type declarations available
 import securityPlugin from "eslint-plugin-security"
-
-import type { ESLint } from "eslint"
 
 import type { FlatConfigArray } from "../types"
 
