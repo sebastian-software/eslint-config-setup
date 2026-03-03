@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.5...eslint-config-setup-v0.2.6) (2026-03-03)
+
+
+### Bug Fixes
+
+* trigger npm publish on GitHub Release event instead of release_created output ([61eb93a](https://github.com/sebastian-software/eslint-config-setup/commit/61eb93a2b918fc3e8c815bf1753fa6d1ce453ada))
+
 ## [0.2.5](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.4...eslint-config-setup-v0.2.5) (2026-03-03)
 
 
