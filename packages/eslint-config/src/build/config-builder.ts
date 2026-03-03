@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function, max-statements, max-depth, complexity, sonarjs/cognitive-complexity -- Config builder: merges presets, rules, and overrides in a single pass. Inherent complexity from ESLint's config format. */
 import type { Linter } from "eslint"
 
 import type { FlatConfig, FlatConfigArray } from "../types"

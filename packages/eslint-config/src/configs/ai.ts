@@ -1,3 +1,4 @@
+/* eslint-disable max-lines, max-lines-per-function -- Rule definition file: one function returning a long list of rule entries. Not complex, just large. */
 import type { FlatConfigArray } from "../types"
 
 /**

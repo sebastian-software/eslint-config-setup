@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function, max-statements -- Rule definition file: sequential builder calls that configure the TypeScript preset. */
 import tseslint from "typescript-eslint"
 
 import type { FlatConfig, FlatConfigArray } from "../types"

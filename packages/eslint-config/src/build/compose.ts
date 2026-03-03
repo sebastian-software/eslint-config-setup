@@ -1,3 +1,4 @@
+/* eslint-disable max-statements -- Composition function: sequentially pushes all config blocks. Each push is trivial but there are many configs. */
 import type { ConfigOptions, FlatConfigArray } from "../types"
 
 import { aiConfig } from "../configs/ai"

@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-non-literal-fs-filename -- Paths are computed from deterministic hashes in dist/, not from user input. */
 import { readFileSync } from "node:fs"
 import path from "node:path"
 

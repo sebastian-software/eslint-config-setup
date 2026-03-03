@@ -1,3 +1,4 @@
+/* eslint-disable max-params, complexity -- Public API: config + ruleName + severity + options is the natural signature. Options objects would hurt ergonomics for one-liner calls. */
 import type { Linter } from "eslint"
 
 import type {

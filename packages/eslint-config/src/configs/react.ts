@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function -- Rule definition file: one function returning a flat list of rule entries. */
 // @ts-expect-error -- no type declarations available
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
 import reactPlugin from "eslint-plugin-react"

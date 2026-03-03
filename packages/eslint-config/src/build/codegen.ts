@@ -1,3 +1,4 @@
+/* eslint-disable max-lines, max-lines-per-function, max-statements, max-params, sonarjs/cognitive-complexity -- Build-time code generator: inherently procedural with many sequential steps. Splitting would hurt readability. */
 /**
  * Code generator — produces valid ES module strings for pre-generated ESLint
  * flat configs. Merges rules from the composed config array by matching file
