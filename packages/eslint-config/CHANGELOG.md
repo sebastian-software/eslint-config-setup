@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.4...eslint-config-setup-v0.2.5) (2026-03-03)
+
+
+### Bug Fixes
+
+* point homepage links to documentation site instead of GitHub repo ([0ba3175](https://github.com/sebastian-software/eslint-config-setup/commit/0ba3175a3ba897aca60e9dcafc45374350e7a1a2))
+
 ## [0.2.4](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.3...eslint-config-setup-v0.2.4) (2026-03-03)
 
 
