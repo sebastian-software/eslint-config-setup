@@ -55,6 +55,10 @@
     "node": ">=22"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "sideEffects": false,
   "peerDependencies": {
     "eslint": ">=9.22",
