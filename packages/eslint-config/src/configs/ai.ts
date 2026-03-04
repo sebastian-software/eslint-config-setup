@@ -174,7 +174,7 @@ export function aiConfig(): FlatConfigArray {
             allowExpressions: true,
             allowTypedFunctionExpressions: true,
             allowHigherOrderFunctions: true,
-            allowIIFE: true,
+            allowIIFEs: true,
           },
         ],
 
@@ -360,10 +360,6 @@ export function aiConfig(): FlatConfigArray {
       rules: {
         // ── D. Unicorn — modern, idiomatic patterns ───────────────────
 
-        // Prefer early return over deeply nested if/else — flattens logic
-        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-early-return.md
-        "unicorn/prefer-early-return": "error",
-
         // Move functions to the smallest scope where they're used
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-function-scoping.md
         "unicorn/consistent-function-scoping": "error",
@@ -487,7 +483,7 @@ export function aiConfig(): FlatConfigArray {
 
         // Limit union type size — too many members signals missing abstraction
         // https://sonarsource.github.io/rspec/#/rspec/S4622/javascript
-        "sonarjs/max-union-size": ["error", { max: 5 }],
+        "sonarjs/max-union-size": ["error", { threshold: 5 }],
 
         // Prefer type predicates for type narrowing — safer than assertions
         // https://sonarsource.github.io/rspec/#/rspec/S4322/javascript

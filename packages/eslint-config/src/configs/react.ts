@@ -215,13 +215,6 @@ export function reactConfig(): FlatConfigArray {
           { allowConstantExport: true },
         ],
 
-        // ── React Compiler (via react-hooks >= 7.0) ─────────────────────
-
-        // Validates code is compatible with React Compiler's auto-memoization
-        // Merged into react-hooks since React Compiler v1.0 (Oct 2025)
-        // https://react.dev/learn/react-compiler
-        "react-hooks/react-compiler": "error",
-
         // ── JSX Accessibility (a11y) ──────────────────────────────────
 
         // Require alt text on img, area, input[type="image"], object

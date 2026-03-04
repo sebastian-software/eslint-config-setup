@@ -924,7 +924,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         {
           "allowExpressions": true,
           "allowHigherOrderFunctions": true,
-          "allowIIFE": true,
+          "allowIIFEs": true,
           "allowTypedFunctionExpressions": true,
         },
       ],
@@ -1117,7 +1117,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/no-for-loop": "error",
       "unicorn/no-useless-switch-case": "error",
       "unicorn/prefer-default-parameters": "error",
-      "unicorn/prefer-early-return": "error",
       "unicorn/prefer-logical-operator-over-ternary": "error",
       "unicorn/prefer-math-min-max": "error",
       "unicorn/prefer-set-size": "error",
@@ -1141,7 +1140,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "sonarjs/max-union-size": [
         "error",
         {
-          "max": 5,
+          "threshold": 5,
         },
       ],
       "sonarjs/no-collapsible-if": "error",
@@ -2836,7 +2835,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
       "react-hooks/exhaustive-deps": "error",
-      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-refresh/only-export-components": [
         "warn",
@@ -3051,7 +3049,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         {
           "allowExpressions": true,
           "allowHigherOrderFunctions": true,
-          "allowIIFE": true,
+          "allowIIFEs": true,
           "allowTypedFunctionExpressions": true,
         },
       ],
@@ -3244,7 +3242,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/no-for-loop": "error",
       "unicorn/no-useless-switch-case": "error",
       "unicorn/prefer-default-parameters": "error",
-      "unicorn/prefer-early-return": "error",
       "unicorn/prefer-logical-operator-over-ternary": "error",
       "unicorn/prefer-math-min-max": "error",
       "unicorn/prefer-set-size": "error",
@@ -3268,7 +3265,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "sonarjs/max-union-size": [
         "error",
         {
-          "max": 5,
+          "threshold": 5,
         },
       ],
       "sonarjs/no-collapsible-if": "error",
@@ -7979,7 +7976,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
       "react-hooks/exhaustive-deps": "error",
-      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-refresh/only-export-components": [
         "warn",
@@ -8194,7 +8190,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         {
           "allowExpressions": true,
           "allowHigherOrderFunctions": true,
-          "allowIIFE": true,
+          "allowIIFEs": true,
           "allowTypedFunctionExpressions": true,
         },
       ],
@@ -8387,7 +8383,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/no-for-loop": "error",
       "unicorn/no-useless-switch-case": "error",
       "unicorn/prefer-default-parameters": "error",
-      "unicorn/prefer-early-return": "error",
       "unicorn/prefer-logical-operator-over-ternary": "error",
       "unicorn/prefer-math-min-max": "error",
       "unicorn/prefer-set-size": "error",
@@ -8411,7 +8406,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "sonarjs/max-union-size": [
         "error",
         {
-          "max": 5,
+          "threshold": 5,
         },
       ],
       "sonarjs/no-collapsible-if": "error",
@@ -10165,7 +10160,6 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
       "react-hooks/exhaustive-deps": "error",
-      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-refresh/only-export-components": [
         "warn",
@@ -11776,7 +11770,6 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
       "react-hooks/exhaustive-deps": "error",
-      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-refresh/only-export-components": [
         "warn",
@@ -13408,7 +13401,6 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "jsx-a11y/scope": "error",
       "jsx-a11y/tabindex-no-positive": "error",
       "react-hooks/exhaustive-deps": "error",
-      "react-hooks/react-compiler": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-refresh/only-export-components": [
         "warn",
