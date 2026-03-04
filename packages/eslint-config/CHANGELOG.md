@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.8](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.7...eslint-config-setup-v0.2.8) (2026-03-04)
+
+
+### Bug Fixes
+
+* add Codecov token and correct coverage file path ([f30cbe8](https://github.com/sebastian-software/eslint-config-setup/commit/f30cbe86ee9fd7eb8cc3a05e789ae4e29fcd432f))
+* correct rule options and remove non-existent rules ([f76b56e](https://github.com/sebastian-software/eslint-config-setup/commit/f76b56e4780526b8a6e1a0b95d69a3ef85022e4a))
+* dep updates ([36a033b](https://github.com/sebastian-software/eslint-config-setup/commit/36a033b593c2c6d53f757751417f34317eb7ab41))
+* lock file ([7086dc4](https://github.com/sebastian-software/eslint-config-setup/commit/7086dc4e68031aa053969d6014c08c2c6f466234))
+* prevent bun matrix include from merging into all ubuntu entries ([47ff1ac](https://github.com/sebastian-software/eslint-config-setup/commit/47ff1ace58776e200b963d93add6ea500c9684d0))
+
 ## [0.2.7](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.6...eslint-config-setup-v0.2.7) (2026-03-03)
 
 
