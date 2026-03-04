@@ -9,7 +9,7 @@ Date: 2026-03-02
 
 ## Decision
 
-Perfectionist for all sorting needs. Base rules (mechanical sorting like imports, exports, named imports) are always active. Structural rules (object keys, interfaces, enums, etc.) are only enabled in AI mode. `partitionByNewLine: true` is set globally to preserve semantic blank-line grouping.
+Perfectionist for all sorting needs. Base rules (mechanical sorting like imports, exports, named imports) are always active. Structural rules (object keys, interfaces, enums, etc.) are only enabled in AI mode. `partitionByNewLine: true` is set globally to preserve semantic blank-line grouping, with the exception of `sort-imports` which sets it to `false` to enforce a single canonical import order without blank-line partitions.
 
 ## Consequences
 

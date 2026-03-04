@@ -9,7 +9,9 @@ ESLint Flat Config is typically composed at runtime — plugins are imported, ru
 
 ## Decision
 
-16 permutations (combinations of `react`, `library`, `oxlint`, `ai`) are generated at build time and shipped as static config objects. The consumer selects the matching permutation via an options hash, which is loaded at runtime.
+16 ESLint permutations (combinations of `react`, `node`, `oxlint`, `ai`) are generated at build time and shipped as static config objects. The consumer selects the matching permutation via an options hash, which is loaded at runtime.
+
+Additionally, 8 OxLint config permutations (combinations of `react`, `node`, `ai` — `oxlint` is irrelevant here) are generated alongside them for split-linting setups.
 
 ## Consequences
 

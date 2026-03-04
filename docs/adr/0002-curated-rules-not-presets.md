@@ -9,11 +9,12 @@ Most shared configs use `recommended` presets from their respective plugins and 
 
 ## Decision
 
-Every rule is individually reviewed and hand-picked. We do not use `recommended` or `all` presets — instead we explicitly define which rules from which plugin are active.
+Where plugins provide well-maintained presets with sensible defaults (e.g. `eslint.configs.recommended`, `tseslint.configs.strictTypeChecked`, `jsdoc flat/recommended-typescript-error`, `regexp flat/recommended`, `package-json recommended`), we use them as a starting point. On top of these baselines, every additional rule is individually reviewed and hand-picked. We never blindly adopt presets without curation — rules are added, removed, or reconfigured to avoid duplicates and conflicts between plugins.
 
 ## Consequences
 
 - No duplicates or conflicts between plugins (e.g. `no-unused-vars` vs `@typescript-eslint/no-unused-vars`)
 - Full control over severity and options of every single rule
+- Established presets reduce initial setup effort; curation on top ensures quality
 - Maintenance overhead on plugin updates: new rules must be manually evaluated
 - Transparency: the config files document every conscious decision
