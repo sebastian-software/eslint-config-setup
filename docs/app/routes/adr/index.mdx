@@ -1,0 +1,60 @@
+---
+title: Architecture Decision Records
+---
+
+# Architecture Decision Records
+
+This project documents significant architectural decisions as ADRs. They are ordered by impact — from core architecture down to individual plugin choices.
+
+## Core Architecture
+
+Fundamental decisions that define how this project works.
+
+| # | Decision | Summary |
+|---|----------|---------|
+| [ADR-0001](/adr/0001-pre-built-configs) | Pre-built Configs | 16 ESLint + 8 OxLint permutations generated at build time |
+| [ADR-0002](/adr/0002-codegen) | Code Generation | Emit real ES modules with imports instead of serializing config objects |
+| [ADR-0003](/adr/0003-bitmask-hashing) | Bitmask Hashing | Deterministic SHA-1 filenames from frozen bit positions |
+
+## Rule Philosophy
+
+How rules are selected, configured, and organized.
+
+| # | Decision | Summary |
+|---|----------|---------|
+| [ADR-0004](/adr/0004-curated-rules) | Curated Rules | Use presets as baselines, hand-pick every additional rule |
+| [ADR-0005](/adr/0005-strict-typescript) | Strict TypeScript | `strictTypeChecked` + `projectService: true` for maximum type safety |
+| [ADR-0006](/adr/0006-ai-mode) | AI Mode | Dedicated `ai: true` flag for stricter rules on AI-generated code |
+
+## Integration Patterns
+
+How configs, tools, and overrides fit together.
+
+| # | Decision | Summary |
+|---|----------|---------|
+| [ADR-0007](/adr/0007-file-scoped-overrides) | File-Scoped Overrides | Six override blocks (tests, e2e, stories, configs, declarations, scripts) |
+| [ADR-0008](/adr/0008-prettier) | Prettier Compatibility | `eslint-config-prettier` disables all formatting conflicts |
+| [ADR-0009](/adr/0009-oxlint-integration) | OxLint Integration | `@oxlint/migrate` at build time, `eslint-plugin-oxlint` at runtime |
+| [ADR-0010](/adr/0010-oxlint-over-biome) | OxLint over Biome | ESLint rule compatibility and Vite ecosystem alignment |
+
+## Plugin Decisions
+
+Which plugins are included and why.
+
+| # | Decision | Summary |
+|---|----------|---------|
+| [ADR-0011](/adr/0011-perfectionist) | Perfectionist | One plugin for all sorting (imports, exports, objects, interfaces) |
+| [ADR-0012](/adr/0012-testing-plugins) | Testing Plugins | Vitest, Playwright, Testing Library, Storybook — scoped by file pattern |
+| [ADR-0013](/adr/0013-cspell) | CSpell | Spell checking for identifiers and comments (warn severity) |
+| [ADR-0014](/adr/0014-rule-helpers) | Rule-Helpers API | Five functions for post-load config customization |
+
+## Exclusion Decisions
+
+Plugins and tools that were evaluated and intentionally not adopted.
+
+| # | Decision | Summary |
+|---|----------|---------|
+| [ADR-0015](/adr/0015-no-promise) | No eslint-plugin-promise | TypeScript + SonarJS already cover Promise patterns |
+| [ADR-0016](/adr/0016-no-frameworks) | No Framework Linting | No Next.js, Nuxt, Remix, or Tailwind plugins |
+| [ADR-0017](/adr/0017-eslint-react-deferred) | @eslint-react Deferred | Promising but unstable — re-evaluate after v3 stabilizes |
+| [ADR-0018](/adr/0018-no-shopify) | No @shopify/eslint-plugin | Only 2-3 useful rules out of 29 |
