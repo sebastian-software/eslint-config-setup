@@ -20,7 +20,7 @@ Every function operates on the config array in-place.
 
 ## Scoped rules
 
-All four main functions accept an optional `{ scope }` parameter to target specific file types instead of the entire config. The scope matches config block names by prefix:
+`setRuleSeverity`, `configureRule`, `disableRule`, and `addRule` accept an optional `{ scope }` parameter to target specific file types instead of the entire config.
 
 ```typescript
 import {
@@ -48,7 +48,12 @@ export default config
 
 `"tests"`, `"e2e"`, `"stories"`, `"configs"`, `"declarations"`, `"scripts"`
 
-Each scope matches blocks whose name is `@effective/eslint/{scope}` or starts with `@effective/eslint/{scope}-` (e.g. `"tests"` matches both `tests` and `tests-react`).
+Each scope matches generated blocks whose name starts with `eslint-config-setup/`.
+
+- `"configs"` maps to the `eslint-config-setup/config-files` block.
+- Other scopes map 1:1 (for example `"tests"` → `eslint-config-setup/tests`).
+
+For custom file patterns (for example browser vs server folders), add your own flat config blocks with `files` globs. See [Configuration](/guide/configuration#mixed-frontendbackend-repositories).
 
 ## Why not just spread?
 

@@ -11,7 +11,7 @@ import { Tabs, TabList, Tab, TabPanel, TabPanels, Note, Tip } from "ardo/ui"
 | Flag | Default | What it does |
 |------|---------|--------------|
 | `react` | `false` | React 19+ with Server Components, Hooks, JSX-A11y, Storybook, Testing Library |
-| `node` | `false` | Node.js globals, `eslint-plugin-n` rules. Disables browser compat checks. |
+| `node` | `false` | Node.js globals, `eslint-plugin-n` rules. Disables browser compat checks. In mixed frontend/backend repos, add file-scoped overrides (see below). |
 | `ai` | `false` | Enforces a consistent standard across human and AI contributors (see [AI Mode](/guide/ai-mode)) |
 | `oxlint` | `false` | Disables ESLint rules that OxLint already covers (see [OxLint Integration](/guide/oxlint)) |
 
@@ -106,6 +106,122 @@ export default config
 </TabPanel>
 </TabPanels>
 </Tabs>
+
+## Mixed frontend/backend repositories
+
+When you enable both `react: true` and `node: true`, environment-specific rules and globals are loaded into the shared generated config. This is intentional for the pre-built 16-permutation architecture.
+
+### Option A: directory-local configs (recommended)
+
+For strict runtime boundaries, use directory-local `eslint.config.*` files and let ESLint resolve them per file:
+
+```text
+project/
+├── eslint.config.ts         # root/scripts config
+├── app/
+│   └── eslint.config.ts     # react config
+└── convex/
+    └── eslint.config.ts     # node config
+```
+
+```typescript
+// app/eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  ai: true,
+  react: true,
+})
+```
+
+```typescript
+// convex/eslint.config.ts
+import { configureRule, getEslintConfig } from "eslint-config-setup"
+
+const config = await getEslintConfig({
+  ai: true,
+  node: true,
+})
+
+configureRule(config, "node/no-unsupported-features/node-builtins", [
+  { version: ">=22" },
+])
+
+export default config
+```
+
+Run lint from the repo root:
+
+```bash
+# ESLint 10 (default)
+eslint .
+
+# ESLint 9.30+ (enable per-file config lookup)
+eslint --flag v10_config_lookup_from_file .
+```
+
+No `root: true` setting is needed with flat config.
+
+For older ESLint 9 releases, use `--flag unstable_config_lookup_from_file` or separate `--config` scripts.
+
+### Option B: single config + file-scoped overrides
+
+If you prefer one config file, add explicit file-scoped blocks:
+
+```typescript
+// eslint.config.ts
+import { configureRule, getEslintConfig } from "eslint-config-setup"
+
+const config = await getEslintConfig({
+  ai: true,
+  react: true,
+  node: true,
+})
+
+// Set your runtime target for eslint-plugin-n checks
+configureRule(config, "node/no-unsupported-features/node-builtins", [
+  { version: ">=22" },
+])
+
+config.push(
+  {
+    name: "project/browser-runtime",
+    files: ["app/**/*.{ts,tsx}"],
+    languageOptions: {
+      globals: {
+        // Disable leaked Node globals in browser code
+        Buffer: "off",
+        __dirname: "off",
+        __filename: "off",
+        module: "off",
+        process: "off",
+        require: "off",
+      },
+    },
+    rules: {
+      "node/no-unsupported-features/node-builtins": "off",
+    },
+  },
+  {
+    name: "project/node-runtime",
+    files: ["convex/**/*.ts", "scripts/**/*.ts"],
+    languageOptions: {
+      globals: {
+        // Disable leaked browser globals in server code
+        document: "off",
+        localStorage: "off",
+        navigator: "off",
+        sessionStorage: "off",
+        window: "off",
+      },
+    },
+  },
+)
+
+export default config
+```
+
+This keeps the generated baseline, while making runtime boundaries explicit in your project.
 
 <Tip>
 See the [Rule API](/guide/rule-api) for the full set of rule manipulation functions and scoped rules.
