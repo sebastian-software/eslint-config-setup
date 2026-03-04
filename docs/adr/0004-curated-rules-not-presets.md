@@ -1,4 +1,4 @@
-# ADR-0002: Curated Rules over Plugin Presets
+# ADR-0004: Curated Rules over Plugin Presets
 
 Status: Accepted
 Date: 2026-03-02

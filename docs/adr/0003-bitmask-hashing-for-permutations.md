@@ -1,4 +1,4 @@
-# ADR-0017: Bitmask Hashing for Config Permutations
+# ADR-0003: Bitmask Hashing for Config Permutations
 
 Status: Accepted
 Date: 2026-03-02

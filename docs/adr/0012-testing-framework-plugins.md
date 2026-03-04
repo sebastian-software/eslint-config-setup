@@ -1,4 +1,4 @@
-# ADR-0015: Dedicated Testing Framework Plugins
+# ADR-0012: Dedicated Testing Framework Plugins
 
 Status: Accepted
 Date: 2026-03-02

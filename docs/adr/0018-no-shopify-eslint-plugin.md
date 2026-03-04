@@ -1,4 +1,4 @@
-# ADR-0010: No @shopify/eslint-plugin
+# ADR-0018: No @shopify/eslint-plugin
 
 Status: Accepted
 Date: 2026-03-02

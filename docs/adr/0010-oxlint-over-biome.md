@@ -1,4 +1,4 @@
-# ADR-0008: OxLint over Biome
+# ADR-0010: OxLint over Biome
 
 Status: Accepted
 Date: 2026-03-02

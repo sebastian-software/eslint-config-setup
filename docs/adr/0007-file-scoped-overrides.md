@@ -1,4 +1,4 @@
-# ADR-0012: File-Scoped Rule Overrides via Glob Patterns
+# ADR-0007: File-Scoped Rule Overrides via Glob Patterns
 
 Status: Accepted
 Date: 2026-03-02

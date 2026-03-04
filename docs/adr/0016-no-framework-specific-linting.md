@@ -1,4 +1,4 @@
-# ADR-0006: No Framework-specific Linting (Next.js, Nuxt, Tailwind)
+# ADR-0016: No Framework-specific Linting (Next.js, Nuxt, Tailwind)
 
 Status: Accepted
 Date: 2026-03-02

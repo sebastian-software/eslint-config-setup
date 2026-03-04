@@ -1,4 +1,4 @@
-# ADR-0016: Rule-Helpers API for Consumer Customization
+# ADR-0014: Rule-Helpers API for Consumer Customization
 
 Status: Accepted
 Date: 2026-03-02

@@ -1,4 +1,4 @@
-# ADR-0014: Prettier Compatibility via eslint-config-prettier
+# ADR-0008: Prettier Compatibility via eslint-config-prettier
 
 Status: Accepted
 Date: 2026-03-02

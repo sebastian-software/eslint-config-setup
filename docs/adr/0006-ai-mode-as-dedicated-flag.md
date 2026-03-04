@@ -1,4 +1,4 @@
-# ADR-0003: AI Mode as Dedicated Flag
+# ADR-0006: AI Mode as Dedicated Flag
 
 Status: Accepted
 Date: 2026-03-02

@@ -1,4 +1,4 @@
-# ADR-0013: Strict TypeScript with projectService
+# ADR-0005: Strict TypeScript with projectService
 
 Status: Accepted
 Date: 2026-03-02

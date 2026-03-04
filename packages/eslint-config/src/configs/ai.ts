@@ -11,7 +11,7 @@ import type { FlatConfigArray } from "../types"
  *
  * No plugin preset is used — all rules are hand-picked from existing plugins
  * and tightened beyond their defaults for AI-generated code.
- * @see ADR-0003: docs/adr/0003-ai-mode-as-dedicated-flag.md
+ * @see ADR-0006: docs/adr/0006-ai-mode-as-dedicated-flag.md
  */
 export function aiConfig(): FlatConfigArray {
   const configs: FlatConfigArray = [

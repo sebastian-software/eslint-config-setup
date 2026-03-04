@@ -1,4 +1,4 @@
-# ADR-0004: Perfectionist over simple-import-sort
+# ADR-0011: Perfectionist over simple-import-sort
 
 Status: Accepted
 Date: 2026-03-02

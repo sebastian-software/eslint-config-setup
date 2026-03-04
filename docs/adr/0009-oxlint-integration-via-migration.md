@@ -1,4 +1,4 @@
-# ADR-0007: OxLint Integration via Config Migration
+# ADR-0009: OxLint Integration via Config Migration
 
 Status: Accepted
 Date: 2026-03-02

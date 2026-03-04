@@ -1,4 +1,4 @@
-# ADR-0009: @eslint-react Evaluated but Deferred
+# ADR-0017: @eslint-react Evaluated but Deferred
 
 Status: Accepted
 Date: 2026-03-02

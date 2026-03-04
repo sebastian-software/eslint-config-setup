@@ -1,4 +1,4 @@
-# ADR-0018: CSpell Integration for Spell Checking
+# ADR-0013: CSpell Integration for Spell Checking
 
 Status: Accepted
 Date: 2026-03-02

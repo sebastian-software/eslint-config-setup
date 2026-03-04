@@ -1,4 +1,4 @@
-# ADR-0011: Code Generation over Runtime Serialization
+# ADR-0002: Code Generation over Runtime Serialization
 
 Status: Accepted
 Date: 2026-03-02

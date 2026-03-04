@@ -1,4 +1,4 @@
-# ADR-0005: No eslint-plugin-promise
+# ADR-0015: No eslint-plugin-promise
 
 Status: Accepted
 Date: 2026-03-02
