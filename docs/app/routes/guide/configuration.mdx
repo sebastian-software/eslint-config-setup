@@ -121,7 +121,17 @@ project/
 ├── app/
 │   └── eslint.config.ts     # react config
 └── convex/
+    ├── package.json         # engines.node for backend runtime
     └── eslint.config.ts     # node config
+```
+
+```typescript
+// eslint.config.ts (root)
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  node: true,
+})
 ```
 
 ```typescript
@@ -136,18 +146,23 @@ export default await getEslintConfig({
 
 ```typescript
 // convex/eslint.config.ts
-import { configureRule, getEslintConfig } from "eslint-config-setup"
+import { getEslintConfig } from "eslint-config-setup"
 
-const config = await getEslintConfig({
+export default await getEslintConfig({
   ai: true,
   node: true,
 })
+```
 
-configureRule(config, "node/no-unsupported-features/node-builtins", [
-  { version: ">=22" },
-])
-
-export default config
+```json
+// convex/package.json
+{
+  "name": "convex-backend",
+  "private": true,
+  "engines": {
+    "node": ">=22.4.0"
+  }
+}
 ```
 
 Run lint from the repo root:
@@ -164,24 +179,30 @@ No `root: true` setting is needed with flat config.
 
 For older ESLint 9 releases, use `--flag unstable_config_lookup_from_file` or separate `--config` scripts.
 
+`eslint-plugin-n` resolves the Node target from `engines.node` by default. Prefer this over per-rule overrides.
+
 ### Option B: single config + file-scoped overrides
 
 If you prefer one config file, add explicit file-scoped blocks:
 
+```json
+// package.json
+{
+  "engines": {
+    "node": ">=22.4.0"
+  }
+}
+```
+
 ```typescript
 // eslint.config.ts
-import { configureRule, getEslintConfig } from "eslint-config-setup"
+import { getEslintConfig } from "eslint-config-setup"
 
 const config = await getEslintConfig({
   ai: true,
   react: true,
   node: true,
 })
-
-// Set your runtime target for eslint-plugin-n checks
-configureRule(config, "node/no-unsupported-features/node-builtins", [
-  { version: ">=22" },
-])
 
 config.push(
   {
