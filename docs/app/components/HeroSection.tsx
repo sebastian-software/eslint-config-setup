@@ -11,7 +11,7 @@ export function HeroSection() {
           <span className="hp-hero-headline-accent">Start shipping.</span>
         </h1>
         <p className="hp-hero-sub hp-animate">
-          27 plugins. 400+ rules. Every rule pre-resolved. AI guardrails and
+          27 plugins. 500+ rules. Every rule pre-resolved. AI guardrails and
           OxLint integration built in.
         </p>
         <div className="hp-animate">

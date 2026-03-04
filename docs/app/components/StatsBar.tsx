@@ -8,7 +8,7 @@ export function StatsBar() {
             <div className="hp-stat-label">Plugins</div>
           </div>
           <div className="hp-stat">
-            <div className="hp-stat-number">400+</div>
+            <div className="hp-stat-number">500+</div>
             <div className="hp-stat-label">Rules</div>
           </div>
           <div className="hp-stat">

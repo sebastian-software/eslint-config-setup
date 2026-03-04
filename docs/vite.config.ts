@@ -11,7 +11,7 @@ export default defineConfig({
     ardo({
       title: 'ESLint Config Setup',
       description:
-        'One import. 25+ plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled.',
+        'One import. 27 plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled.',
 
       project: {
         name: pkg.name,

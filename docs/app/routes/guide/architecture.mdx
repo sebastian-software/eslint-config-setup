@@ -27,17 +27,22 @@ import { FileTree } from "ardo/ui"
     - base.ts — ESLint recommended + best practices
     - typescript.ts — typescript-eslint (strictTypeChecked)
     - ai.ts — AI mode rules + per-file relaxations
-    - react.ts — React 19+, Hooks, Compiler, JSX-A11y
+    - react.ts — React 19+, Hooks, JSX-A11y
+    - react-effect.ts — No unnecessary useEffect
     - node.ts — Node.js rules and globals
-    - imports.ts — import-x + simple-import-sort
+    - imports.ts — import-x + unused-imports
+    - perfectionist.ts — Import/export/structural sorting
     - unicorn.ts — Modern JS patterns
     - regexp.ts — RegExp quality
     - jsdoc.ts — JSDoc validation
     - cspell.ts — Spell checking
     - sonarjs.ts — Code quality
     - security.ts — Security rules
+    - de-morgan.ts — Boolean expression simplification
+    - compat.ts — Browser compatibility checking
     - json.ts — JSON/JSONC validation
-    - markdown.ts — Markdown linting
+    - package-json.ts — package.json validation
+    - markdown.ts — Markdown/MDX linting
     - prettier.ts — Prettier conflict removal
   - overrides/ — File-pattern-specific rule overrides
     - tests.ts — *.test.\{ts,tsx\}
@@ -53,8 +58,9 @@ import { FileTree } from "ardo/ui"
   - build/
     - config-builder.ts — Validated config builder
     - compose.ts — Assembles full config from options
-    - serialize.ts — Serializes config to JS module
-    - generate.ts — Generates all 16 permutations
+    - codegen.ts — Generates ES modules with real imports
+    - plugin-registry.ts — Maps rule namespaces to imports
+    - generate.ts — Generates all 16+8 permutations
   - oxlint/
     - integration.ts — eslint-plugin-oxlint rule disabling
 
