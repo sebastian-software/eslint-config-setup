@@ -1,22 +1,23 @@
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
+import { pathToFileURL } from "node:url"
 
-import { execaCommand } from "execa"
+import { execa } from "execa"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
 const PACKAGE_ROOT = join(import.meta.dirname, "../..")
 
-/** Path to the built modules export of the package */
-const MODULES_PATH = join(PACKAGE_ROOT, "dist/modules.js")
+/** file:// URL to the built modules export — works cross-platform in dynamic import() */
+const MODULES_URL = pathToFileURL(join(PACKAGE_ROOT, "dist/modules.js")).href
 
 /** ESLint config that imports cspell from our built package and enables .ts files */
 function makeEslintConfig(): string {
-  // Use dynamic import with the absolute path to the built package.
+  // Use a file:// URL for the dynamic import so Windows backslash paths work.
   // We need { files: ["**/*.ts"] } to tell ESLint to lint TypeScript files,
   // since flat config does not include them by default.
   return `
-    const { cspell } = await import(${JSON.stringify(MODULES_PATH)})
+    const { cspell } = await import(${JSON.stringify(MODULES_URL)})
     export default [
       { files: ["**/*.ts"] },
       ...cspell()
@@ -36,8 +37,7 @@ function makeCspellJson(): string {
 
 /** Run ESLint in the given directory and return the result */
 async function runEslint(cwd: string) {
-  const eslintBin = join(PACKAGE_ROOT, "node_modules/.bin/eslint")
-  return execaCommand(`${eslintBin} .`, {
+  return execa("npx", ["eslint", "."], {
     cwd,
     reject: false,
     env: { NO_COLOR: "1" },
