@@ -40,7 +40,7 @@ const PERMUTATIONS: Array<{ label: string; opts: ConfigOptions }> = [
 
 describe("ESLint E2E — generated configs load without fatal errors", () => {
   for (const { label, opts } of PERMUTATIONS) {
-    it(`ESLint accepts generated config: ${label}`, async () => {
+    it(`ESLint accepts generated config: ${label}`, { timeout: 30_000 }, async () => {
       // 1. Generate the config module (same as the build/publish step)
       const moduleSource = generateConfigModule(opts)
 

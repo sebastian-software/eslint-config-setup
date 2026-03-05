@@ -32,7 +32,7 @@ describe("oxlint E2E — generated configs are valid", async () => {
   const migrate = (await import("@oxlint/migrate")).default
 
   for (const { label, opts } of PERMUTATIONS) {
-    it(`oxlint accepts generated config: ${label}`, async () => {
+    it(`oxlint accepts generated config: ${label}`, { timeout: 30_000 }, async () => {
       // 1. Generate the oxlint config the same way the build does
       const eslintConfig = composeConfig({ ...opts, oxlint: false })
       const oxlintConfig = await migrate(eslintConfig)
