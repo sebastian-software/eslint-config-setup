@@ -13,7 +13,8 @@ import type { FlatConfigArray } from "../types"
  * and tightened beyond their defaults for AI-generated code.
  * @see ADR-0006: docs/adr/0006-ai-mode-as-dedicated-flag.md
  */
-export function aiConfig(): FlatConfigArray {
+export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
+  const isReact = opts?.react ?? false
   const configs: FlatConfigArray = [
     {
       name: "eslint-config-setup/ai-structural",
@@ -184,11 +185,32 @@ export function aiConfig(): FlatConfigArray {
         "@typescript-eslint/naming-convention": [
           "error",
           {
+            selector: "variable",
+            format: isReact
+              ? ["strictCamelCase", "UPPER_CASE", "StrictPascalCase"]
+              : ["strictCamelCase", "UPPER_CASE"],
+            leadingUnderscore: "allowSingleOrDouble",
+            trailingUnderscore: "allow",
+            filter: { regex: "[- ]", match: false },
+          },
+          {
+            selector: "function",
+            format: isReact
+              ? ["strictCamelCase", "StrictPascalCase"]
+              : ["strictCamelCase"],
+          },
+          {
+            selector: "parameter",
+            format: ["strictCamelCase"],
+            leadingUnderscore: "allow",
+          },
+          {
+            selector: "import",
+            format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
+          },
+          {
             selector: [
-              "variable",
-              "function",
               "classProperty",
-              "objectLiteralProperty",
               "parameterProperty",
               "classMethod",
               "objectLiteralMethod",
@@ -199,6 +221,10 @@ export function aiConfig(): FlatConfigArray {
             leadingUnderscore: "allowSingleOrDouble",
             trailingUnderscore: "allow",
             filter: { regex: "[- ]", match: false },
+          },
+          {
+            selector: ["objectLiteralProperty", "typeProperty"],
+            format: null,
           },
           {
             selector: "typeLike",

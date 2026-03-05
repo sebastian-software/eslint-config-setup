@@ -93,7 +93,7 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
 
   // 14. AI mode (conditional — includes its own complexity limits)
   if (opts.ai) {
-    config.push(...aiConfig())
+    config.push(...aiConfig({ react: opts.react }))
     config.push(...perfectionistAiConfig())
     config.push(...packageJsonAiConfig())
   }

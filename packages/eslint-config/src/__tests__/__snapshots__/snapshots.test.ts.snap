@@ -1001,13 +1001,44 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           },
           "format": [
             "strictCamelCase",
+            "UPPER_CASE",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": "variable",
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "selector": "function",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allow",
+          "selector": "parameter",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+            "UPPER_CASE",
+          ],
+          "selector": "import",
+        },
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
           ],
           "leadingUnderscore": "allowSingleOrDouble",
           "selector": [
-            "variable",
-            "function",
             "classProperty",
-            "objectLiteralProperty",
             "parameterProperty",
             "classMethod",
             "objectLiteralMethod",
@@ -1015,6 +1046,13 @@ exports[`config snapshots > snapshot: ai only 1`] = `
             "accessor",
           ],
           "trailingUnderscore": "allow",
+        },
+        {
+          "format": null,
+          "selector": [
+            "objectLiteralProperty",
+            "typeProperty",
+          ],
         },
         {
           "format": [
@@ -3103,13 +3141,46 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           },
           "format": [
             "strictCamelCase",
+            "UPPER_CASE",
+            "StrictPascalCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": "variable",
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+          ],
+          "selector": "function",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allow",
+          "selector": "parameter",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+            "UPPER_CASE",
+          ],
+          "selector": "import",
+        },
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
           ],
           "leadingUnderscore": "allowSingleOrDouble",
           "selector": [
-            "variable",
-            "function",
             "classProperty",
-            "objectLiteralProperty",
             "parameterProperty",
             "classMethod",
             "objectLiteralMethod",
@@ -3117,6 +3188,13 @@ exports[`config snapshots > snapshot: all flags 1`] = `
             "accessor",
           ],
           "trailingUnderscore": "allow",
+        },
+        {
+          "format": null,
+          "selector": [
+            "objectLiteralProperty",
+            "typeProperty",
+          ],
         },
         {
           "format": [
@@ -8221,13 +8299,46 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           },
           "format": [
             "strictCamelCase",
+            "UPPER_CASE",
+            "StrictPascalCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": "variable",
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+          ],
+          "selector": "function",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allow",
+          "selector": "parameter",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+            "UPPER_CASE",
+          ],
+          "selector": "import",
+        },
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
           ],
           "leadingUnderscore": "allowSingleOrDouble",
           "selector": [
-            "variable",
-            "function",
             "classProperty",
-            "objectLiteralProperty",
             "parameterProperty",
             "classMethod",
             "objectLiteralMethod",
@@ -8235,6 +8346,13 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
             "accessor",
           ],
           "trailingUnderscore": "allow",
+        },
+        {
+          "format": null,
+          "selector": [
+            "objectLiteralProperty",
+            "typeProperty",
+          ],
         },
         {
           "format": [
