@@ -604,9 +604,10 @@ function emitMarkdownBlock(): string {
 function emitOxlintBlock(opts: ConfigOptions): string {
   const lines: string[] = [ "  // OxLint integration — disables rules already covered by OxLint"]
 
-  // Helper to emit a spread config
+  // Emit a spread that handles both plain objects and SplittedFlatConfig tuples
+  // (eslint-plugin-oxlint ≥1.51.0 returns arrays from flat/* configs)
   const addSpread = (configName: string, blockName: string): void => {
-    lines.push(`  { name: "eslint-config-setup/${blockName}", ...oxlintPlugin.configs[${JSON.stringify(configName)}] },`)
+    lines.push(`  ...[oxlintPlugin.configs[${JSON.stringify(configName)}]].flat().map((c) => ({ name: "eslint-config-setup/${blockName}", ...c })),`)
   }
 
   addSpread("flat/recommended", "oxlint")

@@ -11,48 +11,36 @@ import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types"
  */
 export function oxlintIntegration(opts: ConfigOptions): FlatConfigArray {
   const typedPlugin = oxlintPlugin as unknown as {
-    configs: Record<string, FlatConfig>
+    configs: Record<string, FlatConfig | FlatConfig[]>
   }
 
-  const configs: FlatConfigArray = [
-    {
-      name: "eslint-config-setup/oxlint",
-      ...typedPlugin.configs["flat/recommended"],
-    },
-  ]
+  const configs: FlatConfigArray = []
+
+  const add = (configName: string, blockName: string): void => {
+    const raw = typedPlugin.configs[configName]
+    const items = Array.isArray(raw) ? raw : [raw]
+    for (const item of items) {
+      configs.push({ name: `eslint-config-setup/${blockName}`, ...item })
+    }
+  }
+
+  add("flat/recommended", "oxlint")
 
   // Add plugin-specific oxlint overrides if those plugins are active
   if (opts.react) {
-    configs.push({
-      name: "eslint-config-setup/oxlint-react",
-      ...typedPlugin.configs["flat/react"],
-    }, {
-      name: "eslint-config-setup/oxlint-jsx-a11y",
-      ...typedPlugin.configs["flat/jsx-a11y"],
-    })
+    add("flat/react", "oxlint-react")
+    add("flat/jsx-a11y", "oxlint-jsx-a11y")
   }
 
   if (opts.node) {
-    configs.push({
-      name: "eslint-config-setup/oxlint-node",
-      ...typedPlugin.configs["flat/node"],
-    })
+    add("flat/node", "oxlint-node")
   }
 
   // TypeScript and unicorn overlaps
-  configs.push({
-    name: "eslint-config-setup/oxlint-typescript",
-    ...typedPlugin.configs["flat/typescript"],
-  }, {
-    name: "eslint-config-setup/oxlint-unicorn",
-    ...typedPlugin.configs["flat/unicorn"],
-  }, {
-    name: "eslint-config-setup/oxlint-import",
-    ...typedPlugin.configs["flat/import"],
-  }, {
-    name: "eslint-config-setup/oxlint-jsdoc",
-    ...typedPlugin.configs["flat/jsdoc"],
-  })
+  add("flat/typescript", "oxlint-typescript")
+  add("flat/unicorn", "oxlint-unicorn")
+  add("flat/import", "oxlint-import")
+  add("flat/jsdoc", "oxlint-jsdoc")
 
   return configs
 }
