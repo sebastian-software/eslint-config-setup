@@ -10,8 +10,8 @@ import type { OxlintConfigOptions } from "../types"
 import { composeConfig } from "../build/compose"
 import { serializeOxlintConfig } from "../build/serialize"
 
-/** Use npx to run oxlint — works cross-platform (avoids .cmd issues on Windows). */
-const OXLINT_CMD = "npx oxlint"
+/** Use pnpm exec to run oxlint — works cross-platform and only uses locally installed packages. */
+const OXLINT_CMD = "pnpm exec oxlint"
 
 /** Minimal valid TS file that oxlint should accept without errors. */
 const FIXTURE = `const greeting: string = "hello"\nconsole.log(greeting)\n`
