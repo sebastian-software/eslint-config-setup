@@ -19,6 +19,10 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -32,6 +36,38 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -139,6 +175,10 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -1249,7 +1289,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "max-lines-per-function": [
         "error",
         {
-          "max": 50,
+          "max": 100,
           "skipBlankLines": true,
           "skipComments": true,
         },
@@ -2036,6 +2076,10 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -2049,6 +2093,38 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -2156,6 +2232,10 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -3390,7 +3470,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "max-lines-per-function": [
         "error",
         {
-          "max": 50,
+          "max": 100,
           "skipBlankLines": true,
           "skipComments": true,
         },
@@ -4783,6 +4863,10 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -4796,6 +4880,38 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -4903,6 +5019,10 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -6279,6 +6399,10 @@ exports[`config snapshots > snapshot: node only 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -6292,6 +6416,38 @@ exports[`config snapshots > snapshot: node only 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -6399,6 +6555,10 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -7804,6 +7964,10 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -7817,6 +7981,38 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -7924,6 +8120,10 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -9129,7 +9329,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "max-lines-per-function": [
         "error",
         {
-          "max": 50,
+          "max": 100,
           "skipBlankLines": true,
           "skipComments": true,
         },
@@ -9916,6 +10116,10 @@ exports[`config snapshots > snapshot: react + node 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -9929,6 +10133,38 @@ exports[`config snapshots > snapshot: react + node 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -10036,6 +10272,10 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -11534,6 +11774,10 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -11547,6 +11791,38 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -11654,6 +11930,10 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",
@@ -13719,6 +13999,10 @@ exports[`config snapshots > snapshot: react only 1`] = `
           "allowImplicit": true,
         },
       ],
+      "complexity": [
+        "error",
+        20,
+      ],
       "constructor-super": "error",
       "default-case-last": "error",
       "eqeqeq": [
@@ -13732,6 +14016,38 @@ exports[`config snapshots > snapshot: react only 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "max-depth": [
+        "error",
+        5,
+      ],
+      "max-lines": [
+        "error",
+        {
+          "max": 500,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 200,
+          "skipBlankLines": true,
+          "skipComments": true,
+        },
+      ],
+      "max-nested-callbacks": [
+        "error",
+        4,
+      ],
+      "max-params": [
+        "error",
+        5,
+      ],
+      "max-statements": [
+        "error",
+        25,
+      ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
       "no-caller": "error",
@@ -13839,6 +14155,10 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "radix": "error",
       "require-atomic-updates": "error",
       "require-yield": "error",
+      "sonarjs/cognitive-complexity": [
+        "error",
+        20,
+      ],
       "symbol-description": "error",
       "use-isnan": "error",
       "valid-typeof": "error",

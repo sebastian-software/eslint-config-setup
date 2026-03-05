@@ -603,11 +603,7 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
       // https://eslint.org/docs/latest/rules/max-lines-per-function
       "max-lines-per-function": [
         "error",
-        {
-          max: 50,
-          skipBlankLines: true,
-          skipComments: true,
-        },
+        { max: 100, skipBlankLines: true, skipComments: true },
       ],
 
       // Max lines per file — encourages modular file organization

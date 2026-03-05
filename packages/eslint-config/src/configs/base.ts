@@ -181,6 +181,46 @@ export function baseConfig(): FlatConfigArray {
       { disallowRedundantWrapping: true },
     ])
 
+    // ── Complexity limits ────────────────────────────────────────
+
+    // Cyclomatic complexity limit — max branches per function
+    // https://eslint.org/docs/latest/rules/complexity
+    .addRule("complexity", ["error", 20])
+
+    // Max nesting depth — deep nesting signals need for extraction
+    // https://eslint.org/docs/latest/rules/max-depth
+    .addRule("max-depth", ["error", 5])
+
+    // Max nested callbacks — prevents callback hell
+    // https://eslint.org/docs/latest/rules/max-nested-callbacks
+    .addRule("max-nested-callbacks", ["error", 4])
+
+    // Max function parameters — many params suggest a config object
+    // https://eslint.org/docs/latest/rules/max-params
+    .addRule("max-params", ["error", 5])
+
+    // Max statements per function — keeps functions focused
+    // https://eslint.org/docs/latest/rules/max-statements
+    .addRule("max-statements", ["error", 25])
+
+    // Max lines per function — encourages extraction of helpers
+    // https://eslint.org/docs/latest/rules/max-lines-per-function
+    .addRule("max-lines-per-function", [
+      "error",
+      { max: 200, skipBlankLines: true, skipComments: true },
+    ])
+
+    // Max lines per file — encourages modular file organization
+    // https://eslint.org/docs/latest/rules/max-lines
+    .addRule("max-lines", [
+      "error",
+      { max: 500, skipBlankLines: true, skipComments: true },
+    ])
+
+    // Cognitive complexity — measures how hard a function is to understand
+    // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
+    .addRule("sonarjs/cognitive-complexity", ["error", 20])
+
     // ── Modern JS style ───────────────────────────────────────────
 
     // Disallow var — use let/const for block scoping
