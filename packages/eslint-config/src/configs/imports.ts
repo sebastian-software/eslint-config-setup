@@ -26,7 +26,7 @@ export function importsConfig(): FlatConfigArray {
 
         // Merge duplicate import paths into one statement — reduces noise
         // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
-        "import/no-duplicates": ["error", { "prefer-inline": true }],
+        "import/no-duplicates": "error",
 
         // Forbid a module from importing itself — always a bug
         // https://github.com/un-ts/eslint-plugin-import/blob/master/docs/rules/no-self-import.md
@@ -67,6 +67,33 @@ export function importsConfig(): FlatConfigArray {
         // Forbid absolute file paths in imports — not portable across machines
         // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-absolute-path.md
         "import/no-absolute-path": "error",
+
+        // Forbid imports of packages not listed in package.json — catches phantom deps
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-extraneous-dependencies.md
+        "import/no-extraneous-dependencies": ["error", { includeTypes: true }],
+
+        // Forbid side-effect-only imports — make dependencies explicit
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unassigned-import.md
+        "import/no-unassigned-import": [
+          "error",
+          {
+            allow: [
+              "@babel/polyfill",
+              "**/register",
+              "**/register.*",
+              "**/register/**",
+              "**/register/**.*",
+              "**/*.css",
+              "**/*.scss",
+              "**/*.sass",
+              "**/*.less",
+            ],
+          },
+        ],
+
+        // Forbid `import { default as Foo }` — use `import Foo` instead
+        // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-named-default.md
+        "import/no-named-default": "error",
 
         // ── Disabled: ordering handled by perfectionist ────────────────
 

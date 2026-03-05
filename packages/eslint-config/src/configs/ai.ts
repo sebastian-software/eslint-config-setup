@@ -73,10 +73,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // https://eslint.org/docs/latest/rules/prefer-template
         "prefer-template": "error",
 
-        // Require shorthand properties in objects — concise, skip quoted keys
-        // https://eslint.org/docs/latest/rules/object-shorthand
-        "object-shorthand": ["error", "always", { avoidQuotes: true }],
-
         // Prefer concise arrow body: `() => expr` over `() => { return expr }`
         // https://eslint.org/docs/latest/rules/arrow-body-style
         "arrow-body-style": "error",
@@ -92,10 +88,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
           "always",
           { enforceForIfStatements: true },
         ],
-
-        // No assignment in return statements — separate mutation from return
-        // https://eslint.org/docs/latest/rules/no-return-assign
-        "no-return-assign": ["error", "always"],
 
         // One statement per line — scannable, diff-friendly
         // https://eslint.org/docs/latest/rules/max-statements-per-line
@@ -273,46 +265,14 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // https://typescript-eslint.io/rules/prefer-readonly
         "@typescript-eslint/prefer-readonly": "error",
 
-        // Functions returning promises must be async — consistent async patterns
-        // https://typescript-eslint.io/rules/promise-function-async
-        "@typescript-eslint/promise-function-async": "error",
-
-        // Exhaustive switch statements — no missing cases, no unnecessary defaults
-        // https://typescript-eslint.io/rules/switch-exhaustiveness-check
-        "@typescript-eslint/switch-exhaustiveness-check": [
-          "error",
-          {
-            allowDefaultCaseForExhaustiveSwitch: false,
-            requireDefaultForNonUnion: true,
-          },
-        ],
-
-        // Disallow unsafe type assertions (as Type) — use type guards instead
-        // https://typescript-eslint.io/rules/no-unsafe-type-assertion
-        "@typescript-eslint/no-unsafe-type-assertion": "error",
-
-        // Require comparator for Array.sort() — prevents locale-dependent string sort
-        // https://typescript-eslint.io/rules/require-array-sort-compare
-        "@typescript-eslint/require-array-sort-compare": [
-          "error",
-          { ignoreStringArrays: true },
-        ],
 
         // Require explicit `public`/`private`/`protected` on class members
         // https://typescript-eslint.io/rules/explicit-member-accessibility
         "@typescript-eslint/explicit-member-accessibility": "error",
 
-        // Enforce property style for method signatures — prevents bivariance issues
-        // https://typescript-eslint.io/rules/method-signature-style
-        "@typescript-eslint/method-signature-style": ["error", "property"],
-
         // Require explicit values for enum members — prevents accidental shifts on reorder
         // https://typescript-eslint.io/rules/prefer-enum-initializers
         "@typescript-eslint/prefer-enum-initializers": "error",
-
-        // Prefer `type` over `interface` — consistent, supports unions/intersections
-        // https://typescript-eslint.io/rules/consistent-type-definitions
-        "@typescript-eslint/consistent-type-definitions": ["error", "type"],
 
         // Enforce consistent member ordering in classes and interfaces
         // Static → fields by visibility → constructors → methods by visibility (XO convention)
@@ -405,13 +365,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // Prefer switch for 3+ conditions on same variable — structured
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-switch.md
         "unicorn/prefer-switch": ["error", { minimumCases: 3 }],
-
-        // Enforce camelCase or PascalCase filenames — consistent project structure
-        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/filename-case.md
-        "unicorn/filename-case": [
-          "error",
-          { cases: { camelCase: true, pascalCase: true } },
-        ],
 
         // Prevent abbreviated variable names (e → error, btn → button) — readable
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md

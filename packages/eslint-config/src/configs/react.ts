@@ -314,6 +314,15 @@ export function reactConfig(): FlatConfigArray {
         // Validate autocomplete attribute values on form elements
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/autocomplete-valid.md
         "jsx-a11y/autocomplete-valid": "error",
+
+        // ── TypeScript adjustments for React ────────────────────────────
+
+        // Allow async event handlers — onClick={async () => {...}} is idiomatic React
+        // https://typescript-eslint.io/rules/no-misused-promises
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          { checksVoidReturn: false },
+        ],
       },
     },
   ]

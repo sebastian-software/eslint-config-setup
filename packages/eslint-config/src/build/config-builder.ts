@@ -16,9 +16,15 @@ interface ConfigBuilderOptions {
   ignores?: FlatConfig["ignores"]
 }
 
+type Severity = "error" | "warn" | "off"
+
 interface ConfigBuilder {
   /** Override an existing preset rule. THROWS if rule not in preset. */
   overrideRule(name: string, value: RuleValue): ConfigBuilder
+  /** Change only the severity of an existing preset rule, keeping its options. THROWS if not in preset. */
+  overrideSeverity(name: string, severity: Severity): ConfigBuilder
+  /** Change only the options of an existing preset rule, keeping its severity. THROWS if not in preset. */
+  overrideOptions(name: string, ...options: unknown[]): ConfigBuilder
   /** Add a new rule. THROWS if rule already exists in preset or was already added. */
   addRule(name: string, value: RuleValue): ConfigBuilder
   /** Disable an existing preset rule (set to "off"). THROWS if not found. */
@@ -75,6 +81,36 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
         )
       }
       overrides.set(name, value)
+      return builder
+    },
+
+    overrideSeverity(name: string, severity: Severity): ConfigBuilder {
+      if (!presetRules.has(name)) {
+        throw new Error(
+          `overrideSeverity("${name}"): rule not found in preset. ` +
+            `Cannot override severity of a rule that doesn't exist in the preset.`,
+        )
+      }
+      const existing = presetRules.get(name)!
+      if (Array.isArray(existing)) {
+        const [, ...options] = existing
+        overrides.set(name, [severity, ...options])
+      } else {
+        overrides.set(name, severity)
+      }
+      return builder
+    },
+
+    overrideOptions(name: string, ...options: unknown[]): ConfigBuilder {
+      if (!presetRules.has(name)) {
+        throw new Error(
+          `overrideOptions("${name}"): rule not found in preset. ` +
+            `Cannot override options of a rule that doesn't exist in the preset.`,
+        )
+      }
+      const existing = presetRules.get(name)!
+      const severity = Array.isArray(existing) ? existing[0] : existing
+      overrides.set(name, [severity as Severity, ...options])
       return builder
     },
 

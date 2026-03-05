@@ -99,6 +99,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -122,10 +123,19 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -147,19 +157,33 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -170,7 +194,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -180,8 +204,19 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -236,7 +271,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -244,7 +279,10 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -254,10 +292,14 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -269,10 +311,21 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -323,6 +376,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -353,11 +407,19 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -387,6 +449,13 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -486,17 +555,35 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -532,15 +619,28 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -559,7 +659,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -570,6 +670,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -897,20 +998,9 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         },
       ],
       "no-promise-executor-return": "error",
-      "no-return-assign": [
-        "error",
-        "always",
-      ],
       "no-unneeded-ternary": "error",
       "no-var": "error",
       "no-warning-comments": "warn",
-      "object-shorthand": [
-        "error",
-        "always",
-        {
-          "avoidQuotes": true,
-        },
-      ],
       "one-var": [
         "error",
         "never",
@@ -942,10 +1032,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   {
     "name": "eslint-config-setup/ai-typescript",
     "rules": {
-      "@typescript-eslint/consistent-type-definitions": [
-        "error",
-        "type",
-      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -1026,10 +1112,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
             "method",
           ],
         },
-      ],
-      "@typescript-eslint/method-signature-style": [
-        "error",
-        "property",
       ],
       "@typescript-eslint/naming-convention": [
         "error",
@@ -1153,23 +1235,8 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           "fixToUnknown": true,
         },
       ],
-      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/prefer-enum-initializers": "error",
       "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/promise-function-async": "error",
-      "@typescript-eslint/require-array-sort-compare": [
-        "error",
-        {
-          "ignoreStringArrays": true,
-        },
-      ],
-      "@typescript-eslint/switch-exhaustiveness-check": [
-        "error",
-        {
-          "allowDefaultCaseForExhaustiveSwitch": false,
-          "requireDefaultForNonUnion": true,
-        },
-      ],
     },
   },
   {
@@ -1178,15 +1245,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/consistent-function-scoping": "error",
       "unicorn/custom-error-definition": "error",
       "unicorn/explicit-length-check": "error",
-      "unicorn/filename-case": [
-        "error",
-        {
-          "cases": {
-            "camelCase": true,
-            "pascalCase": true,
-          },
-        },
-      ],
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-array-for-each": "error",
       "unicorn/no-array-push-push": "error",
@@ -2156,6 +2214,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -2179,10 +2238,19 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -2204,19 +2272,33 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -2227,7 +2309,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -2237,8 +2319,19 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -2293,7 +2386,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -2301,7 +2394,10 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -2311,10 +2407,14 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -2326,10 +2426,21 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -2380,6 +2491,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -2410,11 +2522,19 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -2444,6 +2564,13 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -2543,17 +2670,35 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -2589,15 +2734,28 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -2616,7 +2774,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -2627,6 +2785,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -2885,6 +3044,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "eslint-config-setup/node",
     "rules": {
+      "node/handle-callback-err": "error",
       "node/hashbang": "error",
       "node/no-deprecated-api": "error",
       "node/no-exports-assign": "error",
@@ -2915,6 +3075,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       ],
       "node/prefer-promises/dns": "error",
       "node/prefer-promises/fs": "error",
+      "node/process-exit-as-throw": "error",
     },
   },
   {
@@ -2928,6 +3089,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -3076,20 +3243,9 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         },
       ],
       "no-promise-executor-return": "error",
-      "no-return-assign": [
-        "error",
-        "always",
-      ],
       "no-unneeded-ternary": "error",
       "no-var": "error",
       "no-warning-comments": "warn",
-      "object-shorthand": [
-        "error",
-        "always",
-        {
-          "avoidQuotes": true,
-        },
-      ],
       "one-var": [
         "error",
         "never",
@@ -3121,10 +3277,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "eslint-config-setup/ai-typescript",
     "rules": {
-      "@typescript-eslint/consistent-type-definitions": [
-        "error",
-        "type",
-      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -3205,10 +3357,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
             "method",
           ],
         },
-      ],
-      "@typescript-eslint/method-signature-style": [
-        "error",
-        "property",
       ],
       "@typescript-eslint/naming-convention": [
         "error",
@@ -3334,23 +3482,8 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           "fixToUnknown": true,
         },
       ],
-      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/prefer-enum-initializers": "error",
       "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/promise-function-async": "error",
-      "@typescript-eslint/require-array-sort-compare": [
-        "error",
-        {
-          "ignoreStringArrays": true,
-        },
-      ],
-      "@typescript-eslint/switch-exhaustiveness-check": [
-        "error",
-        {
-          "allowDefaultCaseForExhaustiveSwitch": false,
-          "requireDefaultForNonUnion": true,
-        },
-      ],
     },
   },
   {
@@ -3359,15 +3492,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/consistent-function-scoping": "error",
       "unicorn/custom-error-definition": "error",
       "unicorn/explicit-length-check": "error",
-      "unicorn/filename-case": [
-        "error",
-        {
-          "cases": {
-            "camelCase": true,
-            "pascalCase": true,
-          },
-        },
-      ],
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-array-for-each": "error",
       "unicorn/no-array-push-push": "error",
@@ -4943,6 +5067,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -4966,10 +5091,19 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -4991,19 +5125,33 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -5014,7 +5162,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -5024,8 +5172,19 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -5080,7 +5239,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -5088,7 +5247,10 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -5098,10 +5260,14 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -5113,10 +5279,21 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -5167,6 +5344,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -5197,11 +5375,19 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -5231,6 +5417,13 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -5330,17 +5523,35 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -5376,15 +5587,28 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -5403,7 +5627,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -5414,6 +5638,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -6479,6 +6704,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -6502,10 +6728,19 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -6527,19 +6762,33 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -6550,7 +6799,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -6560,8 +6809,19 @@ exports[`config snapshots > snapshot: node only 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -6616,7 +6876,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -6624,7 +6884,10 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -6634,10 +6897,14 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -6649,10 +6916,21 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -6703,6 +6981,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -6733,11 +7012,19 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -6767,6 +7054,13 @@ exports[`config snapshots > snapshot: node only 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -6866,17 +7160,35 @@ exports[`config snapshots > snapshot: node only 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -6912,15 +7224,28 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -6939,7 +7264,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -6950,6 +7275,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -7267,6 +7593,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
   {
     "name": "eslint-config-setup/node",
     "rules": {
+      "node/handle-callback-err": "error",
       "node/hashbang": "error",
       "node/no-deprecated-api": "error",
       "node/no-exports-assign": "error",
@@ -7297,6 +7624,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
       ],
       "node/prefer-promises/dns": "error",
       "node/prefer-promises/fs": "error",
+      "node/process-exit-as-throw": "error",
     },
   },
   {
@@ -8044,6 +8372,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -8067,10 +8396,19 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -8092,19 +8430,33 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -8115,7 +8467,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -8125,8 +8477,19 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -8181,7 +8544,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -8189,7 +8552,10 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -8199,10 +8565,14 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -8214,10 +8584,21 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -8268,6 +8649,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -8298,11 +8680,19 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -8332,6 +8722,13 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -8431,17 +8828,35 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -8477,15 +8892,28 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -8504,7 +8932,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -8515,6 +8943,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -8787,6 +9216,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -8935,20 +9370,9 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         },
       ],
       "no-promise-executor-return": "error",
-      "no-return-assign": [
-        "error",
-        "always",
-      ],
       "no-unneeded-ternary": "error",
       "no-var": "error",
       "no-warning-comments": "warn",
-      "object-shorthand": [
-        "error",
-        "always",
-        {
-          "avoidQuotes": true,
-        },
-      ],
       "one-var": [
         "error",
         "never",
@@ -8980,10 +9404,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   {
     "name": "eslint-config-setup/ai-typescript",
     "rules": {
-      "@typescript-eslint/consistent-type-definitions": [
-        "error",
-        "type",
-      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -9064,10 +9484,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
             "method",
           ],
         },
-      ],
-      "@typescript-eslint/method-signature-style": [
-        "error",
-        "property",
       ],
       "@typescript-eslint/naming-convention": [
         "error",
@@ -9193,23 +9609,8 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           "fixToUnknown": true,
         },
       ],
-      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/prefer-enum-initializers": "error",
       "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/promise-function-async": "error",
-      "@typescript-eslint/require-array-sort-compare": [
-        "error",
-        {
-          "ignoreStringArrays": true,
-        },
-      ],
-      "@typescript-eslint/switch-exhaustiveness-check": [
-        "error",
-        {
-          "allowDefaultCaseForExhaustiveSwitch": false,
-          "requireDefaultForNonUnion": true,
-        },
-      ],
     },
   },
   {
@@ -9218,15 +9619,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/consistent-function-scoping": "error",
       "unicorn/custom-error-definition": "error",
       "unicorn/explicit-length-check": "error",
-      "unicorn/filename-case": [
-        "error",
-        {
-          "cases": {
-            "camelCase": true,
-            "pascalCase": true,
-          },
-        },
-      ],
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-array-for-each": "error",
       "unicorn/no-array-push-push": "error",
@@ -10196,6 +10588,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -10219,10 +10612,19 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -10244,19 +10646,33 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -10267,7 +10683,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -10277,8 +10693,19 @@ exports[`config snapshots > snapshot: react + node 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -10333,7 +10760,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -10341,7 +10768,10 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -10351,10 +10781,14 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -10366,10 +10800,21 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -10420,6 +10865,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -10450,11 +10896,19 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -10484,6 +10938,13 @@ exports[`config snapshots > snapshot: react + node 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -10583,17 +11044,35 @@ exports[`config snapshots > snapshot: react + node 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -10629,15 +11108,28 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -10656,7 +11148,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -10667,6 +11159,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -10984,6 +11477,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   {
     "name": "eslint-config-setup/node",
     "rules": {
+      "node/handle-callback-err": "error",
       "node/hashbang": "error",
       "node/no-deprecated-api": "error",
       "node/no-exports-assign": "error",
@@ -11014,6 +11508,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       ],
       "node/prefer-promises/dns": "error",
       "node/prefer-promises/fs": "error",
+      "node/process-exit-as-throw": "error",
     },
   },
   {
@@ -11027,6 +11522,12 @@ exports[`config snapshots > snapshot: react + node 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -11854,6 +12355,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -11877,10 +12379,19 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -11902,19 +12413,33 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -11925,7 +12450,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -11935,8 +12460,19 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -11991,7 +12527,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -11999,7 +12535,10 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -12009,10 +12548,14 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -12024,10 +12567,21 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -12078,6 +12632,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -12108,11 +12663,19 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -12142,6 +12705,13 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -12241,17 +12811,35 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -12287,15 +12875,28 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -12314,7 +12915,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -12325,6 +12926,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -12656,6 +13258,12 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -14079,6 +14687,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
       "no-irregular-whitespace": "error",
@@ -14102,10 +14711,19 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "no-prototype-builtins": "error",
       "no-redeclare": "error",
       "no-regex-spaces": "error",
+      "no-return-assign": [
+        "error",
+        "always",
+      ],
       "no-script-url": "error",
       "no-self-assign": "error",
       "no-self-compare": "error",
-      "no-sequences": "error",
+      "no-sequences": [
+        "error",
+        {
+          "allowInParentheses": false,
+        },
+      ],
       "no-setter-return": "error",
       "no-shadow-restricted-names": "error",
       "no-sparse-arrays": "error",
@@ -14127,19 +14745,33 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "no-useless-backreference": "error",
       "no-useless-call": "error",
       "no-useless-catch": "error",
-      "no-useless-computed-key": "error",
+      "no-useless-computed-key": [
+        "error",
+        {
+          "enforceForClassMembers": true,
+        },
+      ],
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
       "no-with": "error",
+      "object-shorthand": [
+        "error",
+        "always",
+        {
+          "avoidExplicitReturnArrows": true,
+          "avoidQuotes": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
       "prefer-regex-literals": [
@@ -14150,7 +14782,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "error",
+      "prefer-template": "warn",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
@@ -14160,8 +14792,19 @@ exports[`config snapshots > snapshot: react only 1`] = `
         20,
       ],
       "symbol-description": "error",
-      "use-isnan": "error",
-      "valid-typeof": "error",
+      "use-isnan": [
+        "error",
+        {
+          "enforceForIndexOf": true,
+          "enforceForSwitchCase": true,
+        },
+      ],
+      "valid-typeof": [
+        "error",
+        {
+          "requireStringLiterals": true,
+        },
+      ],
       "yoda": "error",
     },
   },
@@ -14216,7 +14859,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {
-          "minimumDescriptionLength": 10,
+          "ts-expect-error": "allow-with-description",
         },
       ],
       "@typescript-eslint/ban-tslint-comment": "error",
@@ -14224,7 +14867,10 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/consistent-generic-constructors": "error",
       "@typescript-eslint/consistent-indexed-object-style": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
-      "@typescript-eslint/consistent-type-definitions": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type",
+      ],
       "@typescript-eslint/consistent-type-exports": [
         "error",
         {
@@ -14234,10 +14880,14 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "inline-type-imports",
+          "fixStyle": "separate-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/method-signature-style": [
+        "error",
+        "property",
+      ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
       "@typescript-eslint/no-base-to-string": "error",
@@ -14249,10 +14899,21 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": true,
+        },
+      ],
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
-      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreIIFE": true,
+        },
+      ],
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-implied-eval": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
@@ -14303,6 +14964,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "error",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -14333,11 +14995,19 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
+      "@typescript-eslint/prefer-readonly": "warn",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
       "@typescript-eslint/prefer-string-starts-ends-with": "error",
+      "@typescript-eslint/promise-function-async": "error",
       "@typescript-eslint/related-getter-setter-pairs": "error",
+      "@typescript-eslint/require-array-sort-compare": [
+        "error",
+        {
+          "ignoreStringArrays": true,
+        },
+      ],
       "@typescript-eslint/require-await": "error",
       "@typescript-eslint/restrict-plus-operands": [
         "error",
@@ -14367,6 +15037,13 @@ exports[`config snapshots > snapshot: react only 1`] = `
         },
       ],
       "@typescript-eslint/strict-void-return": "error",
+      "@typescript-eslint/switch-exhaustiveness-check": [
+        "error",
+        {
+          "allowDefaultCaseForExhaustiveSwitch": false,
+          "requireDefaultForNonUnion": true,
+        },
+      ],
       "@typescript-eslint/triple-slash-reference": "error",
       "@typescript-eslint/unbound-method": "error",
       "@typescript-eslint/unified-signatures": "error",
@@ -14466,17 +15143,35 @@ exports[`config snapshots > snapshot: react only 1`] = `
           "maxDepth": 3,
         },
       ],
-      "import/no-duplicates": [
+      "import/no-duplicates": "error",
+      "import/no-empty-named-blocks": "error",
+      "import/no-extraneous-dependencies": [
         "error",
         {
-          "prefer-inline": true,
+          "includeTypes": true,
         },
       ],
-      "import/no-empty-named-blocks": "error",
       "import/no-mutable-exports": "error",
       "import/no-named-as-default": "error",
       "import/no-named-as-default-member": "error",
+      "import/no-named-default": "error",
       "import/no-self-import": "error",
+      "import/no-unassigned-import": [
+        "error",
+        {
+          "allow": [
+            "@babel/polyfill",
+            "**/register",
+            "**/register.*",
+            "**/register/**",
+            "**/register/**.*",
+            "**/*.css",
+            "**/*.scss",
+            "**/*.sass",
+            "**/*.less",
+          ],
+        },
+      ],
       "import/no-useless-path-segments": "error",
       "import/order": "off",
       "import/sort-imports": "off",
@@ -14512,15 +15207,28 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
+      "unicorn/consistent-function-scoping": "warn",
       "unicorn/error-message": "error",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "kebabCase": true,
+            "pascalCase": true,
+          },
+        },
+      ],
       "unicorn/new-for-builtins": "error",
       "unicorn/no-abusive-eslint-disable": "error",
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
       "unicorn/no-array-method-this-argument": "error",
+      "unicorn/no-array-reduce": "warn",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
+      "unicorn/no-for-loop": "warn",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -14539,7 +15247,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "error",
+      "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -14550,6 +15258,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
         {
@@ -14881,6 +15590,12 @@ exports[`config snapshots > snapshot: react only 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
