@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.2...eslint-config-setup-v0.3.3) (2026-03-05)
+
+
+### Bug Fixes
+
+* remove eqeqeq override from AI config to preserve "smart" option ([fe38a5e](https://github.com/sebastian-software/eslint-config-setup/commit/fe38a5e0bc1c3810563b9d403149b0d9572d64a2))
+
 ## [0.3.2](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.1...eslint-config-setup-v0.3.2) (2026-03-05)
 
 
