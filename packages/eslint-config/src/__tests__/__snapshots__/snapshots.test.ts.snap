@@ -825,7 +825,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         "error",
         "all",
       ],
-      "eqeqeq": "error",
       "logical-assignment-operators": [
         "error",
         "always",
@@ -2965,7 +2964,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         "error",
         "all",
       ],
-      "eqeqeq": "error",
       "logical-assignment-operators": [
         "error",
         "always",
@@ -8705,7 +8703,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         "error",
         "all",
       ],
-      "eqeqeq": "error",
       "logical-assignment-operators": [
         "error",
         "always",

@@ -69,10 +69,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // https://eslint.org/docs/latest/rules/no-var
         "no-var": "error",
 
-        // Require strict equality (===) — no type coercion
-        // https://eslint.org/docs/latest/rules/eqeqeq
-        eqeqeq: "error",
-
         // Prefer template literals over concatenation — more readable
         // https://eslint.org/docs/latest/rules/prefer-template
         "prefer-template": "error",
