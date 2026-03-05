@@ -482,7 +482,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -2500,7 +2500,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -4666,7 +4666,7 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -6162,7 +6162,7 @@ exports[`config snapshots > snapshot: node only 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -7687,7 +7687,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -9800,7 +9800,7 @@ exports[`config snapshots > snapshot: react + node 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -11418,7 +11418,7 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {
@@ -13028,7 +13028,7 @@ exports[`config snapshots > snapshot: react only 1`] = `
   {
     "name": "eslint-config-setup/unicorn",
     "rules": {
-      "unicorn/better-regex": "error",
+      "unicorn/better-regex": "off",
       "unicorn/catch-error-name": [
         "error",
         {

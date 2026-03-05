@@ -218,9 +218,11 @@ export function unicornConfig(): FlatConfigArray {
 
         // ── Regex ─────────────────────────────────────────────────────
 
-        // Simplify regex patterns — auto-fixable regex optimization
-        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/better-regex.md
-        "unicorn/better-regex": "error",
+        // Disabled — conflicts with regexp/strict from eslint-plugin-regexp.
+        // Both rules auto-fix regex escaping but disagree on whether characters
+        // like { } ] should be escaped, causing circular fixes.
+        // regexp/strict is the more thorough rule, so we defer to it.
+        "unicorn/better-regex": "off",
 
         // ── Misc ──────────────────────────────────────────────────────
 
