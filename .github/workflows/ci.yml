@@ -51,6 +51,9 @@ jobs:
         if: matrix.runtime != 'bun'
         run: pnpm run check
 
+      - name: Build
+        run: pnpm run build
+
       - name: Run tests
         if: matrix.runtime != 'bun'
         run: pnpm run test:coverage
@@ -66,9 +69,6 @@ jobs:
           files: packages/eslint-config/coverage/coverage-final.json
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
-
-      - name: Build
-        run: pnpm run build
 
       - name: Generate config permutations
         if: matrix.runtime != 'bun'
