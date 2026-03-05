@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.8...eslint-config-setup-v0.3.0) (2026-03-05)
+
+
+### Features
+
+* migrate from eslint-plugin-react to [@eslint-react](https://github.com/eslint-react) ([cae95b4](https://github.com/sebastian-software/eslint-config-setup/commit/cae95b4d9f49fafab676e2bb7a977bcbc8dff973))
+
 ## [0.2.8](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.7...eslint-config-setup-v0.2.8) (2026-03-04)
 
 
