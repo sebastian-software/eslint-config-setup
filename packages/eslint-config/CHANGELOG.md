@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.0...eslint-config-setup-v0.3.1) (2026-03-05)
+
+
+### Bug Fixes
+
+* make naming-convention compatible with React/JS conventions ([#20](https://github.com/sebastian-software/eslint-config-setup/issues/20)) ([0221588](https://github.com/sebastian-software/eslint-config-setup/commit/02215889a69bb6c0de50e3db5f2559ccf0c87f37))
+* type getOxlintConfig return and fix docs ([#22](https://github.com/sebastian-software/eslint-config-setup/issues/22)) ([d16da82](https://github.com/sebastian-software/eslint-config-setup/commit/d16da82c36e007189c9752f6bfc35f8b31641dad))
+
 ## [0.3.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.2.8...eslint-config-setup-v0.3.0) (2026-03-05)
 
 
