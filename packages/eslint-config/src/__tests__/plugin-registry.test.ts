@@ -19,7 +19,10 @@ describe("pluginRegistry", () => {
       "compat",
       "node",
       "react",
+      "react-dom",
+      "react-web-api",
       "react-hooks",
+      "@stylistic",
       "react-refresh",
       "jsx-a11y",
       "vitest",
@@ -57,9 +60,21 @@ describe("pluginRegistry", () => {
     }
   })
 
-  it("has no duplicate varNames", () => {
-    const varNames = Object.values(pluginRegistry).map((e) => e.varName)
-    expect(new Set(varNames).size).toBe(varNames.length)
+  it("has no duplicate varNames (except shared packages)", () => {
+    // Plugins from the same package legitimately share a varName
+    // (e.g. react, react-dom, react-web-api all come from @eslint-react/eslint-plugin)
+    const byPkg = new Map<string, Set<string>>()
+    for (const entry of Object.values(pluginRegistry)) {
+      if (!byPkg.has(entry.pkg)) byPkg.set(entry.pkg, new Set())
+      byPkg.get(entry.pkg)!.add(entry.varName)
+    }
+    // Each package should use exactly one varName
+    for (const [pkg, names] of byPkg) {
+      expect(names.size, `${pkg} should use a single varName`).toBe(1)
+    }
+    // Across different packages, varNames should be unique
+    const perPkgNames = [...byPkg.values()].flatMap((s) => [...s])
+    expect(new Set(perPkgNames).size).toBe(perPkgNames.length)
   })
 })
 

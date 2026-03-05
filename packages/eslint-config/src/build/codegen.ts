@@ -451,11 +451,6 @@ function emitBaseBlock(
   }
   lines.push("    },")
 
-  // Settings
-  if (features.hasReact) {
-    lines.push("    settings: {", '      react: { version: "detect" },', "    },")
-  }
-
   // Rules
   lines.push(`    rules: ${indentJson(rules, 4)},`, "  },", "")
 

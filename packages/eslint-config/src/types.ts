@@ -1,7 +1,7 @@
 import type { Linter } from "eslint"
 
 export interface ConfigOptions {
-  /** Enable React 19+ rules (Hooks, JSX-A11y, Server Components) */
+  /** Enable React 19+ rules via `@eslint-react` (Hooks, DOM, Web API leaks, JSX-A11y) */
   react?: boolean
   /** Enable Node.js-specific rules and globals */
   node?: boolean

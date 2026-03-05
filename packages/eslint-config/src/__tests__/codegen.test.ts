@@ -66,14 +66,14 @@ describe("generateConfigModule", () => {
   it("adds react imports and settings when react is enabled", () => {
     const output = generateConfigModule({ react: true })
     expect(output).toContain("globals.browser")
-    expect(output).toContain('react: { version: "detect" }')
     expect(output).toContain("ecmaFeatures: { jsx: true }")
+    expect(output).toContain("eslintReactPlugin")
   })
 
   it("does not include react settings when react is disabled", () => {
     const output = generateConfigModule({})
     expect(output).not.toContain("globals.browser")
-    expect(output).not.toContain('react: { version: "detect" }')
+    expect(output).not.toContain("eslintReactPlugin")
   })
 
   it("adds node globals when node is enabled", () => {

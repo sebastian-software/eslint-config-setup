@@ -104,16 +104,34 @@ export const pluginRegistry: Record<string, PluginEntry> = {
     pluginExpr: "nodePlugin",
   },
   react: {
-    pkg: "eslint-plugin-react",
-    varName: "reactPlugin",
-    importStatement: 'import reactPlugin from "eslint-plugin-react"',
-    pluginExpr: "reactPlugin",
+    pkg: "@eslint-react/eslint-plugin",
+    varName: "eslintReactPlugin",
+    importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
+    pluginExpr: "eslintReactPlugin",
+  },
+  "react-dom": {
+    pkg: "@eslint-react/eslint-plugin",
+    varName: "eslintReactPlugin",
+    importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
+    pluginExpr: 'eslintReactPlugin.configs.dom.plugins["@eslint-react/dom"]',
+  },
+  "react-web-api": {
+    pkg: "@eslint-react/eslint-plugin",
+    varName: "eslintReactPlugin",
+    importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
+    pluginExpr: 'eslintReactPlugin.configs["web-api"].plugins["@eslint-react/web-api"]',
   },
   "react-hooks": {
     pkg: "eslint-plugin-react-hooks",
     varName: "reactHooksPlugin",
     importStatement: 'import reactHooksPlugin from "eslint-plugin-react-hooks"',
     pluginExpr: "reactHooksPlugin",
+  },
+  "@stylistic": {
+    pkg: "@stylistic/eslint-plugin",
+    varName: "stylisticPlugin",
+    importStatement: 'import stylisticPlugin from "@stylistic/eslint-plugin"',
+    pluginExpr: "stylisticPlugin",
   },
   "react-refresh": {
     pkg: "eslint-plugin-react-refresh",

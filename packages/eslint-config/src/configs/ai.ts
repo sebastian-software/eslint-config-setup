@@ -542,14 +542,6 @@ export function aiConfig(): FlatConfigArray {
   }, {
     name: "eslint-config-setup/ai-react",
     rules: {
-      // Max one component per file — clear module boundaries
-      // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
-      "react/no-multi-comp": "error",
-
-      // No inline function creation in JSX props — extract to variable or useCallback
-      // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md
-      "react/jsx-no-bind": "error",
-
       // No click handlers on static elements without role — use semantic HTML
       // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-static-element-interactions.md
       "jsx-a11y/no-static-element-interactions": "error",

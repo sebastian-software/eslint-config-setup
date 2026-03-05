@@ -1,7 +1,8 @@
 /* eslint-disable max-lines-per-function -- Rule definition file: one function returning a flat list of rule entries. */
+import eslintReactPlugin from "@eslint-react/eslint-plugin"
+import stylisticPlugin from "@stylistic/eslint-plugin"
 // @ts-expect-error -- no type declarations available
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
-import reactPlugin from "eslint-plugin-react"
 import reactHooksPlugin from "eslint-plugin-react-hooks"
 import reactRefreshPlugin from "eslint-plugin-react-refresh"
 import globals from "globals"
@@ -9,23 +10,28 @@ import globals from "globals"
 import type { FlatConfigArray } from "../types"
 
 /**
- * React config — React 19+, Hooks (incl. Compiler), and JSX accessibility.
+ * React config — React 19+, Hooks, JSX accessibility, and Web API leak detection.
  *
- * We hand-pick rules instead of using plugin presets because:
- * - `eslint-plugin-react`'s recommended preset includes `react-in-jsx-scope` which
- *   is unnecessary since React 17 JSX transform
- * - We want explicit control over each rule and its severity
- * - jsx-a11y has no flat config preset yet
+ * Uses `@eslint-react` (eslint-plugin-react-x) as the primary React linting plugin,
+ * replacing the unmaintained eslint-plugin-react. Plugins are registered under
+ * familiar namespaces (`react/`, `react-dom/`, `react-hooks/`) for compatibility
+ * with OxLint and user overrides — the same pattern used for `import` (import-x)
+ * and `node` (eslint-plugin-n).
  *
- * Since React Compiler v1.0, compiler rules are included in eslint-plugin-react-hooks
- * (>= 7.0.0). The standalone eslint-plugin-react-compiler is deprecated.
+ * Stylistic JSX rules (self-closing, curly braces) are provided by `@stylistic`.
  *
- * @see https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules
+ * @see https://eslint-react.xyz/docs/rules/overview
  * @see https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks
  * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
 export function reactConfig(): FlatConfigArray {
+  // Extract sub-plugin objects from @eslint-react configs
+  const reactDomPlugin = (eslintReactPlugin.configs.dom as Record<string, unknown>)
+    .plugins as Record<string, unknown>
+  const reactWebApiPlugin = (eslintReactPlugin.configs["web-api"] as Record<string, unknown>)
+    .plugins as Record<string, unknown>
+
   return [
     {
       name: "eslint-config-setup/react",
@@ -40,161 +46,144 @@ export function reactConfig(): FlatConfigArray {
         },
       },
       plugins: {
-        react: reactPlugin,
+        // @eslint-react core → registered as "react" (like import-x → "import")
+        react: eslintReactPlugin,
+        // @eslint-react/dom → registered as "react-dom"
+        "react-dom": reactDomPlugin["@eslint-react/dom"] as Record<string, unknown>,
+        // @eslint-react/web-api → registered as "react-web-api"
+        "react-web-api": reactWebApiPlugin["@eslint-react/web-api"] as Record<string, unknown>,
+        // eslint-plugin-react-hooks stays as-is
         "react-hooks": reactHooksPlugin as Record<string, unknown>,
+        "@stylistic": stylisticPlugin,
         "react-refresh": reactRefreshPlugin,
         "jsx-a11y": jsxA11yPlugin as Record<string, unknown>,
       },
-      settings: {
-        react: {
-          version: "detect",
-        },
-      },
       rules: {
-        // ── React core ────────────────────────────────────────────────
-
-        // Prevent unsafe target="_blank" links — requires rel="noreferrer"
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md
-        "react/jsx-no-target-blank": "error",
-
-        // Prevent usage of undefined JSX components — catches typos
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-undef.md
-        "react/jsx-no-undef": "error",
-
-        // OFF: Not needed with React 17+ automatic JSX transform
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-uses-react.md
-        "react/jsx-uses-react": "off",
-
-        // OFF: Not needed with React 17+ automatic JSX transform
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
-        "react/react-in-jsx-scope": "off",
-
-        // Warn on dangerouslySetInnerHTML — XSS risk, should be reviewed
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-danger.md
-        "react/no-danger": "warn",
-
-        // Prevent usage of deprecated React APIs — stay current
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-deprecated.md
-        "react/no-deprecated": "error",
-
-        // Prevent direct mutation of this.state — use setState instead
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md
-        "react/no-direct-mutation-state": "error",
-
-        // Prevent unknown DOM properties (e.g., class → className)
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md
-        "react/no-unknown-property": "error",
-
-        // Prevent unstable nested component definitions — causes remounts
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unstable-nested-components.md
-        "react/no-unstable-nested-components": "error",
+        // ── React core (react/) ─────────────────────────────────────────
 
         // Prevent passing children as a prop — use JSX children syntax instead
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md
+        // https://eslint-react.xyz/docs/rules/no-children-prop
         "react/no-children-prop": "error",
 
-        // Enforce self-closing tags for components without children — <Foo />
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
-        "react/self-closing-comp": "error",
+        // Prevent direct mutation of this.state — use setState instead
+        // https://eslint-react.xyz/docs/rules/no-direct-mutation-state
+        "react/no-direct-mutation-state": "error",
 
-        // Prevent void DOM elements (br, img, hr) from having children
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md
-        "react/void-dom-elements-no-children": "error",
+        // Prevent unstable nested component definitions — causes remounts
+        // https://eslint-react.xyz/docs/rules/no-nested-component-definitions
+        "react/no-nested-component-definitions": "error",
 
-        // OFF: TypeScript handles prop validation
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md
-        "react/prop-types": "off",
+        // Require key prop in iterators — prevent reconciliation bugs
+        // https://eslint-react.xyz/docs/rules/no-missing-key
+        "react/no-missing-key": "error",
 
-        // Require key prop in iterators — including fragment shorthand
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
-        "react/jsx-key": ["error", { checkFragmentShorthand: true }],
+        // Prevent duplicate key props in iterators
+        // https://eslint-react.xyz/docs/rules/no-duplicate-key
+        "react/no-duplicate-key": "error",
 
         // Prevent comments from being inserted as text nodes in JSX
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-comment-textnodes.md
+        // https://eslint-react.xyz/docs/rules/jsx-no-comment-textnodes
         "react/jsx-no-comment-textnodes": "error",
 
-        // Prevent duplicate props — always a bug
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-duplicate-props.md
-        "react/jsx-no-duplicate-props": "error",
-
         // Remove unnecessary JSX fragments — <>{x}</> → {x}
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md
-        "react/jsx-no-useless-fragment": ["error", { allowExpressions: true }],
-
-        // Enforce PascalCase for component names — React convention
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md
-        "react/jsx-pascal-case": "error",
+        // https://eslint-react.xyz/docs/rules/no-useless-fragment
+        "react/no-useless-fragment": "error",
 
         // Prefer <Foo active /> over <Foo active={true} /> — concise
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md
-        "react/jsx-boolean-value": ["error", "never"],
-
-        // Prevent unnecessary string curly braces: title={"foo"} → title="foo"
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-curly-brace-presence.md
-        "react/jsx-curly-brace-presence": [
-          "error",
-          { props: "never", children: "never" },
-        ],
-
-        // Enforce function declarations for named components, arrows for unnamed
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
-        "react/function-component-definition": [
-          "error",
-          {
-            namedComponents: "function-declaration",
-            unnamedComponents: "arrow-function",
-          },
-        ],
-
-        // Enforce destructured useState naming: const [foo, setFoo] = useState()
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/hook-use-state.md
-        "react/hook-use-state": "error",
-
-        // Require sandbox attribute on iframes — security best practice
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/iframe-missing-sandbox.md
-        "react/iframe-missing-sandbox": "error",
+        // https://eslint-react.xyz/docs/rules/jsx-shorthand-boolean
+        "react/jsx-shorthand-boolean": "error",
 
         // Prevent using array index as key — breaks reconciliation on reorder
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+        // https://eslint-react.xyz/docs/rules/no-array-index-key
         "react/no-array-index-key": "error",
 
         // Prevent object/array literals as default props — creates new reference every render
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-object-type-as-default-prop.md
-        "react/no-object-type-as-default-prop": "error",
+        // https://eslint-react.xyz/docs/rules/no-unstable-default-props
+        "react/no-unstable-default-props": "error",
 
         // Prevent `{count && <Foo />}` — renders "0" when count is 0
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-leaked-render.md
-        "react/jsx-no-leaked-render": "error",
+        // https://eslint-react.xyz/docs/rules/no-leaked-conditional-rendering
+        "react/no-leaked-conditional-rendering": "error",
 
         // Prevent inline object creation in context providers — causes re-renders
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-constructed-context-values.md
-        "react/jsx-no-constructed-context-values": "error",
+        // https://eslint-react.xyz/docs/rules/no-unstable-context-value
+        "react/no-unstable-context-value": "error",
 
         // Prevent `this.setState({ count: this.state.count + 1 })` — race condition
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md
+        // https://eslint-react.xyz/docs/rules/no-access-state-in-setstate
         "react/no-access-state-in-setstate": "error",
 
         // Detect state properties that are set but never read — dead code
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unused-state.md
+        // https://eslint-react.xyz/docs/rules/no-unused-state
         "react/no-unused-state": "error",
 
-        // Prevent `style="color: red"` — must be an object in React
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md
-        "react/style-prop-object": "error",
+        // ── React 19 migration rules ────────────────────────────────────
 
-        // No string refs — deprecated since React 16.3, use useRef
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md
-        "react/no-string-refs": "error",
+        // React 19: Use <Context> instead of <Context.Provider>
+        // https://eslint-react.xyz/docs/rules/no-context-provider
+        "react/no-context-provider": "error",
+
+        // React 19: Use ref as prop instead of forwardRef
+        // https://eslint-react.xyz/docs/rules/no-forward-ref
+        "react/no-forward-ref": "error",
+
+        // React 19: Use use() instead of useContext()
+        // https://eslint-react.xyz/docs/rules/no-use-context
+        "react/no-use-context": "error",
+
+        // ── React DOM (react-dom/) ──────────────────────────────────────
+
+        // Prevent unsafe target="_blank" links — requires rel="noreferrer"
+        // https://eslint-react.xyz/docs/rules/dom-no-unsafe-target-blank
+        "react-dom/no-unsafe-target-blank": "error",
+
+        // Prevent unknown DOM properties (e.g., class → className)
+        // https://eslint-react.xyz/docs/rules/dom-no-unknown-property
+        "react-dom/no-unknown-property": "error",
+
+        // Prevent void DOM elements (br, img, hr) from having children
+        // https://eslint-react.xyz/docs/rules/dom-no-void-elements-with-children
+        "react-dom/no-void-elements-with-children": "error",
+
+        // Require sandbox attribute on iframes — security best practice
+        // https://eslint-react.xyz/docs/rules/dom-no-missing-iframe-sandbox
+        "react-dom/no-missing-iframe-sandbox": "error",
+
+        // Prevent `style="color: red"` — must be an object in React
+        // https://eslint-react.xyz/docs/rules/dom-no-string-style-prop
+        "react-dom/no-string-style-prop": "error",
 
         // Require explicit type on <button> — prevents unintended form submits
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/button-has-type.md
-        "react/button-has-type": "error",
+        // https://eslint-react.xyz/docs/rules/dom-no-missing-button-type
+        "react-dom/no-missing-button-type": "error",
 
         // Prevent dangerouslySetInnerHTML + children at the same time — conflict
-        // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md
-        "react/no-danger-with-children": "error",
+        // https://eslint-react.xyz/docs/rules/dom-no-dangerously-set-innerhtml-with-children
+        "react-dom/no-dangerously-set-innerhtml-with-children": "error",
 
-        // ── React Hooks ───────────────────────────────────────────────
+        // Warn on dangerouslySetInnerHTML — XSS risk, should be reviewed
+        // https://eslint-react.xyz/docs/rules/dom-no-dangerously-set-innerhtml
+        "react-dom/no-dangerously-set-innerhtml": "warn",
+
+        // ── React Web API (react-web-api/) — cleanup leak detection ─────
+
+        // Require cleanup for addEventListener in effects
+        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-event-listener
+        "react-web-api/no-leaked-event-listener": "error",
+
+        // Require cleanup for setInterval in effects
+        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-interval
+        "react-web-api/no-leaked-interval": "error",
+
+        // Require cleanup for setTimeout in effects
+        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-timeout
+        "react-web-api/no-leaked-timeout": "error",
+
+        // Require cleanup for ResizeObserver in effects
+        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-resize-observer
+        "react-web-api/no-leaked-resize-observer": "error",
+
+        // ── React Hooks (react-hooks/) — eslint-plugin-react-hooks ──────
 
         // Enforce Rules of Hooks — hooks must be called at the top level
         // https://react.dev/reference/rules/rules-of-hooks
@@ -203,6 +192,19 @@ export function reactConfig(): FlatConfigArray {
         // Verify dependency arrays in useEffect/useMemo/useCallback
         // https://react.dev/reference/react/useEffect#specifying-reactive-dependencies
         "react-hooks/exhaustive-deps": "error",
+
+        // ── @stylistic — JSX formatting rules ───────────────────────────
+
+        // Enforce self-closing tags for components without children — <Foo />
+        // https://eslint.style/rules/jsx/jsx-self-closing-comp
+        "@stylistic/jsx-self-closing-comp": "error",
+
+        // Prevent unnecessary string curly braces: title={"foo"} → title="foo"
+        // https://eslint.style/rules/jsx/jsx-curly-brace-presence
+        "@stylistic/jsx-curly-brace-presence": [
+          "error",
+          { props: "never", children: "never" },
+        ],
 
         // ── React Refresh (Fast Refresh / HMR) ────────────────────────
 

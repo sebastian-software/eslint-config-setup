@@ -111,7 +111,7 @@ describe("config rule stability", () => {
     expect(sonarBlock!.rules!["sonarjs/no-collapsible-if"]).toBe("error")
   })
 
-  it("react config includes hooks, compiler, and a11y rules", () => {
+  it("react config includes hooks, dom, and a11y rules", () => {
     const config = composeConfig({ react: true })
     const reactBlock = config.find(
       (b) => b.name === "eslint-config-setup/react",
@@ -119,6 +119,7 @@ describe("config rule stability", () => {
     expect(reactBlock?.rules).toBeDefined()
     expect(reactBlock!.rules!["react-hooks/rules-of-hooks"]).toBe("error")
     expect(reactBlock!.rules!["react-hooks/exhaustive-deps"]).toBe("error")
+    expect(reactBlock!.rules!["react-dom/no-unknown-property"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/alt-text"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/anchor-is-valid"]).toBe("error")
   })

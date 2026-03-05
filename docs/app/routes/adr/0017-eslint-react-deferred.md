@@ -4,7 +4,7 @@ title: "ADR-0017: @eslint-react Evaluated but Deferred"
 
 ADR-0017: @eslint-react Evaluated but Deferred
 
-Status: Accepted
+Status: Superseded by ADR-0019
 Date: 2026-03-02
 
 ## Context
