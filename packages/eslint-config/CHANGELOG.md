@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.3...eslint-config-setup-v0.4.0) (2026-03-05)
+
+
+### Features
+
+* add complexity rules to base config and relax AI limits ([2590a44](https://github.com/sebastian-software/eslint-config-setup/commit/2590a44781c7e2ec9e96ce2e4444bd1ddb88d0f6))
+
 ## [0.3.3](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.2...eslint-config-setup-v0.3.3) (2026-03-05)
 
 
