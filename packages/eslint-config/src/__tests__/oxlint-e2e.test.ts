@@ -1,4 +1,4 @@
-import { execFileSync } from "node:child_process"
+import { execSync } from "node:child_process"
 import { mkdirSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { tmpdir } from "node:os"
@@ -10,10 +10,8 @@ import type { OxlintConfigOptions } from "../types"
 import { composeConfig } from "../build/compose"
 import { serializeOxlintConfig } from "../build/serialize"
 
-const OXLINT_BIN = path.resolve(
-  import.meta.dirname,
-  "../../node_modules/.bin/oxlint",
-)
+/** Use npx to run oxlint — works cross-platform (avoids .cmd issues on Windows). */
+const OXLINT_CMD = "npx oxlint"
 
 /** Minimal valid TS file that oxlint should accept without errors. */
 const FIXTURE = `const greeting: string = "hello"\nconsole.log(greeting)\n`
@@ -55,9 +53,10 @@ describe("oxlint E2E — generated configs are valid", async () => {
       let exitCode = 0
       let stderr = ""
       try {
-        execFileSync(OXLINT_BIN, ["-c", configPath, fixturePath], {
+        execSync(`${OXLINT_CMD} -c "${configPath}" "${fixturePath}"`, {
           timeout: 10_000,
           encoding: "utf8",
+          stdio: ["pipe", "pipe", "pipe"],
         })
       } catch (error: unknown) {
         const execError = error as { status: number; stderr: string }

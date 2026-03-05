@@ -55,8 +55,9 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
         JSON.stringify({ compilerOptions: { strict: true }, include: ["*.ts"] }),
       )
 
-      // Symlink node_modules so plugin imports resolve
-      symlinkSync(NODE_MODULES, path.join(dir, "node_modules"))
+      // Link node_modules so plugin imports resolve.
+      // Use "junction" on Windows (no admin rights needed), symlink elsewhere.
+      symlinkSync(NODE_MODULES, path.join(dir, "node_modules"), "junction")
 
       // 3. Run ESLint with the generated config — just like a real user.
       //    Override tsconfigRootDir to pin the project service to this dir
