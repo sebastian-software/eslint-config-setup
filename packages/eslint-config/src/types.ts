@@ -14,6 +14,16 @@ export interface ConfigOptions {
 /** Options for pre-generated OxLint configs (oxlint flag is irrelevant here). */
 export type OxlintConfigOptions = Omit<ConfigOptions, "oxlint">
 
+export interface OxlintConfigResult {
+  $schema?: string
+  plugins?: string[]
+  categories?: Record<string, string>
+  env?: Record<string, boolean>
+  globals?: Record<string, string>
+  rules?: Record<string, unknown>
+  overrides?: Array<{ files: string[]; rules?: Record<string, unknown> }>
+}
+
 export type FlatConfig = Linter.Config
 export type FlatConfigArray = Linter.Config[]
 export type RuleSeverity = "error" | "off" | "warn"

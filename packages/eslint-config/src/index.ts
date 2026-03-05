@@ -14,6 +14,7 @@ export type {
   ConfigOptions,
   FlatConfigArray,
   OxlintConfigOptions,
+  OxlintConfigResult,
   RuleOptions,
   RuleScope,
   RuleSeverity,

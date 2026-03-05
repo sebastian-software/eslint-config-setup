@@ -35,9 +35,10 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
    ```typescript
    // oxlint.config.ts
+   import { defineConfig } from "oxlint"
    import { getOxlintConfig } from "eslint-config-setup"
 
-   export default await getOxlintConfig({ react: true, ai: true })
+   export default defineConfig(getOxlintConfig({ react: true, ai: true }))
    ```
 
 4. Run both linters in sequence — OxLint first for instant feedback, ESLint second for deep analysis:

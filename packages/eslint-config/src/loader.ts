@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs"
 import path from "node:path"
 
-import type { ConfigOptions, FlatConfigArray, OxlintConfigOptions } from "./types"
+import type { ConfigOptions, FlatConfigArray, OxlintConfigOptions, OxlintConfigResult } from "./types"
 
 import { optionsToFilename, oxlintOptionsToFilename } from "./hash"
 
@@ -37,14 +37,14 @@ export async function getEslintConfig(
  */
 export function getOxlintConfig(
   opts: OxlintConfigOptions = {},
-): unknown {
+): OxlintConfigResult {
   const filename = oxlintOptionsToFilename(opts)
   const dirname = import.meta.dirname
   const configPath = path.join(dirname, "oxlint-configs", filename)
 
   try {
     const content = readFileSync(configPath, "utf8")
-    return JSON.parse(content) as unknown
+    return JSON.parse(content) as OxlintConfigResult
   } catch {
     throw new Error(
       `eslint-config-setup: No pre-generated OxLint config found for options ${JSON.stringify(opts)}. ` +
