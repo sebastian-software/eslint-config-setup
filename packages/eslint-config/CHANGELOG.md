@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.2](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.1...eslint-config-setup-v0.3.2) (2026-03-05)
+
+
+### Bug Fixes
+
+* disable unicorn/better-regex to resolve circular fixes with regexp/strict ([206c1bc](https://github.com/sebastian-software/eslint-config-setup/commit/206c1bce2ac4f4f7b48538d4a74aec28f3c39851))
+* handle SplittedFlatConfig tuples from eslint-plugin-oxlint ≥1.51.0 ([0f6c8a7](https://github.com/sebastian-software/eslint-config-setup/commit/0f6c8a75045f0501b45c600ac71c048b58525ec0)), closes [#26](https://github.com/sebastian-software/eslint-config-setup/issues/26)
+* increase E2E test timeout to 30s for slower CI runners ([74185c1](https://github.com/sebastian-software/eslint-config-setup/commit/74185c143f844e8ab0bb137df9c8c358ccbdab72))
+* make E2E tests cross-platform for CI (Windows/macOS/Linux) ([c31a8b1](https://github.com/sebastian-software/eslint-config-setup/commit/c31a8b181321c98a4a0bd473ff4852564c85bb21))
+
 ## [0.3.1](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.0...eslint-config-setup-v0.3.1) (2026-03-05)
 
 
