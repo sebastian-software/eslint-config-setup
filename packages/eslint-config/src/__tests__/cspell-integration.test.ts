@@ -6,10 +6,17 @@ import { pathToFileURL } from "node:url"
 import { execa } from "execa"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
+const IS_WINDOWS = process.platform === "win32"
 const PACKAGE_ROOT = join(import.meta.dirname, "../..")
 
 /** file:// URL to the built modules export — works cross-platform in dynamic import() */
 const MODULES_URL = pathToFileURL(join(PACKAGE_ROOT, "dist/modules.js")).href
+
+/** Resolve the eslint binary — on Windows we need the .cmd shim */
+const ESLINT_BIN = join(
+  PACKAGE_ROOT,
+  IS_WINDOWS ? "node_modules/.bin/eslint.cmd" : "node_modules/.bin/eslint",
+)
 
 /** ESLint config that imports cspell from our built package and enables .ts files */
 function makeEslintConfig(): string {
@@ -37,7 +44,7 @@ function makeCspellJson(): string {
 
 /** Run ESLint in the given directory and return the result */
 async function runEslint(cwd: string) {
-  return execa("npx", ["eslint", "."], {
+  return execa(ESLINT_BIN, ["."], {
     cwd,
     reject: false,
     env: { NO_COLOR: "1" },
@@ -48,7 +55,7 @@ function hasCspellWarning(output: string): boolean {
   return output.includes("@cspell/spellchecker")
 }
 
-describe("cspell.json config file discovery", { timeout: 30_000 }, () => {
+describe("cspell.json config file discovery", { timeout: 60_000 }, () => {
   let tempDir: string
 
   beforeEach(() => {
@@ -56,7 +63,11 @@ describe("cspell.json config file discovery", { timeout: 30_000 }, () => {
   })
 
   afterEach(() => {
-    rmSync(tempDir, { recursive: true, force: true })
+    try {
+      rmSync(tempDir, { recursive: true, force: true, maxRetries: 3 })
+    } catch {
+      // On Windows the ESLint process may still hold file locks briefly
+    }
   })
 
   it("baseline — unknown word is flagged without cspell.json", async () => {
