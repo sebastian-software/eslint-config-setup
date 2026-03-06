@@ -70,6 +70,14 @@ describe("generateConfigModule", () => {
     expect(output).toContain("eslintReactPlugin")
   })
 
+  it("does not emit legacy aliases for semantically different React rules", () => {
+    const output = generateConfigModule({ react: true })
+    expect(output).toContain('"react/no-forward-ref": "error"')
+    expect(output).toContain('"react/no-prop-types": "error"')
+    expect(output).not.toContain('"forward-ref-uses-ref": [core, "no-forward-ref"]')
+    expect(output).not.toContain('"prop-types": [core, "no-prop-types"]')
+  })
+
   it("does not include react settings when react is disabled", () => {
     const output = generateConfigModule({})
     expect(output).not.toContain("globals.browser")

@@ -44,7 +44,7 @@ Plus dedicated plugins for hooks, accessibility, fast refresh, and effect patter
 Three rules guide your codebase toward React 19 patterns:
 
 - **`react/no-context-provider`** — Use `<Context>` instead of `<Context.Provider>`
-- **`react/forward-ref-uses-ref`** — Use ref as a prop instead of `forwardRef`
+- **`react/no-forward-ref`** — Use ref as a prop instead of `forwardRef`
 - **`react/no-use-context`** — Use `use()` instead of `useContext()`
 
 ### Strict by default
@@ -57,7 +57,7 @@ When you enable `oxlint: true`, something powerful happens behind the scenes.
 
 OxLint implements many React rules in Rust — but it uses the classic `eslint-plugin-react` rule names (`react/jsx-key`, `react/no-danger`). Our config uses the modern @eslint-react implementations, which have different names internally (`no-missing-key`, `no-dangerously-set-innerhtml`).
 
-The **React Compat Plugin** bridges this gap. It registers every @eslint-react rule implementation under the legacy name that OxLint expects. The result: `eslint-plugin-oxlint` correctly identifies which rules OxLint already handles and disables them in ESLint.
+The **React Compat Plugin** bridges this gap. It registers semantically compatible @eslint-react rules under the legacy names that OxLint expects, while keeping genuinely new semantics under their modern names. The result: `eslint-plugin-oxlint` correctly identifies which rules OxLint already handles and disables them in ESLint.
 
 **31 React rules run in Rust.** Zero configuration on your part.
 

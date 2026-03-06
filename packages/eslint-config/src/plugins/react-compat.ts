@@ -1,13 +1,14 @@
 /**
  * React Compat Plugin — merges all `@eslint-react` sub-plugins into a single
  * `react` namespace and re-exports rules under legacy `eslint-plugin-react`
- * names where a 1:1 equivalent exists.
+ * names where a 1:1 semantic equivalent exists.
  *
  * **Why?** OxLint implements many React rules under the classic `react/` prefix
  * with legacy names (e.g. `react/jsx-key`, `react/no-danger`). By registering
- * the modern `@eslint-react` rule implementations under those legacy names, we
- * get automatic OxLint coverage — OxLint runs the fast Rust check and ESLint
- * skips the JS version via `eslint-plugin-oxlint`'s `flat/react` config.
+ * semantically compatible `@eslint-react` rule implementations under those
+ * legacy names, we get automatic OxLint coverage — OxLint runs the fast Rust
+ * check and ESLint skips the JS version via `eslint-plugin-oxlint`'s
+ * `flat/react` config.
  *
  * Rules without a legacy equivalent keep their `@eslint-react` short name
  * (e.g. `react/no-context-provider`, `react/no-leaked-event-listener`).
@@ -50,8 +51,9 @@ const rscRules = extractSubPluginRules("rsc", "@eslint-react/rsc")
 
 // ── Legacy name mapping ─────────────────────────────────────────────────────
 // Maps legacy eslint-plugin-react name → { source rules object, original name }
-// Based on @eslint-react's `disable-conflict-eslint-plugin-react` config.
-// Only 1:1 mappings are included — 1:many (e.g. `no-unsafe` → 3 rules) are skipped.
+// `disable-conflict-eslint-plugin-react` is only a conflict list, not an alias table.
+// We only include aliases where the legacy rule and @eslint-react rule are semantically equivalent.
+// 1:many groupings (e.g. `no-unsafe` → 3 rules) and semantic mismatches are skipped.
 
 const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]> =
   {
@@ -92,8 +94,6 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
       "no-nested-component-definitions",
     ],
     "display-name": [coreRules, "no-missing-component-display-name"],
-    "forward-ref-uses-ref": [coreRules, "no-forward-ref"],
-    "prop-types": [coreRules, "no-prop-types"],
     "destructuring-assignment": [coreRules, "prefer-destructuring-assignment"],
     "prefer-read-only-props": [coreRules, "prefer-read-only-props"],
     "no-did-mount-set-state": [

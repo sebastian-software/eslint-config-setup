@@ -37,15 +37,15 @@ The compat plugin builds a unified rules object in three steps:
 
 1. **Core rules** — added under their original name, unless they have a legacy alias
 2. **Sub-plugin rules** (DOM, Web API, Hooks Extra, Naming, RSC) — added under their short name (prefix stripped), unless they have a legacy alias
-3. **Legacy aliases** — 43 rules registered under their classic `eslint-plugin-react` name, pointing to the @eslint-react implementation
+3. **Legacy aliases** — 41 rules registered under their classic `eslint-plugin-react` name, pointing to the semantically equivalent @eslint-react implementation
 
 ### The mapping source
 
-@eslint-react ships a `disable-conflict-eslint-plugin-react` config that lists every rule with a legacy equivalent. This config is the authoritative mapping table. Four legacy names that map to multiple @eslint-react rules (`no-unsafe`, `no-deprecated`, `forbid-prop-types`, `jsx-filename-extension`) are intentionally skipped — only 1:1 mappings are used.
+@eslint-react ships a `disable-conflict-eslint-plugin-react` config that is useful as a conflict inventory, but it is not an authoritative alias table. We only map legacy names when the semantics actually match. Grouped legacy rules like `no-unsafe` and `no-deprecated`, and semantic mismatches like `forward-ref-uses-ref`, `prop-types`, `forbid-prop-types`, and `jsx-filename-extension`, are intentionally skipped.
 
 ### What this means for OxLint
 
-Of the 43 mapped rules, **31 have active OxLint implementations.** When users enable `oxlint: true`, `eslint-plugin-oxlint`'s `flat/react` config sets these 31 rules to `"off"` in ESLint — and because our compat plugin uses the exact names OxLint expects, the deduplication works automatically. These 31 rules run in Rust at native speed. ESLint only handles the rules OxLint can't cover yet.
+Of the 41 mapped rules, **31 have active OxLint implementations.** When users enable `oxlint: true`, `eslint-plugin-oxlint`'s `flat/react` config sets these 31 rules to `"off"` in ESLint — and because our compat plugin uses the exact names OxLint expects for that compatible subset, the deduplication works automatically. These 31 rules run in Rust at native speed. ESLint only handles the rules OxLint can't cover yet.
 
 ### What this means for future growth
 

@@ -14,7 +14,7 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
 ### React rules in Rust
 
-When `react: true` is enabled alongside OxLint, **31 React rules automatically run in Rust** instead of JavaScript. This works because the [React Compat Plugin](/adr/0020-react-compat-plugin) registers @eslint-react rule implementations under their classic `eslint-plugin-react` names — the exact names OxLint expects. Rules like `react/jsx-key`, `react/no-danger`, and `react/no-children-prop` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet (Web API leak detection, React 19 migration, type-aware analysis).
+When `react: true` is enabled alongside OxLint, **31 React rules automatically run in Rust** instead of JavaScript. This works because the [React Compat Plugin](/adr/0020-react-compat-plugin) registers semantically compatible @eslint-react rules under the classic `eslint-plugin-react` names that OxLint expects. Rules like `react/jsx-key`, `react/no-danger`, and `react/no-children-prop` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet (Web API leak detection, React 19 migration, type-aware analysis).
 
 As OxLint expands its React coverage, more rules shift to Rust automatically — no config changes required.
 

@@ -17,10 +17,11 @@ import type { FlatConfigArray } from "../types"
  * hooks-extra, naming-convention, and RSC sub-plugins — are registered under a single
  * `react/` namespace via the react-compat plugin for maximum OxLint compatibility.
  *
- * Rules with a legacy `eslint-plugin-react` equivalent are registered under the
- * legacy name (e.g. `react/jsx-key` instead of `react/no-missing-key`) so that
- * OxLint can handle them natively. Rules without a legacy equivalent keep their
- * `@eslint-react` short name (e.g. `react/no-context-provider`).
+ * Rules with a semantically equivalent legacy `eslint-plugin-react` counterpart
+ * are registered under the legacy name (e.g. `react/jsx-key` instead of
+ * `react/no-missing-key`) so that OxLint can handle them natively. Rules without
+ * a safe legacy equivalent keep their `@eslint-react` short name
+ * (e.g. `react/no-context-provider`, `react/no-forward-ref`).
  *
  * Stylistic JSX rules (self-closing, curly braces) are provided by `@stylistic`.
  *
@@ -45,7 +46,7 @@ export function reactConfig(): FlatConfigArray {
       },
       plugins: {
         // Unified react-compat plugin: all @eslint-react rules under "react/"
-        // with legacy names for OxLint compatibility.
+        // with safe legacy aliases where semantics actually match.
         react: reactCompatPlugin,
         // eslint-plugin-react-hooks stays as-is
         "react-hooks": reactHooksPlugin as Record<string, unknown>,
@@ -55,8 +56,8 @@ export function reactConfig(): FlatConfigArray {
       },
       rules: {
         // ── JSX rules ───────────────────────────────────────────────────
-        // Rules use legacy names where available (→ OxLint handles them).
-        // Rules without legacy equivalent use @eslint-react short name.
+        // Rules use legacy names where a safe alias exists (→ OxLint handles them).
+        // Rules without a safe legacy equivalent use the @eslint-react short name.
 
         // Require key prop in iterators — prevent reconciliation bugs
         "react/jsx-key": "error",
@@ -105,7 +106,7 @@ export function reactConfig(): FlatConfigArray {
         // React 19: Use <Context> instead of <Context.Provider>
         "react/no-context-provider": "error",
         // React 19: Use ref as prop instead of forwardRef
-        "react/forward-ref-uses-ref": "error",
+        "react/no-forward-ref": "error",
         // React 19: Use use() instead of useContext()
         "react/no-use-context": "error",
 
@@ -128,7 +129,7 @@ export function reactConfig(): FlatConfigArray {
         // Use default parameters instead of defaultProps
         "react/no-default-props": "error",
         // Use TypeScript instead of PropTypes
-        "react/prop-types": "error",
+        "react/no-prop-types": "error",
         // Use ref callbacks or useRef instead of string refs
         "react/no-string-refs": "error",
         // Prevent direct mutation of this.state — use setState
