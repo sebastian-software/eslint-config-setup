@@ -20,6 +20,7 @@ export interface InitOptions extends ConfigOptions {
 }
 
 export interface DoctorCheck {
+  fix?: string
   level: "fail" | "pass" | "warn"
   message: string
 }
@@ -95,6 +96,14 @@ export function findOxlintConfigFile(cwd: string): string | null {
   return findFirstExistingFile(cwd, OXLINT_CONFIG_FILENAMES)
 }
 
+export function formatInstallCommand(
+  packageManager: PackageManager,
+  dependencies: string[],
+): string {
+  const command = getInstallCommand(packageManager, dependencies)
+  return [command.bin, ...command.args].join(" ")
+}
+
 export function formatConfigOptions(opts: ConfigOptions): string {
   const entries = Object.entries(opts).filter(([, value]) => value)
 
@@ -144,6 +153,35 @@ export function hasDependency(
 export function parseMajorVersion(version: string): number | null {
   const match = version.match(/(\d+)/)
   return match ? Number(match[1]) : null
+}
+
+export function getInstallCommand(
+  packageManager: PackageManager,
+  dependencies: string[],
+): { args: string[]; bin: string } {
+  switch (packageManager) {
+    case "bun":
+      return { bin: "bun", args: ["add", "-d", ...dependencies] }
+    case "pnpm":
+      return { bin: "pnpm", args: ["add", "-D", ...dependencies] }
+    case "yarn":
+      return { bin: "yarn", args: ["add", "-D", ...dependencies] }
+    default:
+      return { bin: "npm", args: ["install", "-D", ...dependencies] }
+  }
+}
+
+export function getRunCommand(packageManager: PackageManager): string {
+  switch (packageManager) {
+    case "bun":
+      return "bun run"
+    case "pnpm":
+      return "pnpm run"
+    case "yarn":
+      return "yarn"
+    default:
+      return "npm run"
+  }
 }
 
 function findFirstExistingFile(

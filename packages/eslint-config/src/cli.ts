@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url"
 import { parseArgs } from "node:util"
 
 import { runDoctor } from "./cli/doctor"
+import { formatDoctorReport } from "./cli/doctor-report"
 import { runInit } from "./cli/init"
 
 export async function runCli(argv: string[]): Promise<number> {
@@ -30,11 +31,9 @@ function handleDoctor(argv: string[]): number {
 
   if (parsed.values) {
     const result = runDoctor(process.cwd())
-    for (const check of result.checks) {
-      const prefix = check.level.toUpperCase().padEnd(4, " ")
-      const stream = check.level === "fail" ? console.error : console.log
-      stream(`${prefix} ${check.message}`)
-    }
+    const report = formatDoctorReport(result)
+    const stream = result.exitCode === 0 ? console.log : console.error
+    stream(report.trimEnd())
     return result.exitCode
   }
 

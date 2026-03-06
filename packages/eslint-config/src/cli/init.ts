@@ -12,6 +12,9 @@ import { createVscodeSettingsTemplate } from "./templates/vscode-settings"
 import {
   detectPackageManager,
   formatConfigOptions,
+  formatInstallCommand,
+  getInstallCommand,
+  getRunCommand,
   readPackageJson,
   readTextIfExists,
   writeJsonFile,
@@ -182,22 +185,6 @@ function installDependencies(
   }
 }
 
-function getInstallCommand(
-  packageManager: PackageManager,
-  dependencies: string[],
-): { args: string[]; bin: string } {
-  switch (packageManager) {
-    case "bun":
-      return { bin: "bun", args: ["add", "-d", ...dependencies] }
-    case "pnpm":
-      return { bin: "pnpm", args: ["add", "-D", ...dependencies] }
-    case "yarn":
-      return { bin: "yarn", args: ["add", "-D", ...dependencies] }
-    default:
-      return { bin: "npm", args: ["install", "-D", ...dependencies] }
-  }
-}
-
 function renderAgentsGuide(
   opts: InitOptions,
   packageManager: PackageManager,
@@ -269,25 +256,4 @@ function renderVscodeSettings(
   }
 
   return `${JSON.stringify(settings, null, 2)}\n`
-}
-
-function formatInstallCommand(
-  packageManager: PackageManager,
-  dependencies: string[],
-): string {
-  const command = getInstallCommand(packageManager, dependencies)
-  return [command.bin, ...command.args].join(" ")
-}
-
-function getRunCommand(packageManager: PackageManager): string {
-  switch (packageManager) {
-    case "bun":
-      return "bun run"
-    case "pnpm":
-      return "pnpm run"
-    case "yarn":
-      return "yarn"
-    default:
-      return "npm run"
-  }
 }
