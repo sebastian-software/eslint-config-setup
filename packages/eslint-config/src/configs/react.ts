@@ -1,13 +1,13 @@
 /* eslint-disable max-lines-per-function -- Rule definition file: one function returning a flat list of rule entries. */
-import stylisticPlugin from "@stylistic/eslint-plugin"
+import stylisticPlugin from "@stylistic/eslint-plugin";
 // @ts-expect-error -- no type declarations available
-import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
-import reactHooksPlugin from "eslint-plugin-react-hooks"
-import reactRefreshPlugin from "eslint-plugin-react-refresh"
-import globals from "globals"
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
+import globals from "globals";
 
-import { reactCompatPlugin } from "../plugins/react-compat"
-import type { FlatConfigArray } from "../types"
+import { reactCompatPlugin } from "../plugins/react-compat";
+import type { FlatConfigArray } from "../types";
 
 /**
  * React config — React 19+, Hooks, JSX accessibility, and Web API leak detection.
@@ -78,9 +78,9 @@ export function reactConfig(): FlatConfigArray {
         // Prevent inline object creation in context providers — re-renders
         "react/jsx-no-constructed-context-values": "error",
         // Prevent javascript: URLs — XSS risk
-        "react/jsx-no-script-url": "warn",
+        "react/jsx-no-script-url": "error",
         // Prevent IIFE in JSX — move logic outside render
-        "react/jsx-no-iife": "error",
+        "react/jsx-no-iife": "warn",
         // Prefer destructuring: ({foo}) over (props) => props.foo
         "react/destructuring-assignment": "warn",
 
@@ -104,11 +104,11 @@ export function reactConfig(): FlatConfigArray {
         // ── React 19 migration ──────────────────────────────────────────
 
         // React 19: Use <Context> instead of <Context.Provider>
-        "react/no-context-provider": "error",
+        "react/no-context-provider": "warn",
         // React 19: Use ref as prop instead of forwardRef
-        "react/no-forward-ref": "error",
+        "react/no-forward-ref": "warn",
         // React 19: Use use() instead of useContext()
-        "react/no-use-context": "error",
+        "react/no-use-context": "warn",
 
         // ── Children API (prefer composition over Children utilities) ───
 
@@ -227,11 +227,12 @@ export function reactConfig(): FlatConfigArray {
         // RSC: Enforce function definition conventions for server components
         "react/function-definition": "error",
 
-        // ── React Hooks (react-hooks/) — eslint-plugin-react-hooks ──────
+        // ── React Hooks (react-hooks/) — official React compiler profile ──
 
-        // Enforce Rules of Hooks — hooks must be called at the top level
-        // https://react.dev/reference/rules/rules-of-hooks
-        "react-hooks/rules-of-hooks": "error",
+        // Official compiler-powered Hooks rules from the React team.
+        // Keep exhaustive-deps stricter than the preset default because stale
+        // dependency arrays are still a high-value correctness signal here.
+        ...reactHooksPlugin.configs.flat.recommended.rules,
 
         // Verify dependency arrays in useEffect/useMemo/useCallback
         // https://react.dev/reference/react/useEffect#specifying-reactive-dependencies
@@ -369,5 +370,5 @@ export function reactConfig(): FlatConfigArray {
         ],
       },
     },
-  ]
+  ];
 }

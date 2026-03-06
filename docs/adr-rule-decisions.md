@@ -10,6 +10,8 @@ Architectural Decision Record für bewusste Abweichungen von anderen prominenten
 
 Jede Regel wurde im Vergleich zu Ultracite, XO und @antfu/eslint-config evaluiert. Hier werden nur bewusste Abweichungen dokumentiert — Regeln wo wir übereinstimmen werden nicht aufgeführt.
 
+**React-spezifische Entscheidungen** nach dem React-Compat-Refactoring und der rule-by-rule Review vom 6. März 2026 sind jetzt zentral in [ADR-0021](./app/routes/adr/0021-react-rule-policy.md) dokumentiert. Dort ist auch die gewünschte Trennung zwischen `base` und `ai: true` festgehalten.
+
 ---
 
 ## Bewusst nicht übernommen

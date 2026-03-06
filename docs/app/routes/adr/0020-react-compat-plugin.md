@@ -63,3 +63,5 @@ The 45 rules without a legacy equivalent (e.g., `no-context-provider`, `no-leake
 - The compat plugin follows the same pattern as `eslint-plugin-import-x` (registered as `import`) and `eslint-plugin-n` (registered as `node`) — proven ESLint convention
 - Future OxLint React rule additions will automatically be deduplicated, as the naming is already aligned
 - The mapping table must be updated when @eslint-react adds new rules with legacy equivalents, but this is low-frequency maintenance tied to @eslint-react releases
+
+See [ADR-0021](/adr/0021-react-rule-policy) for the accepted React rule severities and the `base` vs `ai: true` policy built on top of this compat layer.

@@ -35,4 +35,4 @@ Reasons:
 - `react/no-string-refs` is dropped as React 19 removes string refs entirely
 - `react/no-deprecated` is dropped — superseded by the specific React 19 migration rules
 
-See [ADR-0020](/adr/0020-react-compat-plugin) for how all @eslint-react rules are unified under a single `react/` namespace for OxLint compatibility.
+See [ADR-0020](/adr/0020-react-compat-plugin) for how all @eslint-react rules are unified under a single `react/` namespace for OxLint compatibility. See [ADR-0021](/adr/0021-react-rule-policy) for the accepted severity policy and the `base` vs `ai: true` split after the migration.
