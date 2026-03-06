@@ -3,6 +3,11 @@ import path from "node:path"
 import { spawnSync } from "node:child_process"
 
 import type { InitOptions, PackageManager, ProjectPackageJson } from "./shared"
+import { renderAgentsTemplate } from "./templates/agents"
+import { renderEslintConfigTemplate } from "./templates/eslint-config"
+import { renderOxlintConfigTemplate } from "./templates/oxlint-config"
+import { renderPreCommitTemplate } from "./templates/pre-commit"
+import { createVscodeSettingsTemplate } from "./templates/vscode-settings"
 
 import {
   detectPackageManager,
@@ -210,14 +215,7 @@ function renderAgentsGuide(
     "- Keep `eslint.config.ts`, optional `oxlint.config.ts`, and package scripts aligned when changing the setup.",
   ]
 
-  return `# AGENTS.md
-
-## Quality Gate
-
-This project uses \`eslint-config-setup\` as its verification baseline.
-
-${commands.join("\n")}
-`
+  return renderAgentsTemplate(commands)
 }
 
 function renderEslintConfig(opts: InitOptions): string {
@@ -228,10 +226,7 @@ function renderEslintConfig(opts: InitOptions): string {
     react: opts.react,
   })
 
-  return `import { getEslintConfig } from "eslint-config-setup"
-
-export default await getEslintConfig(${configOptions})
-`
+  return renderEslintConfigTemplate(configOptions)
 }
 
 function renderOxlintConfig(opts: InitOptions): string {
@@ -241,11 +236,7 @@ function renderOxlintConfig(opts: InitOptions): string {
     react: opts.react,
   })
 
-  return `import { defineConfig } from "oxlint"
-import { getOxlintConfig } from "eslint-config-setup"
-
-export default defineConfig(getOxlintConfig(${configOptions}))
-`
+  return renderOxlintConfigTemplate(configOptions)
 }
 
 function renderPreCommitHook(
@@ -261,11 +252,7 @@ function renderPreCommitHook(
 
   commands.push(`${run} lint`)
 
-  return `#!/bin/sh
-set -e
-
-${commands.join("\n")}
-`
+  return renderPreCommitTemplate(commands)
 }
 
 function renderVscodeSettings(
@@ -278,17 +265,7 @@ function renderVscodeSettings(
 
   const settings: Record<string, unknown> = {
     ...existing,
-    "editor.formatOnSave": opts.formatter === "oxfmt",
-    "eslint.useFlatConfig": true,
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "json",
-      "jsonc",
-      "markdown",
-      "typescript",
-      "typescriptreact",
-    ],
+    ...createVscodeSettingsTemplate(opts),
   }
 
   return `${JSON.stringify(settings, null, 2)}\n`
