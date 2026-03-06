@@ -85,7 +85,7 @@ function handleInit(argv: string[]): number {
   console.log(`Touched files: ${outcome.files.join(", ")}`)
 
   if (!parsed.values.install) {
-    console.log(`Install dependencies manually: ${outcome.installedDependencies.join(" ")}`)
+    console.log(`Install dependencies manually: ${outcome.installCommand}`)
   }
 
   return 0

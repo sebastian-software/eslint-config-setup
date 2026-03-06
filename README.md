@@ -27,6 +27,14 @@ export default await getEslintConfig({ react: true, ai: true })
 ## Quick Start
 
 ```bash
+npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
+```
+
+This scaffolds `eslint.config.ts`, optional `oxlint.config.ts`, package scripts, an `AGENTS.md`, VS Code settings, and a simple pre-commit hook preset.
+
+If you prefer to wire things manually:
+
+```bash
 npm install -D eslint-config-setup eslint typescript
 ```
 
@@ -64,6 +72,7 @@ export default config
 ## Documentation
 
 - [Getting Started](https://sebastian-software.github.io/eslint-config-setup/guide/getting-started) — installation and setup
+- [CLI Workflow](https://sebastian-software.github.io/eslint-config-setup/guide/cli-workflow) — scaffold and validate projects with `init` and `doctor`
 - [AI Mode](https://sebastian-software.github.io/eslint-config-setup/guide/ai-mode) — why AI-generated code needs different rules
 - [OxLint Integration](https://sebastian-software.github.io/eslint-config-setup/guide/oxlint) — run ESLint + OxLint without conflicts
 - [All 27 Plugins](https://sebastian-software.github.io/eslint-config-setup/guide/plugins) — what's included and why

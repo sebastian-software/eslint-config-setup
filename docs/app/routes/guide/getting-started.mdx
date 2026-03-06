@@ -8,6 +8,25 @@ import { Steps, Tabs, TabList, Tab, TabPanel, TabPanels, Note, Tip } from "ardo/
 
 Get a complete ESLint setup in under a minute — with built-in support for AI-generated code and OxLint migration.
 
+## Fastest path: scaffold it
+
+If you want the full workflow instead of wiring files by hand, use the CLI:
+
+```bash
+npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
+```
+
+This scaffolds:
+
+- `eslint.config.ts`
+- `oxlint.config.ts` when `--oxlint` is enabled
+- package scripts such as `lint`, `check`, `fix`, and formatter scripts
+- `AGENTS.md` for AI coding assistants
+- `.vscode/settings.json`
+- `.githooks/pre-commit`
+
+See [CLI Workflow](/guide/cli-workflow) for the command reference.
+
 ## Installation
 
 <Steps>

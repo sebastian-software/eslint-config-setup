@@ -38,6 +38,7 @@ export default defineConfig({
             items: [
               { text: 'Why This Exists', link: '/guide/why' },
               { text: 'Getting Started', link: '/guide/getting-started' },
+              { text: 'CLI Workflow', link: '/guide/cli-workflow' },
             ],
           },
           {

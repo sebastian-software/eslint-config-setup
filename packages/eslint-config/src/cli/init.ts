@@ -15,6 +15,7 @@ import {
 
 export interface InitOutcome {
   files: string[]
+  installCommand: string
   installedDependencies: string[]
   packageManager: PackageManager
   scripts: string[]
@@ -39,6 +40,7 @@ export function runInit(opts: InitOptions): InitOutcome {
 
   return {
     files,
+    installCommand: formatInstallCommand(packageManager, installedDependencies),
     installedDependencies,
     packageManager,
     scripts: Object.keys(scripts),
@@ -51,6 +53,7 @@ function writeProjectFiles(
   scripts: Record<string, string>,
   files: string[],
 ): void {
+  const packageManager = detectPackageManager(opts.cwd, packageJson)
   const nextPackageJson = {
     ...packageJson,
     scripts: {
@@ -85,7 +88,7 @@ function writeProjectFiles(
     if (opts.dryRun) {
       files.push(agentsPath)
     } else {
-      writeTextFile(agentsPath, renderAgentsGuide(opts))
+      writeTextFile(agentsPath, renderAgentsGuide(opts, packageManager))
       files.push(agentsPath)
     }
   }
@@ -111,7 +114,7 @@ function writeProjectFiles(
       files.push(hookPath)
     } else {
       mkdirSync(hooksDir, { recursive: true })
-      writeTextFile(hookPath, renderPreCommitHook(opts))
+      writeTextFile(hookPath, renderPreCommitHook(opts, packageManager))
       chmodSync(hookPath, 0o755)
       files.push(hookPath)
     }
@@ -190,11 +193,15 @@ function getInstallCommand(
   }
 }
 
-function renderAgentsGuide(opts: InitOptions): string {
+function renderAgentsGuide(
+  opts: InitOptions,
+  packageManager: PackageManager,
+): string {
+  const run = getRunCommand(packageManager)
   const commands = [
-    "- Run `npm run lint` before handing work back.",
+    `- Run \`${run} lint\` before handing work back.`,
     opts.formatter === "oxfmt"
-      ? "- Run `npm run format` when touching code style-sensitive files."
+      ? `- Run \`${run} format\` when touching code style-sensitive files.`
       : "- Do not add formatting-only churn unless explicitly requested.",
     opts.oxlint
       ? "- Keep `oxlint` and `eslint` flows aligned; do not remove one side of the split-lint setup."
@@ -242,14 +249,18 @@ export default defineConfig(getOxlintConfig(${configOptions}))
 `
 }
 
-function renderPreCommitHook(opts: InitOptions): string {
+function renderPreCommitHook(
+  opts: InitOptions,
+  packageManager: PackageManager,
+): string {
+  const run = getRunCommand(packageManager)
   const commands = []
 
   if (opts.formatter === "oxfmt") {
-    commands.push("npm run format:check")
+    commands.push(`${run} format:check`)
   }
 
-  commands.push("npm run lint")
+  commands.push(`${run} lint`)
 
   return `#!/bin/sh
 set -e
@@ -282,4 +293,25 @@ function renderVscodeSettings(
   }
 
   return `${JSON.stringify(settings, null, 2)}\n`
+}
+
+function formatInstallCommand(
+  packageManager: PackageManager,
+  dependencies: string[],
+): string {
+  const command = getInstallCommand(packageManager, dependencies)
+  return [command.bin, ...command.args].join(" ")
+}
+
+function getRunCommand(packageManager: PackageManager): string {
+  switch (packageManager) {
+    case "bun":
+      return "bun run"
+    case "pnpm":
+      return "pnpm run"
+    case "yarn":
+      return "yarn"
+    default:
+      return "npm run"
+  }
 }

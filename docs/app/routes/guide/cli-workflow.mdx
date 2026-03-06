@@ -1,0 +1,73 @@
+---
+title: CLI Workflow
+---
+
+# CLI Workflow
+
+`eslint-config-setup` ships with a small CLI that turns the package into a working setup flow instead of only a library import.
+
+## init
+
+Use `init` to scaffold a project around the existing public API:
+
+```bash
+npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
+```
+
+What it can generate:
+
+- `eslint.config.ts`
+- `oxlint.config.ts`
+- package scripts such as `lint`, `check`, `fix`, `format`, and `format:check`
+- `AGENTS.md`
+- `.vscode/settings.json`
+- `.githooks/pre-commit`
+
+Useful flags:
+
+```bash
+--react
+--node
+--ai
+--oxlint
+--formatter oxfmt
+--vscode
+--agents
+--hooks
+--dry-run
+--install
+```
+
+### Example
+
+```bash
+npx eslint-config-setup init --react --oxlint --formatter oxfmt --vscode --dry-run
+```
+
+The command prints which files it would touch and which install command it expects.
+
+## doctor
+
+Use `doctor` to validate an existing setup:
+
+```bash
+npx eslint-config-setup doctor
+```
+
+Current checks include:
+
+- required dependencies such as `eslint`, `typescript`, and `eslint-config-setup`
+- presence of `eslint.config.*`
+- OxLint wiring when `oxlint: true` is enabled
+- `oxfmt` availability when formatter scripts reference it
+- presence of a `check` script
+- local Node.js version against the package requirement
+
+## Scope
+
+The CLI is intentionally opinionated but narrow:
+
+- linting stays the responsibility of `eslint-config-setup`
+- formatting stays external
+- `oxfmt` is treated as an optional companion, not a built-in formatter
+- generated companion files are reviewable plain text, not hidden state
