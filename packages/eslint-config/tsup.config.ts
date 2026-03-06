@@ -19,6 +19,7 @@ export default defineConfig({
     // All plugin dependencies — npm installs them, no need to bundle
     /^eslint-plugin-/,
     /^@eslint\//,
+    /^@eslint-react\//,
     /^@typescript-eslint\//,
     /^@cspell\//,
     /^@vitest\//,

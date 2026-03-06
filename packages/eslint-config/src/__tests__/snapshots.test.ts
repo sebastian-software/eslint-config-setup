@@ -119,7 +119,7 @@ describe("config rule stability", () => {
     expect(reactBlock?.rules).toBeDefined()
     expect(reactBlock!.rules!["react-hooks/rules-of-hooks"]).toBe("error")
     expect(reactBlock!.rules!["react-hooks/exhaustive-deps"]).toBe("error")
-    expect(reactBlock!.rules!["react-dom/no-unknown-property"]).toBe("error")
+    expect(reactBlock!.rules!["react/no-unknown-property"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/alt-text"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/anchor-is-valid"]).toBe("error")
   })

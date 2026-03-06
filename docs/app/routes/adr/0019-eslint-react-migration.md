@@ -34,3 +34,5 @@ Reasons:
 - Rules that TypeScript already catches are removed (`jsx-no-undef`, `jsx-no-duplicate-props`)
 - `react/no-string-refs` is dropped as React 19 removes string refs entirely
 - `react/no-deprecated` is dropped — superseded by the specific React 19 migration rules
+
+See [ADR-0020](/adr/0020-react-compat-plugin) for how all @eslint-react rules are unified under a single `react/` namespace for OxLint compatibility.
