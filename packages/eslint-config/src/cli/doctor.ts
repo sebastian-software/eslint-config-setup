@@ -24,7 +24,14 @@ export function runDoctor(cwd: string): DoctorResult {
 
   const eslintConfigFile = findEslintConfigFile(cwd)
   const oxlintConfigFile = findOxlintConfigFile(cwd)
+  const agentsPath = path.join(cwd, "AGENTS.md")
+  const vscodePath = path.join(cwd, ".vscode/settings.json")
+  const preCommitHookPath = path.join(cwd, ".githooks/pre-commit")
   const eslintConfigContent = eslintConfigFile ? readTextIfExists(eslintConfigFile) : null
+  const agentsContent = readTextIfExists(agentsPath)
+  const vscodeContent = readTextIfExists(vscodePath)
+  const preCommitHookContent = readTextIfExists(preCommitHookPath)
+  const usesAi = Boolean(eslintConfigContent?.match(/\bai\s*:\s*true\b/))
   const usesOxlint = Boolean(eslintConfigContent?.match(/\boxlint\s*:\s*true\b/))
 
   checks.push(
@@ -81,18 +88,63 @@ export function runDoctor(cwd: string): DoctorResult {
   }
 
   const formatScript = packageJson.scripts?.format ?? ""
+  const checkScript = packageJson.scripts?.check ?? ""
+  const hooksInstallScript = packageJson.scripts?.["hooks:install"] ?? ""
   if (formatScript.includes("oxfmt")) {
     checks.push(
       hasDependency(packageJson, "oxfmt")
         ? { level: "pass" as const, message: "oxfmt dependency found." }
         : { level: "fail" as const, message: "Format script references oxfmt, but oxfmt is not installed." },
     )
+
+    if (!checkScript.includes("oxfmt")) {
+      checks.push({
+        level: "warn" as const,
+        message: "Format script uses oxfmt, but the check script does not verify formatting.",
+      })
+    }
+
+    if (vscodeContent && !vscodeContent.includes('"editor.formatOnSave": true')) {
+      checks.push({
+        level: "warn" as const,
+        message: "VS Code settings exist, but editor.formatOnSave is not enabled for the oxfmt workflow.",
+      })
+    }
   }
 
   if (!packageJson.scripts?.check) {
     checks.push({
       level: "warn" as const,
       message: "No check script found. Add one for CI and local verification.",
+    })
+  }
+
+  if (usesAi) {
+    checks.push(
+      agentsContent
+        ? { level: "pass" as const, message: "Found AGENTS.md for agent-facing verification instructions." }
+        : { level: "warn" as const, message: "AI mode is enabled, but AGENTS.md is missing." },
+    )
+  }
+
+  if (agentsContent && !agentsContent.includes("run `") && !agentsContent.includes("run ")) {
+    checks.push({
+      level: "warn" as const,
+      message: "AGENTS.md exists, but it does not appear to contain an explicit verification command.",
+    })
+  }
+
+  if (hooksInstallScript && !preCommitHookContent) {
+    checks.push({
+      level: "fail" as const,
+      message: "hooks:install is present, but .githooks/pre-commit is missing.",
+    })
+  }
+
+  if (preCommitHookContent && !hooksInstallScript) {
+    checks.push({
+      level: "warn" as const,
+      message: ".githooks/pre-commit exists, but package.json has no hooks:install script.",
     })
   }
 

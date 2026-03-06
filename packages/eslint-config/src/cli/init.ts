@@ -199,23 +199,22 @@ function renderAgentsGuide(
 ): string {
   const run = getRunCommand(packageManager)
   const commands = [
-    `- Run \`${run} lint\` before handing work back.`,
-    opts.formatter === "oxfmt"
-      ? `- Run \`${run} format\` when touching code style-sensitive files.`
-      : "- Do not add formatting-only churn unless explicitly requested.",
+    `- Before handoff, run \`${run} check\`.`,
+    "- If the quality gate fails, fix the setup or code instead of bypassing the tooling.",
     opts.oxlint
-      ? "- Keep `oxlint` and `eslint` flows aligned; do not remove one side of the split-lint setup."
-      : "- Keep the ESLint config as the source of truth for code-quality rules.",
-    opts.ai
-      ? "- Prefer explicit types, stable naming, small functions, and no magic values."
-      : "- Preserve the existing lint standard instead of inventing local exceptions.",
+      ? "- Keep OxLint and ESLint in the same verification path; do not drop one side of the split-lint setup."
+      : "- Keep ESLint as the source of truth for code-quality verification.",
+    opts.formatter === "oxfmt"
+      ? `- Use \`${run} format\` when you intentionally apply formatting changes.`
+      : "- Do not add formatting-only churn unless explicitly requested.",
+    "- Keep `eslint.config.ts`, optional `oxlint.config.ts`, and package scripts aligned when changing the setup.",
   ]
 
   return `# AGENTS.md
 
-## Working Agreement
+## Quality Gate
 
-This project uses \`eslint-config-setup\` as a deterministic, pre-generated lint baseline.
+This project uses \`eslint-config-setup\` as its verification baseline.
 
 ${commands.join("\n")}
 `

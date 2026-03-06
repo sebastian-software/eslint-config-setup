@@ -63,11 +63,36 @@ describe("runInit", () => {
     expect(packageJson.scripts.check).toContain("oxlint . && eslint .")
     expect(packageJson.scripts["hooks:install"]).toBe("git config core.hooksPath .githooks")
     expect(oxlintConfig).toContain("getOxlintConfig")
-    expect(agents).toContain("explicit types")
+    expect(agents).toContain("Before handoff, run `npm run check`.")
+    expect(agents).toContain("Keep OxLint and ESLint in the same verification path")
     expect(vscode).toContain("\"eslint.useFlatConfig\": true")
     expect(vscode).toContain("\"files.trimTrailingWhitespace\": true")
     expect(hook).toContain("npm run format:check")
     expect(hook).toContain("npm run lint")
+  })
+
+  it("renders package-manager-specific commands in generated companions", () => {
+    const dir = createProjectDir()
+    writeFileSync(
+      path.join(dir, "package.json"),
+      JSON.stringify({ name: "fixture", packageManager: "pnpm@10.0.0", private: true }, null, 2),
+    )
+
+    runInit({
+      agents: true,
+      cwd: dir,
+      formatter: "oxfmt",
+      hooks: true,
+      react: true,
+    })
+
+    const agents = readFileSync(path.join(dir, "AGENTS.md"), "utf8")
+    const hook = readFileSync(path.join(dir, ".githooks/pre-commit"), "utf8")
+
+    expect(agents).toContain("pnpm run check")
+    expect(agents).toContain("pnpm run format")
+    expect(hook).toContain("pnpm run format:check")
+    expect(hook).toContain("pnpm run lint")
   })
 
   it("supports dry-run without writing files", () => {
