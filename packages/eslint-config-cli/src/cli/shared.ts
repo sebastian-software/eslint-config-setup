@@ -13,6 +13,7 @@ export interface InitOptions extends ConfigOptions {
   agents?: boolean
   cwd: string
   dryRun?: boolean
+  force?: boolean
   formatter?: "none" | "oxfmt"
   hooks?: boolean
   install?: boolean

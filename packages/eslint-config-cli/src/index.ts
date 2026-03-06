@@ -49,6 +49,7 @@ async function handleInit(argv: string[]): Promise<number> {
       agents: { type: "boolean" },
       ai: { type: "boolean" },
       "dry-run": { type: "boolean" },
+      force: { type: "boolean" },
       formatter: { type: "string" },
       hooks: { type: "boolean" },
       install: { type: "boolean" },
@@ -72,7 +73,7 @@ async function handleInit(argv: string[]): Promise<number> {
       return 1
     }
 
-    const outcome = await runInitWizard(process.cwd())
+    const outcome = await runInitWizard(process.cwd(), { force: parsed.values.force ?? false })
     if (!outcome) {
       console.log("Init cancelled.")
       return 1
@@ -87,6 +88,7 @@ async function handleInit(argv: string[]): Promise<number> {
     ai: parsed.values.ai ?? false,
     cwd: process.cwd(),
     dryRun: parsed.values["dry-run"] ?? false,
+    force: parsed.values.force ?? false,
     formatter: (formatter as "none" | "oxfmt" | undefined) ?? "none",
     hooks: parsed.values.hooks ?? false,
     install: parsed.values.install ?? false,
@@ -105,7 +107,7 @@ function printUsage(): void {
 
 Usage:
   eslint-config-setup-cli init
-  eslint-config-setup-cli init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--install]
+  eslint-config-setup-cli init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--install] [--force]
   eslint-config-setup-cli doctor
 `)
 }
@@ -130,13 +132,13 @@ function shouldUseWizard(
     values.agents,
     values.ai,
     values["dry-run"],
-    values.formatter,
     values.hooks,
     values.install,
     values.node,
     values.oxlint,
     values.react,
     values.vscode,
+    values.formatter,
   ].some(Boolean)
 }
 

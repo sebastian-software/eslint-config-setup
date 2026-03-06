@@ -1,11 +1,10 @@
 import { Box, Text, render, useApp, useInput } from "ink"
 import React, { useState } from "react"
 
-import type { InitOutcome } from "./init"
-import type { InitOptions } from "./shared"
+import type { InitOutcome, InitPreview } from "./init"
 import type { InitWizardState, WizardStepId } from "./init-wizard-state"
 
-import { runInit } from "./init"
+import { previewInit, runInit } from "./init"
 import {
   createDefaultWizardState,
   getStepAnswerSummary,
@@ -16,11 +15,15 @@ import {
 const HIGHLIGHT = "cyan"
 const MUTED = "gray"
 
-export async function runInitWizard(cwd: string): Promise<InitOutcome | null> {
+export async function runInitWizard(
+  cwd: string,
+  options: { force?: boolean } = {},
+): Promise<InitOutcome | null> {
   return await new Promise((resolve, reject) => {
     const app = render(
       <InitWizard
         cwd={cwd}
+        force={options.force ?? false}
         onCancel={() => {
           app.unmount()
           resolve(null)
@@ -40,11 +43,13 @@ export async function runInitWizard(cwd: string): Promise<InitOutcome | null> {
 
 function InitWizard({
   cwd,
+  force,
   onCancel,
   onError,
   onSubmit,
 }: {
   cwd: string
+  force: boolean
   onCancel: () => void
   onError: (error: Error) => void
   onSubmit: (outcome: InitOutcome) => void
@@ -54,7 +59,15 @@ function InitWizard({
   const [stepIndex, setStepIndex] = useState(0)
   const [state, setState] = useState<InitWizardState>(createDefaultWizardState)
   const currentStep = WIZARD_STEPS[stepIndex]
-  const preview = getPreview(cwd, state)
+  const preview = getPreview(cwd, state, force)
+  const canSubmit = currentStep.id !== "review"
+    || Boolean(
+      preview
+      && (
+        preview.conflicts.length === 0
+        || (force && preview.conflicts.every((conflict) => conflict.canForce))
+      ),
+    )
 
   useInput((input, key) => {
     if (key.escape || input === "q") {
@@ -71,8 +84,12 @@ function InitWizard({
 
     if (currentStep.id === "review") {
       if (key.return) {
+        if (!canSubmit) {
+          return
+        }
+
         try {
-          const outcome = runInit(toInitOptions(cwd, state))
+          const outcome = runInit({ ...toInitOptions(cwd, state), force })
           onSubmit(outcome)
           exit()
         } catch (error) {
@@ -181,6 +198,7 @@ function InitWizard({
             )}
             {currentStep.id === "review" && (
               <ReviewStep
+                force={force}
                 preview={preview}
                 state={state}
               />
@@ -191,7 +209,11 @@ function InitWizard({
       <Box marginTop={1} flexDirection="column">
         <Text color={MUTED}>
           {currentStep.id === "review"
-            ? "Enter to write files. Press b to go back. Press q or Esc to cancel."
+            ? canSubmit
+              ? "Enter to write files. Press b to go back. Press q or Esc to cancel."
+              : force
+                ? "Resolve the listed conflicts before writing files. Press b to go back."
+                : "Resolve the listed conflicts or re-run init with --force. Press b to go back."
             : "Up/Down to move. Space toggles multi-select. Enter confirms. Press b to go back."}
         </Text>
       </Box>
@@ -202,9 +224,10 @@ function InitWizard({
 function getPreview(
   cwd: string,
   state: InitWizardState,
-): InitOutcome | null {
+  force: boolean,
+): InitPreview | null {
   try {
-    return runInit({ ...toInitOptions(cwd, state), dryRun: true })
+    return previewInit({ ...toInitOptions(cwd, state), dryRun: true, force })
   } catch {
     return null
   }
@@ -275,9 +298,11 @@ function OptionRow({
 
 function ReviewStep({
   preview,
+  force,
   state,
 }: {
-  preview: InitOutcome | null
+  force: boolean
+  preview: InitPreview | null
   state: InitWizardState
 }) {
   return (
@@ -290,6 +315,16 @@ function ReviewStep({
       <Text>Install: {getStepAnswerSummary("install", state)}</Text>
       {preview ? (
         <>
+          {preview.conflicts.length > 0 && (
+            <>
+              <Text color={force ? "yellow" : "red"}>
+                {force ? "Overwrite targets" : "Conflicts"}
+              </Text>
+              {preview.conflicts.map((conflict) => (
+                <Text key={conflict.message} color={MUTED}>- {conflict.message}</Text>
+              ))}
+            </>
+          )}
           <Text color={HIGHLIGHT}>Files</Text>
           {preview.files.map((file) => (
             <Text key={file} color={MUTED}>- {file}</Text>

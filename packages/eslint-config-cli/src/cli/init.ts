@@ -11,13 +11,14 @@ import { createVscodeSettingsTemplate } from "./templates/vscode-settings"
 
 import {
   detectPackageManager,
+  findEslintConfigFile,
+  findOxlintConfigFile,
   formatConfigOptions,
   formatInstallCommand,
   getInstallCommand,
   getRunCommand,
   readPackageJson,
   readTextIfExists,
-  writeJsonFile,
   writeTextFile,
 } from "./shared"
 
@@ -29,25 +30,74 @@ export interface InitOutcome {
   scripts: string[]
 }
 
+export interface InitConflict {
+  canForce: boolean
+  message: string
+}
+
+export interface InitPreview extends InitOutcome {
+  conflicts: InitConflict[]
+}
+
+interface PlannedFile {
+  content: string
+  executable?: boolean
+  filepath: string
+}
+
+export class InitConflictError extends Error {
+  conflicts: InitConflict[]
+
+  constructor(conflicts: InitConflict[]) {
+    super(formatConflictError(conflicts))
+    this.name = "InitConflictError"
+    this.conflicts = conflicts
+  }
+}
+
 export function runInit(opts: InitOptions): InitOutcome {
+  const plan = previewInit(opts)
+
+  if (plan.conflicts.length > 0 && (!opts.force || plan.conflicts.some((conflict) => !conflict.canForce))) {
+    throw new InitConflictError(plan.conflicts)
+  }
+
+  if (!opts.dryRun) {
+    writeProjectFiles(plan)
+  }
+
+  if (opts.install) {
+    installDependencies(opts.cwd, plan.packageManager, plan.installedDependencies)
+  }
+
+  return {
+    files: plan.files,
+    installCommand: plan.installCommand,
+    installedDependencies: plan.installedDependencies,
+    packageManager: plan.packageManager,
+    scripts: plan.scripts,
+  }
+}
+
+export function previewInit(opts: InitOptions): InitPreview & {
+  filesToWrite: PlannedFile[]
+  packageManager: PackageManager
+} {
   const packageJson = readPackageJson(opts.cwd)
   if (!packageJson) {
     throw new Error(`No package.json found in ${opts.cwd}`)
   }
 
   const packageManager = detectPackageManager(opts.cwd, packageJson)
-  const files: string[] = []
   const installedDependencies = getDependenciesToInstall(opts)
   const scripts = getScripts(opts)
-
-  writeProjectFiles(opts, packageJson, scripts, files)
-
-  if (opts.install) {
-    installDependencies(opts.cwd, packageManager, installedDependencies)
-  }
+  const filesToWrite = getPlannedFiles(opts, packageJson, scripts, packageManager)
+  const conflicts = getConflicts(opts, packageJson, scripts, filesToWrite)
 
   return {
-    files,
+    conflicts,
+    files: filesToWrite.map((file) => file.filepath),
+    filesToWrite,
     installCommand: formatInstallCommand(packageManager, installedDependencies),
     installedDependencies,
     packageManager,
@@ -56,12 +106,25 @@ export function runInit(opts: InitOptions): InitOutcome {
 }
 
 function writeProjectFiles(
+  plan: InitPreview & {
+    filesToWrite: PlannedFile[]
+  },
+): void {
+  for (const file of plan.filesToWrite) {
+    mkdirSync(path.dirname(file.filepath), { recursive: true })
+    writeTextFile(file.filepath, file.content)
+    if (file.executable) {
+      chmodSync(file.filepath, 0o755)
+    }
+  }
+}
+
+function getPlannedFiles(
   opts: InitOptions,
   packageJson: ProjectPackageJson,
   scripts: Record<string, string>,
-  files: string[],
-): void {
-  const packageManager = detectPackageManager(opts.cwd, packageJson)
+  packageManager: PackageManager,
+): PlannedFile[] {
   const nextPackageJson = {
     ...packageJson,
     scripts: {
@@ -72,61 +135,49 @@ function writeProjectFiles(
 
   const eslintConfigPath = path.join(opts.cwd, "eslint.config.ts")
   const packageJsonPath = path.join(opts.cwd, "package.json")
-
-  if (opts.dryRun) {
-    files.push(packageJsonPath, eslintConfigPath)
-  } else {
-    writeJsonFile(packageJsonPath, nextPackageJson)
-    writeTextFile(eslintConfigPath, renderEslintConfig(opts))
-    files.push(packageJsonPath, eslintConfigPath)
-  }
+  const filesToWrite: PlannedFile[] = [
+    {
+      content: `${JSON.stringify(nextPackageJson, null, 2)}\n`,
+      filepath: packageJsonPath,
+    },
+    {
+      content: renderEslintConfig(opts),
+      filepath: eslintConfigPath,
+    },
+  ]
 
   if (opts.oxlint) {
     const oxlintConfigPath = path.join(opts.cwd, "oxlint.config.ts")
-    if (opts.dryRun) {
-      files.push(oxlintConfigPath)
-    } else {
-      writeTextFile(oxlintConfigPath, renderOxlintConfig(opts))
-      files.push(oxlintConfigPath)
-    }
+    filesToWrite.push({
+      content: renderOxlintConfig(opts),
+      filepath: oxlintConfigPath,
+    })
   }
 
   if (opts.agents) {
-    const agentsPath = path.join(opts.cwd, "AGENTS.md")
-    if (opts.dryRun) {
-      files.push(agentsPath)
-    } else {
-      writeTextFile(agentsPath, renderAgentsGuide(opts, packageManager))
-      files.push(agentsPath)
-    }
+    filesToWrite.push({
+      content: renderAgentsGuide(opts, packageManager),
+      filepath: path.join(opts.cwd, "AGENTS.md"),
+    })
   }
 
   if (opts.vscode) {
-    const vscodeDir = path.join(opts.cwd, ".vscode")
-    const vscodePath = path.join(vscodeDir, "settings.json")
-    const settings = renderVscodeSettings(opts, readTextIfExists(vscodePath))
-
-    if (opts.dryRun) {
-      files.push(vscodePath)
-    } else {
-      mkdirSync(vscodeDir, { recursive: true })
-      writeTextFile(vscodePath, settings)
-      files.push(vscodePath)
-    }
+    const vscodePath = path.join(opts.cwd, ".vscode/settings.json")
+    filesToWrite.push({
+      content: renderVscodeSettings(opts, readTextIfExists(vscodePath)),
+      filepath: vscodePath,
+    })
   }
 
   if (opts.hooks) {
-    const hooksDir = path.join(opts.cwd, ".githooks")
-    const hookPath = path.join(hooksDir, "pre-commit")
-    if (opts.dryRun) {
-      files.push(hookPath)
-    } else {
-      mkdirSync(hooksDir, { recursive: true })
-      writeTextFile(hookPath, renderPreCommitHook(opts, packageManager))
-      chmodSync(hookPath, 0o755)
-      files.push(hookPath)
-    }
+    filesToWrite.push({
+      content: renderPreCommitHook(opts, packageManager),
+      executable: true,
+      filepath: path.join(opts.cwd, ".githooks/pre-commit"),
+    })
   }
+
+  return filesToWrite
 }
 
 function getDependenciesToInstall(opts: InitOptions): string[] {
@@ -167,6 +218,94 @@ function getScripts(opts: InitOptions): Record<string, string> {
   }
 
   return scripts
+}
+
+function getConflicts(
+  opts: InitOptions,
+  packageJson: ProjectPackageJson,
+  scripts: Record<string, string>,
+  filesToWrite: PlannedFile[],
+): InitConflict[] {
+  const conflicts: InitConflict[] = []
+  const packageScripts = packageJson.scripts ?? {}
+  const forceHint = "Re-run with `--force` to replace it."
+  const vscodePath = path.join(opts.cwd, ".vscode/settings.json")
+
+  for (const [scriptName, scriptValue] of Object.entries(scripts)) {
+    const existing = packageScripts[scriptName]
+    if (existing && existing !== scriptValue) {
+      conflicts.push({
+        canForce: true,
+        message: `Script "${scriptName}" already exists in package.json with different content. ${forceHint}`,
+      })
+    }
+  }
+
+  for (const file of filesToWrite) {
+    if (file.filepath.endsWith("package.json")) {
+      continue
+    }
+
+    if (file.filepath.endsWith("eslint.config.ts")) {
+      const existingConfig = findEslintConfigFile(opts.cwd)
+      if (existingConfig && existingConfig !== file.filepath) {
+        conflicts.push({
+          canForce: false,
+          message: `Found existing ESLint config at ${existingConfig}. Rename or remove it before generating eslint.config.ts.`,
+        })
+        continue
+      }
+    }
+
+    if (file.filepath.endsWith("oxlint.config.ts")) {
+      const existingConfig = findOxlintConfigFile(opts.cwd)
+      if (existingConfig && existingConfig !== file.filepath) {
+        conflicts.push({
+          canForce: false,
+          message: `Found existing OxLint config at ${existingConfig}. Rename or remove it before generating oxlint.config.ts.`,
+        })
+        continue
+      }
+    }
+
+    if (file.filepath === vscodePath) {
+      const existing = readTextIfExists(vscodePath)
+      if (!existing) {
+        continue
+      }
+
+      try {
+        const parsedExisting = JSON.parse(existing) as Record<string, unknown>
+        const managedSettings = createVscodeSettingsTemplate(opts)
+
+        for (const [key, value] of Object.entries(managedSettings)) {
+          if (key in parsedExisting && JSON.stringify(parsedExisting[key]) !== JSON.stringify(value)) {
+            conflicts.push({
+              canForce: true,
+              message: `.vscode/settings.json already defines "${key}" with a different value. ${forceHint}`,
+            })
+          }
+        }
+      } catch {
+        conflicts.push({
+          canForce: true,
+          message: ".vscode/settings.json is not valid JSON. Re-run with `--force` to replace it.",
+        })
+      }
+
+      continue
+    }
+
+    const existing = readTextIfExists(file.filepath)
+    if (existing !== null && existing !== file.content) {
+      conflicts.push({
+        canForce: true,
+        message: `${path.relative(opts.cwd, file.filepath) || path.basename(file.filepath)} already exists with different content. ${forceHint}`,
+      })
+    }
+  }
+
+  return conflicts
 }
 
 function installDependencies(
@@ -246,9 +385,14 @@ function renderVscodeSettings(
   opts: InitOptions,
   existingContent: string | null,
 ): string {
-  const existing = existingContent
-    ? JSON.parse(existingContent) as Record<string, unknown>
-    : {}
+  let existing: Record<string, unknown> = {}
+  if (existingContent) {
+    try {
+      existing = JSON.parse(existingContent) as Record<string, unknown>
+    } catch {
+      existing = {}
+    }
+  }
 
   const settings: Record<string, unknown> = {
     ...existing,
@@ -256,4 +400,17 @@ function renderVscodeSettings(
   }
 
   return `${JSON.stringify(settings, null, 2)}\n`
+}
+
+function formatConflictError(conflicts: InitConflict[]): string {
+  const lines = [
+    "Init found existing files or scripts that would be overwritten:",
+    ...conflicts.map((conflict) => `- ${conflict.message}`),
+  ]
+
+  if (conflicts.some((conflict) => conflict.canForce)) {
+    lines.push("Use `eslint-config-setup init --force` if you want to overwrite the replaceable targets.")
+  }
+
+  return lines.join("\n")
 }

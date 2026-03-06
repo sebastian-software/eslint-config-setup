@@ -4,7 +4,7 @@ import { tmpdir } from "node:os"
 
 import { describe, expect, it } from "vitest"
 
-import { runInit } from "../cli/init"
+import { InitConflictError, previewInit, runInit } from "../cli/init"
 
 function createProjectDir(): string {
   const dir = mkdtempSync(path.join(tmpdir(), "eslint-config-setup-init-"))
@@ -110,5 +110,72 @@ describe("runInit", () => {
     expect(outcome.files).toContain(path.join(dir, "eslint.config.ts"))
     expect(outcome.files).toContain(path.join(dir, "oxlint.config.ts"))
     expect(outcome.files).toContain(path.join(dir, "AGENTS.md"))
+  })
+
+  it("refuses to overwrite existing files or scripts without force", () => {
+    const dir = createProjectDir()
+    writeFileSync(path.join(dir, "eslint.config.ts"), "export default []\n")
+    writeFileSync(
+      path.join(dir, "package.json"),
+      JSON.stringify({
+        name: "fixture",
+        private: true,
+        scripts: {
+          lint: "custom lint",
+        },
+      }, null, 2),
+    )
+
+    expect(() => runInit({
+      cwd: dir,
+      react: true,
+    })).toThrow(InitConflictError)
+
+    expect(() => runInit({
+      cwd: dir,
+      react: true,
+    })).toThrow(/would be overwritten/)
+    expect(() => runInit({
+      cwd: dir,
+      react: true,
+    })).toThrow(/eslint\.config\.ts already exists/)
+    expect(() => runInit({
+      cwd: dir,
+      react: true,
+    })).toThrow(/Script "lint" already exists/)
+  })
+
+  it("shows overwrites in preview and applies them with force", () => {
+    const dir = createProjectDir()
+    writeFileSync(path.join(dir, "eslint.config.ts"), "export default []\n")
+
+    const preview = previewInit({
+      cwd: dir,
+      force: true,
+      react: true,
+    })
+
+    expect(preview.conflicts).toHaveLength(1)
+    expect(preview.conflicts[0]?.canForce).toBe(true)
+
+    runInit({
+      cwd: dir,
+      force: true,
+      react: true,
+    })
+
+    const eslintConfig = readFileSync(path.join(dir, "eslint.config.ts"), "utf8")
+    expect(eslintConfig).toContain("getEslintConfig")
+  })
+
+  it("blocks alternative config filenames even with force", () => {
+    const dir = createProjectDir()
+    writeFileSync(path.join(dir, "eslint.config.js"), "export default []\n")
+
+    expect(() => runInit({
+      cwd: dir,
+      force: true,
+      react: true,
+    })).toThrow(/Rename or remove it before generating eslint\.config\.ts/)
   })
 })
