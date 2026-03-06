@@ -2,8 +2,12 @@ import { defineConfig } from "tsup"
 
 export default defineConfig({
   entry: {
+    cli: "src/cli.ts",
     index: "src/index.ts",
     modules: "src/modules.ts",
+  },
+  banner: {
+    js: "#!/usr/bin/env node",
   },
   format: ["esm"],
   dts: true,

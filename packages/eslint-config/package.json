@@ -5,6 +5,9 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "eslint-config-setup": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -22,6 +25,7 @@
     "check": "tsc --noEmit",
     "build": "tsup",
     "generate": "node --import tsx src/build/generate.ts",
+    "cli": "node --import tsx src/cli.ts",
     "prepublishOnly": "npm run build && npm run generate",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
