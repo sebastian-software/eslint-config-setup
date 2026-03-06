@@ -13,6 +13,14 @@ Get a complete ESLint setup in under a minute — with built-in support for AI-g
 If you want the full workflow instead of wiring files by hand, use the CLI:
 
 ```bash
+npx eslint-config-setup init
+```
+
+That starts the interactive setup wizard.
+
+If you prefer explicit flags:
+
+```bash
 npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
 ```
 
@@ -24,6 +32,8 @@ This scaffolds:
 - `AGENTS.md` for AI coding assistants
 - `.vscode/settings.json`
 - `.githooks/pre-commit`
+
+By default, `init` will not overwrite conflicting config files, scripts, or companion files. Use `--dry-run` to preview changes, and `--force` only when you intentionally want to replace an existing generated target.
 
 See [CLI Workflow](/guide/cli-workflow) for the command reference.
 

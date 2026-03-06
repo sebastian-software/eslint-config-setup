@@ -5,10 +5,19 @@ title: CLI Workflow
 # CLI Workflow
 
 `eslint-config-setup` ships with a small CLI that turns the package into a working setup flow instead of only a library import.
+The user-facing command stays `eslint-config-setup`, even though the CLI now lives in its own workspace package internally.
 
 ## init
 
 Use `init` to scaffold a project around the existing public API:
+
+```bash
+npx eslint-config-setup init
+```
+
+If you run it in a TTY without feature flags, it starts the interactive terminal wizard.
+
+For explicit, non-interactive setup:
 
 ```bash
 npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
@@ -36,6 +45,7 @@ Useful flags:
 --hooks
 --dry-run
 --install
+--force
 ```
 
 ### Example
@@ -45,6 +55,23 @@ npx eslint-config-setup init --react --oxlint --formatter oxfmt --vscode --dry-r
 ```
 
 The command prints which files it would touch and which install command it expects.
+
+### Conflict handling
+
+`init` is non-destructive by default.
+
+- existing `eslint.config.*` or `oxlint.config.*` files block generation until you remove or rename them
+- existing generated companions such as `AGENTS.md`, `.vscode/settings.json`, or `.githooks/pre-commit` are compared before writing
+- existing package scripts such as `lint`, `check`, or `format` are compared before updating `package.json`
+
+If a replaceable target already exists with conflicting content, `init` stops and prints the conflict list.
+Use `--force` only when you intentionally want to overwrite those replaceable targets.
+
+Example:
+
+```bash
+npx eslint-config-setup init --react --oxlint --force
+```
 
 ## doctor
 

@@ -27,10 +27,28 @@ export default await getEslintConfig({ react: true, ai: true })
 ## Quick Start
 
 ```bash
+npx eslint-config-setup init
+```
+
+Without flags, `init` opens the interactive terminal wizard.
+
+If you prefer explicit, scriptable setup:
+
+```bash
 npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
 ```
 
 This scaffolds `eslint.config.ts`, optional `oxlint.config.ts`, package scripts, an `AGENTS.md`, VS Code settings, and a simple pre-commit hook preset.
+
+Useful follow-ups:
+
+```bash
+npx eslint-config-setup init --react --oxlint --formatter oxfmt --dry-run
+npx eslint-config-setup init --react --force
+npx eslint-config-setup doctor
+```
+
+`init` protects existing config files, scripts, and companion files by default. If it detects conflicting content, it stops and shows what would be replaced. Use `--force` only when you intentionally want to overwrite replaceable targets.
 
 If you prefer to wire things manually:
 
