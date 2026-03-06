@@ -6,6 +6,7 @@ import { parseArgs } from "node:util"
 import { runDoctor } from "./cli/doctor"
 import { formatDoctorReport } from "./cli/doctor-report"
 import { runInit } from "./cli/init"
+import { runInitWizard } from "./cli/init-wizard"
 
 export async function runCli(argv: string[]): Promise<number> {
   const [command, ...rest] = argv
@@ -40,7 +41,7 @@ function handleDoctor(argv: string[]): number {
   return 0
 }
 
-function handleInit(argv: string[]): number {
+async function handleInit(argv: string[]): Promise<number> {
   const parsed = parseArgs({
     allowPositionals: false,
     args: argv,
@@ -65,6 +66,22 @@ function handleInit(argv: string[]): number {
     return 1
   }
 
+  if (shouldUseWizard(parsed.values)) {
+    if (!process.stdin.isTTY || !process.stdout.isTTY) {
+      console.error("Interactive init requires a TTY. Pass flags explicitly instead.")
+      return 1
+    }
+
+    const outcome = await runInitWizard(process.cwd())
+    if (!outcome) {
+      console.log("Init cancelled.")
+      return 1
+    }
+
+    printInitOutcome(outcome, parsed.values.install ?? false)
+    return 0
+  }
+
   const outcome = runInit({
     agents: parsed.values.agents ?? false,
     ai: parsed.values.ai ?? false,
@@ -79,14 +96,7 @@ function handleInit(argv: string[]): number {
     vscode: parsed.values.vscode ?? false,
   })
 
-  console.log(`Configured project using ${outcome.packageManager}.`)
-  console.log(`Updated scripts: ${outcome.scripts.join(", ")}`)
-  console.log(`Touched files: ${outcome.files.join(", ")}`)
-
-  if (!parsed.values.install) {
-    console.log(`Install dependencies manually: ${outcome.installCommand}`)
-  }
-
+  printInitOutcome(outcome, parsed.values.install ?? false)
   return 0
 }
 
@@ -94,9 +104,40 @@ function printUsage(): void {
   console.log(`eslint-config-setup CLI
 
 Usage:
-  eslint-config-setup init [--react] [--node] [--ai] [--oxlint] [--vscode] [--agents]
+  eslint-config-setup init
+  eslint-config-setup init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--install]
   eslint-config-setup doctor
 `)
+}
+
+function printInitOutcome(
+  outcome: ReturnType<typeof runInit>,
+  installDependencies: boolean,
+): void {
+  console.log(`Configured project using ${outcome.packageManager}.`)
+  console.log(`Updated scripts: ${outcome.scripts.join(", ")}`)
+  console.log(`Touched files: ${outcome.files.join(", ")}`)
+
+  if (!installDependencies) {
+    console.log(`Install dependencies manually: ${outcome.installCommand}`)
+  }
+}
+
+function shouldUseWizard(
+  values: Record<string, boolean | string | undefined>,
+): boolean {
+  return ![
+    values.agents,
+    values.ai,
+    values["dry-run"],
+    values.formatter,
+    values.hooks,
+    values.install,
+    values.node,
+    values.oxlint,
+    values.react,
+    values.vscode,
+  ].some(Boolean)
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
