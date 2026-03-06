@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "eslint-config-setup": "./dist/cli.js"
+    "eslint-config-setup": "./cli.mjs"
   },
   "exports": {
     ".": {
@@ -19,13 +19,14 @@
     }
   },
   "files": [
+    "cli.mjs",
     "dist/"
   ],
   "scripts": {
     "check": "tsc --noEmit",
     "build": "tsup",
     "generate": "node --import tsx src/build/generate.ts",
-    "cli": "node --import tsx src/cli.ts",
+    "cli": "pnpm --filter eslint-config-setup-cli cli",
     "prepublishOnly": "npm run build && npm run generate",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
@@ -97,16 +98,14 @@
     "eslint-plugin-testing-library": "^7.16.0",
     "eslint-plugin-unicorn": "^63.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "eslint-config-setup-cli": "workspace:*",
     "globals": "^17.4.0",
-    "ink": "^6.8.0",
-    "react": "^19.2.4",
     "typescript-eslint": "^8.56.1"
   },
   "devDependencies": {
     "@oxlint/migrate": "^1.51.0",
     "@types/node": "^25.3.3",
     "@types/picomatch": "^4.0.2",
-    "@types/react": "^19.2.14",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.0.2",
     "oxlint": "^1.51.0",

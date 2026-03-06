@@ -15,7 +15,7 @@ export async function runCli(argv: string[]): Promise<number> {
     case "doctor":
       return handleDoctor(rest)
     case "init":
-      return handleInit(rest)
+      return await handleInit(rest)
     default:
       printUsage()
       return command ? 1 : 0
@@ -101,12 +101,12 @@ async function handleInit(argv: string[]): Promise<number> {
 }
 
 function printUsage(): void {
-  console.log(`eslint-config-setup CLI
+  console.log(`eslint-config-setup-cli
 
 Usage:
-  eslint-config-setup init
-  eslint-config-setup init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--install]
-  eslint-config-setup doctor
+  eslint-config-setup-cli init
+  eslint-config-setup-cli init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--install]
+  eslint-config-setup-cli doctor
 `)
 }
 

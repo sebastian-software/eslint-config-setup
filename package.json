@@ -24,11 +24,11 @@
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
   "scripts": {
-    "build": "pnpm --filter eslint-config-setup build",
-    "check": "pnpm --filter eslint-config-setup check",
+    "build": "pnpm --filter eslint-config-setup --filter eslint-config-setup-cli build",
+    "check": "pnpm --filter eslint-config-setup --filter eslint-config-setup-cli check",
     "generate": "pnpm --filter eslint-config-setup generate",
-    "test": "pnpm --filter eslint-config-setup test",
-    "test:coverage": "pnpm --filter eslint-config-setup test:coverage",
+    "test": "pnpm --filter eslint-config-setup --filter eslint-config-setup-cli test",
+    "test:coverage": "pnpm --filter eslint-config-setup --filter eslint-config-setup-cli test:coverage",
     "lint": "node --import tsx node_modules/eslint/bin/eslint.js .",
     "docs:dev": "pnpm --filter docs dev",
     "docs:build": "pnpm --filter docs build"
