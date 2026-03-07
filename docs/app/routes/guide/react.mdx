@@ -1,0 +1,121 @@
+---
+title: React Linting
+---
+
+import { Tip, Steps } from "ardo/ui"
+
+# React Linting
+
+Enable React linting with a single flag:
+
+```typescript
+export default await getEslintConfig({ react: true })
+```
+
+That's it. No plugin installation, no namespace configuration, no manual rule selection. You get 80+ curated React rules — and if you're using OxLint, 31 of them run in Rust automatically.
+
+## What's included
+
+### One namespace, six capabilities
+
+Under the hood, this config uses [@eslint-react](https://eslint-react.xyz/) — a modern, type-aware React linting engine that's 4-7x faster than the legacy `eslint-plugin-react`. It ships six sub-plugins covering different aspects of React development. We merge all of them into a single `react/` namespace:
+
+| Capability | What it catches | Example rules |
+|-----------|-----------------|---------------|
+| **Core** | Keys, children, component patterns, class component legacy | `react/jsx-key`, `react/no-children-prop`, `react/no-class-component` |
+| **DOM** | Unsafe HTML, unknown properties, void elements | `react/no-danger`, `react/no-unknown-property`, `react/button-has-type` |
+| **Web API** | Missing cleanup in effects | `react/no-leaked-event-listener`, `react/no-leaked-timeout` |
+| **Hooks** | Unnecessary memoization, setState in effects | `react/no-unnecessary-use-callback`, `react/no-direct-set-state-in-use-effect` |
+| **Naming** | useState destructuring, context names | `react/hook-use-state`, `react/context-name` |
+| **RSC** | Server Component conventions | `react/function-definition` |
+
+Plus dedicated plugins for hooks, accessibility, fast refresh, and effect patterns:
+
+| Plugin | Purpose |
+|--------|---------|
+| `eslint-plugin-react-hooks` | Rules of Hooks, exhaustive dependency checking |
+| `eslint-plugin-jsx-a11y` | ARIA validation, keyboard navigation, alt text |
+| `eslint-plugin-react-refresh` | Fast Refresh (HMR) compatible exports |
+| `eslint-plugin-react-you-might-not-need-an-effect` | Catches unnecessary useEffect patterns |
+| `@stylistic/eslint-plugin` | JSX self-closing tags, curly brace presence |
+
+### React 19 ready
+
+Three rules guide your codebase toward React 19 patterns:
+
+- **`react/no-context-provider`** — Use `<Context>` instead of `<Context.Provider>`
+- **`react/no-forward-ref`** — Use ref as a prop instead of `forwardRef`
+- **`react/no-use-context`** — Use `use()` instead of `useContext()`
+
+### Strict by default
+
+Rules are based on @eslint-react's `strict-type-checked` preset — the most comprehensive level, including type-aware analysis. Legacy class component patterns, deprecated lifecycle methods, and unsafe APIs are flagged as errors. Modern patterns like unnecessary memoization and naming conventions are flagged as warnings.
+
+## OxLint acceleration
+
+When you enable `oxlint: true`, something powerful happens behind the scenes.
+
+OxLint implements many React rules in Rust — but it uses the classic `eslint-plugin-react` rule names (`react/jsx-key`, `react/no-danger`). Our config uses the modern @eslint-react implementations, which have different names internally (`no-missing-key`, `no-dangerously-set-innerhtml`).
+
+The **React Compat Plugin** bridges this gap. It registers semantically compatible @eslint-react rules under the legacy names that OxLint expects, while keeping genuinely new semantics under their modern names. The result: `eslint-plugin-oxlint` correctly identifies which rules OxLint already handles and disables them in ESLint.
+
+**31 React rules run in Rust.** Zero configuration on your part.
+
+```
+Your config                 What actually runs
+──────────                  ──────────────────
+react/jsx-key        ───►   OxLint (Rust, ~100x faster)
+react/no-danger      ───►   OxLint (Rust)
+react/no-children-prop ──►  OxLint (Rust)
+...31 rules total
+
+react/no-leaked-timeout ──► ESLint (no OxLint equivalent yet)
+react/no-context-provider ► ESLint (React 19 rule, new)
+...remaining rules
+```
+
+As OxLint expands its React coverage, more rules will automatically shift to Rust — no config changes needed. The naming is already aligned.
+
+<Tip>
+This follows the same proven pattern as `eslint-plugin-import-x` (registered as `import/`) and `eslint-plugin-n` (registered as `node/`). One namespace, maximum tool compatibility.
+</Tip>
+
+## Rule categories
+
+### Error-level rules
+
+These catch bugs, security issues, and broken patterns:
+
+- **Keys & reconciliation** — missing keys, duplicate keys, implicit keys, array index keys
+- **DOM safety** — `dangerouslySetInnerHTML`, unsafe `target="_blank"`, script URLs, unknown properties
+- **Component stability** — nested component definitions, leaked conditional rendering, unstable context values
+- **Legacy migration** — class components, `createRef`, `defaultProps`, `PropTypes`, string refs, deprecated lifecycle methods
+- **React 18/19 APIs** — `ReactDOM.render`, `ReactDOM.hydrate`, `flushSync`, `useFormState`
+- **Web API cleanup** — leaked event listeners, intervals, timeouts, resize observers
+
+### Warning-level rules
+
+These flag code smells and encourage better patterns:
+
+- **Performance** — unnecessary `useCallback`/`useMemo`, lazy state initialization
+- **Children API** — `Children.count/map/forEach/only/toArray`, `cloneElement`
+- **Naming** — `useState` destructuring, context names, ref names
+- **Style** — destructuring assignment, JSX key placement, boolean shorthand
+
+## Customization
+
+Use the rule helpers API to adjust severity or disable rules:
+
+```typescript
+import { getEslintConfig, disableRules, changeRuleSeverity } from "eslint-config-setup"
+
+const config = await getEslintConfig({ react: true })
+
+export default [
+  ...config,
+  // Downgrade class component rules to warnings (migrating codebase)
+  ...changeRuleSeverity(config, ["react/no-class-component", "react/no-create-ref"], "warn"),
+  // Disable Children API rules (using them intentionally)
+  ...disableRules(config, ["react/no-children-map", "react/no-children-count"]),
+]
+```

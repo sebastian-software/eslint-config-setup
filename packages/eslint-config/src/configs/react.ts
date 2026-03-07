@@ -1,22 +1,27 @@
 /* eslint-disable max-lines-per-function -- Rule definition file: one function returning a flat list of rule entries. */
-import eslintReactPlugin from "@eslint-react/eslint-plugin"
-import stylisticPlugin from "@stylistic/eslint-plugin"
+import stylisticPlugin from "@stylistic/eslint-plugin";
 // @ts-expect-error -- no type declarations available
-import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
-import reactHooksPlugin from "eslint-plugin-react-hooks"
-import reactRefreshPlugin from "eslint-plugin-react-refresh"
-import globals from "globals"
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
+import globals from "globals";
 
-import type { FlatConfigArray } from "../types"
+import { reactCompatPlugin } from "../plugins/react-compat";
+import type { FlatConfigArray } from "../types";
 
 /**
  * React config — React 19+, Hooks, JSX accessibility, and Web API leak detection.
  *
  * Uses `@eslint-react` (eslint-plugin-react-x) as the primary React linting plugin,
- * replacing the unmaintained eslint-plugin-react. Plugins are registered under
- * familiar namespaces (`react/`, `react-dom/`, `react-hooks/`) for compatibility
- * with OxLint and user overrides — the same pattern used for `import` (import-x)
- * and `node` (eslint-plugin-n).
+ * replacing the unmaintained eslint-plugin-react. All rules — including DOM, Web API,
+ * hooks-extra, naming-convention, and RSC sub-plugins — are registered under a single
+ * `react/` namespace via the react-compat plugin for maximum OxLint compatibility.
+ *
+ * Rules with a semantically equivalent legacy `eslint-plugin-react` counterpart
+ * are registered under the legacy name (e.g. `react/jsx-key` instead of
+ * `react/no-missing-key`) so that OxLint can handle them natively. Rules without
+ * a safe legacy equivalent keep their `@eslint-react` short name
+ * (e.g. `react/no-context-provider`, `react/no-forward-ref`).
  *
  * Stylistic JSX rules (self-closing, curly braces) are provided by `@stylistic`.
  *
@@ -26,12 +31,6 @@ import type { FlatConfigArray } from "../types"
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
 export function reactConfig(): FlatConfigArray {
-  // Extract sub-plugin objects from @eslint-react configs
-  const reactDomPlugin = (eslintReactPlugin.configs.dom as Record<string, unknown>)
-    .plugins as Record<string, unknown>
-  const reactWebApiPlugin = (eslintReactPlugin.configs["web-api"] as Record<string, unknown>)
-    .plugins as Record<string, unknown>
-
   return [
     {
       name: "eslint-config-setup/react",
@@ -46,12 +45,9 @@ export function reactConfig(): FlatConfigArray {
         },
       },
       plugins: {
-        // @eslint-react core → registered as "react" (like import-x → "import")
-        react: eslintReactPlugin,
-        // @eslint-react/dom → registered as "react-dom"
-        "react-dom": reactDomPlugin["@eslint-react/dom"] as Record<string, unknown>,
-        // @eslint-react/web-api → registered as "react-web-api"
-        "react-web-api": reactWebApiPlugin["@eslint-react/web-api"] as Record<string, unknown>,
+        // Unified react-compat plugin: all @eslint-react rules under "react/"
+        // with safe legacy aliases where semantics actually match.
+        react: reactCompatPlugin,
         // eslint-plugin-react-hooks stays as-is
         "react-hooks": reactHooksPlugin as Record<string, unknown>,
         "@stylistic": stylisticPlugin,
@@ -59,135 +55,184 @@ export function reactConfig(): FlatConfigArray {
         "jsx-a11y": jsxA11yPlugin as Record<string, unknown>,
       },
       rules: {
-        // ── React core (react/) ─────────────────────────────────────────
-
-        // Prevent passing children as a prop — use JSX children syntax instead
-        // https://eslint-react.xyz/docs/rules/no-children-prop
-        "react/no-children-prop": "error",
-
-        // Prevent direct mutation of this.state — use setState instead
-        // https://eslint-react.xyz/docs/rules/no-direct-mutation-state
-        "react/no-direct-mutation-state": "error",
-
-        // Prevent unstable nested component definitions — causes remounts
-        // https://eslint-react.xyz/docs/rules/no-nested-component-definitions
-        "react/no-nested-component-definitions": "error",
+        // ── JSX rules ───────────────────────────────────────────────────
+        // Rules use legacy names where a safe alias exists (→ OxLint handles them).
+        // Rules without a safe legacy equivalent use the @eslint-react short name.
 
         // Require key prop in iterators — prevent reconciliation bugs
-        // https://eslint-react.xyz/docs/rules/no-missing-key
-        "react/no-missing-key": "error",
-
+        "react/jsx-key": "error",
         // Prevent duplicate key props in iterators
-        // https://eslint-react.xyz/docs/rules/no-duplicate-key
         "react/no-duplicate-key": "error",
-
+        // Detect implicit keys from array position — fragile reconciliation
+        "react/no-implicit-key": "error",
+        // Spread after key means key gets overwritten silently
+        "react/jsx-key-before-spread": "warn",
         // Prevent comments from being inserted as text nodes in JSX
-        // https://eslint-react.xyz/docs/rules/jsx-no-comment-textnodes
         "react/jsx-no-comment-textnodes": "error",
-
         // Remove unnecessary JSX fragments — <>{x}</> → {x}
-        // https://eslint-react.xyz/docs/rules/no-useless-fragment
-        "react/no-useless-fragment": "error",
-
-        // Prefer <Foo active /> over <Foo active={true} /> — concise
-        // https://eslint-react.xyz/docs/rules/jsx-shorthand-boolean
-        "react/jsx-shorthand-boolean": "error",
-
-        // Prevent using array index as key — breaks reconciliation on reorder
-        // https://eslint-react.xyz/docs/rules/no-array-index-key
-        "react/no-array-index-key": "error",
-
-        // Prevent object/array literals as default props — creates new reference every render
-        // https://eslint-react.xyz/docs/rules/no-unstable-default-props
-        "react/no-unstable-default-props": "error",
-
+        "react/jsx-no-useless-fragment": "error",
+        // Prefer <Foo active /> over <Foo active={true} />
+        "react/jsx-boolean-value": "error",
         // Prevent `{count && <Foo />}` — renders "0" when count is 0
-        // https://eslint-react.xyz/docs/rules/no-leaked-conditional-rendering
-        "react/no-leaked-conditional-rendering": "error",
+        "react/jsx-no-leaked-render": "error",
+        // Prevent inline object creation in context providers — re-renders
+        "react/jsx-no-constructed-context-values": "error",
+        // Prevent javascript: URLs — XSS risk
+        "react/jsx-no-script-url": "error",
+        // Prevent IIFE in JSX — move logic outside render
+        "react/jsx-no-iife": "warn",
+        // Prefer destructuring: ({foo}) over (props) => props.foo
+        "react/destructuring-assignment": "warn",
 
-        // Prevent inline object creation in context providers — causes re-renders
-        // https://eslint-react.xyz/docs/rules/no-unstable-context-value
-        "react/no-unstable-context-value": "error",
+        // ── Component patterns ──────────────────────────────────────────
 
-        // Prevent `this.setState({ count: this.state.count + 1 })` — race condition
-        // https://eslint-react.xyz/docs/rules/no-access-state-in-setstate
-        "react/no-access-state-in-setstate": "error",
+        // Prevent passing children as a prop — use JSX children syntax
+        "react/no-children-prop": "error",
+        // Prevent using array index as key — breaks reconciliation on reorder
+        "react/no-array-index-key": "error",
+        // Prevent object/array literals as default props — new ref every render
+        "react/no-object-type-as-default-prop": "error",
+        // Prevent unstable nested component definitions — causes remounts
+        "react/no-unstable-nested-components": "error",
+        // Prevent nested lazy() declarations — causes remount on every render
+        "react/no-nested-lazy-component-declarations": "error",
+        // Detect unused props — dead code
+        "react/no-unused-props": "warn",
+        // Prevent useless forwardRef wrapping (React 19: ref is a prop)
+        "react/no-useless-forward-ref": "warn",
 
-        // Detect state properties that are set but never read — dead code
-        // https://eslint-react.xyz/docs/rules/no-unused-state
-        "react/no-unused-state": "error",
-
-        // ── React 19 migration rules ────────────────────────────────────
+        // ── React 19 migration ──────────────────────────────────────────
 
         // React 19: Use <Context> instead of <Context.Provider>
-        // https://eslint-react.xyz/docs/rules/no-context-provider
-        "react/no-context-provider": "error",
-
+        "react/no-context-provider": "warn",
         // React 19: Use ref as prop instead of forwardRef
-        // https://eslint-react.xyz/docs/rules/no-forward-ref
-        "react/no-forward-ref": "error",
-
+        "react/no-forward-ref": "warn",
         // React 19: Use use() instead of useContext()
-        // https://eslint-react.xyz/docs/rules/no-use-context
-        "react/no-use-context": "error",
+        "react/no-use-context": "warn",
 
-        // ── React DOM (react-dom/) ──────────────────────────────────────
+        // ── Children API (prefer composition over Children utilities) ───
+
+        "react/no-children-count": "warn",
+        "react/no-children-for-each": "warn",
+        "react/no-children-map": "warn",
+        "react/no-children-only": "warn",
+        "react/no-children-to-array": "warn",
+        // Prefer composition over cloneElement — fragile implicit prop passing
+        "react/no-clone-element": "warn",
+
+        // ── Class component rules (flag legacy patterns) ────────────────
+
+        // Prefer function components — class components are legacy
+        "react/no-class-component": "error",
+        // Use useRef instead of createRef
+        "react/no-create-ref": "error",
+        // Use default parameters instead of defaultProps
+        "react/no-default-props": "error",
+        // Use TypeScript instead of PropTypes
+        "react/no-prop-types": "error",
+        // Use ref callbacks or useRef instead of string refs
+        "react/no-string-refs": "error",
+        // Prevent direct mutation of this.state — use setState
+        "react/no-direct-mutation-state": "error",
+        // Prevent this.setState({ count: this.state.count + 1 }) — race condition
+        "react/no-access-state-in-setstate": "error",
+        // PureComponent already implements shouldComponentUpdate
+        "react/no-redundant-should-component-update": "error",
+        // Detect unused class component members — dead code
+        "react/no-unused-class-component-members": "warn",
+        // Detect state properties that are set but never read
+        "react/no-unused-state": "error",
+        // Deprecated lifecycle methods
+        "react/no-component-will-mount": "error",
+        "react/no-component-will-receive-props": "error",
+        "react/no-component-will-update": "error",
+        // UNSAFE_ lifecycle methods — migration path
+        "react/no-unsafe-component-will-mount": "warn",
+        "react/no-unsafe-component-will-receive-props": "warn",
+        "react/no-unsafe-component-will-update": "warn",
+        // Prevent setState in lifecycle methods — causes double renders
+        "react/no-did-mount-set-state": "warn",
+        "react/no-did-update-set-state": "warn",
+        "react/no-will-update-set-state": "warn",
+
+        // ── Hooks optimization ──────────────────────────────────────────
+
+        // Prevent unnecessary useCallback/useMemo — only wrap when needed
+        "react/no-unnecessary-use-callback": "warn",
+        "react/no-unnecessary-use-memo": "warn",
+        // Prevent "use" prefix on non-hooks — confusing naming
+        "react/no-unnecessary-use-prefix": "warn",
+        // Prevent direct setState in useEffect — often a smell
+        "react/no-direct-set-state-in-use-effect": "warn",
+        // useState with expensive initializer should use lazy form
+        "react/prefer-use-state-lazy-initialization": "warn",
+
+        // ── Naming conventions ──────────────────────────────────────────
+
+        // useState destructuring: [value, setValue] pattern
+        "react/hook-use-state": "warn",
+        // Context display names must follow convention
+        "react/context-name": "warn",
+        // Component/hook id naming convention
+        "react/id-name": "warn",
+        // Ref naming convention
+        "react/ref-name": "warn",
+
+        // ── DOM rules ───────────────────────────────────────────────────
 
         // Prevent unsafe target="_blank" links — requires rel="noreferrer"
-        // https://eslint-react.xyz/docs/rules/dom-no-unsafe-target-blank
-        "react-dom/no-unsafe-target-blank": "error",
-
+        "react/jsx-no-target-blank": "error",
         // Prevent unknown DOM properties (e.g., class → className)
-        // https://eslint-react.xyz/docs/rules/dom-no-unknown-property
-        "react-dom/no-unknown-property": "error",
-
+        "react/no-unknown-property": "error",
         // Prevent void DOM elements (br, img, hr) from having children
-        // https://eslint-react.xyz/docs/rules/dom-no-void-elements-with-children
-        "react-dom/no-void-elements-with-children": "error",
-
-        // Require sandbox attribute on iframes — security best practice
-        // https://eslint-react.xyz/docs/rules/dom-no-missing-iframe-sandbox
-        "react-dom/no-missing-iframe-sandbox": "error",
-
+        "react/void-dom-elements-no-children": "error",
+        // Require sandbox attribute on iframes
+        "react/iframe-missing-sandbox": "error",
+        // Prevent unsafe iframe sandbox values (allow-scripts + allow-same-origin)
+        "react/no-unsafe-iframe-sandbox": "warn",
         // Prevent `style="color: red"` — must be an object in React
-        // https://eslint-react.xyz/docs/rules/dom-no-string-style-prop
-        "react-dom/no-string-style-prop": "error",
-
+        "react/style-prop-object": "error",
         // Require explicit type on <button> — prevents unintended form submits
-        // https://eslint-react.xyz/docs/rules/dom-no-missing-button-type
-        "react-dom/no-missing-button-type": "error",
-
-        // Prevent dangerouslySetInnerHTML + children at the same time — conflict
-        // https://eslint-react.xyz/docs/rules/dom-no-dangerously-set-innerhtml-with-children
-        "react-dom/no-dangerously-set-innerhtml-with-children": "error",
-
+        "react/button-has-type": "error",
+        // Prevent dangerouslySetInnerHTML + children at the same time
+        "react/no-danger-with-children": "error",
         // Warn on dangerouslySetInnerHTML — XSS risk, should be reviewed
-        // https://eslint-react.xyz/docs/rules/dom-no-dangerously-set-innerhtml
-        "react-dom/no-dangerously-set-innerhtml": "warn",
+        "react/no-danger": "warn",
+        // Prevent ReactDOM.findDOMNode — use refs instead
+        "react/no-find-dom-node": "error",
+        // Prevent ReactDOM.render return value — unreliable
+        "react/no-render-return-value": "error",
+        // Prevent SVG namespace — not supported in React
+        "react/no-namespace": "error",
+        // React 18: Use hydrateRoot instead of ReactDOM.hydrate
+        "react/no-hydrate": "error",
+        // React 18: Use createRoot instead of ReactDOM.render
+        "react/no-render": "error",
+        // Prefer batched updates over flushSync
+        "react/no-flush-sync": "error",
+        // React 19: Use useActionState instead of useFormState
+        "react/no-use-form-state": "error",
 
-        // ── React Web API (react-web-api/) — cleanup leak detection ─────
+        // ── Web API leak detection ──────────────────────────────────────
 
-        // Require cleanup for addEventListener in effects
-        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-event-listener
-        "react-web-api/no-leaked-event-listener": "error",
+        "react/no-leaked-event-listener": "error",
+        "react/no-leaked-interval": "error",
+        "react/no-leaked-timeout": "error",
+        "react/no-leaked-resize-observer": "error",
 
-        // Require cleanup for setInterval in effects
-        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-interval
-        "react-web-api/no-leaked-interval": "error",
+        // ── Misc ────────────────────────────────────────────────────────
 
-        // Require cleanup for setTimeout in effects
-        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-timeout
-        "react-web-api/no-leaked-timeout": "error",
+        // Prevent misuse of captureOwnerStack (React 19)
+        "react/no-misused-capture-owner-stack": "error",
+        // RSC: Enforce function definition conventions for server components
+        "react/function-definition": "error",
 
-        // Require cleanup for ResizeObserver in effects
-        // https://eslint-react.xyz/docs/rules/web-api-no-leaked-resize-observer
-        "react-web-api/no-leaked-resize-observer": "error",
+        // ── React Hooks (react-hooks/) — official React compiler profile ──
 
-        // ── React Hooks (react-hooks/) — eslint-plugin-react-hooks ──────
-
-        // Enforce Rules of Hooks — hooks must be called at the top level
-        // https://react.dev/reference/rules/rules-of-hooks
-        "react-hooks/rules-of-hooks": "error",
+        // Official compiler-powered Hooks rules from the React team.
+        // Keep exhaustive-deps stricter than the preset default because stale
+        // dependency arrays are still a high-value correctness signal here.
+        ...reactHooksPlugin.configs.flat.recommended.rules,
 
         // Verify dependency arrays in useEffect/useMemo/useCallback
         // https://react.dev/reference/react/useEffect#specifying-reactive-dependencies
@@ -314,7 +359,16 @@ export function reactConfig(): FlatConfigArray {
         // Validate autocomplete attribute values on form elements
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/autocomplete-valid.md
         "jsx-a11y/autocomplete-valid": "error",
+
+        // ── TypeScript adjustments for React ────────────────────────────
+
+        // Allow async event handlers — onClick={async () => {...}} is idiomatic React
+        // https://typescript-eslint.io/rules/no-misused-promises
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          { checksVoidReturn: false },
+        ],
       },
     },
-  ]
+  ];
 }

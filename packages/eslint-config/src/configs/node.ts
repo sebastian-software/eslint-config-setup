@@ -56,6 +56,14 @@ export function nodeConfig(): FlatConfigArray {
         // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-path-concat.md
         "node/no-path-concat": "error",
 
+        // Treat process.exit() as throw — prevents false positives in unreachable code analysis
+        // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/process-exit-as-throw.md
+        "node/process-exit-as-throw": "error",
+
+        // Ensure error parameters in callbacks are handled — don't silently swallow errors
+        // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/handle-callback-err.md
+        "node/handle-callback-err": "error",
+
         // ── Prefer global builtins ────────────────────────────────────
 
         // Use global Buffer instead of require('buffer').Buffer

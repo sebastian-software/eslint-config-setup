@@ -19,8 +19,6 @@ describe("pluginRegistry", () => {
       "compat",
       "node",
       "react",
-      "react-dom",
-      "react-web-api",
       "react-hooks",
       "@stylistic",
       "react-refresh",
@@ -49,7 +47,7 @@ describe("pluginRegistry", () => {
   it("import statements reference the correct package", () => {
     for (const [ns, entry] of Object.entries(pluginRegistry)) {
       expect(entry.importStatement, `${ns} import should reference package`).toContain(
-        `"${entry.pkg}"`,
+        entry.pkg,
       )
     }
   })

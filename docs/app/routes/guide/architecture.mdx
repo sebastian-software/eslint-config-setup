@@ -27,7 +27,7 @@ import { FileTree } from "ardo/ui"
     - base.ts — ESLint recommended + best practices
     - typescript.ts — typescript-eslint (strictTypeChecked)
     - ai.ts — AI mode rules + per-file relaxations
-    - react.ts — React 19+, Hooks, JSX-A11y
+    - react.ts — React 19+, Hooks, JSX-A11y (80+ rules via react-compat)
     - react-effect.ts — No unnecessary useEffect
     - node.ts — Node.js rules and globals
     - imports.ts — import-x + unused-imports
@@ -55,6 +55,8 @@ import { FileTree } from "ardo/ui"
     - standard.ts — Default limits
   - api/
     - rule-helpers.ts — Runtime rule manipulation functions
+  - plugins/
+    - react-compat.ts — Unified react/ namespace (legacy names for OxLint)
   - build/
     - config-builder.ts — Validated config builder
     - compose.ts — Assembles full config from options

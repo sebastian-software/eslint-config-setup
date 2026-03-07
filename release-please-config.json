@@ -14,6 +14,20 @@
           "jsonpath": "$.version"
         }
       ]
+    },
+    "packages/eslint-config-cli": {
+      "release-type": "node",
+      "component": "eslint-config-setup-cli",
+      "package-name": "eslint-config-setup-cli",
+      "changelog-path": "packages/eslint-config-cli/CHANGELOG.md",
+      "exclude-paths": ["docs"],
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "packages/eslint-config-cli/package.json",
+          "jsonpath": "$.version"
+        }
+      ]
     }
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable max-lines, max-lines-per-function -- Rule definition file: one function returning a long list of rule entries. Not complex, just large. */
-import type { FlatConfigArray } from "../types"
+import type { FlatConfigArray } from "../types";
 
 /**
  * AI mode rules — strict clean-code rules that are trivial for AI assistants
@@ -14,7 +14,50 @@ import type { FlatConfigArray } from "../types"
  * @see ADR-0006: docs/adr/0006-ai-mode-as-dedicated-flag.md
  */
 export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
-  const isReact = opts?.react ?? false
+  const isReact = opts?.react ?? false;
+  const reactAiBlock = {
+    name: "eslint-config-setup/ai-react",
+    rules: {
+      // React 19 migration rules are guidance in base and hard requirements in AI.
+      "react/no-context-provider": "error",
+      "react/no-forward-ref": "error",
+      "react/no-use-context": "error",
+
+      // Dangerous DOM patterns should fail in AI mode.
+      "react/no-danger": "error",
+      "react/no-unsafe-iframe-sandbox": "error",
+
+      // Prefer composition over Children utilities in generated code.
+      "react/no-children-count": "error",
+      "react/no-children-for-each": "error",
+      "react/no-children-map": "error",
+      "react/no-children-only": "error",
+      "react/no-children-to-array": "error",
+      "react/no-clone-element": "error",
+
+      // Naming consistency is cheap for AI and improves codebase uniformity.
+      "react/context-name": "error",
+      "react/hook-use-state": "error",
+      "react/ref-name": "error",
+
+      // Legacy lifecycle patterns should be hard failures in AI mode.
+      "react/no-unsafe-component-will-mount": "error",
+      "react/no-unsafe-component-will-receive-props": "error",
+      "react/no-unsafe-component-will-update": "error",
+      "react/no-did-mount-set-state": "error",
+      "react/no-did-update-set-state": "error",
+      "react/no-will-update-set-state": "error",
+
+      // Readonly props improve AI-generated TS consistency without burdening base.
+      "react/prefer-read-only-props": "error",
+
+      // Follow the official react-hooks recommended-latest profile, then
+      // tighten the remaining warnings for AI-generated code.
+      "react-hooks/incompatible-library": "error",
+      "react-hooks/unsupported-syntax": "error",
+      "react-hooks/void-use-memo": "error",
+    },
+  } satisfies FlatConfigArray[number];
   const configs: FlatConfigArray = [
     {
       name: "eslint-config-setup/ai-structural",
@@ -73,10 +116,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // https://eslint.org/docs/latest/rules/prefer-template
         "prefer-template": "error",
 
-        // Require shorthand properties in objects — concise, skip quoted keys
-        // https://eslint.org/docs/latest/rules/object-shorthand
-        "object-shorthand": ["error", "always", { avoidQuotes: true }],
-
         // Prefer concise arrow body: `() => expr` over `() => { return expr }`
         // https://eslint.org/docs/latest/rules/arrow-body-style
         "arrow-body-style": "error",
@@ -92,10 +131,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
           "always",
           { enforceForIfStatements: true },
         ],
-
-        // No assignment in return statements — separate mutation from return
-        // https://eslint.org/docs/latest/rules/no-return-assign
-        "no-return-assign": ["error", "always"],
 
         // One statement per line — scannable, diff-friendly
         // https://eslint.org/docs/latest/rules/max-statements-per-line
@@ -273,46 +308,13 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // https://typescript-eslint.io/rules/prefer-readonly
         "@typescript-eslint/prefer-readonly": "error",
 
-        // Functions returning promises must be async — consistent async patterns
-        // https://typescript-eslint.io/rules/promise-function-async
-        "@typescript-eslint/promise-function-async": "error",
-
-        // Exhaustive switch statements — no missing cases, no unnecessary defaults
-        // https://typescript-eslint.io/rules/switch-exhaustiveness-check
-        "@typescript-eslint/switch-exhaustiveness-check": [
-          "error",
-          {
-            allowDefaultCaseForExhaustiveSwitch: false,
-            requireDefaultForNonUnion: true,
-          },
-        ],
-
-        // Disallow unsafe type assertions (as Type) — use type guards instead
-        // https://typescript-eslint.io/rules/no-unsafe-type-assertion
-        "@typescript-eslint/no-unsafe-type-assertion": "error",
-
-        // Require comparator for Array.sort() — prevents locale-dependent string sort
-        // https://typescript-eslint.io/rules/require-array-sort-compare
-        "@typescript-eslint/require-array-sort-compare": [
-          "error",
-          { ignoreStringArrays: true },
-        ],
-
         // Require explicit `public`/`private`/`protected` on class members
         // https://typescript-eslint.io/rules/explicit-member-accessibility
         "@typescript-eslint/explicit-member-accessibility": "error",
 
-        // Enforce property style for method signatures — prevents bivariance issues
-        // https://typescript-eslint.io/rules/method-signature-style
-        "@typescript-eslint/method-signature-style": ["error", "property"],
-
         // Require explicit values for enum members — prevents accidental shifts on reorder
         // https://typescript-eslint.io/rules/prefer-enum-initializers
         "@typescript-eslint/prefer-enum-initializers": "error",
-
-        // Prefer `type` over `interface` — consistent, supports unions/intersections
-        // https://typescript-eslint.io/rules/consistent-type-definitions
-        "@typescript-eslint/consistent-type-definitions": ["error", "type"],
 
         // Enforce consistent member ordering in classes and interfaces
         // Static → fields by visibility → constructors → methods by visibility (XO convention)
@@ -405,13 +407,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // Prefer switch for 3+ conditions on same variable — structured
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-switch.md
         "unicorn/prefer-switch": ["error", { minimumCases: 3 }],
-
-        // Enforce camelCase or PascalCase filenames — consistent project structure
-        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/filename-case.md
-        "unicorn/filename-case": [
-          "error",
-          { cases: { camelCase: true, pascalCase: true } },
-        ],
 
         // Prevent abbreviated variable names (e → error, btn → button) — readable
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md
@@ -516,176 +511,171 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         "sonarjs/public-static-readonly": "error",
       },
     },
-   {
-    name: "eslint-config-setup/ai-regexp",
-    rules: {
-      // Prefer lookarounds over capturing groups used only for context
-      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-lookaround.html
-      "regexp/prefer-lookaround": "error",
+    {
+      name: "eslint-config-setup/ai-regexp",
+      rules: {
+        // Prefer lookarounds over capturing groups used only for context
+        // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-lookaround.html
+        "regexp/prefer-lookaround": "error",
 
-      // Prefer named backreferences — \k<quote> over \1
-      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-backreference.html
-      "regexp/prefer-named-backreference": "error",
+        // Prefer named backreferences — \k<quote> over \1
+        // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-backreference.html
+        "regexp/prefer-named-backreference": "error",
 
-      // Prefer named replacement — $<name> over $1
-      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-replacement.html
-      "regexp/prefer-named-replacement": "error",
+        // Prefer named replacement — $<name> over $1
+        // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-replacement.html
+        "regexp/prefer-named-replacement": "error",
 
-      // Prefer quantifier shorthand — a{3} over aaa
-      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-quantifier.html
-      "regexp/prefer-quantifier": "error",
+        // Prefer quantifier shorthand — a{3} over aaa
+        // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-quantifier.html
+        "regexp/prefer-quantifier": "error",
 
-      // Prefer match.groups.name over match[1] — consistent named groups usage
-      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-result-array-groups.html
-      "regexp/prefer-result-array-groups": "error",
+        // Prefer match.groups.name over match[1] — consistent named groups usage
+        // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-result-array-groups.html
+        "regexp/prefer-result-array-groups": "error",
 
-      // Require v flag (unicode sets) over u flag — stricter ES2024 superset
-      // https://ota-meshi.github.io/eslint-plugin-regexp/rules/require-unicode-sets-regexp.html
-      "regexp/require-unicode-sets-regexp": "error",
+        // Require v flag (unicode sets) over u flag — stricter ES2024 superset
+        // https://ota-meshi.github.io/eslint-plugin-regexp/rules/require-unicode-sets-regexp.html
+        "regexp/require-unicode-sets-regexp": "error",
+      },
     },
-  }, {
-    name: "eslint-config-setup/ai-jsdoc",
-    rules: {
-      // Prevent comments that just repeat the name — `/** The name */ name: string`
-      // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/informative-docs.md
-      "jsdoc/informative-docs": "error",
+    {
+      name: "eslint-config-setup/ai-jsdoc",
+      rules: {
+        // Prevent comments that just repeat the name — `/** The name */ name: string`
+        // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/informative-docs.md
+        "jsdoc/informative-docs": "error",
 
-      // AI should document parameters and return values completely
-      "jsdoc/require-param": "error",
-      "jsdoc/require-returns": "error",
+        // AI should document parameters and return values completely
+        "jsdoc/require-param": "error",
+        "jsdoc/require-returns": "error",
+      },
     },
-  }, {
-    name: "eslint-config-setup/ai-node",
-    rules: {
-      // Warn when using Node.js builtins not available in the target version
-      // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-unsupported-features/node-builtins.md
-      "node/no-unsupported-features/node-builtins": "error",
+    {
+      name: "eslint-config-setup/ai-node",
+      rules: {
+        // Warn when using Node.js builtins not available in the target version
+        // https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-unsupported-features/node-builtins.md
+        "node/no-unsupported-features/node-builtins": "error",
+      },
     },
-  }, {
-    name: "eslint-config-setup/ai-react",
-    rules: {
-      // No click handlers on static elements without role — use semantic HTML
-      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-static-element-interactions.md
-      "jsx-a11y/no-static-element-interactions": "error",
+    ...(isReact ? [reactAiBlock] : []),
+    {
+      name: "eslint-config-setup/ai-complexity",
+      rules: {
+        // Cyclomatic complexity limit — max branches per function
+        // https://eslint.org/docs/latest/rules/complexity
+        complexity: ["error", 10],
 
-      // No event handlers on non-interactive elements — use button/link instead
-      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-noninteractive-element-interactions.md
-      "jsx-a11y/no-noninteractive-element-interactions": "error",
+        // Max nesting depth — deep nesting signals need for extraction
+        // https://eslint.org/docs/latest/rules/max-depth
+        "max-depth": ["error", 3],
 
-      // Interactive elements (role="button") must be focusable
-      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/interactive-supports-focus.md
-      "jsx-a11y/interactive-supports-focus": "error",
+        // Max nested callbacks — prevents callback hell
+        // https://eslint.org/docs/latest/rules/max-nested-callbacks
+        "max-nested-callbacks": ["error", 2],
+
+        // Max function parameters — many params suggest a config object
+        // https://eslint.org/docs/latest/rules/max-params
+        "max-params": ["error", 3],
+
+        // Max statements per function — keeps functions focused
+        // https://eslint.org/docs/latest/rules/max-statements
+        "max-statements": ["error", 15],
+
+        // Max lines per function — encourages extraction of helpers
+        // https://eslint.org/docs/latest/rules/max-lines-per-function
+        "max-lines-per-function": [
+          "error",
+          { max: 100, skipBlankLines: true, skipComments: true },
+        ],
+
+        // Max lines per file — encourages modular file organization
+        // https://eslint.org/docs/latest/rules/max-lines
+        "max-lines": [
+          "error",
+          {
+            max: 300,
+            skipBlankLines: true,
+            skipComments: true,
+          },
+        ],
+
+        // Cognitive complexity — measures how hard a function is to understand
+        // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
+        "sonarjs/cognitive-complexity": ["error", 10],
+      },
     },
-  }, {
-    name: "eslint-config-setup/ai-complexity",
-    rules: {
-      // Cyclomatic complexity limit — max branches per function
-      // https://eslint.org/docs/latest/rules/complexity
-      complexity: ["error", 10],
+    {
+      name: "eslint-config-setup/ai-tests-strict",
+      files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
+      rules: {
+        // Every test must be inside a describe block — organized test suites
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-top-level-describe.md
+        "vitest/require-top-level-describe": "error",
 
-      // Max nesting depth — deep nesting signals need for extraction
-      // https://eslint.org/docs/latest/rules/max-depth
-      "max-depth": ["error", 3],
-
-      // Max nested callbacks — prevents callback hell
-      // https://eslint.org/docs/latest/rules/max-nested-callbacks
-      "max-nested-callbacks": ["error", 2],
-
-      // Max function parameters — many params suggest a config object
-      // https://eslint.org/docs/latest/rules/max-params
-      "max-params": ["error", 3],
-
-      // Max statements per function — keeps functions focused
-      // https://eslint.org/docs/latest/rules/max-statements
-      "max-statements": ["error", 15],
-
-      // Max lines per function — encourages extraction of helpers
-      // https://eslint.org/docs/latest/rules/max-lines-per-function
-      "max-lines-per-function": [
-        "error",
-        { max: 100, skipBlankLines: true, skipComments: true },
+        // Hooks (beforeEach, afterEach) must be at the top of describe — predictable setup
+        // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-hooks-on-top.md
+        "vitest/prefer-hooks-on-top": "error",
+      },
+    },
+    {
+      name: "eslint-config-setup/ai-tests-relaxed",
+      files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
+      rules: {
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "max-statements": "off",
+        "max-nested-callbacks": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "sonarjs/no-duplicate-string": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "unicorn/prevent-abbreviations": "off",
+      },
+    },
+    {
+      name: "eslint-config-setup/ai-e2e-relaxed",
+      files: ["**/*.spec.ts"],
+      rules: {
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "max-statements": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+      },
+    },
+    {
+      name: "eslint-config-setup/ai-config-relaxed",
+      files: [
+        "**/*.config.{ts,mts,cts,js,mjs,cjs}",
+        "**/vite.config.*",
+        "**/vitest.config.*",
+        "**/next.config.*",
       ],
-
-      // Max lines per file — encourages modular file organization
-      // https://eslint.org/docs/latest/rules/max-lines
-      "max-lines": [
-        "error",
-        {
-          max: 300,
-          skipBlankLines: true,
-          skipComments: true,
-        },
-      ],
-
-      // Cognitive complexity — measures how hard a function is to understand
-      // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
-      "sonarjs/cognitive-complexity": ["error", 10],
+      rules: {
+        complexity: "off",
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "max-statements": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/naming-convention": "off",
+      },
     },
-  }, {
-    name: "eslint-config-setup/ai-tests-strict",
-    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
-    rules: {
-      // Every test must be inside a describe block — organized test suites
-      // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-top-level-describe.md
-      "vitest/require-top-level-describe": "error",
-
-      // Hooks (beforeEach, afterEach) must be at the top of describe — predictable setup
-      // https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-hooks-on-top.md
-      "vitest/prefer-hooks-on-top": "error",
+    {
+      name: "eslint-config-setup/ai-declarations-relaxed",
+      files: ["**/*.d.ts"],
+      rules: {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "unicorn/prevent-abbreviations": "off",
+        "unicorn/filename-case": "off",
+      },
     },
-  }, {
-    name: "eslint-config-setup/ai-tests-relaxed",
-    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
-    rules: {
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "max-statements": "off",
-      "max-nested-callbacks": "off",
-      "@typescript-eslint/no-magic-numbers": "off",
-      "sonarjs/no-duplicate-string": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/naming-convention": "off",
-      "unicorn/prevent-abbreviations": "off",
-    },
-  }, {
-    name: "eslint-config-setup/ai-e2e-relaxed",
-    files: ["**/*.spec.ts"],
-    rules: {
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "max-statements": "off",
-      "@typescript-eslint/no-magic-numbers": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-    },
-  }, {
-    name: "eslint-config-setup/ai-config-relaxed",
-    files: [
-      "**/*.config.{ts,mts,cts,js,mjs,cjs}",
-      "**/vite.config.*",
-      "**/vitest.config.*",
-      "**/next.config.*",
-    ],
-    rules: {
-      complexity: "off",
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-      "max-statements": "off",
-      "@typescript-eslint/no-magic-numbers": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/naming-convention": "off",
-    },
-  }, {
-    name: "eslint-config-setup/ai-declarations-relaxed",
-    files: ["**/*.d.ts"],
-    rules: {
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/naming-convention": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-magic-numbers": "off",
-      "unicorn/prevent-abbreviations": "off",
-      "unicorn/filename-case": "off",
-    },
-  }]
+  ];
 
   // ── G. Regex — self-documenting, modern patterns ──────────────────
 
@@ -696,5 +686,5 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
   // ── AI mode relaxations for E2E test files ────────────────────────
   // E2E tests are long procedural scripts with page interactions
 
-  return configs
+  return configs;
 }

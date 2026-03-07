@@ -68,7 +68,15 @@ export function baseConfig(): FlatConfigArray {
 
     // Remove unnecessary computed keys — `{ ["key"]: value }` → `{ key: value }`
     // https://eslint.org/docs/latest/rules/no-useless-computed-key
-    .addRule("no-useless-computed-key", "error")
+    .addRule("no-useless-computed-key", ["error", { enforceForClassMembers: true }])
+
+    // Require Number.isNaN() — also catches NaN in indexOf/switch where it silently fails
+    // https://eslint.org/docs/latest/rules/use-isnan
+    .overrideRule("use-isnan", ["error", { enforceForIndexOf: true, enforceForSwitchCase: true }])
+
+    // Require string literals in typeof comparisons — prevents typos like `typeof x === myVar`
+    // https://eslint.org/docs/latest/rules/valid-typeof
+    .overrideRule("valid-typeof", ["error", { requireStringLiterals: true }])
 
     // ── Dangerous patterns ────────────────────────────────────────
 
@@ -116,6 +124,10 @@ export function baseConfig(): FlatConfigArray {
     // https://eslint.org/docs/latest/rules/no-octal-escape
     .addRule("no-octal-escape", "error")
 
+    // Forbid implicit global variable declarations — safety net for CJS/scripts
+    // https://eslint.org/docs/latest/rules/no-implicit-globals
+    .addRule("no-implicit-globals", "error")
+
     // ── Code quality ──────────────────────────────────────────────
 
     // Require strict equality, but allow == null (checks both null and undefined)
@@ -140,7 +152,7 @@ export function baseConfig(): FlatConfigArray {
 
     // Forbid comma operator — confusing, usually a mistake
     // https://eslint.org/docs/latest/rules/no-sequences
-    .addRule("no-sequences", "error")
+    .addRule("no-sequences", ["error", { allowInParentheses: false }])
 
     // Forbid new for side effects — use function call instead
     // https://eslint.org/docs/latest/rules/no-new
@@ -169,6 +181,10 @@ export function baseConfig(): FlatConfigArray {
     // Remove unnecessary return statements — let function end naturally
     // https://eslint.org/docs/latest/rules/no-useless-return
     .addRule("no-useless-return", "error")
+
+    // Forbid assignments in return statements — almost always a typo (=== vs =)
+    // https://eslint.org/docs/latest/rules/no-return-assign
+    .addRule("no-return-assign", ["error", "always"])
 
     // Forbid multiline strings via backslash — use template literals
     // https://eslint.org/docs/latest/rules/no-multi-str
@@ -249,11 +265,19 @@ export function baseConfig(): FlatConfigArray {
 
     // Prefer template literals over string concatenation — more readable
     // https://eslint.org/docs/latest/rules/prefer-template
-    .addRule("prefer-template", "error")
+    .addRule("prefer-template", "warn")
 
     // Require description for Symbol() — aids debugging
     // https://eslint.org/docs/latest/rules/symbol-description
     .addRule("symbol-description", "error")
+
+    // Prefer numeric literals over parseInt() with radix — 0b111 over parseInt("111", 2)
+    // https://eslint.org/docs/latest/rules/prefer-numeric-literals
+    .addRule("prefer-numeric-literals", "error")
+
+    // Require object shorthand — { foo } over { foo: foo }, method shorthand over arrows
+    // https://eslint.org/docs/latest/rules/object-shorthand
+    .addRule("object-shorthand", ["error", "always", { avoidExplicitReturnArrows: true, avoidQuotes: true }])
 
     .build()
 }

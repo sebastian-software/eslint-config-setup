@@ -107,19 +107,7 @@ export const pluginRegistry: Record<string, PluginEntry> = {
     pkg: "@eslint-react/eslint-plugin",
     varName: "eslintReactPlugin",
     importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
-    pluginExpr: "eslintReactPlugin",
-  },
-  "react-dom": {
-    pkg: "@eslint-react/eslint-plugin",
-    varName: "eslintReactPlugin",
-    importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
-    pluginExpr: 'eslintReactPlugin.configs.dom.plugins["@eslint-react/dom"]',
-  },
-  "react-web-api": {
-    pkg: "@eslint-react/eslint-plugin",
-    varName: "eslintReactPlugin",
-    importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
-    pluginExpr: 'eslintReactPlugin.configs["web-api"].plugins["@eslint-react/web-api"]',
+    pluginExpr: "reactCompatPlugin",
   },
   "react-hooks": {
     pkg: "eslint-plugin-react-hooks",

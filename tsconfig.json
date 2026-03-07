@@ -1,5 +1,6 @@
 {
   "references": [
+    { "path": "packages/eslint-config-cli" },
     { "path": "packages/eslint-config" },
     { "path": "docs" }
   ],

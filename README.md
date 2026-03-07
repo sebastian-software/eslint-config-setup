@@ -27,6 +27,33 @@ export default await getEslintConfig({ react: true, ai: true })
 ## Quick Start
 
 ```bash
+npx eslint-config-setup init
+```
+
+Without flags, `init` opens the interactive terminal wizard.
+
+If you prefer explicit, scriptable setup:
+
+```bash
+npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
+npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hook-provider husky
+```
+
+This scaffolds `eslint.config.ts`, optional `oxlint.config.ts`, package scripts, an `AGENTS.md`, VS Code settings, and an optional pre-commit hook preset via native `.githooks` or Husky.
+
+Useful follow-ups:
+
+```bash
+npx eslint-config-setup init --react --oxlint --formatter oxfmt --dry-run
+npx eslint-config-setup init --react --force
+npx eslint-config-setup doctor
+```
+
+`init` protects existing config files, scripts, and companion files by default. If it detects conflicting content, it stops and shows what would be replaced. Use `--force` only when you intentionally want to overwrite replaceable targets.
+
+If you prefer to wire things manually:
+
+```bash
 npm install -D eslint-config-setup eslint typescript
 ```
 
@@ -64,6 +91,7 @@ export default config
 ## Documentation
 
 - [Getting Started](https://sebastian-software.github.io/eslint-config-setup/guide/getting-started) — installation and setup
+- [CLI Workflow](https://sebastian-software.github.io/eslint-config-setup/guide/cli-workflow) — scaffold and validate projects with `init` and `doctor`
 - [AI Mode](https://sebastian-software.github.io/eslint-config-setup/guide/ai-mode) — why AI-generated code needs different rules
 - [OxLint Integration](https://sebastian-software.github.io/eslint-config-setup/guide/oxlint) — run ESLint + OxLint without conflicts
 - [All 27 Plugins](https://sebastian-software.github.io/eslint-config-setup/guide/plugins) — what's included and why

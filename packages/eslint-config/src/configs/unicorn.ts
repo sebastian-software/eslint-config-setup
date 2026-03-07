@@ -59,7 +59,7 @@ export function unicornConfig(): FlatConfigArray {
 
         // Disallow `return undefined` — implicit undefined is cleaner
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-undefined.md
-        "unicorn/no-useless-undefined": "error",
+        "unicorn/no-useless-undefined": "warn",
 
         // Disallow `await` in Promise.all/race arguments — already a promise
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-in-promise-methods.md
@@ -134,6 +134,32 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-existence-index-check.md
         "unicorn/consistent-existence-index-check": "error",
 
+        // Move functions to the smallest possible scope — avoids re-creation on every call,
+        // improves testability, and makes dependencies explicit
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-function-scoping.md
+        "unicorn/consistent-function-scoping": "warn",
+
+        // Enforce consistent filename casing — camelCase, PascalCase, or kebab-case (no snake_case)
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/filename-case.md
+        "unicorn/filename-case": [
+          "error",
+          {
+            cases: {
+              camelCase: true,
+              pascalCase: true,
+              kebabCase: true,
+            },
+          },
+        ],
+
+        // Discourage Array.reduce() — hard to read for many developers, prefer for...of or other methods
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-reduce.md
+        "unicorn/no-array-reduce": "warn",
+
+        // Prefer for...of over C-style for loops — more readable when index isn't needed
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-for-loop.md
+        "unicorn/no-for-loop": "warn",
+
         // ── Modern API preferences ────────────────────────────────────
 
         // Prefer .flatMap() over .map().flat() — single pass, more readable
@@ -167,6 +193,10 @@ export function unicornConfig(): FlatConfigArray {
         // Prefer .before()/.after()/.replaceWith() over parent.insertBefore()
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-modern-dom-apis.md
         "unicorn/prefer-modern-dom-apis": "error",
+
+        // Prefer element.dataset.foo over setAttribute('data-foo') — modern, readable
+        // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-dom-node-dataset.md
+        "unicorn/prefer-dom-node-dataset": "error",
 
         // Prefer Math.log10/Math.hypot over manual math — accurate and readable
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-modern-math-apis.md

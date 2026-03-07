@@ -75,15 +75,42 @@ export function typescriptConfig(): FlatConfigArray {
 
   // Downgrade from error to warn — stay current but don't block
   // https://typescript-eslint.io/rules/no-deprecated
-  builder.overrideRule("@typescript-eslint/no-deprecated", "warn")
+  builder.overrideSeverity("@typescript-eslint/no-deprecated", "warn")
+
+  // Downgrade from error to warn — nudge towards unknown, don't block
+  // https://typescript-eslint.io/rules/no-explicit-any
+  builder.overrideRule("@typescript-eslint/no-explicit-any", [
+    "warn",
+    { fixToUnknown: true },
+  ])
+
+  // Enforce `type` over `interface` — consistent, prevents accidental declaration merging
+  // https://typescript-eslint.io/rules/consistent-type-definitions
+  builder.overrideRule("@typescript-eslint/consistent-type-definitions", [
+    "error",
+    "type",
+  ])
+
+  // Require description for @ts-expect-error — document why you override the compiler
+  // https://typescript-eslint.io/rules/ban-ts-comment
+  builder.overrideOptions("@typescript-eslint/ban-ts-comment", {
+    "ts-expect-error": "allow-with-description",
+  })
+
+  // Catch unhandled thenables (not just Promises) and allow async IIFEs
+  // https://typescript-eslint.io/rules/no-floating-promises
+  builder.overrideOptions("@typescript-eslint/no-floating-promises", {
+    checkThenables: true,
+    ignoreIIFE: true,
+  })
 
   // ── Beyond presets: import/export hygiene ──────────────────
 
-  // Enforce `import type { T }` — ensures types are erased at compile time
+  // Enforce `import type { T }` — separate type imports for clarity
   // https://typescript-eslint.io/rules/consistent-type-imports
   builder.addRule("@typescript-eslint/consistent-type-imports", [
     "error",
-    { fixStyle: "inline-type-imports" },
+    { fixStyle: "separate-type-imports" },
   ])
 
   // Enforce `export type { T }` — matches import convention
@@ -117,6 +144,42 @@ export function typescriptConfig(): FlatConfigArray {
   // https://typescript-eslint.io/rules/strict-void-return
   builder.addRule("@typescript-eslint/strict-void-return", "error")
 
+  // Suggest readonly for properties that are never reassigned — clarifies intent
+  // https://typescript-eslint.io/rules/prefer-readonly
+  builder.addRule("@typescript-eslint/prefer-readonly", "warn")
+
+  // Require comparator for Array.sort() — [10,2,1].sort() → [1,10,2] without one
+  // https://typescript-eslint.io/rules/require-array-sort-compare
+  builder.addRule("@typescript-eslint/require-array-sort-compare", [
+    "error",
+    { ignoreStringArrays: true },
+  ])
+
+  // Disallow unsafe type assertions — use type guards instead of `as Type`
+  // https://typescript-eslint.io/rules/no-unsafe-type-assertion
+  builder.addRule("@typescript-eslint/no-unsafe-type-assertion", "error")
+
+  // Exhaustive switch — all union/enum values must be handled, no redundant defaults
+  // https://typescript-eslint.io/rules/switch-exhaustiveness-check
+  builder.addRule("@typescript-eslint/switch-exhaustiveness-check", [
+    "error",
+    {
+      allowDefaultCaseForExhaustiveSwitch: false,
+      requireDefaultForNonUnion: true,
+    },
+  ])
+
+  // Require async keyword on functions returning Promises — intent is immediately visible
+  // https://typescript-eslint.io/rules/promise-function-async
+  builder.addRule("@typescript-eslint/promise-function-async", "error")
+
+  // Enforce property-style signatures — safer due to strict parameter contravariance
+  // https://typescript-eslint.io/rules/method-signature-style
+  builder.addRule("@typescript-eslint/method-signature-style", [
+    "error",
+    "property",
+  ])
+
   // ── Beyond presets: safety & correctness ──────────────────────
 
   // Prevent variable shadowing — catches bugs where inner var hides outer
@@ -135,10 +198,7 @@ export function typescriptConfig(): FlatConfigArray {
 
   // Allow numbers in template literals — `${count}` is idiomatic JS
   // https://typescript-eslint.io/rules/restrict-template-expressions
-  builder.overrideRule("@typescript-eslint/restrict-template-expressions", [
-    "error",
-    { allowNumber: true },
-  ])
+  builder.overrideOptions("@typescript-eslint/restrict-template-expressions", { allowNumber: true })
 
   // Require strict boolean expressions — no implicit truthiness checks
   // Prevents bugs like `if (count)` when count is 0 (falsy but valid)

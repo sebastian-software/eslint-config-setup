@@ -1,0 +1,73 @@
+{
+  "name": "eslint-config-setup-cli",
+  "version": "0.3.3",
+  "description": "CLI and TUI setup workflow for eslint-config-setup",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "eslint-config-setup-cli": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "tsup",
+    "cli": "node --import tsx src/index.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "cli",
+    "tui",
+    "oxlint"
+  ],
+  "author": {
+    "name": "Sebastian Software GmbH",
+    "url": "https://sebastian-software.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastian-software/eslint-config-setup.git",
+    "directory": "packages/eslint-config-cli"
+  },
+  "homepage": "https://sebastian-software.github.io/eslint-config-setup/",
+  "bugs": {
+    "url": "https://github.com/sebastian-software/eslint-config-setup/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/sebastian-software"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "ink": "^6.8.0",
+    "react": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
+    "@vitest/coverage-v8": "^4.0.18",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
