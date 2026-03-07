@@ -117,11 +117,41 @@ function printInitOutcome(
   installDependencies: boolean,
 ): void {
   console.log(`Configured project using ${outcome.packageManager}.`)
-  console.log(`Updated scripts: ${outcome.scripts.join(", ")}`)
-  console.log(`Touched files: ${outcome.files.join(", ")}`)
 
-  if (!installDependencies) {
+  if (outcome.fileChanges.length > 0) {
+    console.log(
+      `File changes: ${outcome.fileChanges
+        .map((file) => `${file.action} ${file.filepath}`)
+        .join(", ")}`,
+    )
+  } else {
+    console.log("File changes: none")
+  }
+
+  if (outcome.scriptChanges.length > 0) {
+    console.log(
+      `Script changes: ${outcome.scriptChanges
+        .map((script) => `${script.action} ${script.name}`)
+        .join(", ")}`,
+    )
+  } else {
+    console.log("Script changes: none")
+  }
+
+  if (outcome.dependencyChanges.length > 0) {
+    console.log(
+      `Dependencies: ${outcome.dependencyChanges
+        .map((dependency) => `${dependency.action} ${dependency.name}`)
+        .join(", ")}`,
+    )
+  }
+
+  if (!installDependencies && outcome.installNeeded) {
     console.log(`Install dependencies manually: ${outcome.installCommand}`)
+  }
+
+  if (!outcome.installNeeded) {
+    console.log("Dependencies already satisfied.")
   }
 }
 

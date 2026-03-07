@@ -60,6 +60,8 @@ describe("runCli", () => {
 
     expect(exitCode).toBe(0)
     expect(log.mock.calls.flat().join("\n")).toContain("Configured project using npm.")
+    expect(log.mock.calls.flat().join("\n")).toContain("File changes: update")
+    expect(log.mock.calls.flat().join("\n")).toContain("Dependencies: install eslint, install eslint-config-setup, install typescript")
     expect(log.mock.calls.flat().join("\n")).toContain("Install dependencies manually: npm install -D eslint eslint-config-setup typescript")
   })
 
@@ -84,6 +86,6 @@ describe("runCli", () => {
 
     expect(exitCode).toBe(0)
     expect(readFileSync(path.join(dir, "eslint.config.ts"), "utf8")).toContain("getEslintConfig")
-    expect(log.mock.calls.flat().join("\n")).toContain("Touched files:")
+    expect(log.mock.calls.flat().join("\n")).toContain("File changes: update")
   })
 })

@@ -14,6 +14,8 @@ import {
 
 const HIGHLIGHT = "cyan"
 const MUTED = "gray"
+const SUCCESS = "green"
+const WARNING = "yellow"
 
 export async function runInitWizard(
   cwd: string,
@@ -139,6 +141,7 @@ function InitWizard({
     <Box flexDirection="column" paddingX={1} paddingY={1}>
       <Text color={HIGHLIGHT}>eslint-config-setup init</Text>
       <Text color={MUTED}>Guided setup for lint, OxLint, editor, agent, and hook companions.</Text>
+      <StepProgress stepIndex={stepIndex} totalSteps={WIZARD_STEPS.length} />
       <Box marginTop={1}>
         <Box flexDirection="column" marginRight={4} width={44}>
           {WIZARD_STEPS.map((step, index) => (
@@ -153,6 +156,11 @@ function InitWizard({
         </Box>
         <Box flexDirection="column" flexGrow={1}>
           <Text color={HIGHLIGHT}>{currentStep.question}</Text>
+          {currentStep.id !== "review" && (
+            <Text color={MUTED}>
+              Current selection: {getStepAnswerSummary(currentStep.id, state)}
+            </Text>
+          )}
           <Box marginTop={1} flexDirection="column">
             {currentStep.id === "profile" && (
               <MultiSelectStep
@@ -269,6 +277,27 @@ function TimelineStep({
   )
 }
 
+function StepProgress({
+  stepIndex,
+  totalSteps,
+}: {
+  stepIndex: number
+  totalSteps: number
+}) {
+  const currentStep = stepIndex + 1
+  const filled = Math.max(1, Math.round((currentStep / totalSteps) * 16))
+
+  return (
+    <Box flexDirection="column" marginTop={1}>
+      <Text color={MUTED}>Step {currentStep}/{totalSteps}</Text>
+      <Text color={HIGHLIGHT}>
+        {"█".repeat(filled)}
+        <Text color={MUTED}>{"░".repeat(Math.max(0, 16 - filled))}</Text>
+      </Text>
+    </Box>
+  )
+}
+
 function MultiSelectStep({
   cursorIndex,
   options,
@@ -331,9 +360,11 @@ function ReviewStep({
       {preview ? (
         <>
           <Text color={HIGHLIGHT}>Review summary</Text>
-          <Text color={MUTED}>Write targets: {preview.files.length}</Text>
-          <Text color={MUTED}>Scripts: {preview.scripts.length}</Text>
-          <Text color={MUTED}>Dependencies: {preview.installedDependencies.length}</Text>
+          <Text color={MUTED}>Write targets: {preview.fileChanges.length}</Text>
+          <Text color={MUTED}>Script changes: {preview.scriptChanges.length}</Text>
+          <Text color={MUTED}>
+            Dependencies to install: {preview.dependencyChanges.filter((dependency) => dependency.action === "install").length}
+          </Text>
           <Text color={force ? "yellow" : MUTED}>
             Overwrite mode: {force ? "enabled" : "disabled"}
             {canForceConflicts ? " (press f to toggle)" : ""}
@@ -356,18 +387,45 @@ function ReviewStep({
               ))}
             </>
           )}
-          <Text color={HIGHLIGHT}>Files</Text>
-          {preview.files.map((file) => (
-            <Text key={file} color={MUTED}>- {file}</Text>
+          <Text color={HIGHLIGHT}>File plan</Text>
+          {preview.fileChanges.length > 0 ? (
+            preview.fileChanges.map((file) => (
+              <Text key={file.filepath} color={MUTED}>
+                {formatFileChange(file.action)} {file.filepath}
+              </Text>
+            ))
+          ) : (
+            <Text color={MUTED}>No file writes are needed for the selected setup.</Text>
+          )}
+          <Text color={HIGHLIGHT}>Script plan</Text>
+          {preview.scriptChanges.length > 0 ? (
+            preview.scriptChanges.map((script) => (
+              <Text key={script.name} color={MUTED}>
+                {script.action === "add" ? "add" : "update"} script {script.name}
+              </Text>
+            ))
+          ) : (
+            <Text color={MUTED}>Generated scripts already match the current package.json.</Text>
+          )}
+          <Text color={HIGHLIGHT}>Dependency plan</Text>
+          {preview.dependencyChanges.map((dependency) => (
+            <Text
+              color={dependency.action === "install" ? SUCCESS : MUTED}
+              key={dependency.name}
+            >
+              {dependency.action === "install" ? "install" : "reuse"} {dependency.name}
+            </Text>
           ))}
-          <Text color={HIGHLIGHT}>Scripts</Text>
-          <Text color={MUTED}>{preview.scripts.join(", ")}</Text>
-          <Text color={HIGHLIGHT}>Dependencies</Text>
-          <Text color={MUTED}>{preview.installedDependencies.join(", ")}</Text>
-          {!state.install && (
+          {preview.installNeeded && !state.install && (
             <>
               <Text color={HIGHLIGHT}>Next step</Text>
               <Text color={MUTED}>{preview.installCommand}</Text>
+            </>
+          )}
+          {!preview.installNeeded && (
+            <>
+              <Text color={HIGHLIGHT}>Dependencies</Text>
+              <Text color={MUTED}>All required dependencies are already present.</Text>
             </>
           )}
         </>
@@ -478,4 +536,15 @@ function getFooterHint(
   }
 
   return "Resolve the listed conflicts before writing files. Press b to go back."
+}
+
+function formatFileChange(action: "create" | "merge" | "update"): string {
+  switch (action) {
+    case "create":
+      return "create"
+    case "merge":
+      return "merge "
+    case "update":
+      return "update"
+  }
 }

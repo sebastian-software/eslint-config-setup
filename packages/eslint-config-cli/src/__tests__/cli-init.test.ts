@@ -33,6 +33,9 @@ describe("runInit", () => {
     expect(packageJson.scripts["lint:fix"]).toBe("eslint . --fix")
     expect(eslintConfig).toContain("react: true")
     expect(outcome.files).toContain(path.join(dir, "eslint.config.ts"))
+    expect(outcome.fileChanges.some((file) => file.action === "create" && file.filepath.endsWith("eslint.config.ts"))).toBe(true)
+    expect(outcome.scriptChanges.some((script) => script.action === "add" && script.name === "lint")).toBe(true)
+    expect(outcome.dependencyChanges.filter((dependency) => dependency.action === "install")).toHaveLength(3)
   })
 
   it("adds oxlint, agent, vscode, formatter, and hook companions", () => {
@@ -110,6 +113,7 @@ describe("runInit", () => {
     expect(outcome.files).toContain(path.join(dir, "eslint.config.ts"))
     expect(outcome.files).toContain(path.join(dir, "oxlint.config.ts"))
     expect(outcome.files).toContain(path.join(dir, "AGENTS.md"))
+    expect(outcome.fileChanges.some((file) => file.action === "create" && file.filepath.endsWith(".vscode/settings.json"))).toBe(true)
   })
 
   it("refuses to overwrite existing files or scripts without force", () => {
@@ -157,6 +161,7 @@ describe("runInit", () => {
 
     expect(preview.conflicts).toHaveLength(1)
     expect(preview.conflicts[0]?.canForce).toBe(true)
+    expect(preview.fileChanges[0]?.action).toBe("update")
 
     runInit({
       cwd: dir,

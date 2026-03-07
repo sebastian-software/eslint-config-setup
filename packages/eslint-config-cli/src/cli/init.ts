@@ -24,10 +24,14 @@ import {
 
 export interface InitOutcome {
   files: string[]
+  fileChanges: InitFileChange[]
   installCommand: string
+  installNeeded: boolean
+  dependencyChanges: InitDependencyChange[]
   installedDependencies: string[]
   packageManager: PackageManager
   scripts: string[]
+  scriptChanges: InitScriptChange[]
 }
 
 export interface InitConflict {
@@ -39,7 +43,23 @@ export interface InitPreview extends InitOutcome {
   conflicts: InitConflict[]
 }
 
+export interface InitDependencyChange {
+  action: "install" | "reuse"
+  name: string
+}
+
+export interface InitFileChange {
+  action: "create" | "merge" | "update"
+  filepath: string
+}
+
+export interface InitScriptChange {
+  action: "add" | "update"
+  name: string
+}
+
 interface PlannedFile {
+  action: "create" | "keep" | "merge" | "update"
   content: string
   executable?: boolean
   filepath: string
@@ -66,16 +86,20 @@ export function runInit(opts: InitOptions): InitOutcome {
     writeProjectFiles(plan)
   }
 
-  if (opts.install) {
+  if (plan.installNeeded && opts.install) {
     installDependencies(opts.cwd, plan.packageManager, plan.installedDependencies)
   }
 
   return {
     files: plan.files,
+    fileChanges: plan.fileChanges,
+    dependencyChanges: plan.dependencyChanges,
     installCommand: plan.installCommand,
+    installNeeded: plan.installNeeded,
     installedDependencies: plan.installedDependencies,
     packageManager: plan.packageManager,
     scripts: plan.scripts,
+    scriptChanges: plan.scriptChanges,
   }
 }
 
@@ -89,19 +113,39 @@ export function previewInit(opts: InitOptions): InitPreview & {
   }
 
   const packageManager = detectPackageManager(opts.cwd, packageJson)
-  const installedDependencies = getDependenciesToInstall(opts)
+  const dependencyChanges = getDependencyChanges(packageJson, opts)
+  const installedDependencies = dependencyChanges
+    .filter((dependency) => dependency.action === "install")
+    .map((dependency) => dependency.name)
   const scripts = getScripts(opts)
   const filesToWrite = getPlannedFiles(opts, packageJson, scripts, packageManager)
   const conflicts = getConflicts(opts, packageJson, scripts, filesToWrite)
+  const fileChanges: InitFileChange[] = filesToWrite.flatMap((file) => {
+    if (file.action === "keep") {
+      return []
+    }
+
+    return [{
+      action: file.action,
+      filepath: file.filepath,
+    }]
+  })
+  const scriptChanges = getScriptChanges(packageJson, scripts)
 
   return {
     conflicts,
-    files: filesToWrite.map((file) => file.filepath),
+    dependencyChanges,
+    fileChanges,
+    files: fileChanges.map((file) => file.filepath),
     filesToWrite,
-    installCommand: formatInstallCommand(packageManager, installedDependencies),
+    installCommand: installedDependencies.length > 0
+      ? formatInstallCommand(packageManager, installedDependencies)
+      : "",
+    installNeeded: installedDependencies.length > 0,
     installedDependencies,
     packageManager,
     scripts: Object.keys(scripts),
+    scriptChanges,
   }
 }
 
@@ -111,6 +155,10 @@ function writeProjectFiles(
   },
 ): void {
   for (const file of plan.filesToWrite) {
+    if (file.action === "keep") {
+      continue
+    }
+
     mkdirSync(path.dirname(file.filepath), { recursive: true })
     writeTextFile(file.filepath, file.content)
     if (file.executable) {
@@ -137,10 +185,12 @@ function getPlannedFiles(
   const packageJsonPath = path.join(opts.cwd, "package.json")
   const filesToWrite: PlannedFile[] = [
     {
+      action: getFileAction(packageJsonPath, `${JSON.stringify(nextPackageJson, null, 2)}\n`),
       content: `${JSON.stringify(nextPackageJson, null, 2)}\n`,
       filepath: packageJsonPath,
     },
     {
+      action: getFileAction(eslintConfigPath, renderEslintConfig(opts)),
       content: renderEslintConfig(opts),
       filepath: eslintConfigPath,
     },
@@ -149,6 +199,7 @@ function getPlannedFiles(
   if (opts.oxlint) {
     const oxlintConfigPath = path.join(opts.cwd, "oxlint.config.ts")
     filesToWrite.push({
+      action: getFileAction(oxlintConfigPath, renderOxlintConfig(opts)),
       content: renderOxlintConfig(opts),
       filepath: oxlintConfigPath,
     })
@@ -156,6 +207,10 @@ function getPlannedFiles(
 
   if (opts.agents) {
     filesToWrite.push({
+      action: getFileAction(
+        path.join(opts.cwd, "AGENTS.md"),
+        renderAgentsGuide(opts, packageManager),
+      ),
       content: renderAgentsGuide(opts, packageManager),
       filepath: path.join(opts.cwd, "AGENTS.md"),
     })
@@ -163,14 +218,20 @@ function getPlannedFiles(
 
   if (opts.vscode) {
     const vscodePath = path.join(opts.cwd, ".vscode/settings.json")
+    const renderedSettings = renderVscodeSettings(opts, readTextIfExists(vscodePath))
     filesToWrite.push({
-      content: renderVscodeSettings(opts, readTextIfExists(vscodePath)),
+      action: getFileAction(vscodePath, renderedSettings, "merge"),
+      content: renderedSettings,
       filepath: vscodePath,
     })
   }
 
   if (opts.hooks) {
     filesToWrite.push({
+      action: getFileAction(
+        path.join(opts.cwd, ".githooks/pre-commit"),
+        renderPreCommitHook(opts, packageManager),
+      ),
       content: renderPreCommitHook(opts, packageManager),
       executable: true,
       filepath: path.join(opts.cwd, ".githooks/pre-commit"),
@@ -192,6 +253,16 @@ function getDependenciesToInstall(opts: InitOptions): string[] {
   }
 
   return dependencies
+}
+
+function getDependencyChanges(
+  packageJson: ProjectPackageJson,
+  opts: InitOptions,
+): InitDependencyChange[] {
+  return getDependenciesToInstall(opts).map((name) => ({
+    action: hasDependencyInPackageJson(packageJson, name) ? "reuse" : "install",
+    name,
+  }))
 }
 
 function getScripts(opts: InitOptions): Record<string, string> {
@@ -218,6 +289,28 @@ function getScripts(opts: InitOptions): Record<string, string> {
   }
 
   return scripts
+}
+
+function getScriptChanges(
+  packageJson: ProjectPackageJson,
+  scripts: Record<string, string>,
+): InitScriptChange[] {
+  const existingScripts = packageJson.scripts ?? {}
+  const changes: InitScriptChange[] = []
+
+  for (const [name, value] of Object.entries(scripts)) {
+    const existing = existingScripts[name]
+    if (!existing) {
+      changes.push({ action: "add", name })
+      continue
+    }
+
+    if (existing !== value) {
+      changes.push({ action: "update", name })
+    }
+  }
+
+  return changes
 }
 
 function getConflicts(
@@ -313,6 +406,10 @@ function installDependencies(
   packageManager: PackageManager,
   dependencies: string[],
 ): void {
+  if (dependencies.length === 0) {
+    return
+  }
+
   const command = getInstallCommand(packageManager, dependencies)
   const result = spawnSync(command.bin, command.args, {
     cwd,
@@ -400,6 +497,34 @@ function renderVscodeSettings(
   }
 
   return `${JSON.stringify(settings, null, 2)}\n`
+}
+
+function getFileAction(
+  filepath: string,
+  content: string,
+  existingAction: "merge" | "update" = "update",
+): PlannedFile["action"] {
+  const existing = readTextIfExists(filepath)
+
+  if (existing === null) {
+    return "create"
+  }
+
+  if (existing === content) {
+    return "keep"
+  }
+
+  return existingAction
+}
+
+function hasDependencyInPackageJson(
+  packageJson: ProjectPackageJson,
+  dependencyName: string,
+): boolean {
+  return Boolean(
+    packageJson.dependencies?.[dependencyName]
+    || packageJson.devDependencies?.[dependencyName],
+  )
 }
 
 function formatConflictError(conflicts: InitConflict[]): string {
