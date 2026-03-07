@@ -194,4 +194,42 @@ export default await getEslintConfig({ react: true, ai: true })
     expect(result.checks.some((check) => check.message.includes("Init-managed companion files drift"))).toBe(true)
     expect(result.checks.some((check) => check.fix?.includes("pnpm exec eslint-config-setup init --react --ai --formatter oxfmt --vscode --agents --dry-run"))).toBe(true)
   })
+
+  it("validates husky hook setups", () => {
+    const dir = createProjectDir()
+
+    writeFileSync(
+      path.join(dir, "package.json"),
+      JSON.stringify({
+        devDependencies: {
+          eslint: "^10.0.0",
+          "eslint-config-setup": "^0.3.3",
+          husky: "^9.0.0",
+          typescript: "^5.0.0",
+        },
+        scripts: {
+          check: "eslint .",
+          lint: "eslint .",
+          prepare: "husky",
+        },
+      }, null, 2),
+    )
+    writeFileSync(
+      path.join(dir, "eslint.config.ts"),
+      `import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+`,
+    )
+    mkdirSync(path.join(dir, ".husky"), { recursive: true })
+    writeFileSync(
+      path.join(dir, ".husky/pre-commit"),
+      "npm run lint\n",
+    )
+
+    const result = runDoctor(dir)
+
+    expect(result.checks.some((check) => check.message.includes("Husky dependency found."))).toBe(true)
+    expect(result.checks.some((check) => check.message.includes(".githooks/pre-commit"))).toBe(false)
+  })
 })

@@ -1,6 +1,6 @@
 import path from "node:path"
 
-import type { DoctorResult } from "./shared"
+import type { DoctorResult, HookStrategy, PackageManager, ProjectPackageJson } from "./shared"
 
 import { previewInit } from "./init"
 import {
@@ -32,11 +32,14 @@ export function runDoctor(cwd: string): DoctorResult {
     formatInstallCommand(packageManager, dependencies)
   const cli = getCliCommand(packageManager)
   const run = getRunCommand(packageManager)
+  const hookStrategy = detectHookStrategy(packageJson, cwd)
   const eslintConfigFile = findEslintConfigFile(cwd)
   const oxlintConfigFile = findOxlintConfigFile(cwd)
   const agentsPath = path.join(cwd, "AGENTS.md")
   const vscodePath = path.join(cwd, ".vscode/settings.json")
-  const preCommitHookPath = path.join(cwd, ".githooks/pre-commit")
+  const preCommitHookPath = hookStrategy === "husky"
+    ? path.join(cwd, ".husky/pre-commit")
+    : path.join(cwd, ".githooks/pre-commit")
   const eslintConfigContent = eslintConfigFile ? readTextIfExists(eslintConfigFile) : null
   const agentsContent = readTextIfExists(agentsPath)
   const vscodeContent = readTextIfExists(vscodePath)
@@ -128,6 +131,7 @@ export function runDoctor(cwd: string): DoctorResult {
 
   const formatScript = packageJson.scripts?.format ?? ""
   const checkScript = packageJson.scripts?.check ?? ""
+  const prepareScript = packageJson.scripts?.prepare ?? ""
   const hooksInstallScript = packageJson.scripts?.["hooks:install"] ?? ""
   if (formatScript.includes("oxfmt")) {
     checks.push(
@@ -185,21 +189,16 @@ export function runDoctor(cwd: string): DoctorResult {
     })
   }
 
-  if (hooksInstallScript && !preCommitHookContent) {
-    checks.push({
-      fix: `Create .githooks/pre-commit or remove \`hooks:install\` from package.json.`,
-      level: "fail" as const,
-      message: "hooks:install is present, but .githooks/pre-commit is missing.",
-    })
-  }
-
-  if (preCommitHookContent && !hooksInstallScript) {
-    checks.push({
-      fix: "Add a hooks:install script or remove the orphaned pre-commit hook file.",
-      level: "warn" as const,
-      message: ".githooks/pre-commit exists, but package.json has no hooks:install script.",
-    })
-  }
+  addHookChecks({
+    checks,
+    cli,
+    cwd,
+    hookStrategy,
+    packageJson,
+    preCommitHookContent,
+    prepareScript,
+    hooksInstallScript,
+  })
 
   if (eslintConfigContent?.includes("getEslintConfig")) {
     const preview = previewInit({
@@ -208,7 +207,7 @@ export function runDoctor(cwd: string): DoctorResult {
       cwd,
       dryRun: true,
       formatter: usesOxfmt ? "oxfmt" : "none",
-      hooks: Boolean(preCommitHookContent || hooksInstallScript),
+      hookStrategy,
       node: usesNode,
       oxlint: usesOxlint,
       react: usesReact,
@@ -221,7 +220,7 @@ export function runDoctor(cwd: string): DoctorResult {
           agents: Boolean(agentsContent),
           ai: usesAi,
           formatter: usesOxfmt ? "oxfmt" : "none",
-          hooks: Boolean(preCommitHookContent || hooksInstallScript),
+          hookStrategy,
           node: usesNode,
           oxlint: usesOxlint,
           react: usesReact,
@@ -258,7 +257,7 @@ function formatInitCommand(
     agents?: boolean
     ai?: boolean
     formatter?: "none" | "oxfmt"
-    hooks?: boolean
+    hookStrategy?: HookStrategy
     node?: boolean
     oxlint?: boolean
     react?: boolean
@@ -274,7 +273,8 @@ function formatInitCommand(
     options.formatter === "oxfmt" ? "--formatter oxfmt" : null,
     options.vscode ? "--vscode" : null,
     options.agents ? "--agents" : null,
-    options.hooks ? "--hooks" : null,
+    options.hookStrategy === "native" ? "--hooks" : null,
+    options.hookStrategy === "husky" ? "--hook-provider husky" : null,
     ...extraFlags,
   ].filter(Boolean)
 
@@ -291,10 +291,101 @@ function getDoctorDriftConflicts(conflicts: Array<{ message: string }>): string[
       conflict.message.startsWith("AGENTS.md")
       || conflict.message.startsWith(".vscode/settings.json")
       || conflict.message.startsWith(".githooks/pre-commit")
+      || conflict.message.startsWith(".husky/pre-commit")
     ) {
       return [`Init-managed companion files drift from the current generated defaults. ${conflict.message}`]
     }
 
-    return []
+  return []
   })
+}
+
+function addHookChecks({
+  checks,
+  cli,
+  cwd,
+  hookStrategy,
+  hooksInstallScript,
+  packageJson,
+  preCommitHookContent,
+  prepareScript,
+}: {
+  checks: DoctorResult["checks"]
+  cli: string
+  cwd: string
+  hookStrategy: HookStrategy
+  hooksInstallScript: string
+  packageJson: ProjectPackageJson
+  preCommitHookContent: string | null
+  prepareScript: string
+}) {
+  if (hookStrategy === "native") {
+    if (hooksInstallScript && !preCommitHookContent) {
+      checks.push({
+        fix: `Create .githooks/pre-commit or remove \`hooks:install\` from package.json.`,
+        level: "fail" as const,
+        message: "hooks:install is present, but .githooks/pre-commit is missing.",
+      })
+    }
+
+    if (preCommitHookContent && !hooksInstallScript) {
+      checks.push({
+        fix: "Add a hooks:install script or remove the orphaned pre-commit hook file.",
+        level: "warn" as const,
+        message: ".githooks/pre-commit exists, but package.json has no hooks:install script.",
+      })
+    }
+
+    return
+  }
+
+  if (hookStrategy === "husky") {
+    checks.push(
+      hasDependency(packageJson, "husky")
+        ? { level: "pass" as const, message: "Husky dependency found." }
+        : {
+            fix: `Install it with: ${formatInstallCommand(detectPackageManager(cwd, packageJson), ["husky"])}`,
+            level: "fail" as const,
+            message: "Husky hook setup is present, but husky is not installed.",
+          },
+    )
+
+    if (!prepareScript.includes("husky")) {
+      checks.push({
+        fix: `Add a \`prepare\` script or re-run \`${formatInitCommand(cli, { hookStrategy: "husky" }, ["--dry-run"])}\` to compare the generated setup.`,
+        level: "warn" as const,
+        message: "Husky pre-commit hook exists, but package.json does not contain a husky prepare script.",
+      })
+    }
+
+    if (!preCommitHookContent) {
+      checks.push({
+        fix: `Create .husky/pre-commit or re-run \`${formatInitCommand(cli, { hookStrategy: "husky" }, ["--dry-run"])}\` to compare the generated setup.`,
+        level: "fail" as const,
+        message: "Husky setup is enabled, but .husky/pre-commit is missing.",
+      })
+    }
+  }
+}
+
+function detectHookStrategy(
+  packageJson: ProjectPackageJson,
+  cwd: string,
+): HookStrategy {
+  if (
+    readTextIfExists(path.join(cwd, ".husky/pre-commit"))
+    || packageJson.scripts?.prepare?.includes("husky")
+    || hasDependency(packageJson, "husky")
+  ) {
+    return "husky"
+  }
+
+  if (
+    readTextIfExists(path.join(cwd, ".githooks/pre-commit"))
+    || packageJson.scripts?.["hooks:install"]
+  ) {
+    return "native"
+  }
+
+  return "none"
 }

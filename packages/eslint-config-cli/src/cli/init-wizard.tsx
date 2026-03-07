@@ -199,10 +199,12 @@ function InitWizard({
               />
             )}
             {currentStep.id === "hooks" && (
-              <MultiSelectStep
+              <SingleSelectStep
                 cursorIndex={cursorIndex}
                 options={[
-                  { enabled: state.hooks, label: "Pre-commit hook scaffold" },
+                  { active: state.hookStrategy === "none", label: "No Git hooks" },
+                  { active: state.hookStrategy === "native", label: "Native .githooks pre-commit" },
+                  { active: state.hookStrategy === "husky", label: "Husky pre-commit" },
                 ]}
               />
             )}
@@ -467,6 +469,16 @@ function confirmOption(
       return { ...state, formatter: cursorIndex === 1 ? "oxfmt" : "none" }
     case "install":
       return { ...state, install: cursorIndex === 1 }
+    case "hooks":
+      if (cursorIndex === 1) {
+        return { ...state, hookStrategy: "native" }
+      }
+
+      if (cursorIndex === 2) {
+        return { ...state, hookStrategy: "husky" }
+      }
+
+      return { ...state, hookStrategy: "none" }
     default:
       return state
   }
@@ -480,8 +492,9 @@ function getOptionCount(stepId: WizardStepId): number {
       return 2
     case "editor":
     case "agents":
-    case "hooks":
       return 1
+    case "hooks":
+      return 3
     case "install":
       return 2
     case "review":
@@ -504,8 +517,6 @@ function toggleOption(
       return { ...state, vscode: !state.vscode }
     case "agents":
       return { ...state, agents: !state.agents }
-    case "hooks":
-      return { ...state, hooks: !state.hooks }
     default:
       return state
   }

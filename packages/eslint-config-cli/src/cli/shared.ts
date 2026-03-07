@@ -9,6 +9,8 @@ export interface CliResult {
   stdout: string[]
 }
 
+export type HookStrategy = "husky" | "native" | "none"
+
 export interface InitOptions extends ConfigOptions {
   agents?: boolean
   cwd: string
@@ -16,6 +18,7 @@ export interface InitOptions extends ConfigOptions {
   force?: boolean
   formatter?: "none" | "oxfmt"
   hooks?: boolean
+  hookStrategy?: HookStrategy
   install?: boolean
   vscode?: boolean
 }

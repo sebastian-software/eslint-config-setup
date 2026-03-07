@@ -51,6 +51,7 @@ async function handleInit(argv: string[]): Promise<number> {
       "dry-run": { type: "boolean" },
       force: { type: "boolean" },
       formatter: { type: "string" },
+      "hook-provider": { type: "string" },
       hooks: { type: "boolean" },
       install: { type: "boolean" },
       node: { type: "boolean" },
@@ -64,6 +65,12 @@ async function handleInit(argv: string[]): Promise<number> {
   const formatter = parsed.values.formatter
   if (formatter && formatter !== "none" && formatter !== "oxfmt") {
     console.error(`Unsupported formatter "${formatter}". Use "none" or "oxfmt".`)
+    return 1
+  }
+
+  const hookProvider = parsed.values["hook-provider"]
+  if (hookProvider && hookProvider !== "native" && hookProvider !== "husky") {
+    console.error(`Unsupported hook provider "${hookProvider}". Use "native" or "husky".`)
     return 1
   }
 
@@ -90,6 +97,7 @@ async function handleInit(argv: string[]): Promise<number> {
     dryRun: parsed.values["dry-run"] ?? false,
     force: parsed.values.force ?? false,
     formatter: (formatter as "none" | "oxfmt" | undefined) ?? "none",
+    hookStrategy: resolveHookStrategy(parsed.values.hooks ?? false, hookProvider),
     hooks: parsed.values.hooks ?? false,
     install: parsed.values.install ?? false,
     node: parsed.values.node ?? false,
@@ -107,7 +115,7 @@ function printUsage(): void {
 
 Usage:
   eslint-config-setup-cli init
-  eslint-config-setup-cli init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--install] [--force]
+  eslint-config-setup-cli init [--react] [--node] [--ai] [--oxlint] [--formatter oxfmt] [--vscode] [--agents] [--hooks] [--hook-provider native|husky] [--install] [--force]
   eslint-config-setup-cli doctor
 `)
 }
@@ -162,6 +170,7 @@ function shouldUseWizard(
     values.agents,
     values.ai,
     values["dry-run"],
+    values["hook-provider"],
     values.hooks,
     values.install,
     values.node,
@@ -170,6 +179,21 @@ function shouldUseWizard(
     values.vscode,
     values.formatter,
   ].some(Boolean)
+}
+
+function resolveHookStrategy(
+  hooks: boolean,
+  hookProvider: string | boolean | undefined,
+): "husky" | "native" | "none" {
+  if (hookProvider === "husky") {
+    return "husky"
+  }
+
+  if (hookProvider === "native") {
+    return "native"
+  }
+
+  return hooks ? "native" : "none"
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

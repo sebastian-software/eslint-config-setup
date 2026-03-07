@@ -1,10 +1,10 @@
-import type { InitOptions } from "./shared"
+import type { HookStrategy, InitOptions } from "./shared"
 
 export interface InitWizardState {
   agents: boolean
   ai: boolean
   formatter: "none" | "oxfmt"
-  hooks: boolean
+  hookStrategy: HookStrategy
   install: boolean
   node: boolean
   oxlint: boolean
@@ -41,7 +41,7 @@ export function createDefaultWizardState(): InitWizardState {
     agents: true,
     ai: false,
     formatter: "none",
-    hooks: false,
+    hookStrategy: "none",
     install: false,
     node: false,
     oxlint: false,
@@ -69,7 +69,11 @@ export function getStepAnswerSummary(
     case "agents":
       return state.agents ? "AGENTS.md" : "No agent guidance"
     case "hooks":
-      return state.hooks ? "Pre-commit hook" : "No Git hooks"
+      if (state.hookStrategy === "husky") {
+        return "Husky pre-commit"
+      }
+
+      return state.hookStrategy === "native" ? "Native pre-commit hook" : "No Git hooks"
     case "install":
       return state.install ? "Install dependencies now" : "Print install command only"
     case "review":
@@ -86,7 +90,7 @@ export function toInitOptions(
     ai: state.ai,
     cwd,
     formatter: state.formatter,
-    hooks: state.hooks,
+    hookStrategy: state.hookStrategy,
     install: state.install,
     node: state.node,
     oxlint: state.oxlint,

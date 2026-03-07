@@ -98,6 +98,29 @@ describe("runInit", () => {
     expect(hook).toContain("pnpm run lint")
   })
 
+  it("supports husky as a hook strategy", () => {
+    const dir = createProjectDir()
+
+    const outcome = runInit({
+      cwd: dir,
+      formatter: "oxfmt",
+      hookStrategy: "husky",
+      react: true,
+    })
+
+    const packageJson = JSON.parse(
+      readFileSync(path.join(dir, "package.json"), "utf8"),
+    ) as { scripts: Record<string, string> }
+    const hook = readFileSync(path.join(dir, ".husky/pre-commit"), "utf8")
+
+    expect(packageJson.scripts.prepare).toBe("husky")
+    expect(packageJson.scripts["hooks:install"]).toBeUndefined()
+    expect(hook).toContain("npm run format:check")
+    expect(hook).toContain("npm run lint")
+    expect(outcome.dependencyChanges.some((dependency) => dependency.name === "husky")).toBe(true)
+    expect(outcome.fileChanges.some((file) => file.filepath.endsWith(".husky/pre-commit"))).toBe(true)
+  })
+
   it("supports dry-run without writing files", () => {
     const dir = createProjectDir()
 

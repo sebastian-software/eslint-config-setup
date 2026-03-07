@@ -88,4 +88,17 @@ describe("runCli", () => {
     expect(readFileSync(path.join(dir, "eslint.config.ts"), "utf8")).toContain("getEslintConfig")
     expect(log.mock.calls.flat().join("\n")).toContain("File changes: update")
   })
+
+  it("accepts husky as a hook provider through the CLI entry", async () => {
+    const dir = createProjectDir()
+    process.chdir(dir)
+
+    const log = vi.spyOn(console, "log").mockImplementation(() => {})
+
+    const exitCode = await runCli(["init", "--react", "--hook-provider", "husky", "--dry-run"])
+
+    expect(exitCode).toBe(0)
+    expect(log.mock.calls.flat().join("\n")).toContain(".husky/pre-commit")
+    expect(log.mock.calls.flat().join("\n")).toContain("install husky")
+  })
 })

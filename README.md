@@ -36,9 +36,10 @@ If you prefer explicit, scriptable setup:
 
 ```bash
 npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hooks
+npx eslint-config-setup init --react --ai --oxlint --formatter oxfmt --vscode --agents --hook-provider husky
 ```
 
-This scaffolds `eslint.config.ts`, optional `oxlint.config.ts`, package scripts, an `AGENTS.md`, VS Code settings, and a simple pre-commit hook preset.
+This scaffolds `eslint.config.ts`, optional `oxlint.config.ts`, package scripts, an `AGENTS.md`, VS Code settings, and an optional pre-commit hook preset via native `.githooks` or Husky.
 
 Useful follow-ups:
 

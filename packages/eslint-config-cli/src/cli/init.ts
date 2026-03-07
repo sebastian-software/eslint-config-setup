@@ -2,7 +2,7 @@ import { chmodSync, mkdirSync } from "node:fs"
 import path from "node:path"
 import { spawnSync } from "node:child_process"
 
-import type { InitOptions, PackageManager, ProjectPackageJson } from "./shared"
+import type { HookStrategy, InitOptions, PackageManager, ProjectPackageJson } from "./shared"
 import { renderAgentsTemplate } from "./templates/agents"
 import { renderEslintConfigTemplate } from "./templates/eslint-config"
 import { renderOxlintConfigTemplate } from "./templates/oxlint-config"
@@ -173,6 +173,7 @@ function getPlannedFiles(
   scripts: Record<string, string>,
   packageManager: PackageManager,
 ): PlannedFile[] {
+  const hookStrategy = resolveHookStrategy(opts)
   const nextPackageJson = {
     ...packageJson,
     scripts: {
@@ -226,15 +227,16 @@ function getPlannedFiles(
     })
   }
 
-  if (opts.hooks) {
+  if (hookStrategy !== "none") {
+    const hookPath = getPreCommitHookPath(opts.cwd, hookStrategy)
     filesToWrite.push({
       action: getFileAction(
-        path.join(opts.cwd, ".githooks/pre-commit"),
+        hookPath,
         renderPreCommitHook(opts, packageManager),
       ),
       content: renderPreCommitHook(opts, packageManager),
       executable: true,
-      filepath: path.join(opts.cwd, ".githooks/pre-commit"),
+      filepath: hookPath,
     })
   }
 
@@ -252,6 +254,10 @@ function getDependenciesToInstall(opts: InitOptions): string[] {
     dependencies.push("oxfmt")
   }
 
+  if (resolveHookStrategy(opts) === "husky") {
+    dependencies.push("husky")
+  }
+
   return dependencies
 }
 
@@ -266,6 +272,7 @@ function getDependencyChanges(
 }
 
 function getScripts(opts: InitOptions): Record<string, string> {
+  const hookStrategy = resolveHookStrategy(opts)
   const lint = opts.oxlint ? "oxlint . && eslint ." : "eslint ."
   const lintFix = opts.oxlint ? "oxlint . --fix && eslint . --fix" : "eslint . --fix"
 
@@ -284,8 +291,12 @@ function getScripts(opts: InitOptions): Record<string, string> {
     scripts.fix = lintFix
   }
 
-  if (opts.hooks) {
+  if (hookStrategy === "native") {
     scripts["hooks:install"] = "git config core.hooksPath .githooks"
+  }
+
+  if (hookStrategy === "husky") {
+    scripts.prepare = "husky"
   }
 
   return scripts
@@ -515,6 +526,20 @@ function getFileAction(
   }
 
   return existingAction
+}
+
+function getPreCommitHookPath(cwd: string, hookStrategy: HookStrategy): string {
+  return hookStrategy === "husky"
+    ? path.join(cwd, ".husky/pre-commit")
+    : path.join(cwd, ".githooks/pre-commit")
+}
+
+function resolveHookStrategy(opts: InitOptions): HookStrategy {
+  if (opts.hookStrategy) {
+    return opts.hookStrategy
+  }
+
+  return opts.hooks ? "native" : "none"
 }
 
 function hasDependencyInPackageJson(
