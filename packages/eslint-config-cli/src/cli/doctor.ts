@@ -2,11 +2,13 @@ import path from "node:path"
 
 import type { DoctorResult } from "./shared"
 
+import { previewInit } from "./init"
 import {
   detectPackageManager,
   formatInstallCommand,
   findEslintConfigFile,
   findOxlintConfigFile,
+  getCliCommand,
   getRunCommand,
   hasDependency,
   parseMajorVersion,
@@ -28,6 +30,7 @@ export function runDoctor(cwd: string): DoctorResult {
   const packageManager = detectPackageManager(cwd, packageJson)
   const installDevDeps = (...dependencies: string[]) =>
     formatInstallCommand(packageManager, dependencies)
+  const cli = getCliCommand(packageManager)
   const run = getRunCommand(packageManager)
   const eslintConfigFile = findEslintConfigFile(cwd)
   const oxlintConfigFile = findOxlintConfigFile(cwd)
@@ -39,7 +42,15 @@ export function runDoctor(cwd: string): DoctorResult {
   const vscodeContent = readTextIfExists(vscodePath)
   const preCommitHookContent = readTextIfExists(preCommitHookPath)
   const usesAi = Boolean(eslintConfigContent?.match(/\bai\s*:\s*true\b/))
+  const usesNode = Boolean(eslintConfigContent?.match(/\bnode\s*:\s*true\b/))
   const usesOxlint = Boolean(eslintConfigContent?.match(/\boxlint\s*:\s*true\b/))
+  const usesReact = Boolean(eslintConfigContent?.match(/\breact\s*:\s*true\b/))
+  const usesOxfmt = Boolean(
+    packageJson.scripts?.format?.includes("oxfmt")
+      || packageJson.scripts?.check?.includes("oxfmt")
+      || packageJson.scripts?.fix?.includes("oxfmt")
+      || packageJson.scripts?.["format:check"]?.includes("oxfmt"),
+  )
 
   checks.push(
     hasDependency(packageJson, "eslint-config-setup")
@@ -99,7 +110,7 @@ export function runDoctor(cwd: string): DoctorResult {
       oxlintConfigFile
         ? { level: "pass" as const, message: `Found ${path.basename(oxlintConfigFile)}.` }
         : {
-            fix: `Create one with \`${run} eslint-config-setup init --oxlint --dry-run\` and apply the generated file.`,
+            fix: `Create one with \`${formatInitCommand(cli, { oxlint: true }, ["--dry-run"])}\` and apply the generated file.`,
             level: "fail" as const,
             message: "ESLint config enables oxlint, but no oxlint config file was found.",
           },
@@ -148,10 +159,10 @@ export function runDoctor(cwd: string): DoctorResult {
 
   if (!packageJson.scripts?.check) {
     checks.push({
-      fix: "Add a check script so local development and CI use the same verification path.",
-      level: "warn" as const,
-      message: "No check script found. Add one for CI and local verification.",
-    })
+          fix: "Add a check script so local development and CI use the same verification path.",
+          level: "warn" as const,
+          message: "No check script found. Add one for CI and local verification.",
+        })
   }
 
   if (usesAi) {
@@ -159,7 +170,7 @@ export function runDoctor(cwd: string): DoctorResult {
       agentsContent
         ? { level: "pass" as const, message: "Found AGENTS.md for agent-facing verification instructions." }
         : {
-            fix: `Generate one with \`${run} eslint-config-setup init --agents --dry-run\` and apply the result.`,
+            fix: `Generate one with \`${formatInitCommand(cli, { agents: true }, ["--dry-run"])}\` and apply the result.`,
             level: "warn" as const,
             message: "AI mode is enabled, but AGENTS.md is missing.",
           },
@@ -190,6 +201,38 @@ export function runDoctor(cwd: string): DoctorResult {
     })
   }
 
+  if (eslintConfigContent?.includes("getEslintConfig")) {
+    const preview = previewInit({
+      agents: Boolean(agentsContent),
+      ai: usesAi,
+      cwd,
+      dryRun: true,
+      formatter: usesOxfmt ? "oxfmt" : "none",
+      hooks: Boolean(preCommitHookContent || hooksInstallScript),
+      node: usesNode,
+      oxlint: usesOxlint,
+      react: usesReact,
+      vscode: Boolean(vscodeContent),
+    })
+
+    for (const conflict of getDoctorDriftConflicts(preview.conflicts)) {
+      checks.push({
+        fix: `Compare with \`${formatInitCommand(cli, {
+          agents: Boolean(agentsContent),
+          ai: usesAi,
+          formatter: usesOxfmt ? "oxfmt" : "none",
+          hooks: Boolean(preCommitHookContent || hooksInstallScript),
+          node: usesNode,
+          oxlint: usesOxlint,
+          react: usesReact,
+          vscode: Boolean(vscodeContent),
+        }, ["--dry-run"])}\`, then re-run with \`--force\` if you want to replace the generated targets.`,
+        level: "warn" as const,
+        message: conflict,
+      })
+    }
+  }
+
   const nodeMajor = parseMajorVersion(process.versions.node)
   if (nodeMajor !== null && nodeMajor >= 22) {
     checks.push({
@@ -207,4 +250,51 @@ export function runDoctor(cwd: string): DoctorResult {
     checks,
     exitCode: checks.some((check) => check.level === "fail") ? 1 : 0,
   }
+}
+
+function formatInitCommand(
+  cli: string,
+  options: {
+    agents?: boolean
+    ai?: boolean
+    formatter?: "none" | "oxfmt"
+    hooks?: boolean
+    node?: boolean
+    oxlint?: boolean
+    react?: boolean
+    vscode?: boolean
+  },
+  extraFlags: string[] = [],
+): string {
+  const flags = [
+    options.react ? "--react" : null,
+    options.node ? "--node" : null,
+    options.ai ? "--ai" : null,
+    options.oxlint ? "--oxlint" : null,
+    options.formatter === "oxfmt" ? "--formatter oxfmt" : null,
+    options.vscode ? "--vscode" : null,
+    options.agents ? "--agents" : null,
+    options.hooks ? "--hooks" : null,
+    ...extraFlags,
+  ].filter(Boolean)
+
+  return [cli, "init", ...flags].join(" ")
+}
+
+function getDoctorDriftConflicts(conflicts: Array<{ message: string }>): string[] {
+  return conflicts.flatMap((conflict) => {
+    if (conflict.message.startsWith("Script \"")) {
+      return [`Init-managed package scripts drift from the current generated defaults. ${conflict.message}`]
+    }
+
+    if (
+      conflict.message.startsWith("AGENTS.md")
+      || conflict.message.startsWith(".vscode/settings.json")
+      || conflict.message.startsWith(".githooks/pre-commit")
+    ) {
+      return [`Init-managed companion files drift from the current generated defaults. ${conflict.message}`]
+    }
+
+    return []
+  })
 }

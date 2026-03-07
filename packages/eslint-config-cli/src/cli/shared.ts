@@ -185,6 +185,19 @@ export function getRunCommand(packageManager: PackageManager): string {
   }
 }
 
+export function getCliCommand(packageManager: PackageManager): string {
+  switch (packageManager) {
+    case "bun":
+      return "bunx eslint-config-setup"
+    case "pnpm":
+      return "pnpm exec eslint-config-setup"
+    case "yarn":
+      return "yarn eslint-config-setup"
+    default:
+      return "npx eslint-config-setup"
+  }
+}
+
 function findFirstExistingFile(
   cwd: string,
   filenames: readonly string[],
