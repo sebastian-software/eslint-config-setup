@@ -43,7 +43,7 @@ export async function runInitWizard(
 
 function InitWizard({
   cwd,
-  force,
+  force: initialForce,
   onCancel,
   onError,
   onSubmit,
@@ -56,16 +56,22 @@ function InitWizard({
 }) {
   const { exit } = useApp()
   const [cursorIndex, setCursorIndex] = useState(0)
+  const [force, setForce] = useState(initialForce)
   const [stepIndex, setStepIndex] = useState(0)
   const [state, setState] = useState<InitWizardState>(createDefaultWizardState)
   const currentStep = WIZARD_STEPS[stepIndex]
   const preview = getPreview(cwd, state, force)
+  const canForceConflicts = Boolean(
+    preview
+    && preview.conflicts.length > 0
+    && preview.conflicts.every((conflict) => conflict.canForce),
+  )
   const canSubmit = currentStep.id !== "review"
     || Boolean(
       preview
       && (
         preview.conflicts.length === 0
-        || (force && preview.conflicts.every((conflict) => conflict.canForce))
+        || (force && canForceConflicts)
       ),
     )
 
@@ -83,6 +89,11 @@ function InitWizard({
     }
 
     if (currentStep.id === "review") {
+      if (input === "f" && canForceConflicts) {
+        setForce((current) => !current)
+        return
+      }
+
       if (key.return) {
         if (!canSubmit) {
           return
@@ -198,6 +209,7 @@ function InitWizard({
             )}
             {currentStep.id === "review" && (
               <ReviewStep
+                canForceConflicts={canForceConflicts}
                 force={force}
                 preview={preview}
                 state={state}
@@ -208,13 +220,11 @@ function InitWizard({
       </Box>
       <Box marginTop={1} flexDirection="column">
         <Text color={MUTED}>
-          {currentStep.id === "review"
-            ? canSubmit
-              ? "Enter to write files. Press b to go back. Press q or Esc to cancel."
-              : force
-                ? "Resolve the listed conflicts before writing files. Press b to go back."
-                : "Resolve the listed conflicts or re-run init with --force. Press b to go back."
-            : "Up/Down to move. Space toggles multi-select. Enter confirms. Press b to go back."}
+          {getFooterHint(currentStep.id, {
+            canForceConflicts,
+            canSubmit,
+            force,
+          })}
         </Text>
       </Box>
     </Box>
@@ -297,14 +307,19 @@ function OptionRow({
 }
 
 function ReviewStep({
+  canForceConflicts,
   preview,
   force,
   state,
 }: {
+  canForceConflicts: boolean
   force: boolean
   preview: InitPreview | null
   state: InitWizardState
 }) {
+  const replaceableConflicts = preview?.conflicts.filter((conflict) => conflict.canForce) ?? []
+  const blockingConflicts = preview?.conflicts.filter((conflict) => !conflict.canForce) ?? []
+
   return (
     <Box flexDirection="column">
       <Text>Profile: {getStepAnswerSummary("profile", state)}</Text>
@@ -315,12 +330,28 @@ function ReviewStep({
       <Text>Install: {getStepAnswerSummary("install", state)}</Text>
       {preview ? (
         <>
-          {preview.conflicts.length > 0 && (
+          <Text color={HIGHLIGHT}>Review summary</Text>
+          <Text color={MUTED}>Write targets: {preview.files.length}</Text>
+          <Text color={MUTED}>Scripts: {preview.scripts.length}</Text>
+          <Text color={MUTED}>Dependencies: {preview.installedDependencies.length}</Text>
+          <Text color={force ? "yellow" : MUTED}>
+            Overwrite mode: {force ? "enabled" : "disabled"}
+            {canForceConflicts ? " (press f to toggle)" : ""}
+          </Text>
+          {replaceableConflicts.length > 0 && (
             <>
               <Text color={force ? "yellow" : "red"}>
-                {force ? "Overwrite targets" : "Conflicts"}
+                Replaceable targets ({replaceableConflicts.length})
               </Text>
-              {preview.conflicts.map((conflict) => (
+              {replaceableConflicts.map((conflict) => (
+                <Text key={conflict.message} color={MUTED}>- {conflict.message}</Text>
+              ))}
+            </>
+          )}
+          {blockingConflicts.length > 0 && (
+            <>
+              <Text color="red">Blocking conflicts ({blockingConflicts.length})</Text>
+              {blockingConflicts.map((conflict) => (
                 <Text key={conflict.message} color={MUTED}>- {conflict.message}</Text>
               ))}
             </>
@@ -420,4 +451,31 @@ function toggleOption(
     default:
       return state
   }
+}
+
+function getFooterHint(
+  stepId: WizardStepId,
+  options: {
+    canForceConflicts: boolean
+    canSubmit: boolean
+    force: boolean
+  },
+): string {
+  if (stepId !== "review") {
+    return "Up/Down to move. Space toggles multi-select. Enter confirms. Press b to go back."
+  }
+
+  if (options.canSubmit) {
+    if (options.canForceConflicts) {
+      return "Enter to write files. Press f to toggle overwrite mode. Press b to go back. Press q or Esc to cancel."
+    }
+
+    return "Enter to write files. Press b to go back. Press q or Esc to cancel."
+  }
+
+  if (options.canForceConflicts && !options.force) {
+    return "Press f to enable overwrite mode, or press b to go back."
+  }
+
+  return "Resolve the listed conflicts before writing files. Press b to go back."
 }
