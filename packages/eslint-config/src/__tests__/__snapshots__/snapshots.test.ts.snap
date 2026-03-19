@@ -258,6 +258,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -935,32 +941,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   {
     "name": "eslint-config-setup/ai-structural",
     "rules": {
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-        {
-          "checkThenables": true,
-          "ignoreVoid": true,
-        },
-      ],
-      "@typescript-eslint/no-magic-numbers": [
-        "error",
-        {
-          "enforceConst": true,
-          "ignore": [
-            -1,
-            0,
-            1,
-            2,
-          ],
-          "ignoreArrayIndexes": true,
-          "ignoreClassFieldInitialValues": true,
-          "ignoreDefaultValues": true,
-          "ignoreEnums": true,
-          "ignoreNumericLiteralTypes": true,
-          "ignoreReadonlyClassProperties": true,
-          "ignoreTypeIndexes": true,
-        },
-      ],
       "arrow-body-style": "error",
       "curly": [
         "error",
@@ -1030,6 +1010,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/ai-typescript",
     "rules": {
       "@typescript-eslint/consistent-type-exports": [
@@ -1233,6 +1219,32 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         "error",
         {
           "fixToUnknown": true,
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreVoid": true,
+        },
+      ],
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          "enforceConst": true,
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+          ],
+          "ignoreArrayIndexes": true,
+          "ignoreClassFieldInitialValues": true,
+          "ignoreDefaultValues": true,
+          "ignoreEnums": true,
+          "ignoreNumericLiteralTypes": true,
+          "ignoreReadonlyClassProperties": true,
+          "ignoreTypeIndexes": true,
         },
       ],
       "@typescript-eslint/prefer-enum-initializers": "error",
@@ -2373,6 +2385,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -3089,12 +3107,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": false,
-        },
-      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -3213,6 +3225,23 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
+    "name": "eslint-config-setup/react-typescript",
+    "rules": {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
+    },
+  },
+  {
     "name": "eslint-config-setup/react-effect",
     "rules": {
       "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
@@ -3229,32 +3258,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "eslint-config-setup/ai-structural",
     "rules": {
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-        {
-          "checkThenables": true,
-          "ignoreVoid": true,
-        },
-      ],
-      "@typescript-eslint/no-magic-numbers": [
-        "error",
-        {
-          "enforceConst": true,
-          "ignore": [
-            -1,
-            0,
-            1,
-            2,
-          ],
-          "ignoreArrayIndexes": true,
-          "ignoreClassFieldInitialValues": true,
-          "ignoreDefaultValues": true,
-          "ignoreEnums": true,
-          "ignoreNumericLiteralTypes": true,
-          "ignoreReadonlyClassProperties": true,
-          "ignoreTypeIndexes": true,
-        },
-      ],
       "arrow-body-style": "error",
       "curly": [
         "error",
@@ -3324,6 +3327,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/ai-typescript",
     "rules": {
       "@typescript-eslint/consistent-type-exports": [
@@ -3529,6 +3538,32 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         "error",
         {
           "fixToUnknown": true,
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreVoid": true,
+        },
+      ],
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          "enforceConst": true,
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+          ],
+          "ignoreArrayIndexes": true,
+          "ignoreClassFieldInitialValues": true,
+          "ignoreDefaultValues": true,
+          "ignoreEnums": true,
+          "ignoreNumericLiteralTypes": true,
+          "ignoreReadonlyClassProperties": true,
+          "ignoreTypeIndexes": true,
         },
       ],
       "@typescript-eslint/prefer-enum-initializers": "error",
@@ -5275,6 +5310,12 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -6912,6 +6953,12 @@ exports[`config snapshots > snapshot: node only 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -8580,6 +8627,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -9265,12 +9318,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": false,
-        },
-      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -9389,6 +9436,23 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
+    "name": "eslint-config-setup/react-typescript",
+    "rules": {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
+    },
+  },
+  {
     "name": "eslint-config-setup/react-effect",
     "rules": {
       "react-you-might-not-need-an-effect/no-adjust-state-on-prop-change": "warn",
@@ -9405,32 +9469,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   {
     "name": "eslint-config-setup/ai-structural",
     "rules": {
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-        {
-          "checkThenables": true,
-          "ignoreVoid": true,
-        },
-      ],
-      "@typescript-eslint/no-magic-numbers": [
-        "error",
-        {
-          "enforceConst": true,
-          "ignore": [
-            -1,
-            0,
-            1,
-            2,
-          ],
-          "ignoreArrayIndexes": true,
-          "ignoreClassFieldInitialValues": true,
-          "ignoreDefaultValues": true,
-          "ignoreEnums": true,
-          "ignoreNumericLiteralTypes": true,
-          "ignoreReadonlyClassProperties": true,
-          "ignoreTypeIndexes": true,
-        },
-      ],
       "arrow-body-style": "error",
       "curly": [
         "error",
@@ -9500,6 +9538,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/ai-typescript",
     "rules": {
       "@typescript-eslint/consistent-type-exports": [
@@ -9705,6 +9749,32 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         "error",
         {
           "fixToUnknown": true,
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": [
+        "error",
+        {
+          "checkThenables": true,
+          "ignoreVoid": true,
+        },
+      ],
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          "enforceConst": true,
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+          ],
+          "ignoreArrayIndexes": true,
+          "ignoreClassFieldInitialValues": true,
+          "ignoreDefaultValues": true,
+          "ignoreEnums": true,
+          "ignoreNumericLiteralTypes": true,
+          "ignoreReadonlyClassProperties": true,
+          "ignoreTypeIndexes": true,
         },
       ],
       "@typescript-eslint/prefer-enum-initializers": "error",
@@ -10845,6 +10915,12 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -11620,12 +11696,6 @@ exports[`config snapshots > snapshot: react + node 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": false,
-        },
-      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -11741,6 +11811,23 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "react/ref-name": "warn",
       "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
+    "name": "eslint-config-setup/react-typescript",
+    "rules": {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
     },
   },
   {
@@ -12661,6 +12748,12 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -13405,12 +13498,6 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": false,
-        },
-      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -13526,6 +13613,23 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "react/ref-name": "warn",
       "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
+    "name": "eslint-config-setup/react-typescript",
+    "rules": {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
     },
   },
   {
@@ -15042,6 +15146,12 @@ exports[`config snapshots > snapshot: react only 1`] = `
     },
   },
   {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
     "name": "eslint-config-setup/typescript",
     "rules": {
       "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -15786,12 +15896,6 @@ exports[`config snapshots > snapshot: react only 1`] = `
         },
       ],
       "@stylistic/jsx-self-closing-comp": "error",
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": false,
-        },
-      ],
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-has-content": "error",
       "jsx-a11y/anchor-is-valid": "error",
@@ -15907,6 +16011,23 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "react/ref-name": "warn",
       "react/style-prop-object": "error",
       "react/void-dom-elements-no-children": "error",
+    },
+  },
+  {
+    "files": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ],
+    "name": "eslint-config-setup/react-typescript",
+    "rules": {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false,
+        },
+      ],
     },
   },
   {

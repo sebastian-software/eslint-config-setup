@@ -14,6 +14,11 @@ import type { FlatConfigArray } from "../types"
  * @see https://github.com/DavidAnson/markdownlint-cli2 (recommended for Markdown structure linting)
  */
 export function markdownConfig(): FlatConfigArray {
+  const codeBlockLanguageOptions =
+    (mdxPlugin.flatCodeBlocks.languageOptions as Record<string, unknown> | undefined) ?? {}
+  const codeBlockParserOptions =
+    (codeBlockLanguageOptions.parserOptions as Record<string, unknown> | undefined) ?? {}
+
   return [
     // ── MDX / Markdown parsing ─────────────────────────────────────
     {
@@ -29,6 +34,13 @@ export function markdownConfig(): FlatConfigArray {
     // Relaxes rules that don't apply to incomplete code snippets.
     {
       ...mdxPlugin.flatCodeBlocks,
+      languageOptions: {
+        ...codeBlockLanguageOptions,
+        parserOptions: {
+          ...codeBlockParserOptions,
+          projectService: false,
+        },
+      },
       rules: {
         ...mdxPlugin.flatCodeBlocks.rules,
         // Snippets don't need trailing newlines

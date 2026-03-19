@@ -6,6 +6,10 @@ import reactHooksPlugin from "eslint-plugin-react-hooks"
 import reactRefreshPlugin from "eslint-plugin-react-refresh"
 import globals from "globals"
 
+import {
+  MARKDOWN_CODE_BLOCK_FILES,
+  TYPESCRIPT_SOURCE_FILES,
+} from "../file-patterns"
 import { reactCompatPlugin } from "../plugins/react-compat"
 import type { FlatConfigArray } from "../types"
 
@@ -358,8 +362,13 @@ export function reactConfig(): FlatConfigArray {
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/autocomplete-valid.md
         "jsx-a11y/autocomplete-valid": "error",
 
-        // ── TypeScript adjustments for React ────────────────────────────
-
+      },
+    },
+    {
+      name: "eslint-config-setup/react-typescript",
+      files: [...TYPESCRIPT_SOURCE_FILES],
+      ignores: [...MARKDOWN_CODE_BLOCK_FILES],
+      rules: {
         // Allow async event handlers — onClick={async () => {...}} is idiomatic React
         // https://typescript-eslint.io/rules/no-misused-promises
         "@typescript-eslint/no-misused-promises": [

@@ -10,6 +10,7 @@
  */
 import picomatch from "picomatch"
 
+import { MARKDOWN_DOCUMENT_FILES } from "../file-patterns"
 import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types"
 
 import { composeConfig } from "./compose"
@@ -21,6 +22,7 @@ type Rules = Record<string, unknown>
 const FILE_PROBES = {
   base: "example.ts",
   jsCompat: "example.js",
+  markdownCodeBlocks: "guide.mdx/0.ts",
   tests: "example.test.ts",
   e2e: "example.spec.ts",
   stories: "example.stories.tsx",
@@ -42,6 +44,10 @@ export function generateConfigModule(opts: ConfigOptions): string {
 
   // Compute diffs — each override only contains rules that differ from base
   const jsCompatDiff = computeRuleDiff(resolved.base, resolved.jsCompat)
+  const markdownCodeBlocksDiff = computeRuleDiff(
+    resolved.base,
+    resolved.markdownCodeBlocks,
+  )
   const testsDiff = computeRuleDiff(resolved.base, resolved.tests)
   const e2eDiff = computeRuleDiff(resolved.base, resolved.e2e)
   const storiesDiff = computeRuleDiff(resolved.base, resolved.stories)
@@ -55,6 +61,7 @@ export function generateConfigModule(opts: ConfigOptions): string {
   // Collect all namespaces including overrides (for imports)
   const allRules: Rules = {
     ...baseRules,
+    ...markdownCodeBlocksDiff,
     ...testsDiff,
     ...e2eDiff,
     ...storiesDiff,
@@ -169,7 +176,7 @@ export function generateConfigModule(opts: ConfigOptions): string {
   }
 
   // 13. Markdown/MDX (template block)
-  blocks.push(emitMarkdownBlock())
+  blocks.push(emitMarkdownBlock(markdownCodeBlocksDiff))
 
   // 14. OxLint (absolute last)
   if (hasOxlint) {
@@ -433,7 +440,7 @@ function emitBaseBlock(
   namespaces: Set<string>,
   features: { hasReact: boolean; hasNode: boolean },
 ): string {
-  const lines: string[] = [ "  // Base rules — all effective rules for *.ts files", "  {", '    name: "eslint-config-setup/base",', "    plugins: {"]
+  const lines: string[] = [ "  // Base rules — all effective rules for TS plus shared JS/TS rules", "  {", '    name: "eslint-config-setup/base",', `    ignores: ${JSON.stringify([...MARKDOWN_DOCUMENT_FILES])},`, "    plugins: {"]
 
   // Plugins object
   for (const ns of [...namespaces].sort()) {
@@ -583,7 +590,7 @@ function emitPackageJsonAiBlock(): string {
   ].join("\n")
 }
 
-function emitMarkdownBlock(): string {
+function emitMarkdownBlock(markdownCodeBlocksDiff: Rules): string {
   return [
     "  // Markdown/MDX parsing",
     "  {",
@@ -593,7 +600,15 @@ function emitMarkdownBlock(): string {
     "  // Markdown/MDX code block linting",
     "  {",
     "    ...mdxPlugin.flatCodeBlocks,",
+    "    languageOptions: {",
+    "      ...mdxPlugin.flatCodeBlocks.languageOptions,",
+    "      parserOptions: {",
+    "        ...mdxPlugin.flatCodeBlocks.languageOptions?.parserOptions,",
+    "        projectService: false,",
+    "      },",
+    "    },",
     "    rules: {",
+    `      ...${indentJson(markdownCodeBlocksDiff, 6)},`,
     "      ...mdxPlugin.flatCodeBlocks.rules,",
     '      "eol-last": "off",',
     '      "no-undef": "off",',

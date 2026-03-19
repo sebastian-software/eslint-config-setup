@@ -75,6 +75,12 @@ describe("config rule stability", () => {
     expect(
       tsBlock!.rules!["@typescript-eslint/consistent-type-exports"],
     ).toBeDefined()
+    expect(tsBlock?.files).toStrictEqual([
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ])
   })
 
   it("always uses strictTypeChecked rules", () => {
@@ -153,6 +159,23 @@ describe("config rule stability", () => {
     )
     expect(mdBlock).toBeDefined()
     expect(mdBlock?.files).toStrictEqual(["**/*.{md,mdx}"])
+  })
+
+  it("react typed rules are scoped away from MDX documents", () => {
+    const config = composeConfig({ react: true })
+    const reactTsBlock = config.find(
+      (b) => b.name === "eslint-config-setup/react-typescript",
+    )
+
+    expect(reactTsBlock?.files).toStrictEqual([
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+    ])
+    expect(
+      reactTsBlock?.rules?.["@typescript-eslint/no-misused-promises"],
+    ).toStrictEqual(["error", { checksVoidReturn: false }])
   })
 })
 

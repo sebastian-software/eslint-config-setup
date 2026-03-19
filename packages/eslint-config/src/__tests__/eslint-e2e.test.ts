@@ -11,6 +11,16 @@ import { generateConfigModule } from "../build/codegen"
 
 /** Minimal valid TS file — should not trigger fatal config errors. */
 const FIXTURE_TS = `const greeting: string = "hello"\nconsole.log(greeting)\n`
+const FIXTURE_MDX = `# Hello
+
+export const Demo = () => <button type="button">Go</button>
+`
+const FIXTURE_MDX_TS_BLOCK = `# Types
+
+\`\`\`typescript
+var greeting: string = "hello"
+\`\`\`
+`
 
 /**
  * node_modules root so that the generated eslint.config.js can resolve
@@ -86,4 +96,86 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
       ).toHaveLength(0)
     })
   }
+})
+
+describe("ESLint E2E — MDX handling", () => {
+  const MDX_PERMUTATIONS: Array<{ label: string; opts: ConfigOptions }> = [
+    { label: "base", opts: {} },
+    { label: "react", opts: { react: true } },
+    { label: "ai", opts: { ai: true } },
+    { label: "react + ai", opts: { react: true, ai: true } },
+  ]
+
+  for (const { label, opts } of MDX_PERMUTATIONS) {
+    it(`does not fatal on MDX documents: ${label}`, { timeout: 30_000 }, async () => {
+      const moduleSource = generateConfigModule(opts)
+      const dir = path.join(tmpdir(), `eslint-mdx-e2e-${Date.now()}-${label.replaceAll(" ", "-")}`)
+      mkdirSync(dir, { recursive: true })
+
+      writeFileSync(path.join(dir, "eslint.config.js"), moduleSource)
+      writeFileSync(path.join(dir, "test.mdx"), FIXTURE_MDX)
+      writeFileSync(
+        path.join(dir, "tsconfig.json"),
+        JSON.stringify({ compilerOptions: { jsx: "react-jsx", strict: true }, include: ["*.ts", "*.tsx"] }),
+      )
+
+      symlinkSync(NODE_MODULES, path.join(dir, "node_modules"), "junction")
+
+      const eslint = new ESLint({
+        cwd: dir,
+        overrideConfig: [
+          {
+            languageOptions: {
+              parserOptions: {
+                tsconfigRootDir: dir,
+              },
+            },
+          },
+        ],
+      })
+      const results = await eslint.lintFiles([path.join(dir, "test.mdx")])
+
+      expect(results).toHaveLength(1)
+      const fatal = results[0].messages.filter((m) => m.fatal)
+      expect(
+        fatal,
+        `Fatal errors:\n${fatal.map((m) => `  ${m.message}`).join("\n")}`,
+      ).toHaveLength(0)
+    })
+  }
+
+  it("still lints TypeScript fenced blocks inside MDX", { timeout: 30_000 }, async () => {
+    const moduleSource = generateConfigModule({})
+    const dir = path.join(tmpdir(), `eslint-mdx-code-blocks-${Date.now()}`)
+    mkdirSync(dir, { recursive: true })
+
+    writeFileSync(path.join(dir, "eslint.config.js"), moduleSource)
+    writeFileSync(path.join(dir, "test.mdx"), FIXTURE_MDX_TS_BLOCK)
+    writeFileSync(
+      path.join(dir, "tsconfig.json"),
+      JSON.stringify({ compilerOptions: { strict: true }, include: ["*.ts"] }),
+    )
+
+    symlinkSync(NODE_MODULES, path.join(dir, "node_modules"), "junction")
+
+    const eslint = new ESLint({
+      cwd: dir,
+      overrideConfig: [
+        {
+          languageOptions: {
+            parserOptions: {
+              tsconfigRootDir: dir,
+            },
+          },
+        },
+      ],
+    })
+    const [result] = await eslint.lintFiles([path.join(dir, "test.mdx")])
+
+    const fatal = result.messages.filter((message) => message.fatal)
+    expect(fatal, JSON.stringify(result.messages, null, 2)).toHaveLength(0)
+    expect(result.messages.some((message) => message.ruleId === "no-var")).toBe(
+      true,
+    )
+  })
 })

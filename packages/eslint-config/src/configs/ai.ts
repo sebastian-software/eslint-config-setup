@@ -1,4 +1,8 @@
 /* eslint-disable max-lines, max-lines-per-function -- Rule definition file: one function returning a long list of rule entries. Not complex, just large. */
+import {
+  MARKDOWN_CODE_BLOCK_FILES,
+  TYPESCRIPT_SOURCE_FILES,
+} from "../file-patterns"
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -107,23 +111,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
 
         // ── B. Magic numbers & constants — no unexplained code ────────
 
-        // No magic numbers — extract to named constants (allows -1, 0, 1, 2)
-        // https://typescript-eslint.io/rules/no-magic-numbers
-        "@typescript-eslint/no-magic-numbers": [
-          "error",
-          {
-            ignore: [-1, 0, 1, 2],
-            ignoreArrayIndexes: true,
-            ignoreDefaultValues: true,
-            enforceConst: true,
-            ignoreClassFieldInitialValues: true,
-            ignoreEnums: true,
-            ignoreNumericLiteralTypes: true,
-            ignoreReadonlyClassProperties: true,
-            ignoreTypeIndexes: true,
-          },
-        ],
-
         // No duplicate strings (threshold 3) — extract to constant
         // https://sonarsource.github.io/rspec/#/rspec/S1192/javascript
         "sonarjs/no-duplicate-string": ["error", { threshold: 3 }],
@@ -142,18 +129,38 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
         // https://eslint.org/docs/latest/rules/no-promise-executor-return
         "no-promise-executor-return": "error",
 
+      },
+    },
+    {
+      name: "eslint-config-setup/ai-typescript",
+      files: [...TYPESCRIPT_SOURCE_FILES],
+      ignores: [...MARKDOWN_CODE_BLOCK_FILES],
+      rules: {
+        // ── C. TypeScript strictness — explicit types, safe patterns ──
+
+        // No magic numbers — extract to named constants (allows -1, 0, 1, 2)
+        // https://typescript-eslint.io/rules/no-magic-numbers
+        "@typescript-eslint/no-magic-numbers": [
+          "error",
+          {
+            ignore: [-1, 0, 1, 2],
+            ignoreArrayIndexes: true,
+            ignoreDefaultValues: true,
+            enforceConst: true,
+            ignoreClassFieldInitialValues: true,
+            ignoreEnums: true,
+            ignoreNumericLiteralTypes: true,
+            ignoreReadonlyClassProperties: true,
+            ignoreTypeIndexes: true,
+          },
+        ],
+
         // Every Promise must be awaited, returned, or voided — prevents silent failures
         // https://typescript-eslint.io/rules/no-floating-promises
         "@typescript-eslint/no-floating-promises": [
           "error",
           { checkThenables: true, ignoreVoid: true },
         ],
-      },
-    },
-    {
-      name: "eslint-config-setup/ai-typescript",
-      rules: {
-        // ── C. TypeScript strictness — explicit types, safe patterns ──
 
         // Require explicit return types — self-documenting function signatures
         // https://typescript-eslint.io/rules/explicit-function-return-type

@@ -4,6 +4,7 @@ import tseslint from "typescript-eslint"
 import type { FlatConfig, FlatConfigArray } from "../types"
 
 import { createConfig } from "../build/config-builder"
+import { MARKDOWN_CODE_BLOCK_FILES, TYPESCRIPT_SOURCE_FILES } from "../file-patterns"
 
 /**
  * TypeScript config — extends typescript-eslint strict presets with project-wide type checking.
@@ -31,6 +32,8 @@ export function typescriptConfig(): FlatConfigArray {
     name: "eslint-config-setup/typescript",
     passthrough: structuralBlocks,
     presets: ruleBlocks,
+    files: [...TYPESCRIPT_SOURCE_FILES],
+    ignores: [...MARKDOWN_CODE_BLOCK_FILES],
     languageOptions: {
       parserOptions: {
         // Use project service for automatic tsconfig resolution

@@ -15,6 +15,7 @@ describe("generateConfigModule", () => {
     const output = generateConfigModule({})
     expect(output).toContain('"eslint-config-setup/base"')
     expect(output).toContain("projectService: true")
+    expect(output).toContain('ignores: ["**/*.{md,mdx}"]')
   })
 
   it("includes JS compat override", () => {
@@ -68,6 +69,7 @@ describe("generateConfigModule", () => {
     expect(output).toContain("globals.browser")
     expect(output).toContain("ecmaFeatures: { jsx: true }")
     expect(output).toContain("eslintReactPlugin")
+    expect(output).toContain('"@typescript-eslint/no-misused-promises": "off"')
   })
 
   it("does not include react settings when react is disabled", () => {
