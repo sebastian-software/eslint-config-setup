@@ -1,4 +1,5 @@
 import type { Config } from "@react-router/dev/config"
+
 import { detectGitHubBasename } from "ardo/vite"
 
 export default {

@@ -1,7 +1,8 @@
 import type { EntryContext } from "react-router"
-import { ServerRouter } from "react-router"
-import { renderToReadableStream } from "react-dom/server"
+
 import { isbot } from "isbot"
+import { renderToReadableStream } from "react-dom/server"
+import { ServerRouter } from "react-router"
 
 export default async function handleRequest(
   request: Request,
@@ -21,7 +22,7 @@ export default async function handleRequest(
     }
   )
 
-  if (userAgent && isbot(userAgent)) {
+  if (userAgent !== null && isbot(userAgent)) {
     await stream.allReady
   }
 

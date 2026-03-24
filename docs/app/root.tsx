@@ -1,8 +1,10 @@
-import { RootLayout, ArdoRoot } from "ardo/ui"
+import type { MetaFunction } from "react-router"
+
+import { ArdoRoot, RootLayout } from "ardo/ui"
 import config from "virtual:ardo/config"
 import sidebar from "virtual:ardo/sidebar"
-import type { MetaFunction } from "react-router"
 import "ardo/ui/styles.css"
+
 import "./homepage.css"
 
 export const meta: MetaFunction = () => [{ title: config.title }]

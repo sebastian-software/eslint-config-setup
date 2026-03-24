@@ -1,9 +1,9 @@
-interface LogoProps {
+type LogoProps = {
   size?: number
   className?: string
 }
 
-function Icon({ size = 14, d, className }: LogoProps & { d: string }) {
+function Icon({ size = 14, d, className }: { d: string } & LogoProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -109,10 +109,10 @@ export function PlaywrightLogo(props: LogoProps) {
 }
 
 /** Map from plugin name to its brand logo component and color */
-export const brandMap: Record<
+export const brandMap: Partial<Record<
   string,
   { logo: (props: LogoProps) => JSX.Element; color: string }
-> = {
+>> = {
   "TypeScript ESLint": { logo: TypeScriptLogo, color: "#3178c6" },
   React: { logo: ReactLogo, color: "#61dafb" },
   "React Hooks": { logo: ReactLogo, color: "#61dafb" },

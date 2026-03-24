@@ -13,12 +13,15 @@ pnpm install
 ## Development
 
 ```bash
+pnpm lint           # Run self-linting for package + docs workspace
 pnpm check          # TypeScript type checking
 pnpm test           # Run tests
 pnpm test:coverage  # Run tests with coverage
 pnpm build          # Build the package
 pnpm generate       # Generate all config permutations
 ```
+
+`pnpm install` also wires the repo-local `pre-push` hook, which runs `pnpm lint` automatically before pushes.
 
 ## How It Works
 
@@ -53,7 +56,7 @@ When adding new rules or plugins:
 - Keep changes focused — one feature or fix per PR
 - Update tests and snapshots
 - Update the docs if behavior changes
-- Run `pnpm check && pnpm test && pnpm build` before submitting
+- Run `pnpm lint && pnpm check && pnpm test && pnpm build` before submitting
 
 ## License
 

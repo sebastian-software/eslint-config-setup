@@ -2,13 +2,13 @@ import { getEslintConfig } from "eslint-config-setup"
 
 const config = await getEslintConfig({ node: true })
 
-// Ignore directories and file types not relevant for self-linting
+// Root self-lint focuses on the package workspace; docs have their own React-aware config.
 config.unshift({
   ignores: [
     "refs/",
     "docs/",
-    "packages/eslint-config/dist/",
-    "packages/eslint-config/coverage/",
+    "packages/*/dist/",
+    "packages/*/coverage/",
     ".claude/",
     "**/*.md",
     "**/*.mdx",

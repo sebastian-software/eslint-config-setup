@@ -29,7 +29,10 @@
     "generate": "pnpm --filter eslint-config-setup generate",
     "test": "pnpm --filter eslint-config-setup test",
     "test:coverage": "pnpm --filter eslint-config-setup test:coverage",
-    "lint": "node --import tsx node_modules/eslint/bin/eslint.js .",
+    "lint": "pnpm lint:self && pnpm lint:docs",
+    "lint:self": "node --import tsx node_modules/eslint/bin/eslint.js --no-config-lookup --config eslint.config.js .",
+    "lint:docs": "node --import tsx node_modules/eslint/bin/eslint.js --no-config-lookup --config docs/eslint.config.js docs/app docs/react-router.config.ts docs/vite.config.ts",
+    "prepare": "git config --local core.hooksPath .githooks || true",
     "docs:dev": "pnpm --filter docs dev",
     "docs:build": "pnpm --filter docs build"
   },

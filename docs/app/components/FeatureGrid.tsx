@@ -1,12 +1,13 @@
+import type { ReactNode } from "react"
+
 import {
-  Zap,
-  Sparkles,
   Blocks,
+  Package,
   Rabbit,
   SlidersHorizontal,
-  Package,
+  Sparkles,
+  Zap,
 } from "ardo/icons"
-import type { ReactNode } from "react"
 
 function FeatureCard({
   icon,

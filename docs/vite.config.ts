@@ -1,10 +1,7 @@
-import { defineConfig } from 'vite'
 import { ardo } from 'ardo/vite'
-import { readFileSync } from 'node:fs'
+import { defineConfig } from 'vite'
 
-const pkg = JSON.parse(
-  readFileSync(new URL('../packages/eslint-config/package.json', import.meta.url), 'utf-8')
-)
+import pkg from '../packages/eslint-config/package.json' with { type: 'json' }
 
 export default defineConfig({
   plugins: [
@@ -16,7 +13,7 @@ export default defineConfig({
       project: {
         name: pkg.name,
         version: pkg.version,
-        repository: pkg.repository?.url?.replace(/^git\+/, '').replace(/\.git$/, ''),
+        repository: pkg.repository.url.replace(/^git\+/, '').replace(/\.git$/, ''),
         license: pkg.license,
       },
 

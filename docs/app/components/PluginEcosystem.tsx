@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react"
+
 import { brandMap } from "./BrandLogos"
 
 function PluginTile({
@@ -10,12 +12,12 @@ function PluginTile({
   color: string
 }) {
   const brand = brandMap[name]
+  const style: CSSProperties & Record<"--hp-tile-color", string> = {
+    "--hp-tile-color": color,
+  }
 
   return (
-    <div
-      className="hp-eco-tile"
-      style={{ "--hp-tile-color": color } as React.CSSProperties}
-    >
+    <div className="hp-eco-tile" style={style}>
       <div className="hp-eco-tile-icon">
         {brand ? (
           <brand.logo size={28} />

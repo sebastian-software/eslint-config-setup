@@ -1,11 +1,12 @@
 import type { MetaFunction } from "react-router"
-import { HeroSection } from "../components/HeroSection"
-import { StatsBar } from "../components/StatsBar"
+
 import { BeforeAfterSection } from "../components/BeforeAfterSection"
-import { FeatureGrid } from "../components/FeatureGrid"
 import { CodeShowcase } from "../components/CodeShowcase"
-import { PluginEcosystem } from "../components/PluginEcosystem"
 import { CTAFooter } from "../components/CTAFooter"
+import { FeatureGrid } from "../components/FeatureGrid"
+import { HeroSection } from "../components/HeroSection"
+import { PluginEcosystem } from "../components/PluginEcosystem"
+import { StatsBar } from "../components/StatsBar"
 
 export const meta: MetaFunction = () => [
   { title: "ESLint Config Setup" },
