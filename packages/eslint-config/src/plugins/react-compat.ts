@@ -1,3 +1,5 @@
+import type { ESLint, Rule } from "eslint"
+
 /**
  * React Compat Plugin — merges all `@eslint-react` sub-plugins into a single
  * `react` namespace and re-exports rules under legacy `eslint-plugin-react`
@@ -13,28 +15,29 @@
  * (e.g. `react/no-context-provider`, `react/no-leaked-event-listener`).
  * As OxLint expands React support, more rules will automatically be covered.
  *
- * @see https://eslint-react.xyz/docs/rules/overview
- * @see https://oxc.rs/docs/guide/usage/linter/rules.html
+ * @see https://eslint-react.xyz/docs/rules/overview - `@eslint-react` rules overview
+ * @see https://oxc.rs/docs/guide/usage/linter/rules.html - OxLint rules
  */
 import eslintReactPlugin from "@eslint-react/eslint-plugin"
-
-import type { ESLint, Rule } from "eslint"
 
 type PluginRules = Record<string, Rule.RuleModule>
 
 /**
- * Extracts a sub-plugin's rules object from an @eslint-react config entry.
+ * Extracts a sub-plugin's rules object from an `@eslint-react` config entry.
  */
 function extractSubPluginRules(
   configName: string,
   pluginKey: string,
 ): PluginRules {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the eslint-react plugin config shape
   const configs = eslintReactPlugin.configs as Record<string, Record<string, unknown>>
   const config = configs[configName]
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the plugins object shape
   const plugins = config.plugins as Record<string, { rules: PluginRules }>
   return plugins[pluginKey].rules
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the rules export
 const coreRules = eslintReactPlugin.rules as PluginRules
 const domRules = extractSubPluginRules("dom", "@eslint-react/dom")
 const webApiRules = extractSubPluginRules("web-api", "@eslint-react/web-api")
@@ -208,7 +211,7 @@ export function translatePresetRules(
 
 /**
  * Unified React plugin registered as `react` in ESLint flat config.
- * Contains all @eslint-react rule implementations under OxLint-compatible names.
+ * Contains all `@eslint-react` rule implementations under OxLint-compatible names.
  */
 export const reactCompatPlugin: ESLint.Plugin = {
   meta: {

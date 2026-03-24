@@ -1,7 +1,8 @@
 import sonarjsPlugin from "eslint-plugin-sonarjs"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * SonarJS config — code-quality rules from SonarSource.
@@ -17,6 +18,7 @@ export function sonarjsConfig(opts?: { ai?: boolean }): FlatConfigArray {
   const builder = createConfig({
     name: "eslint-config-setup/sonarjs",
     presets: [{
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin type is compatible
       plugins: { sonarjs: sonarjsPlugin as Record<string, unknown> },
       rules: {
         // Detect copy-pasted functions — extract to shared helper instead

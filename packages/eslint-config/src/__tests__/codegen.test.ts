@@ -137,9 +137,8 @@ describe("generateConfigModule", () => {
   it("only includes active rules (no 'off' rules in base)", () => {
     const output = generateConfigModule({})
     // The base block should not contain rules set to "off"
-    const baseMatch = output.match(/name: "eslint-config-setup\/base"[\s\S]*?rules: \{([\s\S]*?)\}/)
-    if (baseMatch) {
-      expect(baseMatch[1]).not.toContain('"off"')
-    }
+    const baseMatch = /name: "eslint-config-setup\/base"[\s\S]*?rules: \{([\s\S]*?)\}/.exec(output)
+    expect(baseMatch).not.toBeNull()
+    expect(baseMatch?.[1]).not.toContain('"off"')
   })
 })

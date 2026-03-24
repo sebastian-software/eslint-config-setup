@@ -5,6 +5,7 @@ import securityPlugin from "eslint-plugin-security"
 
 import type { FlatConfigArray } from "../types"
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the security plugin
 const plugin = securityPlugin as unknown as ESLint.Plugin
 
 /**

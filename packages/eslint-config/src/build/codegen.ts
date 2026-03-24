@@ -1,4 +1,4 @@
-/* eslint-disable max-lines, max-lines-per-function, max-statements, max-params, sonarjs/cognitive-complexity -- Build-time code generator: inherently procedural with many sequential steps. Splitting would hurt readability. */
+/* eslint-disable max-lines, max-lines-per-function, max-statements, max-params, complexity, sonarjs/cognitive-complexity -- Build-time code generator: inherently procedural with many sequential steps. Splitting would hurt readability. */
 /**
  * Code generator — produces valid ES module strings for pre-generated ESLint
  * flat configs. Merges rules from the composed config array by matching file
@@ -10,9 +10,9 @@
  */
 import picomatch from "picomatch"
 
-import { MARKDOWN_DOCUMENT_FILES } from "../file-patterns"
 import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types"
 
+import { MARKDOWN_DOCUMENT_FILES } from "../file-patterns"
 import { composeConfig } from "./compose"
 import { pluginRegistry, standaloneImports } from "./plugin-registry"
 
@@ -218,9 +218,11 @@ export function generateConfigModule(opts: ConfigOptions): string {
 function resolveRulesForAllProbes(
   config: FlatConfigArray,
 ): Record<keyof typeof FILE_PROBES, Rules> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Populated for all keys in the loop below
   const result = {} as Record<keyof typeof FILE_PROBES, Rules>
 
   for (const [key, filename] of Object.entries(FILE_PROBES)) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Key is always a valid FILE_PROBES key
     result[key as keyof typeof FILE_PROBES] = resolveRulesForFile(config, filename)
   }
 
@@ -258,7 +260,7 @@ function resolveRulesForFile(config: FlatConfigArray, filename: string): Rules {
  * (JSON, JSONC, markdown, etc.).
  */
 function hasNonJsFields(block: FlatConfig): boolean {
-  // biome-ignore lint: using `any` for dynamic property access
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Checking dynamic properties on config block
   const b = block as Record<string, unknown>
   return b.language !== undefined || b.processor !== undefined
 }
@@ -685,7 +687,7 @@ function indentJson(obj: Rules, indent: number): string {
  * Sorts rules alphabetically by name for deterministic output.
  */
 /**
- * Emits inline JS that builds the react-compat plugin from @eslint-react/eslint-plugin.
+ * Emits inline JS that builds the react-compat plugin from `@eslint-react/eslint-plugin`.
  * Merges all sub-plugins into one namespace and aliases rules to legacy names for OxLint compat.
  */
 function emitReactCompatHelper(): string[] {

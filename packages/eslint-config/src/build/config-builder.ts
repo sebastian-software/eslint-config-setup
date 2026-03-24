@@ -5,7 +5,7 @@ import type { FlatConfig, FlatConfigArray } from "../types"
 
 type RuleValue = Linter.RuleEntry
 
-interface ConfigBuilderOptions {
+type ConfigBuilderOptions = {
   name: string
   presets?: FlatConfig[]
   passthrough?: FlatConfigArray
@@ -16,29 +16,29 @@ interface ConfigBuilderOptions {
   ignores?: FlatConfig["ignores"]
 }
 
-type Severity = "error" | "warn" | "off"
+type Severity = "error" | "off" | "warn"
 
-interface ConfigBuilder {
+type ConfigBuilder = {
   /** Override an existing preset rule. THROWS if rule not in preset. */
-  overrideRule(name: string, value: RuleValue): ConfigBuilder
+  overrideRule: (name: string, value: RuleValue) => ConfigBuilder
   /** Change only the severity of an existing preset rule, keeping its options. THROWS if not in preset. */
-  overrideSeverity(name: string, severity: Severity): ConfigBuilder
+  overrideSeverity: (name: string, severity: Severity) => ConfigBuilder
   /** Change only the options of an existing preset rule, keeping its severity. THROWS if not in preset. */
-  overrideOptions(name: string, ...options: unknown[]): ConfigBuilder
+  overrideOptions: (name: string, ...options: unknown[]) => ConfigBuilder
   /** Add a new rule. THROWS if rule already exists in preset or was already added. */
-  addRule(name: string, value: RuleValue): ConfigBuilder
+  addRule: (name: string, value: RuleValue) => ConfigBuilder
   /** Disable an existing preset rule (set to "off"). THROWS if not found. */
-  disableRule(name: string): ConfigBuilder
+  disableRule: (name: string) => ConfigBuilder
   /** Remove a rule entirely from output. THROWS if not found. */
-  removeRule(name: string): ConfigBuilder
+  removeRule: (name: string) => ConfigBuilder
   /** Add an extra output block with specific files and rules (not validated against preset). */
-  addFileOverride(
+  addFileOverride: (
     name: string,
     files: string[],
     rules: Partial<Linter.RulesRecord>,
-  ): ConfigBuilder
+  ) => ConfigBuilder
   /** Materialize into FlatConfigArray. */
-  build(): FlatConfigArray
+  build: () => FlatConfigArray
 }
 
 export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
@@ -91,26 +91,28 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
             `Cannot override severity of a rule that doesn't exist in the preset.`,
         )
       }
-      const existing = presetRules.get(name)!
+      const existing = presetRules.get(name)
       if (Array.isArray(existing)) {
-        const [, ...options] = existing
-        overrides.set(name, [severity, ...options])
+        const [, ...restOptions] = existing
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Spreading rule options from preset
+        overrides.set(name, [severity, ...restOptions])
       } else {
         overrides.set(name, severity)
       }
       return builder
     },
 
-    overrideOptions(name: string, ...options: unknown[]): ConfigBuilder {
+    overrideOptions(name: string, ...ruleOptions: unknown[]): ConfigBuilder {
       if (!presetRules.has(name)) {
         throw new Error(
           `overrideOptions("${name}"): rule not found in preset. ` +
             `Cannot override options of a rule that doesn't exist in the preset.`,
         )
       }
-      const existing = presetRules.get(name)!
+      const existing = presetRules.get(name)
       const severity = Array.isArray(existing) ? existing[0] : existing
-      overrides.set(name, [severity as Severity, ...options])
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Severity extracted from preset rule entry
+      overrides.set(name, [severity as Severity, ...ruleOptions])
       return builder
     },
 
@@ -232,6 +234,7 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
         result.push({
           name: fo.name,
           files: fo.files,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Partial<RulesRecord> is compatible with RulesRecord
           rules: fo.rules as Linter.RulesRecord,
         })
       }

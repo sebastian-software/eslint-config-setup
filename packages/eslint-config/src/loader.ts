@@ -1,4 +1,4 @@
-/* eslint-disable security/detect-non-literal-fs-filename -- Paths are computed from deterministic hashes in dist/, not from user input. */
+/* eslint-disable security/detect-non-literal-fs-filename, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-type-assertion, @typescript-eslint/no-unsafe-argument -- Paths are computed from deterministic hashes in dist/, not from user input. Node.js and path APIs have unresolved types in this context. */
 import { readFileSync } from "node:fs"
 import path from "node:path"
 

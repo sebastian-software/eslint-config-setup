@@ -1,6 +1,6 @@
 import type { Linter } from "eslint"
 
-export interface ConfigOptions {
+export type ConfigOptions = {
   /** Enable React 19+ rules via `@eslint-react` (Hooks, DOM, Web API leaks, JSX-A11y) */
   react?: boolean
   /** Enable Node.js-specific rules and globals */
@@ -14,7 +14,7 @@ export interface ConfigOptions {
 /** Options for pre-generated OxLint configs (oxlint flag is irrelevant here). */
 export type OxlintConfigOptions = Omit<ConfigOptions, "oxlint">
 
-export interface OxlintConfigResult {
+export type OxlintConfigResult = {
   $schema?: string
   plugins?: string[]
   categories?: Record<string, string>
@@ -36,6 +36,6 @@ export type RuleScope =
   | "stories"
   | "tests"
 
-export interface RuleOptions {
+export type RuleOptions = {
   scope?: RuleScope
 }

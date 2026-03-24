@@ -1,8 +1,7 @@
-import {
-  MARKDOWN_CODE_BLOCK_FILES,
-  TYPESCRIPT_SOURCE_FILES,
-} from "../file-patterns"
 import type { FlatConfigArray } from "../types"
+
+
+
 
 /**
  * AI mode — cross-cutting concerns that span multiple domains.
@@ -16,6 +15,7 @@ import type { FlatConfigArray } from "../types"
  *
  * @see ADR-0006: docs/adr/0006-ai-mode-as-dedicated-flag.md
  */
+// eslint-disable-next-line max-lines-per-function -- Config definition: flat list of rule overrides for multiple file types
 export function aiConfig(): FlatConfigArray {
   return [
     {

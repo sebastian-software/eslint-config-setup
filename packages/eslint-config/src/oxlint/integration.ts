@@ -10,6 +10,7 @@ import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types"
  * checks and ESLint only runs type-aware and specialty rules.
  */
 export function oxlintIntegration(opts: ConfigOptions): FlatConfigArray {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the oxlint plugin's config shape
   const typedPlugin = oxlintPlugin as unknown as {
     configs: Record<string, FlatConfig | FlatConfig[]>
   }

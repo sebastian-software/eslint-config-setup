@@ -1,8 +1,8 @@
-import { mkdirSync, symlinkSync, writeFileSync } from "node:fs"
-import path from "node:path"
-import { tmpdir } from "node:os"
-
+/* eslint-disable @typescript-eslint/no-unsafe-call, security/detect-non-literal-fs-filename */
 import { ESLint } from "eslint"
+import { mkdirSync, symlinkSync, writeFileSync } from "node:fs"
+import { tmpdir } from "node:os"
+import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import type { ConfigOptions } from "../types"
@@ -170,10 +170,11 @@ describe("ESLint E2E — MDX handling", () => {
         },
       ],
     })
-    const [result] = await eslint.lintFiles([path.join(dir, "test.mdx")])
+    const results = await eslint.lintFiles([path.join(dir, "test.mdx")])
+    const result = results[0]
 
     const fatal = result.messages.filter((message) => message.fatal)
-    expect(fatal, JSON.stringify(result.messages, null, 2)).toHaveLength(0)
+    expect(fatal).toHaveLength(0)
     expect(result.messages.some((message) => message.ruleId === "no-var")).toBe(
       true,
     )

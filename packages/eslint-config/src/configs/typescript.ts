@@ -1,4 +1,4 @@
-/* eslint-disable max-lines-per-function, max-statements -- Rule definition file: sequential builder calls that configure the TypeScript preset. */
+/* eslint-disable max-lines-per-function, max-statements, complexity -- Rule definition file: sequential builder calls that configure the TypeScript preset. */
 import tseslint from "typescript-eslint"
 
 import type { FlatConfig, FlatConfigArray } from "../types"
@@ -179,7 +179,7 @@ export function typescriptConfig(opts?: { ai?: boolean; react?: boolean }): Flat
   // https://typescript-eslint.io/rules/promise-function-async
   builder.addRule("@typescript-eslint/promise-function-async", "error")
 
-  // Enforce property-style signatures — safer due to strict parameter contravariance
+  // Enforce property-style signatures — safer due to strict parameter contra-variance
   // https://typescript-eslint.io/rules/method-signature-style
   builder.addRule("@typescript-eslint/method-signature-style", [
     "error",

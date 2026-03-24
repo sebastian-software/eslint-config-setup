@@ -1,8 +1,9 @@
-/* eslint-disable max-lines-per-function -- Rule definition file: one function returning a flat list of rule entries. */
+/* eslint-disable max-lines-per-function, max-statements -- Rule definition file: one function returning a flat list of rule entries. */
 import unicornPlugin from "eslint-plugin-unicorn"
 
-import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
+
+import { createConfig } from "../build/config-builder"
 
 /**
  * Unicorn config — modern JavaScript idioms and best practices.

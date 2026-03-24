@@ -4,6 +4,7 @@ import jsonPlugin from "@eslint/json"
 
 import type { FlatConfigArray } from "../types"
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the JSON plugin
 const plugin = jsonPlugin as unknown as ESLint.Plugin
 
 /**

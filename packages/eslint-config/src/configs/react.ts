@@ -5,26 +5,26 @@ import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
 import reactRefreshPlugin from "eslint-plugin-react-refresh"
 import globals from "globals"
 
+import type { FlatConfigArray } from "../types"
+
 import { createConfig } from "../build/config-builder"
 import {
-  MARKDOWN_CODE_BLOCK_FILES,
   TYPESCRIPT_SOURCE_FILES,
 } from "../file-patterns"
 import {
   reactCompatPlugin,
   translatePresetRules,
 } from "../plugins/react-compat"
-import type { FlatConfigArray } from "../types"
 
 // ── Derive react/ rules from @eslint-react presets ──────────────────────────
 // Recommended + strict presets are merged and translated to react/ compat names.
 // This way new rules added to the presets are picked up automatically.
-const recommendedRules = (
-  eslintReactPlugin.configs as Record<string, Record<string, unknown>>
-).recommended.rules as Record<string, unknown>
-const strictRules = (
-  eslintReactPlugin.configs as Record<string, Record<string, unknown>>
-).strict.rules as Record<string, unknown>
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the eslint-react configs shape
+const typedConfigs = eslintReactPlugin.configs as Record<string, Record<string, unknown>>
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Extracting rules from preset config
+const recommendedRules = typedConfigs.recommended.rules as Record<string, unknown>
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Extracting rules from preset config
+const strictRules = typedConfigs.strict.rules as Record<string, unknown>
 const presetRules = translatePresetRules({ ...recommendedRules, ...strictRules })
 
 /**
@@ -43,6 +43,7 @@ const presetRules = translatePresetRules({ ...recommendedRules, ...strictRules }
  * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
+// eslint-disable-next-line max-lines-per-function, max-statements -- Config builder: many sequential rule additions for React/JSX/a11y
 export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
   const isAi = opts?.ai ?? false
 
@@ -53,6 +54,7 @@ export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
       react: reactCompatPlugin,
       "@stylistic": stylisticPlugin,
       "react-refresh": reactRefreshPlugin,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin from untyped module
       "jsx-a11y": jsxA11yPlugin as Record<string, unknown>,
     },
     languageOptions: {

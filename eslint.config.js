@@ -1,6 +1,6 @@
-import { composeConfig } from "./packages/eslint-config/src/build/compose.ts"
+import { getEslintConfig } from "eslint-config-setup"
 
-const config = composeConfig({ node: true })
+const config = await getEslintConfig({ node: true })
 
 // Ignore directories and file types not relevant for self-linting
 config.unshift({

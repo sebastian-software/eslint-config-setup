@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, security/detect-non-literal-fs-filename */
 import { execSync } from "node:child_process"
 import { mkdirSync, writeFileSync } from "node:fs"
-import path from "node:path"
 import { tmpdir } from "node:os"
-
+import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import type { OxlintConfigOptions } from "../types"
@@ -29,7 +29,8 @@ const PERMUTATIONS: Array<{ label: string; opts: OxlintConfigOptions }> = [
 ]
 
 describe("oxlint E2E — generated configs are valid", async () => {
-  const migrate = (await import("@oxlint/migrate")).default
+  const migrateModule = await import("@oxlint/migrate")
+  const migrate = migrateModule.default
 
   for (const { label, opts } of PERMUTATIONS) {
     it(`oxlint accepts generated config: ${label}`, { timeout: 30_000 }, async () => {
@@ -59,9 +60,10 @@ describe("oxlint E2E — generated configs are valid", async () => {
           stdio: ["pipe", "pipe", "pipe"],
         })
       } catch (error: unknown) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
         const execError = error as { status: number; stderr: string }
         exitCode = execError.status
-        stderr = execError.stderr ?? ""
+        stderr = execError.stderr
       }
 
       // oxlint uses exit code 2 for config errors

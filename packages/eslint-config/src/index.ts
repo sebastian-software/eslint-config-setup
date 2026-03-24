@@ -1,5 +1,3 @@
-export { getEslintConfig, getOxlintConfig } from "./loader"
-
 export {
   addRule,
   configureRule,
@@ -9,6 +7,8 @@ export {
 } from "./api/rule-helpers"
 
 export { bitmaskToHash, optionsToBitmask, optionsToFilename } from "./hash"
+
+export { getEslintConfig, getOxlintConfig } from "./loader"
 
 export type {
   ConfigOptions,

@@ -1,4 +1,4 @@
-/* eslint-disable max-statements, security/detect-non-literal-fs-filename -- Build script: sequential file generation steps. All fs paths are computed from deterministic hashes, not user input. */
+/* eslint-disable max-statements, security/detect-non-literal-fs-filename, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- Build script: sequential file generation steps. All fs paths are computed from deterministic hashes, not user input. Node.js and path APIs have unresolved types in this context. */
 import { mkdirSync, writeFileSync } from "node:fs"
 import { createRequire } from "node:module"
 import path from "node:path"
@@ -17,15 +17,15 @@ import { generateConfigModule } from "./codegen"
 import { composeConfig } from "./compose"
 import { serializeOxlintConfig } from "./serialize"
 
-(globalThis as Record<string, unknown>).require = createRequire(import.meta.url)
+;(globalThis as Record<string, unknown>).require = createRequire(import.meta.url) // eslint-disable-line import/newline-after-import -- Semicolon-prefixed statement confuses the rule
 
 const dirname = import.meta.dirname
 const outDir = path.resolve(dirname, "../../dist/configs")
 const oxlintOutDir = path.resolve(dirname, "../../dist/oxlint-configs")
 
-function describeOptions(opts: ConfigOptions): string {
+function describeOptions(opts: ConfigOptions | OxlintConfigOptions): string {
   const flags = Object.entries(opts)
-    .filter(([, v]) => v === true)
+    .filter(([, v]) => v)
     .map(([k]) => k)
   return flags.length > 0 ? flags.join(" + ") : "base"
 }
@@ -76,19 +76,12 @@ async function main(): Promise<void> {
     writeFileSync(filepath, content, "utf8")
     oxlintCount++
 
-    const desc = describeOxlintOptions(opts)
+    const desc = describeOptions(opts)
     const size = (Buffer.byteLength(content) / 1024).toFixed(1)
     console.log(`  [${String(mask).padStart(2, " ")}] ${hash}.json → ${desc} (${size} KB)`)
   }
 
   console.log(`\nGenerated ${oxlintCount} OxLint config permutations in dist/oxlint-configs/`)
-}
-
-function describeOxlintOptions(opts: OxlintConfigOptions): string {
-  const flags = Object.entries(opts)
-    .filter(([, v]) => v)
-    .map(([k]) => k)
-  return flags.length > 0 ? flags.join(" + ") : "base"
 }
 
 await main()

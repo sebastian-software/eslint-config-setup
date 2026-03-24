@@ -6,7 +6,7 @@
  * instead of serialized plugin objects.
  */
 
-export interface PluginEntry {
+export type PluginEntry = {
   /** npm package name */
   pkg: string
   /** Variable name after import */
