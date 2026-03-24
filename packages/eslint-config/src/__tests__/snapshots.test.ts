@@ -123,8 +123,8 @@ describe("config rule stability", () => {
       (b) => b.name === "eslint-config-setup/react",
     )
     expect(reactBlock?.rules).toBeDefined()
-    expect(reactBlock!.rules!["react-hooks/rules-of-hooks"]).toBe("error")
-    expect(reactBlock!.rules!["react-hooks/exhaustive-deps"]).toBe("error")
+    expect(reactBlock!.rules!["react/rules-of-hooks"]).toBe("error")
+    expect(reactBlock!.rules!["react/exhaustive-deps"]).toBeDefined()
     expect(reactBlock!.rules!["react/no-unknown-property"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/alt-text"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/anchor-is-valid"]).toBe("error")

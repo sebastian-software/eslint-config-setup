@@ -19,7 +19,6 @@ describe("pluginRegistry", () => {
       "compat",
       "node",
       "react",
-      "react-hooks",
       "@stylistic",
       "react-refresh",
       "jsx-a11y",

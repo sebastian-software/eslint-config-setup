@@ -522,21 +522,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
       "node/no-unsupported-features/node-builtins": "error",
     },
   }, {
-    name: "eslint-config-setup/ai-react",
-    rules: {
-      // No click handlers on static elements without role — use semantic HTML
-      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-static-element-interactions.md
-      "jsx-a11y/no-static-element-interactions": "error",
-
-      // No event handlers on non-interactive elements — use button/link instead
-      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/no-noninteractive-element-interactions.md
-      "jsx-a11y/no-noninteractive-element-interactions": "error",
-
-      // Interactive elements (role="button") must be focusable
-      // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/interactive-supports-focus.md
-      "jsx-a11y/interactive-supports-focus": "error",
-    },
-  }, {
     name: "eslint-config-setup/ai-complexity",
     rules: {
       // Cyclomatic complexity limit — max branches per function
@@ -646,15 +631,6 @@ export function aiConfig(opts?: { react?: boolean }): FlatConfigArray {
       "unicorn/filename-case": "off",
     },
   }]
-
-  // ── G. Regex — self-documenting, modern patterns ──────────────────
-
-  // ── H. JSDoc — prevent meaningless AI-generated docs ──────────────
-
-  // ── J. React — stricter component patterns ───────────────────────
-
-  // ── AI mode relaxations for E2E test files ────────────────────────
-  // E2E tests are long procedural scripts with page interactions
 
   return configs
 }

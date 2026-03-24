@@ -38,10 +38,6 @@ function extractSubPluginRules(
 const coreRules = eslintReactPlugin.rules as PluginRules
 const domRules = extractSubPluginRules("dom", "@eslint-react/dom")
 const webApiRules = extractSubPluginRules("web-api", "@eslint-react/web-api")
-const hooksExtraRules = extractSubPluginRules(
-  "recommended",
-  "@eslint-react/hooks-extra",
-)
 const namingRules = extractSubPluginRules(
   "recommended",
   "@eslint-react/naming-convention",
@@ -60,7 +56,6 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     "no-array-index-key": [coreRules, "no-array-index-key"],
     "no-children-prop": [coreRules, "no-children-prop"],
     "no-direct-mutation-state": [coreRules, "no-direct-mutation-state"],
-    "no-string-refs": [coreRules, "no-string-refs"],
     "no-redundant-should-component-update": [
       coreRules,
       "no-redundant-should-component-update",
@@ -71,10 +66,6 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     ],
     "no-unused-state": [coreRules, "no-unused-state"],
     "jsx-no-comment-textnodes": [coreRules, "jsx-no-comment-textnodes"],
-    "jsx-no-duplicate-props": [coreRules, "jsx-no-duplicate-props"],
-    "jsx-no-undef": [coreRules, "jsx-no-undef"],
-    "jsx-uses-react": [coreRules, "jsx-uses-react"],
-    "jsx-uses-vars": [coreRules, "jsx-uses-vars"],
 
     // ── Core: renamed 1:1 ──────────────────────────────────────────────
     "jsx-boolean-value": [coreRules, "jsx-shorthand-boolean"],
@@ -93,9 +84,7 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     ],
     "display-name": [coreRules, "no-missing-component-display-name"],
     "forward-ref-uses-ref": [coreRules, "no-forward-ref"],
-    "prop-types": [coreRules, "no-prop-types"],
     "destructuring-assignment": [coreRules, "prefer-destructuring-assignment"],
-    "prefer-read-only-props": [coreRules, "prefer-read-only-props"],
     "no-did-mount-set-state": [
       coreRules,
       "no-set-state-in-component-did-mount",
@@ -110,8 +99,7 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     ],
 
     // ── Naming convention → legacy names ───────────────────────────────
-    "hook-use-state": [namingRules, "use-state"],
-    "jsx-pascal-case": [namingRules, "component-name"],
+    "hook-use-state": [coreRules, "use-state"],
 
     // ── DOM → legacy react/ names (not react-dom/) ─────────────────────
     "no-danger": [domRules, "no-dangerously-set-innerhtml"],
@@ -158,7 +146,6 @@ for (const [name, rule] of Object.entries(coreRules)) {
 const subPlugins: Array<[PluginRules, Set<string>]> = [
   [domRules, new Set(["prefer-namespace-import"])],
   [webApiRules, new Set()],
-  [hooksExtraRules, new Set()],
   [namingRules, new Set()],
   [rscRules, new Set()],
 ]
@@ -181,6 +168,42 @@ for (const [legacyName, [source, originalName]] of Object.entries(
   LEGACY_ALIASES,
 )) {
   mergedRules[legacyName] = source[originalName]
+}
+
+// ── Reverse map: original name → compat name ────────────────────────────────
+// Used by translatePresetRules to convert @eslint-react preset keys to react/ keys.
+const originalToCompat = new Map<string, string>()
+for (const [legacyName, [, originalName]] of Object.entries(LEGACY_ALIASES)) {
+  originalToCompat.set(originalName, legacyName)
+}
+
+/**
+ * Translates rules from an `@eslint-react` preset (e.g. `recommended`, `strict`)
+ * into `react/` compat names that match our unified plugin namespace.
+ *
+ * Example: `"@eslint-react/no-missing-key": "error"` → `"react/jsx-key": "error"`
+ */
+export function translatePresetRules(
+  presetRules: Record<string, unknown>,
+): Record<string, unknown> {
+  const result: Record<string, unknown> = {}
+
+  for (const [key, value] of Object.entries(presetRules)) {
+    // Strip plugin prefix: @eslint-react/dom/X → X, @eslint-react/X → X
+    const shortName = key
+      .replace(
+        /^@eslint-react\/(?:dom|web-api|naming-convention|rsc)\//,
+        "",
+      )
+      .replace(/^@eslint-react\//, "")
+
+    const compatName = originalToCompat.get(shortName) ?? shortName
+    if (compatName in mergedRules) {
+      result[`react/${compatName}`] = value
+    }
+  }
+
+  return result
 }
 
 /**

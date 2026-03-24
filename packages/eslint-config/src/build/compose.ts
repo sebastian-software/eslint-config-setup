@@ -87,7 +87,7 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
 
   // 13. React (conditional)
   if (opts.react) {
-    config.push(...reactConfig())
+    config.push(...reactConfig({ ai: opts.ai }))
     config.push(...reactEffectConfig())
   }
 
