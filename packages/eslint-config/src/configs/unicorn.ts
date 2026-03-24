@@ -1,6 +1,7 @@
 /* eslint-disable max-lines-per-function -- Rule definition file: one function returning a flat list of rule entries. */
 import unicornPlugin from "eslint-plugin-unicorn"
 
+import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -11,13 +12,13 @@ import type { FlatConfigArray } from "../types"
  *
  * @see https://github.com/sindresorhus/eslint-plugin-unicorn#rules
  */
-export function unicornConfig(): FlatConfigArray {
-  return [
-    {
-      name: "eslint-config-setup/unicorn",
-      plugins: {
-        unicorn: unicornPlugin,
-      },
+export function unicornConfig(opts?: { ai?: boolean }): FlatConfigArray {
+  const isAi = opts?.ai === true
+
+  const builder = createConfig({
+    name: "eslint-config-setup/unicorn",
+    presets: [{
+      plugins: { unicorn: unicornPlugin },
       rules: {
         // ── Error prevention ──────────────────────────────────────────
 
@@ -337,6 +338,30 @@ export function unicornConfig(): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-single-call.md
         "unicorn/prefer-single-call": "off",
       },
-    },
-  ]
+    }],
+  })
+
+  if (isAi) {
+    // Severity overrides: promote existing base rules from warn to error
+    builder.overrideSeverity("unicorn/consistent-function-scoping", "error")
+    builder.overrideSeverity("unicorn/no-array-reduce", "error")
+    builder.overrideSeverity("unicorn/no-for-loop", "error")
+
+    // New AI-only rules
+    builder.addRule("unicorn/no-array-for-each", "error")
+    builder.addRule("unicorn/prefer-ternary", ["error", "only-single-line"])
+    builder.addRule("unicorn/prefer-switch", ["error", { minimumCases: 3 }])
+    builder.addRule("unicorn/prevent-abbreviations", "error")
+    builder.addRule("unicorn/no-useless-switch-case", "error")
+    builder.addRule("unicorn/custom-error-definition", "error")
+    builder.addRule("unicorn/prefer-default-parameters", "error")
+    builder.addRule("unicorn/prefer-logical-operator-over-ternary", "error")
+    builder.addRule("unicorn/prefer-math-min-max", "error")
+    builder.addRule("unicorn/prefer-set-size", "error")
+    builder.addRule("unicorn/explicit-length-check", "error")
+    builder.addRule("unicorn/switch-case-braces", "error")
+    builder.addRule("unicorn/no-array-push-push", "error")
+  }
+
+  return builder.build()
 }

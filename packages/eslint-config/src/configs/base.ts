@@ -15,11 +15,15 @@ import { createConfig } from "../build/config-builder"
  * Preset: `@eslint/js` recommended
  * @see https://eslint.org/docs/latest/rules/
  */
-export function baseConfig(): FlatConfigArray {
-  return createConfig({
+export function baseConfig(opts?: { ai?: boolean }): FlatConfigArray {
+  const isAi = opts?.ai ?? false
+
+  const builder = createConfig({
     name: "eslint-config-setup/base",
     presets: [eslint.configs.recommended],
   })
+
+  builder
     // ── Error prevention ──────────────────────────────────────────
 
     // Enforce getter/setter pairs — prevents incomplete property accessors
@@ -201,41 +205,41 @@ export function baseConfig(): FlatConfigArray {
 
     // Cyclomatic complexity limit — max branches per function
     // https://eslint.org/docs/latest/rules/complexity
-    .addRule("complexity", ["error", 20])
+    .addRule("complexity", ["error", isAi ? 10 : 20])
 
     // Max nesting depth — deep nesting signals need for extraction
     // https://eslint.org/docs/latest/rules/max-depth
-    .addRule("max-depth", ["error", 5])
+    .addRule("max-depth", ["error", isAi ? 3 : 5])
 
     // Max nested callbacks — prevents callback hell
     // https://eslint.org/docs/latest/rules/max-nested-callbacks
-    .addRule("max-nested-callbacks", ["error", 4])
+    .addRule("max-nested-callbacks", ["error", isAi ? 2 : 4])
 
     // Max function parameters — many params suggest a config object
     // https://eslint.org/docs/latest/rules/max-params
-    .addRule("max-params", ["error", 5])
+    .addRule("max-params", ["error", isAi ? 3 : 5])
 
     // Max statements per function — keeps functions focused
     // https://eslint.org/docs/latest/rules/max-statements
-    .addRule("max-statements", ["error", 25])
+    .addRule("max-statements", ["error", isAi ? 15 : 25])
 
     // Max lines per function — encourages extraction of helpers
     // https://eslint.org/docs/latest/rules/max-lines-per-function
     .addRule("max-lines-per-function", [
       "error",
-      { max: 200, skipBlankLines: true, skipComments: true },
+      { max: isAi ? 100 : 200, skipBlankLines: true, skipComments: true },
     ])
 
     // Max lines per file — encourages modular file organization
     // https://eslint.org/docs/latest/rules/max-lines
     .addRule("max-lines", [
       "error",
-      { max: 500, skipBlankLines: true, skipComments: true },
+      { max: isAi ? 300 : 500, skipBlankLines: true, skipComments: true },
     ])
 
     // Cognitive complexity — measures how hard a function is to understand
     // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
-    .addRule("sonarjs/cognitive-complexity", ["error", 20])
+    .addRule("sonarjs/cognitive-complexity", ["error", isAi ? 10 : 20])
 
     // ── Modern JS style ───────────────────────────────────────────
 
@@ -265,7 +269,7 @@ export function baseConfig(): FlatConfigArray {
 
     // Prefer template literals over string concatenation — more readable
     // https://eslint.org/docs/latest/rules/prefer-template
-    .addRule("prefer-template", "warn")
+    .addRule("prefer-template", isAi ? "error" : "warn")
 
     // Require description for Symbol() — aids debugging
     // https://eslint.org/docs/latest/rules/symbol-description
@@ -279,5 +283,35 @@ export function baseConfig(): FlatConfigArray {
     // https://eslint.org/docs/latest/rules/object-shorthand
     .addRule("object-shorthand", ["error", "always", { avoidExplicitReturnArrows: true, avoidQuotes: true }])
 
-    .build()
+  if (isAi) {
+    // ── AI mode: additional structural rules ─────────────────────
+    builder.addRule("curly", ["error", "all"])
+    builder.addRule("no-else-return", ["error", { allowElseIf: false }])
+    builder.addRule("no-nested-ternary", "error")
+    builder.addRule("no-unneeded-ternary", "error")
+    builder.addRule("no-negated-condition", "error")
+    builder.addRule("no-lonely-if", "error")
+    builder.addRule("no-param-reassign", ["error", { props: true }])
+    builder.addRule("no-multi-assign", "error")
+    builder.addRule("one-var", ["error", "never"])
+    builder.addRule("no-implicit-coercion", "error")
+    builder.addRule("arrow-body-style", "error")
+    builder.addRule("prefer-arrow-callback", [
+      "error",
+      { allowNamedFunctions: true },
+    ])
+    builder.addRule("logical-assignment-operators", [
+      "error",
+      "always",
+      { enforceForIfStatements: true },
+    ])
+    builder.addRule("max-statements-per-line", ["error", { max: 1 }])
+    builder.addRule("prefer-exponentiation-operator", "error")
+    builder.addRule("prefer-named-capture-group", "error")
+    builder.addRule("require-unicode-regexp", "error")
+    builder.addRule("no-warning-comments", "warn")
+    builder.addRule("no-await-in-loop", "error")
+  }
+
+  return builder.build()
 }

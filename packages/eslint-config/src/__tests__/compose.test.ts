@@ -83,11 +83,11 @@ describe("composeConfig", () => {
   it("AI mode sets its own complexity limits", () => {
     const aiConfig = composeConfig({ ai: true })
 
-    const aiComplexity = aiConfig.find(
-      (b) => b.name === "eslint-config-setup/ai-complexity",
+    const baseBlock = aiConfig.find(
+      (b) => b.name === "eslint-config-setup/base",
     )
 
-    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 10])
+    expect(baseBlock?.rules?.complexity).toStrictEqual(["error", 10])
   })
 
   it("includes testing-library rules regardless of react flag", () => {

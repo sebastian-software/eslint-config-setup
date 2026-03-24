@@ -37,11 +37,13 @@ import { standardComplexity } from "../presets/standard"
 export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   const config: FlatConfigArray = []
 
-  // 1. Base rules (always)
-  config.push(...baseConfig())
+  const ai = opts.ai
 
-  // 2. TypeScript (always, uses strictTypeChecked)
-  config.push(...typescriptConfig())
+  // 1. Base rules (always — AI flag tightens complexity + adds structural rules)
+  config.push(...baseConfig({ ai }))
+
+  // 2. TypeScript (always — AI flag adds naming, magic-numbers, etc.)
+  config.push(...typescriptConfig({ ai, react: opts.react }))
 
   // 3. Imports (always)
   config.push(...importsConfig())
@@ -49,20 +51,20 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   // 4. Perfectionist — mechanical sorting (always)
   config.push(...perfectionistConfig())
 
-  // 5. Unicorn (always)
-  config.push(...unicornConfig())
+  // 5. Unicorn (always — AI flag adds stricter patterns)
+  config.push(...unicornConfig({ ai }))
 
-  // 5. Regexp (always)
-  config.push(...regexpConfig())
+  // 5. Regexp (always — AI flag adds self-documenting patterns)
+  config.push(...regexpConfig({ ai }))
 
-  // 6. JSDoc (always)
-  config.push(...jsdocConfig())
+  // 6. JSDoc (always — AI flag requires param/returns docs)
+  config.push(...jsdocConfig({ ai }))
 
   // 7. CSpell (always)
   config.push(...cspellConfig())
 
-  // 8. SonarJS (always)
-  config.push(...sonarjsConfig())
+  // 8. SonarJS (always — AI flag adds quality rules)
+  config.push(...sonarjsConfig({ ai }))
 
   // 9. Security (always)
   config.push(...securityConfig())
@@ -76,24 +78,24 @@ export function composeConfig(opts: ConfigOptions): FlatConfigArray {
   }
 
   // 11. Complexity preset (before AI which may override)
-  if (!opts.ai) {
+  if (!ai) {
     config.push(...standardComplexity())
   }
 
-  // 12. Node.js (conditional)
+  // 12. Node.js (conditional — AI flag adds builtins check)
   if (opts.node) {
-    config.push(...nodeConfig())
+    config.push(...nodeConfig({ ai }))
   }
 
-  // 13. React (conditional)
+  // 13. React (conditional — AI flag promotes warn→error)
   if (opts.react) {
-    config.push(...reactConfig({ ai: opts.ai }))
+    config.push(...reactConfig({ ai }))
     config.push(...reactEffectConfig())
   }
 
-  // 14. AI mode (conditional — includes its own complexity limits)
-  if (opts.ai) {
-    config.push(...aiConfig({ react: opts.react }))
+  // 14. AI mode — file-scoped relaxations + cross-cutting AI concerns
+  if (ai) {
+    config.push(...aiConfig())
     config.push(...perfectionistAiConfig())
     config.push(...packageJsonAiConfig())
   }

@@ -15,8 +15,10 @@ import { createConfig } from "../build/config-builder"
  * - param/return descriptions downgraded to warn — helpful but not blocking
  * @see https://github.com/gajus/eslint-plugin-jsdoc#rules
  */
-export function jsdocConfig(): FlatConfigArray {
-  return createConfig({
+export function jsdocConfig(opts?: { ai?: boolean }): FlatConfigArray {
+  const isAi = opts?.ai ?? false
+
+  const builder = createConfig({
     name: "eslint-config-setup/jsdoc",
     presets: [jsdocPlugin.configs["flat/recommended-typescript-error"]],
   })
@@ -50,5 +52,11 @@ export function jsdocConfig(): FlatConfigArray {
     // The preset enforces no blank lines before tags, but visual separation helps.
     .overrideRule("jsdoc/tag-lines", "off")
 
-    .build()
+  if (isAi) {
+    builder.overrideRule("jsdoc/require-param", "error")
+    builder.overrideRule("jsdoc/require-returns", "error")
+    builder.overrideRule("jsdoc/informative-docs", "error")
+  }
+
+  return builder.build()
 }

@@ -13,8 +13,10 @@ import { createConfig } from "../build/config-builder"
  * @see https://ota-meshi.github.io/eslint-plugin-regexp/
  * @see https://ota-meshi.github.io/eslint-plugin-regexp/rules/
  */
-export function regexpConfig(): FlatConfigArray {
-  return createConfig({
+export function regexpConfig(opts?: { ai?: boolean }): FlatConfigArray {
+  const isAi = opts?.ai ?? false
+
+  const builder = createConfig({
     name: "eslint-config-setup/regexp",
     presets: [regexpConfigs["flat/recommended"]],
   })
@@ -41,5 +43,14 @@ export function regexpConfig(): FlatConfigArray {
     // https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-escape-replacement-dollar-char.html
     .addRule("regexp/prefer-escape-replacement-dollar-char", "error")
 
-    .build()
+  if (isAi) {
+    builder.addRule("regexp/prefer-lookaround", "error")
+    builder.addRule("regexp/prefer-named-backreference", "error")
+    builder.addRule("regexp/prefer-named-replacement", "error")
+    builder.addRule("regexp/prefer-quantifier", "error")
+    builder.addRule("regexp/prefer-result-array-groups", "error")
+    builder.addRule("regexp/require-unicode-sets-regexp", "error")
+  }
+
+  return builder.build()
 }

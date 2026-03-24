@@ -19,11 +19,16 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           "allowImplicit": true,
         },
       ],
+      "arrow-body-style": "error",
       "complexity": [
         "error",
-        20,
+        10,
       ],
       "constructor-super": "error",
+      "curly": [
+        "error",
+        "all",
+      ],
       "default-case-last": "error",
       "eqeqeq": [
         "error",
@@ -36,14 +41,21 @@ exports[`config snapshots > snapshot: ai only 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "logical-assignment-operators": [
+        "error",
+        "always",
+        {
+          "enforceForIfStatements": true,
+        },
+      ],
       "max-depth": [
         "error",
-        5,
+        3,
       ],
       "max-lines": [
         "error",
         {
-          "max": 500,
+          "max": 300,
           "skipBlankLines": true,
           "skipComments": true,
         },
@@ -51,25 +63,32 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "max-lines-per-function": [
         "error",
         {
-          "max": 200,
+          "max": 100,
           "skipBlankLines": true,
           "skipComments": true,
         },
       ],
       "max-nested-callbacks": [
         "error",
-        4,
+        2,
       ],
       "max-params": [
         "error",
-        5,
+        3,
       ],
       "max-statements": [
         "error",
-        25,
+        15,
+      ],
+      "max-statements-per-line": [
+        "error",
+        {
+          "max": 1,
+        },
       ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
+      "no-await-in-loop": "error",
       "no-caller": "error",
       "no-case-declarations": "error",
       "no-class-assign": "error",
@@ -87,6 +106,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-dupe-else-if": "error",
       "no-dupe-keys": "error",
       "no-duplicate-case": "error",
+      "no-else-return": [
+        "error",
+        {
+          "allowElseIf": false,
+        },
+      ],
       "no-empty": "error",
       "no-empty-character-class": "error",
       "no-empty-pattern": "error",
@@ -99,6 +124,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-coercion": "error",
       "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
@@ -106,9 +132,13 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-iterator": "error",
       "no-labels": "error",
       "no-lone-blocks": "error",
+      "no-lonely-if": "error",
       "no-loss-of-precision": "error",
       "no-misleading-character-class": "error",
+      "no-multi-assign": "error",
       "no-multi-str": "error",
+      "no-negated-condition": "error",
+      "no-nested-ternary": "error",
       "no-new": "error",
       "no-new-func": "error",
       "no-new-native-nonconstructor": "error",
@@ -118,6 +148,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-object-constructor": "error",
       "no-octal": "error",
       "no-octal-escape": "error",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+        },
+      ],
       "no-promise-executor-return": "error",
       "no-proto": "error",
       "no-prototype-builtins": "error",
@@ -145,6 +181,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-undef": "error",
       "no-unexpected-multiline": "error",
       "no-unmodified-loop-condition": "error",
+      "no-unneeded-ternary": "error",
       "no-unreachable": "error",
       "no-unreachable-loop": "error",
       "no-unsafe-finally": "error",
@@ -168,6 +205,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
+      "no-warning-comments": "warn",
       "no-with": "error",
       "object-shorthand": [
         "error",
@@ -177,12 +215,24 @@ exports[`config snapshots > snapshot: ai only 1`] = `
           "avoidQuotes": true,
         },
       ],
+      "one-var": [
+        "error",
+        "never",
+      ],
+      "prefer-arrow-callback": [
+        "error",
+        {
+          "allowNamedFunctions": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-exponentiation-operator": "error",
+      "prefer-named-capture-group": "error",
       "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
@@ -194,14 +244,15 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "warn",
+      "prefer-template": "error",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
+      "require-unicode-regexp": "error",
       "require-yield": "error",
       "sonarjs/cognitive-complexity": [
         "error",
-        20,
+        10,
       ],
       "symbol-description": "error",
       "use-isnan": [
@@ -298,13 +349,198 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "separate-type-imports",
+          "fixStyle": "inline-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        {
+          "allowExpressions": true,
+          "allowHigherOrderFunctions": true,
+          "allowIIFEs": true,
+          "allowTypedFunctionExpressions": true,
+        },
+      ],
+      "@typescript-eslint/explicit-member-accessibility": "error",
+      "@typescript-eslint/member-ordering": [
+        "warn",
+        {
+          "default": [
+            "signature",
+            "call-signature",
+            "public-static-field",
+            "protected-static-field",
+            "private-static-field",
+            "#private-static-field",
+            "static-field",
+            "public-static-method",
+            "protected-static-method",
+            "private-static-method",
+            "#private-static-method",
+            "static-method",
+            "public-decorated-field",
+            "protected-decorated-field",
+            "private-decorated-field",
+            "public-instance-field",
+            "protected-instance-field",
+            "private-instance-field",
+            "#private-instance-field",
+            "public-abstract-field",
+            "protected-abstract-field",
+            "field",
+            "public-constructor",
+            "protected-constructor",
+            "private-constructor",
+            "constructor",
+            [
+              "public-get",
+              "public-set",
+            ],
+            [
+              "protected-get",
+              "protected-set",
+            ],
+            [
+              "private-get",
+              "private-set",
+            ],
+            [
+              "#private-get",
+              "#private-set",
+            ],
+            "public-decorated-method",
+            "protected-decorated-method",
+            "private-decorated-method",
+            "public-instance-method",
+            "protected-instance-method",
+            "private-instance-method",
+            "#private-instance-method",
+            "public-abstract-method",
+            "protected-abstract-method",
+            "method",
+          ],
+        },
+      ],
       "@typescript-eslint/method-signature-style": [
         "error",
         "property",
+      ],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
+            "UPPER_CASE",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": "variable",
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "selector": "function",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allow",
+          "selector": "parameter",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+            "UPPER_CASE",
+          ],
+          "selector": "import",
+        },
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": [
+            "classProperty",
+            "parameterProperty",
+            "classMethod",
+            "objectLiteralMethod",
+            "typeMethod",
+            "accessor",
+          ],
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": null,
+          "selector": [
+            "objectLiteralProperty",
+            "typeProperty",
+          ],
+        },
+        {
+          "format": [
+            "StrictPascalCase",
+          ],
+          "selector": "typeLike",
+        },
+        {
+          "custom": {
+            "match": false,
+            "regex": "^I[A-Z]",
+          },
+          "format": [
+            "StrictPascalCase",
+          ],
+          "selector": "interface",
+        },
+        {
+          "custom": {
+            "match": true,
+            "regex": "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
+          },
+          "format": [
+            "PascalCase",
+          ],
+          "selector": "typeParameter",
+        },
+        {
+          "format": [
+            "StrictPascalCase",
+          ],
+          "prefix": [
+            "is",
+            "has",
+            "can",
+            "should",
+            "will",
+            "did",
+          ],
+          "selector": "variable",
+          "types": [
+            "boolean",
+          ],
+        },
+        {
+          "format": null,
+          "modifiers": [
+            "requiresQuotes",
+          ],
+          "selector": [
+            "classProperty",
+            "objectLiteralProperty",
+          ],
+        },
       ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
@@ -317,19 +553,14 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": [
-        "warn",
-        {
-          "fixToUnknown": true,
-        },
-      ],
+      "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
       "@typescript-eslint/no-floating-promises": [
         "error",
         {
           "checkThenables": true,
-          "ignoreIIFE": true,
+          "ignoreVoid": true,
         },
       ],
       "@typescript-eslint/no-for-in-array": "error",
@@ -337,6 +568,25 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/no-inferrable-types": "error",
       "@typescript-eslint/no-invalid-void-type": "error",
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          "enforceConst": true,
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+          ],
+          "ignoreArrayIndexes": true,
+          "ignoreClassFieldInitialValues": true,
+          "ignoreDefaultValues": true,
+          "ignoreEnums": true,
+          "ignoreNumericLiteralTypes": true,
+          "ignoreReadonlyClassProperties": true,
+          "ignoreTypeIndexes": true,
+        },
+      ],
       "@typescript-eslint/no-meaningless-void-operator": "error",
       "@typescript-eslint/no-misused-new": "error",
       "@typescript-eslint/no-misused-promises": "error",
@@ -404,6 +654,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/non-nullable-type-assertion-style": "error",
       "@typescript-eslint/only-throw-error": "error",
       "@typescript-eslint/prefer-as-const": "error",
+      "@typescript-eslint/prefer-enum-initializers": "error",
       "@typescript-eslint/prefer-find": "error",
       "@typescript-eslint/prefer-for-of": "error",
       "@typescript-eslint/prefer-function-type": "error",
@@ -413,7 +664,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
-      "@typescript-eslint/prefer-readonly": "warn",
+      "@typescript-eslint/prefer-readonly": "error",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
@@ -625,8 +876,10 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
-      "unicorn/consistent-function-scoping": "warn",
+      "unicorn/consistent-function-scoping": "error",
+      "unicorn/custom-error-definition": "error",
       "unicorn/error-message": "error",
+      "unicorn/explicit-length-check": "error",
       "unicorn/filename-case": [
         "error",
         {
@@ -642,11 +895,13 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
+      "unicorn/no-array-for-each": "error",
       "unicorn/no-array-method-this-argument": "error",
-      "unicorn/no-array-reduce": "warn",
+      "unicorn/no-array-push-push": "error",
+      "unicorn/no-array-reduce": "error",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
-      "unicorn/no-for-loop": "warn",
+      "unicorn/no-for-loop": "error",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -665,6 +920,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
+      "unicorn/no-useless-switch-case": "error",
       "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
@@ -676,6 +932,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-default-parameters": "error",
       "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
@@ -686,6 +943,8 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/prefer-global-this": "error",
       "unicorn/prefer-import-meta-properties": "error",
       "unicorn/prefer-includes": "error",
+      "unicorn/prefer-logical-operator-over-ternary": "error",
+      "unicorn/prefer-math-min-max": "error",
       "unicorn/prefer-modern-dom-apis": "error",
       "unicorn/prefer-modern-math-apis": "error",
       "unicorn/prefer-native-coercion-functions": "error",
@@ -696,6 +955,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/prefer-optional-catch-binding": "error",
       "unicorn/prefer-regexp-test": "error",
       "unicorn/prefer-set-has": "error",
+      "unicorn/prefer-set-size": "error",
       "unicorn/prefer-single-call": "off",
       "unicorn/prefer-spread": "error",
       "unicorn/prefer-string-replace-all": "error",
@@ -703,9 +963,21 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/prefer-string-starts-ends-with": "error",
       "unicorn/prefer-string-trim-start-end": "error",
       "unicorn/prefer-structured-clone": "error",
+      "unicorn/prefer-switch": [
+        "error",
+        {
+          "minimumCases": 3,
+        },
+      ],
+      "unicorn/prefer-ternary": [
+        "error",
+        "only-single-line",
+      ],
       "unicorn/prefer-top-level-await": "error",
       "unicorn/prefer-type-error": "error",
+      "unicorn/prevent-abbreviations": "error",
       "unicorn/relative-url-style": "error",
+      "unicorn/switch-case-braces": "error",
       "unicorn/text-encoding-identifier-case": "error",
       "unicorn/throw-new-error": "error",
     },
@@ -773,14 +1045,20 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "regexp/prefer-character-class": "error",
       "regexp/prefer-d": "error",
       "regexp/prefer-escape-replacement-dollar-char": "error",
+      "regexp/prefer-lookaround": "error",
+      "regexp/prefer-named-backreference": "error",
+      "regexp/prefer-named-replacement": "error",
       "regexp/prefer-plus-quantifier": "error",
       "regexp/prefer-predefined-assertion": "error",
+      "regexp/prefer-quantifier": "error",
       "regexp/prefer-question-quantifier": "error",
       "regexp/prefer-range": "error",
+      "regexp/prefer-result-array-groups": "error",
       "regexp/prefer-set-operation": "error",
       "regexp/prefer-star-quantifier": "error",
       "regexp/prefer-unicode-codepoint-escapes": "error",
       "regexp/prefer-w": "error",
+      "regexp/require-unicode-sets-regexp": "error",
       "regexp/simplify-set-operations": "error",
       "regexp/sort-flags": "error",
       "regexp/strict": "error",
@@ -807,7 +1085,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "jsdoc/escape-inline-tags": "error",
       "jsdoc/implements-on-classes": "error",
       "jsdoc/imports-as-dependencies": "off",
-      "jsdoc/informative-docs": "off",
+      "jsdoc/informative-docs": "error",
       "jsdoc/lines-before-block": "off",
       "jsdoc/match-description": "off",
       "jsdoc/match-name": "off",
@@ -833,7 +1111,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "jsdoc/require-jsdoc": "off",
       "jsdoc/require-next-description": "off",
       "jsdoc/require-next-type": "error",
-      "jsdoc/require-param": "off",
+      "jsdoc/require-param": "error",
       "jsdoc/require-param-description": "warn",
       "jsdoc/require-param-name": "error",
       "jsdoc/require-param-type": "off",
@@ -842,7 +1120,7 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "jsdoc/require-property-name": "error",
       "jsdoc/require-property-type": "off",
       "jsdoc/require-rejects": "off",
-      "jsdoc/require-returns": "off",
+      "jsdoc/require-returns": "error",
       "jsdoc/require-returns-check": "error",
       "jsdoc/require-returns-description": "warn",
       "jsdoc/require-returns-type": "off",
@@ -884,10 +1162,22 @@ exports[`config snapshots > snapshot: ai only 1`] = `
   {
     "name": "eslint-config-setup/sonarjs",
     "rules": {
+      "sonarjs/max-union-size": [
+        "error",
+        {
+          "threshold": 5,
+        },
+      ],
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
       "sonarjs/no-collection-size-mischeck": "error",
       "sonarjs/no-duplicate-in-composite": "error",
+      "sonarjs/no-duplicate-string": [
+        "error",
+        {
+          "threshold": 3,
+        },
+      ],
       "sonarjs/no-duplicated-branches": "error",
       "sonarjs/no-exclusive-tests": "error",
       "sonarjs/no-hardcoded-secrets": "warn",
@@ -897,12 +1187,16 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "sonarjs/no-ignored-return": "error",
       "sonarjs/no-inverted-boolean-check": "error",
       "sonarjs/no-misleading-array-reverse": "error",
+      "sonarjs/no-nested-switch": "error",
+      "sonarjs/no-nested-template-literals": "error",
       "sonarjs/no-redundant-boolean": "error",
       "sonarjs/no-redundant-jump": "error",
       "sonarjs/no-redundant-optional": "error",
       "sonarjs/no-unused-collection": "error",
       "sonarjs/prefer-immediate-return": "error",
       "sonarjs/prefer-single-boolean-return": "error",
+      "sonarjs/prefer-type-guard": "error",
+      "sonarjs/public-static-readonly": "error",
       "sonarjs/reduce-initial-value": "error",
     },
   },
@@ -936,442 +1230,6 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-structural",
-    "rules": {
-      "arrow-body-style": "error",
-      "curly": [
-        "error",
-        "all",
-      ],
-      "logical-assignment-operators": [
-        "error",
-        "always",
-        {
-          "enforceForIfStatements": true,
-        },
-      ],
-      "max-statements-per-line": [
-        "error",
-        {
-          "max": 1,
-        },
-      ],
-      "no-await-in-loop": "error",
-      "no-else-return": [
-        "error",
-        {
-          "allowElseIf": false,
-        },
-      ],
-      "no-implicit-coercion": "error",
-      "no-lonely-if": "error",
-      "no-multi-assign": "error",
-      "no-negated-condition": "error",
-      "no-nested-ternary": "error",
-      "no-param-reassign": [
-        "error",
-        {
-          "props": true,
-        },
-      ],
-      "no-promise-executor-return": "error",
-      "no-unneeded-ternary": "error",
-      "no-var": "error",
-      "no-warning-comments": "warn",
-      "one-var": [
-        "error",
-        "never",
-      ],
-      "prefer-arrow-callback": [
-        "error",
-        {
-          "allowNamedFunctions": true,
-        },
-      ],
-      "prefer-const": [
-        "error",
-        {
-          "destructuring": "all",
-        },
-      ],
-      "prefer-exponentiation-operator": "error",
-      "prefer-named-capture-group": "error",
-      "prefer-template": "error",
-      "require-unicode-regexp": "error",
-      "sonarjs/no-duplicate-string": [
-        "error",
-        {
-          "threshold": 3,
-        },
-      ],
-    },
-  },
-  {
-    "files": [
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.mts",
-      "**/*.cts",
-    ],
-    "name": "eslint-config-setup/ai-typescript",
-    "rules": {
-      "@typescript-eslint/consistent-type-exports": [
-        "error",
-        {
-          "fixMixedExportsWithInlineTypeSpecifier": true,
-        },
-      ],
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        {
-          "fixStyle": "inline-type-imports",
-        },
-      ],
-      "@typescript-eslint/explicit-function-return-type": [
-        "error",
-        {
-          "allowExpressions": true,
-          "allowHigherOrderFunctions": true,
-          "allowIIFEs": true,
-          "allowTypedFunctionExpressions": true,
-        },
-      ],
-      "@typescript-eslint/explicit-member-accessibility": "error",
-      "@typescript-eslint/member-ordering": [
-        "warn",
-        {
-          "default": [
-            "signature",
-            "call-signature",
-            "public-static-field",
-            "protected-static-field",
-            "private-static-field",
-            "#private-static-field",
-            "static-field",
-            "public-static-method",
-            "protected-static-method",
-            "private-static-method",
-            "#private-static-method",
-            "static-method",
-            "public-decorated-field",
-            "protected-decorated-field",
-            "private-decorated-field",
-            "public-instance-field",
-            "protected-instance-field",
-            "private-instance-field",
-            "#private-instance-field",
-            "public-abstract-field",
-            "protected-abstract-field",
-            "field",
-            "public-constructor",
-            "protected-constructor",
-            "private-constructor",
-            "constructor",
-            [
-              "public-get",
-              "public-set",
-            ],
-            [
-              "protected-get",
-              "protected-set",
-            ],
-            [
-              "private-get",
-              "private-set",
-            ],
-            [
-              "#private-get",
-              "#private-set",
-            ],
-            "public-decorated-method",
-            "protected-decorated-method",
-            "private-decorated-method",
-            "public-instance-method",
-            "protected-instance-method",
-            "private-instance-method",
-            "#private-instance-method",
-            "public-abstract-method",
-            "protected-abstract-method",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/naming-convention": [
-        "error",
-        {
-          "filter": {
-            "match": false,
-            "regex": "[- ]",
-          },
-          "format": [
-            "strictCamelCase",
-            "UPPER_CASE",
-          ],
-          "leadingUnderscore": "allowSingleOrDouble",
-          "selector": "variable",
-          "trailingUnderscore": "allow",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-          ],
-          "selector": "function",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-          ],
-          "leadingUnderscore": "allow",
-          "selector": "parameter",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-            "StrictPascalCase",
-            "UPPER_CASE",
-          ],
-          "selector": "import",
-        },
-        {
-          "filter": {
-            "match": false,
-            "regex": "[- ]",
-          },
-          "format": [
-            "strictCamelCase",
-          ],
-          "leadingUnderscore": "allowSingleOrDouble",
-          "selector": [
-            "classProperty",
-            "parameterProperty",
-            "classMethod",
-            "objectLiteralMethod",
-            "typeMethod",
-            "accessor",
-          ],
-          "trailingUnderscore": "allow",
-        },
-        {
-          "format": null,
-          "selector": [
-            "objectLiteralProperty",
-            "typeProperty",
-          ],
-        },
-        {
-          "format": [
-            "StrictPascalCase",
-          ],
-          "selector": "typeLike",
-        },
-        {
-          "custom": {
-            "match": false,
-            "regex": "^I[A-Z]",
-          },
-          "format": [
-            "StrictPascalCase",
-          ],
-          "selector": "interface",
-        },
-        {
-          "custom": {
-            "match": true,
-            "regex": "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
-          },
-          "format": [
-            "PascalCase",
-          ],
-          "selector": "typeParameter",
-        },
-        {
-          "format": [
-            "StrictPascalCase",
-          ],
-          "prefix": [
-            "is",
-            "has",
-            "can",
-            "should",
-            "will",
-            "did",
-          ],
-          "selector": "variable",
-          "types": [
-            "boolean",
-          ],
-        },
-        {
-          "format": null,
-          "modifiers": [
-            "requiresQuotes",
-          ],
-          "selector": [
-            "classProperty",
-            "objectLiteralProperty",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-explicit-any": [
-        "error",
-        {
-          "fixToUnknown": true,
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-        {
-          "checkThenables": true,
-          "ignoreVoid": true,
-        },
-      ],
-      "@typescript-eslint/no-magic-numbers": [
-        "error",
-        {
-          "enforceConst": true,
-          "ignore": [
-            -1,
-            0,
-            1,
-            2,
-          ],
-          "ignoreArrayIndexes": true,
-          "ignoreClassFieldInitialValues": true,
-          "ignoreDefaultValues": true,
-          "ignoreEnums": true,
-          "ignoreNumericLiteralTypes": true,
-          "ignoreReadonlyClassProperties": true,
-          "ignoreTypeIndexes": true,
-        },
-      ],
-      "@typescript-eslint/prefer-enum-initializers": "error",
-      "@typescript-eslint/prefer-readonly": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-unicorn",
-    "rules": {
-      "unicorn/consistent-function-scoping": "error",
-      "unicorn/custom-error-definition": "error",
-      "unicorn/explicit-length-check": "error",
-      "unicorn/no-abusive-eslint-disable": "error",
-      "unicorn/no-array-for-each": "error",
-      "unicorn/no-array-push-push": "error",
-      "unicorn/no-array-reduce": "error",
-      "unicorn/no-for-loop": "error",
-      "unicorn/no-useless-switch-case": "error",
-      "unicorn/prefer-default-parameters": "error",
-      "unicorn/prefer-logical-operator-over-ternary": "error",
-      "unicorn/prefer-math-min-max": "error",
-      "unicorn/prefer-set-size": "error",
-      "unicorn/prefer-switch": [
-        "error",
-        {
-          "minimumCases": 3,
-        },
-      ],
-      "unicorn/prefer-ternary": [
-        "error",
-        "only-single-line",
-      ],
-      "unicorn/prevent-abbreviations": "error",
-      "unicorn/switch-case-braces": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-sonarjs",
-    "rules": {
-      "sonarjs/max-union-size": [
-        "error",
-        {
-          "threshold": 5,
-        },
-      ],
-      "sonarjs/no-collapsible-if": "error",
-      "sonarjs/no-identical-expressions": "error",
-      "sonarjs/no-identical-functions": "error",
-      "sonarjs/no-inverted-boolean-check": "error",
-      "sonarjs/no-nested-switch": "error",
-      "sonarjs/no-nested-template-literals": "error",
-      "sonarjs/no-redundant-boolean": "error",
-      "sonarjs/no-unused-collection": "error",
-      "sonarjs/prefer-immediate-return": "error",
-      "sonarjs/prefer-single-boolean-return": "error",
-      "sonarjs/prefer-type-guard": "error",
-      "sonarjs/public-static-readonly": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-regexp",
-    "rules": {
-      "regexp/prefer-lookaround": "error",
-      "regexp/prefer-named-backreference": "error",
-      "regexp/prefer-named-replacement": "error",
-      "regexp/prefer-quantifier": "error",
-      "regexp/prefer-result-array-groups": "error",
-      "regexp/require-unicode-sets-regexp": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-jsdoc",
-    "rules": {
-      "jsdoc/informative-docs": "error",
-      "jsdoc/require-param": "error",
-      "jsdoc/require-returns": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-node",
-    "rules": {
-      "node/no-unsupported-features/node-builtins": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-complexity",
-    "rules": {
-      "complexity": [
-        "error",
-        10,
-      ],
-      "max-depth": [
-        "error",
-        3,
-      ],
-      "max-lines": [
-        "error",
-        {
-          "max": 300,
-          "skipBlankLines": true,
-          "skipComments": true,
-        },
-      ],
-      "max-lines-per-function": [
-        "error",
-        {
-          "max": 100,
-          "skipBlankLines": true,
-          "skipComments": true,
-        },
-      ],
-      "max-nested-callbacks": [
-        "error",
-        2,
-      ],
-      "max-params": [
-        "error",
-        3,
-      ],
-      "max-statements": [
-        "error",
-        15,
-      ],
-      "sonarjs/cognitive-complexity": [
-        "error",
-        10,
-      ],
     },
   },
   {
@@ -2142,11 +2000,16 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           "allowImplicit": true,
         },
       ],
+      "arrow-body-style": "error",
       "complexity": [
         "error",
-        20,
+        10,
       ],
       "constructor-super": "error",
+      "curly": [
+        "error",
+        "all",
+      ],
       "default-case-last": "error",
       "eqeqeq": [
         "error",
@@ -2159,14 +2022,21 @@ exports[`config snapshots > snapshot: all flags 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "logical-assignment-operators": [
+        "error",
+        "always",
+        {
+          "enforceForIfStatements": true,
+        },
+      ],
       "max-depth": [
         "error",
-        5,
+        3,
       ],
       "max-lines": [
         "error",
         {
-          "max": 500,
+          "max": 300,
           "skipBlankLines": true,
           "skipComments": true,
         },
@@ -2174,25 +2044,32 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "max-lines-per-function": [
         "error",
         {
-          "max": 200,
+          "max": 100,
           "skipBlankLines": true,
           "skipComments": true,
         },
       ],
       "max-nested-callbacks": [
         "error",
-        4,
+        2,
       ],
       "max-params": [
         "error",
-        5,
+        3,
       ],
       "max-statements": [
         "error",
-        25,
+        15,
+      ],
+      "max-statements-per-line": [
+        "error",
+        {
+          "max": 1,
+        },
       ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
+      "no-await-in-loop": "error",
       "no-caller": "error",
       "no-case-declarations": "error",
       "no-class-assign": "error",
@@ -2210,6 +2087,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-dupe-else-if": "error",
       "no-dupe-keys": "error",
       "no-duplicate-case": "error",
+      "no-else-return": [
+        "error",
+        {
+          "allowElseIf": false,
+        },
+      ],
       "no-empty": "error",
       "no-empty-character-class": "error",
       "no-empty-pattern": "error",
@@ -2222,6 +2105,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-coercion": "error",
       "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
@@ -2229,9 +2113,13 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-iterator": "error",
       "no-labels": "error",
       "no-lone-blocks": "error",
+      "no-lonely-if": "error",
       "no-loss-of-precision": "error",
       "no-misleading-character-class": "error",
+      "no-multi-assign": "error",
       "no-multi-str": "error",
+      "no-negated-condition": "error",
+      "no-nested-ternary": "error",
       "no-new": "error",
       "no-new-func": "error",
       "no-new-native-nonconstructor": "error",
@@ -2241,6 +2129,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-object-constructor": "error",
       "no-octal": "error",
       "no-octal-escape": "error",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+        },
+      ],
       "no-promise-executor-return": "error",
       "no-proto": "error",
       "no-prototype-builtins": "error",
@@ -2268,6 +2162,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-undef": "error",
       "no-unexpected-multiline": "error",
       "no-unmodified-loop-condition": "error",
+      "no-unneeded-ternary": "error",
       "no-unreachable": "error",
       "no-unreachable-loop": "error",
       "no-unsafe-finally": "error",
@@ -2291,6 +2186,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
+      "no-warning-comments": "warn",
       "no-with": "error",
       "object-shorthand": [
         "error",
@@ -2300,12 +2196,24 @@ exports[`config snapshots > snapshot: all flags 1`] = `
           "avoidQuotes": true,
         },
       ],
+      "one-var": [
+        "error",
+        "never",
+      ],
+      "prefer-arrow-callback": [
+        "error",
+        {
+          "allowNamedFunctions": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-exponentiation-operator": "error",
+      "prefer-named-capture-group": "error",
       "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
@@ -2317,14 +2225,15 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "warn",
+      "prefer-template": "error",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
+      "require-unicode-regexp": "error",
       "require-yield": "error",
       "sonarjs/cognitive-complexity": [
         "error",
-        20,
+        10,
       ],
       "symbol-description": "error",
       "use-isnan": [
@@ -2421,13 +2330,200 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "separate-type-imports",
+          "fixStyle": "inline-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        {
+          "allowExpressions": true,
+          "allowHigherOrderFunctions": true,
+          "allowIIFEs": true,
+          "allowTypedFunctionExpressions": true,
+        },
+      ],
+      "@typescript-eslint/explicit-member-accessibility": "error",
+      "@typescript-eslint/member-ordering": [
+        "warn",
+        {
+          "default": [
+            "signature",
+            "call-signature",
+            "public-static-field",
+            "protected-static-field",
+            "private-static-field",
+            "#private-static-field",
+            "static-field",
+            "public-static-method",
+            "protected-static-method",
+            "private-static-method",
+            "#private-static-method",
+            "static-method",
+            "public-decorated-field",
+            "protected-decorated-field",
+            "private-decorated-field",
+            "public-instance-field",
+            "protected-instance-field",
+            "private-instance-field",
+            "#private-instance-field",
+            "public-abstract-field",
+            "protected-abstract-field",
+            "field",
+            "public-constructor",
+            "protected-constructor",
+            "private-constructor",
+            "constructor",
+            [
+              "public-get",
+              "public-set",
+            ],
+            [
+              "protected-get",
+              "protected-set",
+            ],
+            [
+              "private-get",
+              "private-set",
+            ],
+            [
+              "#private-get",
+              "#private-set",
+            ],
+            "public-decorated-method",
+            "protected-decorated-method",
+            "private-decorated-method",
+            "public-instance-method",
+            "protected-instance-method",
+            "private-instance-method",
+            "#private-instance-method",
+            "public-abstract-method",
+            "protected-abstract-method",
+            "method",
+          ],
+        },
+      ],
       "@typescript-eslint/method-signature-style": [
         "error",
         "property",
+      ],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
+            "UPPER_CASE",
+            "StrictPascalCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": "variable",
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+          ],
+          "selector": "function",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allow",
+          "selector": "parameter",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+            "UPPER_CASE",
+          ],
+          "selector": "import",
+        },
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": [
+            "classProperty",
+            "parameterProperty",
+            "classMethod",
+            "objectLiteralMethod",
+            "typeMethod",
+            "accessor",
+          ],
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": null,
+          "selector": [
+            "objectLiteralProperty",
+            "typeProperty",
+          ],
+        },
+        {
+          "format": [
+            "StrictPascalCase",
+          ],
+          "selector": "typeLike",
+        },
+        {
+          "custom": {
+            "match": false,
+            "regex": "^I[A-Z]",
+          },
+          "format": [
+            "StrictPascalCase",
+          ],
+          "selector": "interface",
+        },
+        {
+          "custom": {
+            "match": true,
+            "regex": "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
+          },
+          "format": [
+            "PascalCase",
+          ],
+          "selector": "typeParameter",
+        },
+        {
+          "format": [
+            "StrictPascalCase",
+          ],
+          "prefix": [
+            "is",
+            "has",
+            "can",
+            "should",
+            "will",
+            "did",
+          ],
+          "selector": "variable",
+          "types": [
+            "boolean",
+          ],
+        },
+        {
+          "format": null,
+          "modifiers": [
+            "requiresQuotes",
+          ],
+          "selector": [
+            "classProperty",
+            "objectLiteralProperty",
+          ],
+        },
       ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
@@ -2440,19 +2536,14 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": [
-        "warn",
-        {
-          "fixToUnknown": true,
-        },
-      ],
+      "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
       "@typescript-eslint/no-floating-promises": [
         "error",
         {
           "checkThenables": true,
-          "ignoreIIFE": true,
+          "ignoreVoid": true,
         },
       ],
       "@typescript-eslint/no-for-in-array": "error",
@@ -2460,6 +2551,25 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/no-inferrable-types": "error",
       "@typescript-eslint/no-invalid-void-type": "error",
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          "enforceConst": true,
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+          ],
+          "ignoreArrayIndexes": true,
+          "ignoreClassFieldInitialValues": true,
+          "ignoreDefaultValues": true,
+          "ignoreEnums": true,
+          "ignoreNumericLiteralTypes": true,
+          "ignoreReadonlyClassProperties": true,
+          "ignoreTypeIndexes": true,
+        },
+      ],
       "@typescript-eslint/no-meaningless-void-operator": "error",
       "@typescript-eslint/no-misused-new": "error",
       "@typescript-eslint/no-misused-promises": "error",
@@ -2527,6 +2637,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/non-nullable-type-assertion-style": "error",
       "@typescript-eslint/only-throw-error": "error",
       "@typescript-eslint/prefer-as-const": "error",
+      "@typescript-eslint/prefer-enum-initializers": "error",
       "@typescript-eslint/prefer-find": "error",
       "@typescript-eslint/prefer-for-of": "error",
       "@typescript-eslint/prefer-function-type": "error",
@@ -2536,7 +2647,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
-      "@typescript-eslint/prefer-readonly": "warn",
+      "@typescript-eslint/prefer-readonly": "error",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
@@ -2748,8 +2859,10 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
-      "unicorn/consistent-function-scoping": "warn",
+      "unicorn/consistent-function-scoping": "error",
+      "unicorn/custom-error-definition": "error",
       "unicorn/error-message": "error",
+      "unicorn/explicit-length-check": "error",
       "unicorn/filename-case": [
         "error",
         {
@@ -2765,11 +2878,13 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
+      "unicorn/no-array-for-each": "error",
       "unicorn/no-array-method-this-argument": "error",
-      "unicorn/no-array-reduce": "warn",
+      "unicorn/no-array-push-push": "error",
+      "unicorn/no-array-reduce": "error",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
-      "unicorn/no-for-loop": "warn",
+      "unicorn/no-for-loop": "error",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -2788,6 +2903,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
+      "unicorn/no-useless-switch-case": "error",
       "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
@@ -2799,6 +2915,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-default-parameters": "error",
       "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
@@ -2809,6 +2926,8 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/prefer-global-this": "error",
       "unicorn/prefer-import-meta-properties": "error",
       "unicorn/prefer-includes": "error",
+      "unicorn/prefer-logical-operator-over-ternary": "error",
+      "unicorn/prefer-math-min-max": "error",
       "unicorn/prefer-modern-dom-apis": "error",
       "unicorn/prefer-modern-math-apis": "error",
       "unicorn/prefer-native-coercion-functions": "error",
@@ -2819,6 +2938,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/prefer-optional-catch-binding": "error",
       "unicorn/prefer-regexp-test": "error",
       "unicorn/prefer-set-has": "error",
+      "unicorn/prefer-set-size": "error",
       "unicorn/prefer-single-call": "off",
       "unicorn/prefer-spread": "error",
       "unicorn/prefer-string-replace-all": "error",
@@ -2826,9 +2946,21 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/prefer-string-starts-ends-with": "error",
       "unicorn/prefer-string-trim-start-end": "error",
       "unicorn/prefer-structured-clone": "error",
+      "unicorn/prefer-switch": [
+        "error",
+        {
+          "minimumCases": 3,
+        },
+      ],
+      "unicorn/prefer-ternary": [
+        "error",
+        "only-single-line",
+      ],
       "unicorn/prefer-top-level-await": "error",
       "unicorn/prefer-type-error": "error",
+      "unicorn/prevent-abbreviations": "error",
       "unicorn/relative-url-style": "error",
+      "unicorn/switch-case-braces": "error",
       "unicorn/text-encoding-identifier-case": "error",
       "unicorn/throw-new-error": "error",
     },
@@ -2896,14 +3028,20 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "regexp/prefer-character-class": "error",
       "regexp/prefer-d": "error",
       "regexp/prefer-escape-replacement-dollar-char": "error",
+      "regexp/prefer-lookaround": "error",
+      "regexp/prefer-named-backreference": "error",
+      "regexp/prefer-named-replacement": "error",
       "regexp/prefer-plus-quantifier": "error",
       "regexp/prefer-predefined-assertion": "error",
+      "regexp/prefer-quantifier": "error",
       "regexp/prefer-question-quantifier": "error",
       "regexp/prefer-range": "error",
+      "regexp/prefer-result-array-groups": "error",
       "regexp/prefer-set-operation": "error",
       "regexp/prefer-star-quantifier": "error",
       "regexp/prefer-unicode-codepoint-escapes": "error",
       "regexp/prefer-w": "error",
+      "regexp/require-unicode-sets-regexp": "error",
       "regexp/simplify-set-operations": "error",
       "regexp/sort-flags": "error",
       "regexp/strict": "error",
@@ -2930,7 +3068,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "jsdoc/escape-inline-tags": "error",
       "jsdoc/implements-on-classes": "error",
       "jsdoc/imports-as-dependencies": "off",
-      "jsdoc/informative-docs": "off",
+      "jsdoc/informative-docs": "error",
       "jsdoc/lines-before-block": "off",
       "jsdoc/match-description": "off",
       "jsdoc/match-name": "off",
@@ -2956,7 +3094,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "jsdoc/require-jsdoc": "off",
       "jsdoc/require-next-description": "off",
       "jsdoc/require-next-type": "error",
-      "jsdoc/require-param": "off",
+      "jsdoc/require-param": "error",
       "jsdoc/require-param-description": "warn",
       "jsdoc/require-param-name": "error",
       "jsdoc/require-param-type": "off",
@@ -2965,7 +3103,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "jsdoc/require-property-name": "error",
       "jsdoc/require-property-type": "off",
       "jsdoc/require-rejects": "off",
-      "jsdoc/require-returns": "off",
+      "jsdoc/require-returns": "error",
       "jsdoc/require-returns-check": "error",
       "jsdoc/require-returns-description": "warn",
       "jsdoc/require-returns-type": "off",
@@ -3007,10 +3145,22 @@ exports[`config snapshots > snapshot: all flags 1`] = `
   {
     "name": "eslint-config-setup/sonarjs",
     "rules": {
+      "sonarjs/max-union-size": [
+        "error",
+        {
+          "threshold": 5,
+        },
+      ],
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
       "sonarjs/no-collection-size-mischeck": "error",
       "sonarjs/no-duplicate-in-composite": "error",
+      "sonarjs/no-duplicate-string": [
+        "error",
+        {
+          "threshold": 3,
+        },
+      ],
       "sonarjs/no-duplicated-branches": "error",
       "sonarjs/no-exclusive-tests": "error",
       "sonarjs/no-hardcoded-secrets": "warn",
@@ -3020,12 +3170,16 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "sonarjs/no-ignored-return": "error",
       "sonarjs/no-inverted-boolean-check": "error",
       "sonarjs/no-misleading-array-reverse": "error",
+      "sonarjs/no-nested-switch": "error",
+      "sonarjs/no-nested-template-literals": "error",
       "sonarjs/no-redundant-boolean": "error",
       "sonarjs/no-redundant-jump": "error",
       "sonarjs/no-redundant-optional": "error",
       "sonarjs/no-unused-collection": "error",
       "sonarjs/prefer-immediate-return": "error",
       "sonarjs/prefer-single-boolean-return": "error",
+      "sonarjs/prefer-type-guard": "error",
+      "sonarjs/public-static-readonly": "error",
       "sonarjs/reduce-initial-value": "error",
     },
   },
@@ -3067,6 +3221,7 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "node/no-path-concat": "error",
       "node/no-process-exit": "warn",
       "node/no-unpublished-import": "off",
+      "node/no-unsupported-features/node-builtins": "error",
       "node/prefer-global/buffer": [
         "error",
         "always",
@@ -3252,444 +3407,6 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
       "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
       "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-structural",
-    "rules": {
-      "arrow-body-style": "error",
-      "curly": [
-        "error",
-        "all",
-      ],
-      "logical-assignment-operators": [
-        "error",
-        "always",
-        {
-          "enforceForIfStatements": true,
-        },
-      ],
-      "max-statements-per-line": [
-        "error",
-        {
-          "max": 1,
-        },
-      ],
-      "no-await-in-loop": "error",
-      "no-else-return": [
-        "error",
-        {
-          "allowElseIf": false,
-        },
-      ],
-      "no-implicit-coercion": "error",
-      "no-lonely-if": "error",
-      "no-multi-assign": "error",
-      "no-negated-condition": "error",
-      "no-nested-ternary": "error",
-      "no-param-reassign": [
-        "error",
-        {
-          "props": true,
-        },
-      ],
-      "no-promise-executor-return": "error",
-      "no-unneeded-ternary": "error",
-      "no-var": "error",
-      "no-warning-comments": "warn",
-      "one-var": [
-        "error",
-        "never",
-      ],
-      "prefer-arrow-callback": [
-        "error",
-        {
-          "allowNamedFunctions": true,
-        },
-      ],
-      "prefer-const": [
-        "error",
-        {
-          "destructuring": "all",
-        },
-      ],
-      "prefer-exponentiation-operator": "error",
-      "prefer-named-capture-group": "error",
-      "prefer-template": "error",
-      "require-unicode-regexp": "error",
-      "sonarjs/no-duplicate-string": [
-        "error",
-        {
-          "threshold": 3,
-        },
-      ],
-    },
-  },
-  {
-    "files": [
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.mts",
-      "**/*.cts",
-    ],
-    "name": "eslint-config-setup/ai-typescript",
-    "rules": {
-      "@typescript-eslint/consistent-type-exports": [
-        "error",
-        {
-          "fixMixedExportsWithInlineTypeSpecifier": true,
-        },
-      ],
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        {
-          "fixStyle": "inline-type-imports",
-        },
-      ],
-      "@typescript-eslint/explicit-function-return-type": [
-        "error",
-        {
-          "allowExpressions": true,
-          "allowHigherOrderFunctions": true,
-          "allowIIFEs": true,
-          "allowTypedFunctionExpressions": true,
-        },
-      ],
-      "@typescript-eslint/explicit-member-accessibility": "error",
-      "@typescript-eslint/member-ordering": [
-        "warn",
-        {
-          "default": [
-            "signature",
-            "call-signature",
-            "public-static-field",
-            "protected-static-field",
-            "private-static-field",
-            "#private-static-field",
-            "static-field",
-            "public-static-method",
-            "protected-static-method",
-            "private-static-method",
-            "#private-static-method",
-            "static-method",
-            "public-decorated-field",
-            "protected-decorated-field",
-            "private-decorated-field",
-            "public-instance-field",
-            "protected-instance-field",
-            "private-instance-field",
-            "#private-instance-field",
-            "public-abstract-field",
-            "protected-abstract-field",
-            "field",
-            "public-constructor",
-            "protected-constructor",
-            "private-constructor",
-            "constructor",
-            [
-              "public-get",
-              "public-set",
-            ],
-            [
-              "protected-get",
-              "protected-set",
-            ],
-            [
-              "private-get",
-              "private-set",
-            ],
-            [
-              "#private-get",
-              "#private-set",
-            ],
-            "public-decorated-method",
-            "protected-decorated-method",
-            "private-decorated-method",
-            "public-instance-method",
-            "protected-instance-method",
-            "private-instance-method",
-            "#private-instance-method",
-            "public-abstract-method",
-            "protected-abstract-method",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/naming-convention": [
-        "error",
-        {
-          "filter": {
-            "match": false,
-            "regex": "[- ]",
-          },
-          "format": [
-            "strictCamelCase",
-            "UPPER_CASE",
-            "StrictPascalCase",
-          ],
-          "leadingUnderscore": "allowSingleOrDouble",
-          "selector": "variable",
-          "trailingUnderscore": "allow",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-            "StrictPascalCase",
-          ],
-          "selector": "function",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-          ],
-          "leadingUnderscore": "allow",
-          "selector": "parameter",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-            "StrictPascalCase",
-            "UPPER_CASE",
-          ],
-          "selector": "import",
-        },
-        {
-          "filter": {
-            "match": false,
-            "regex": "[- ]",
-          },
-          "format": [
-            "strictCamelCase",
-          ],
-          "leadingUnderscore": "allowSingleOrDouble",
-          "selector": [
-            "classProperty",
-            "parameterProperty",
-            "classMethod",
-            "objectLiteralMethod",
-            "typeMethod",
-            "accessor",
-          ],
-          "trailingUnderscore": "allow",
-        },
-        {
-          "format": null,
-          "selector": [
-            "objectLiteralProperty",
-            "typeProperty",
-          ],
-        },
-        {
-          "format": [
-            "StrictPascalCase",
-          ],
-          "selector": "typeLike",
-        },
-        {
-          "custom": {
-            "match": false,
-            "regex": "^I[A-Z]",
-          },
-          "format": [
-            "StrictPascalCase",
-          ],
-          "selector": "interface",
-        },
-        {
-          "custom": {
-            "match": true,
-            "regex": "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
-          },
-          "format": [
-            "PascalCase",
-          ],
-          "selector": "typeParameter",
-        },
-        {
-          "format": [
-            "StrictPascalCase",
-          ],
-          "prefix": [
-            "is",
-            "has",
-            "can",
-            "should",
-            "will",
-            "did",
-          ],
-          "selector": "variable",
-          "types": [
-            "boolean",
-          ],
-        },
-        {
-          "format": null,
-          "modifiers": [
-            "requiresQuotes",
-          ],
-          "selector": [
-            "classProperty",
-            "objectLiteralProperty",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-explicit-any": [
-        "error",
-        {
-          "fixToUnknown": true,
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-        {
-          "checkThenables": true,
-          "ignoreVoid": true,
-        },
-      ],
-      "@typescript-eslint/no-magic-numbers": [
-        "error",
-        {
-          "enforceConst": true,
-          "ignore": [
-            -1,
-            0,
-            1,
-            2,
-          ],
-          "ignoreArrayIndexes": true,
-          "ignoreClassFieldInitialValues": true,
-          "ignoreDefaultValues": true,
-          "ignoreEnums": true,
-          "ignoreNumericLiteralTypes": true,
-          "ignoreReadonlyClassProperties": true,
-          "ignoreTypeIndexes": true,
-        },
-      ],
-      "@typescript-eslint/prefer-enum-initializers": "error",
-      "@typescript-eslint/prefer-readonly": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-unicorn",
-    "rules": {
-      "unicorn/consistent-function-scoping": "error",
-      "unicorn/custom-error-definition": "error",
-      "unicorn/explicit-length-check": "error",
-      "unicorn/no-abusive-eslint-disable": "error",
-      "unicorn/no-array-for-each": "error",
-      "unicorn/no-array-push-push": "error",
-      "unicorn/no-array-reduce": "error",
-      "unicorn/no-for-loop": "error",
-      "unicorn/no-useless-switch-case": "error",
-      "unicorn/prefer-default-parameters": "error",
-      "unicorn/prefer-logical-operator-over-ternary": "error",
-      "unicorn/prefer-math-min-max": "error",
-      "unicorn/prefer-set-size": "error",
-      "unicorn/prefer-switch": [
-        "error",
-        {
-          "minimumCases": 3,
-        },
-      ],
-      "unicorn/prefer-ternary": [
-        "error",
-        "only-single-line",
-      ],
-      "unicorn/prevent-abbreviations": "error",
-      "unicorn/switch-case-braces": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-sonarjs",
-    "rules": {
-      "sonarjs/max-union-size": [
-        "error",
-        {
-          "threshold": 5,
-        },
-      ],
-      "sonarjs/no-collapsible-if": "error",
-      "sonarjs/no-identical-expressions": "error",
-      "sonarjs/no-identical-functions": "error",
-      "sonarjs/no-inverted-boolean-check": "error",
-      "sonarjs/no-nested-switch": "error",
-      "sonarjs/no-nested-template-literals": "error",
-      "sonarjs/no-redundant-boolean": "error",
-      "sonarjs/no-unused-collection": "error",
-      "sonarjs/prefer-immediate-return": "error",
-      "sonarjs/prefer-single-boolean-return": "error",
-      "sonarjs/prefer-type-guard": "error",
-      "sonarjs/public-static-readonly": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-regexp",
-    "rules": {
-      "regexp/prefer-lookaround": "error",
-      "regexp/prefer-named-backreference": "error",
-      "regexp/prefer-named-replacement": "error",
-      "regexp/prefer-quantifier": "error",
-      "regexp/prefer-result-array-groups": "error",
-      "regexp/require-unicode-sets-regexp": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-jsdoc",
-    "rules": {
-      "jsdoc/informative-docs": "error",
-      "jsdoc/require-param": "error",
-      "jsdoc/require-returns": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-node",
-    "rules": {
-      "node/no-unsupported-features/node-builtins": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-complexity",
-    "rules": {
-      "complexity": [
-        "error",
-        10,
-      ],
-      "max-depth": [
-        "error",
-        3,
-      ],
-      "max-lines": [
-        "error",
-        {
-          "max": 300,
-          "skipBlankLines": true,
-          "skipComments": true,
-        },
-      ],
-      "max-lines-per-function": [
-        "error",
-        {
-          "max": 100,
-          "skipBlankLines": true,
-          "skipComments": true,
-        },
-      ],
-      "max-nested-callbacks": [
-        "error",
-        2,
-      ],
-      "max-params": [
-        "error",
-        3,
-      ],
-      "max-statements": [
-        "error",
-        15,
-      ],
-      "sonarjs/cognitive-complexity": [
-        "error",
-        10,
-      ],
     },
   },
   {
@@ -8395,11 +8112,16 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           "allowImplicit": true,
         },
       ],
+      "arrow-body-style": "error",
       "complexity": [
         "error",
-        20,
+        10,
       ],
       "constructor-super": "error",
+      "curly": [
+        "error",
+        "all",
+      ],
       "default-case-last": "error",
       "eqeqeq": [
         "error",
@@ -8412,14 +8134,21 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
         "getBeforeSet",
       ],
       "guard-for-in": "error",
+      "logical-assignment-operators": [
+        "error",
+        "always",
+        {
+          "enforceForIfStatements": true,
+        },
+      ],
       "max-depth": [
         "error",
-        5,
+        3,
       ],
       "max-lines": [
         "error",
         {
-          "max": 500,
+          "max": 300,
           "skipBlankLines": true,
           "skipComments": true,
         },
@@ -8427,25 +8156,32 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "max-lines-per-function": [
         "error",
         {
-          "max": 200,
+          "max": 100,
           "skipBlankLines": true,
           "skipComments": true,
         },
       ],
       "max-nested-callbacks": [
         "error",
-        4,
+        2,
       ],
       "max-params": [
         "error",
-        5,
+        3,
       ],
       "max-statements": [
         "error",
-        25,
+        15,
+      ],
+      "max-statements-per-line": [
+        "error",
+        {
+          "max": 1,
+        },
       ],
       "no-alert": "error",
       "no-async-promise-executor": "error",
+      "no-await-in-loop": "error",
       "no-caller": "error",
       "no-case-declarations": "error",
       "no-class-assign": "error",
@@ -8463,6 +8199,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-dupe-else-if": "error",
       "no-dupe-keys": "error",
       "no-duplicate-case": "error",
+      "no-else-return": [
+        "error",
+        {
+          "allowElseIf": false,
+        },
+      ],
       "no-empty": "error",
       "no-empty-character-class": "error",
       "no-empty-pattern": "error",
@@ -8475,6 +8217,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-fallthrough": "error",
       "no-func-assign": "error",
       "no-global-assign": "error",
+      "no-implicit-coercion": "error",
       "no-implicit-globals": "error",
       "no-import-assign": "error",
       "no-invalid-regexp": "error",
@@ -8482,9 +8225,13 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-iterator": "error",
       "no-labels": "error",
       "no-lone-blocks": "error",
+      "no-lonely-if": "error",
       "no-loss-of-precision": "error",
       "no-misleading-character-class": "error",
+      "no-multi-assign": "error",
       "no-multi-str": "error",
+      "no-negated-condition": "error",
+      "no-nested-ternary": "error",
       "no-new": "error",
       "no-new-func": "error",
       "no-new-native-nonconstructor": "error",
@@ -8494,6 +8241,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-object-constructor": "error",
       "no-octal": "error",
       "no-octal-escape": "error",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+        },
+      ],
       "no-promise-executor-return": "error",
       "no-proto": "error",
       "no-prototype-builtins": "error",
@@ -8521,6 +8274,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-undef": "error",
       "no-unexpected-multiline": "error",
       "no-unmodified-loop-condition": "error",
+      "no-unneeded-ternary": "error",
       "no-unreachable": "error",
       "no-unreachable-loop": "error",
       "no-unsafe-finally": "error",
@@ -8544,6 +8298,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "no-useless-rename": "error",
       "no-useless-return": "error",
       "no-var": "error",
+      "no-warning-comments": "warn",
       "no-with": "error",
       "object-shorthand": [
         "error",
@@ -8553,12 +8308,24 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
           "avoidQuotes": true,
         },
       ],
+      "one-var": [
+        "error",
+        "never",
+      ],
+      "prefer-arrow-callback": [
+        "error",
+        {
+          "allowNamedFunctions": true,
+        },
+      ],
       "prefer-const": [
         "error",
         {
           "destructuring": "all",
         },
       ],
+      "prefer-exponentiation-operator": "error",
+      "prefer-named-capture-group": "error",
       "prefer-numeric-literals": "error",
       "prefer-object-has-own": "error",
       "prefer-object-spread": "error",
@@ -8570,14 +8337,15 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       ],
       "prefer-rest-params": "error",
       "prefer-spread": "error",
-      "prefer-template": "warn",
+      "prefer-template": "error",
       "preserve-caught-error": "error",
       "radix": "error",
       "require-atomic-updates": "error",
+      "require-unicode-regexp": "error",
       "require-yield": "error",
       "sonarjs/cognitive-complexity": [
         "error",
-        20,
+        10,
       ],
       "symbol-description": "error",
       "use-isnan": [
@@ -8674,13 +8442,200 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
-          "fixStyle": "separate-type-imports",
+          "fixStyle": "inline-type-imports",
         },
       ],
       "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        {
+          "allowExpressions": true,
+          "allowHigherOrderFunctions": true,
+          "allowIIFEs": true,
+          "allowTypedFunctionExpressions": true,
+        },
+      ],
+      "@typescript-eslint/explicit-member-accessibility": "error",
+      "@typescript-eslint/member-ordering": [
+        "warn",
+        {
+          "default": [
+            "signature",
+            "call-signature",
+            "public-static-field",
+            "protected-static-field",
+            "private-static-field",
+            "#private-static-field",
+            "static-field",
+            "public-static-method",
+            "protected-static-method",
+            "private-static-method",
+            "#private-static-method",
+            "static-method",
+            "public-decorated-field",
+            "protected-decorated-field",
+            "private-decorated-field",
+            "public-instance-field",
+            "protected-instance-field",
+            "private-instance-field",
+            "#private-instance-field",
+            "public-abstract-field",
+            "protected-abstract-field",
+            "field",
+            "public-constructor",
+            "protected-constructor",
+            "private-constructor",
+            "constructor",
+            [
+              "public-get",
+              "public-set",
+            ],
+            [
+              "protected-get",
+              "protected-set",
+            ],
+            [
+              "private-get",
+              "private-set",
+            ],
+            [
+              "#private-get",
+              "#private-set",
+            ],
+            "public-decorated-method",
+            "protected-decorated-method",
+            "private-decorated-method",
+            "public-instance-method",
+            "protected-instance-method",
+            "private-instance-method",
+            "#private-instance-method",
+            "public-abstract-method",
+            "protected-abstract-method",
+            "method",
+          ],
+        },
+      ],
       "@typescript-eslint/method-signature-style": [
         "error",
         "property",
+      ],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
+            "UPPER_CASE",
+            "StrictPascalCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": "variable",
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+          ],
+          "selector": "function",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allow",
+          "selector": "parameter",
+        },
+        {
+          "format": [
+            "strictCamelCase",
+            "StrictPascalCase",
+            "UPPER_CASE",
+          ],
+          "selector": "import",
+        },
+        {
+          "filter": {
+            "match": false,
+            "regex": "[- ]",
+          },
+          "format": [
+            "strictCamelCase",
+          ],
+          "leadingUnderscore": "allowSingleOrDouble",
+          "selector": [
+            "classProperty",
+            "parameterProperty",
+            "classMethod",
+            "objectLiteralMethod",
+            "typeMethod",
+            "accessor",
+          ],
+          "trailingUnderscore": "allow",
+        },
+        {
+          "format": null,
+          "selector": [
+            "objectLiteralProperty",
+            "typeProperty",
+          ],
+        },
+        {
+          "format": [
+            "StrictPascalCase",
+          ],
+          "selector": "typeLike",
+        },
+        {
+          "custom": {
+            "match": false,
+            "regex": "^I[A-Z]",
+          },
+          "format": [
+            "StrictPascalCase",
+          ],
+          "selector": "interface",
+        },
+        {
+          "custom": {
+            "match": true,
+            "regex": "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
+          },
+          "format": [
+            "PascalCase",
+          ],
+          "selector": "typeParameter",
+        },
+        {
+          "format": [
+            "StrictPascalCase",
+          ],
+          "prefix": [
+            "is",
+            "has",
+            "can",
+            "should",
+            "will",
+            "did",
+          ],
+          "selector": "variable",
+          "types": [
+            "boolean",
+          ],
+        },
+        {
+          "format": null,
+          "modifiers": [
+            "requiresQuotes",
+          ],
+          "selector": [
+            "classProperty",
+            "objectLiteralProperty",
+          ],
+        },
       ],
       "@typescript-eslint/no-array-constructor": "error",
       "@typescript-eslint/no-array-delete": "error",
@@ -8693,19 +8648,14 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-dynamic-delete": "error",
       "@typescript-eslint/no-empty-function": "error",
       "@typescript-eslint/no-empty-object-type": "error",
-      "@typescript-eslint/no-explicit-any": [
-        "warn",
-        {
-          "fixToUnknown": true,
-        },
-      ],
+      "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-extra-non-null-assertion": "error",
       "@typescript-eslint/no-extraneous-class": "error",
       "@typescript-eslint/no-floating-promises": [
         "error",
         {
           "checkThenables": true,
-          "ignoreIIFE": true,
+          "ignoreVoid": true,
         },
       ],
       "@typescript-eslint/no-for-in-array": "error",
@@ -8713,6 +8663,25 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/no-inferrable-types": "error",
       "@typescript-eslint/no-invalid-void-type": "error",
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          "enforceConst": true,
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+          ],
+          "ignoreArrayIndexes": true,
+          "ignoreClassFieldInitialValues": true,
+          "ignoreDefaultValues": true,
+          "ignoreEnums": true,
+          "ignoreNumericLiteralTypes": true,
+          "ignoreReadonlyClassProperties": true,
+          "ignoreTypeIndexes": true,
+        },
+      ],
       "@typescript-eslint/no-meaningless-void-operator": "error",
       "@typescript-eslint/no-misused-new": "error",
       "@typescript-eslint/no-misused-promises": "error",
@@ -8780,6 +8749,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/non-nullable-type-assertion-style": "error",
       "@typescript-eslint/only-throw-error": "error",
       "@typescript-eslint/prefer-as-const": "error",
+      "@typescript-eslint/prefer-enum-initializers": "error",
       "@typescript-eslint/prefer-find": "error",
       "@typescript-eslint/prefer-for-of": "error",
       "@typescript-eslint/prefer-function-type": "error",
@@ -8789,7 +8759,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "@typescript-eslint/prefer-nullish-coalescing": "error",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "error",
-      "@typescript-eslint/prefer-readonly": "warn",
+      "@typescript-eslint/prefer-readonly": "error",
       "@typescript-eslint/prefer-reduce-type-parameter": "error",
       "@typescript-eslint/prefer-regexp-exec": "error",
       "@typescript-eslint/prefer-return-this-type": "error",
@@ -9001,8 +8971,10 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/consistent-date-clone": "error",
       "unicorn/consistent-empty-array-spread": "error",
       "unicorn/consistent-existence-index-check": "error",
-      "unicorn/consistent-function-scoping": "warn",
+      "unicorn/consistent-function-scoping": "error",
+      "unicorn/custom-error-definition": "error",
       "unicorn/error-message": "error",
+      "unicorn/explicit-length-check": "error",
       "unicorn/filename-case": [
         "error",
         {
@@ -9018,11 +8990,13 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/no-accessor-recursion": "error",
       "unicorn/no-anonymous-default-export": "error",
       "unicorn/no-array-callback-reference": "error",
+      "unicorn/no-array-for-each": "error",
       "unicorn/no-array-method-this-argument": "error",
-      "unicorn/no-array-reduce": "warn",
+      "unicorn/no-array-push-push": "error",
+      "unicorn/no-array-reduce": "error",
       "unicorn/no-await-expression-member": "error",
       "unicorn/no-await-in-promise-methods": "error",
-      "unicorn/no-for-loop": "warn",
+      "unicorn/no-for-loop": "error",
       "unicorn/no-immediate-mutation": "off",
       "unicorn/no-instanceof-builtins": "error",
       "unicorn/no-invalid-fetch-options": "error",
@@ -9041,6 +9015,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
+      "unicorn/no-useless-switch-case": "error",
       "unicorn/no-useless-undefined": "warn",
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
@@ -9052,6 +9027,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/prefer-array-some": "error",
       "unicorn/prefer-at": "error",
       "unicorn/prefer-date-now": "error",
+      "unicorn/prefer-default-parameters": "error",
       "unicorn/prefer-dom-node-dataset": "error",
       "unicorn/prefer-export-from": [
         "error",
@@ -9062,6 +9038,8 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/prefer-global-this": "error",
       "unicorn/prefer-import-meta-properties": "error",
       "unicorn/prefer-includes": "error",
+      "unicorn/prefer-logical-operator-over-ternary": "error",
+      "unicorn/prefer-math-min-max": "error",
       "unicorn/prefer-modern-dom-apis": "error",
       "unicorn/prefer-modern-math-apis": "error",
       "unicorn/prefer-native-coercion-functions": "error",
@@ -9072,6 +9050,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/prefer-optional-catch-binding": "error",
       "unicorn/prefer-regexp-test": "error",
       "unicorn/prefer-set-has": "error",
+      "unicorn/prefer-set-size": "error",
       "unicorn/prefer-single-call": "off",
       "unicorn/prefer-spread": "error",
       "unicorn/prefer-string-replace-all": "error",
@@ -9079,9 +9058,21 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/prefer-string-starts-ends-with": "error",
       "unicorn/prefer-string-trim-start-end": "error",
       "unicorn/prefer-structured-clone": "error",
+      "unicorn/prefer-switch": [
+        "error",
+        {
+          "minimumCases": 3,
+        },
+      ],
+      "unicorn/prefer-ternary": [
+        "error",
+        "only-single-line",
+      ],
       "unicorn/prefer-top-level-await": "error",
       "unicorn/prefer-type-error": "error",
+      "unicorn/prevent-abbreviations": "error",
       "unicorn/relative-url-style": "error",
+      "unicorn/switch-case-braces": "error",
       "unicorn/text-encoding-identifier-case": "error",
       "unicorn/throw-new-error": "error",
     },
@@ -9149,14 +9140,20 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "regexp/prefer-character-class": "error",
       "regexp/prefer-d": "error",
       "regexp/prefer-escape-replacement-dollar-char": "error",
+      "regexp/prefer-lookaround": "error",
+      "regexp/prefer-named-backreference": "error",
+      "regexp/prefer-named-replacement": "error",
       "regexp/prefer-plus-quantifier": "error",
       "regexp/prefer-predefined-assertion": "error",
+      "regexp/prefer-quantifier": "error",
       "regexp/prefer-question-quantifier": "error",
       "regexp/prefer-range": "error",
+      "regexp/prefer-result-array-groups": "error",
       "regexp/prefer-set-operation": "error",
       "regexp/prefer-star-quantifier": "error",
       "regexp/prefer-unicode-codepoint-escapes": "error",
       "regexp/prefer-w": "error",
+      "regexp/require-unicode-sets-regexp": "error",
       "regexp/simplify-set-operations": "error",
       "regexp/sort-flags": "error",
       "regexp/strict": "error",
@@ -9183,7 +9180,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "jsdoc/escape-inline-tags": "error",
       "jsdoc/implements-on-classes": "error",
       "jsdoc/imports-as-dependencies": "off",
-      "jsdoc/informative-docs": "off",
+      "jsdoc/informative-docs": "error",
       "jsdoc/lines-before-block": "off",
       "jsdoc/match-description": "off",
       "jsdoc/match-name": "off",
@@ -9209,7 +9206,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "jsdoc/require-jsdoc": "off",
       "jsdoc/require-next-description": "off",
       "jsdoc/require-next-type": "error",
-      "jsdoc/require-param": "off",
+      "jsdoc/require-param": "error",
       "jsdoc/require-param-description": "warn",
       "jsdoc/require-param-name": "error",
       "jsdoc/require-param-type": "off",
@@ -9218,7 +9215,7 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "jsdoc/require-property-name": "error",
       "jsdoc/require-property-type": "off",
       "jsdoc/require-rejects": "off",
-      "jsdoc/require-returns": "off",
+      "jsdoc/require-returns": "error",
       "jsdoc/require-returns-check": "error",
       "jsdoc/require-returns-description": "warn",
       "jsdoc/require-returns-type": "off",
@@ -9260,10 +9257,22 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
   {
     "name": "eslint-config-setup/sonarjs",
     "rules": {
+      "sonarjs/max-union-size": [
+        "error",
+        {
+          "threshold": 5,
+        },
+      ],
       "sonarjs/no-async-constructor": "error",
       "sonarjs/no-collapsible-if": "error",
       "sonarjs/no-collection-size-mischeck": "error",
       "sonarjs/no-duplicate-in-composite": "error",
+      "sonarjs/no-duplicate-string": [
+        "error",
+        {
+          "threshold": 3,
+        },
+      ],
       "sonarjs/no-duplicated-branches": "error",
       "sonarjs/no-exclusive-tests": "error",
       "sonarjs/no-hardcoded-secrets": "warn",
@@ -9273,12 +9282,16 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "sonarjs/no-ignored-return": "error",
       "sonarjs/no-inverted-boolean-check": "error",
       "sonarjs/no-misleading-array-reverse": "error",
+      "sonarjs/no-nested-switch": "error",
+      "sonarjs/no-nested-template-literals": "error",
       "sonarjs/no-redundant-boolean": "error",
       "sonarjs/no-redundant-jump": "error",
       "sonarjs/no-redundant-optional": "error",
       "sonarjs/no-unused-collection": "error",
       "sonarjs/prefer-immediate-return": "error",
       "sonarjs/prefer-single-boolean-return": "error",
+      "sonarjs/prefer-type-guard": "error",
+      "sonarjs/public-static-readonly": "error",
       "sonarjs/reduce-initial-value": "error",
     },
   },
@@ -9474,444 +9487,6 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
       "react-you-might-not-need-an-effect/no-pass-live-state-to-parent": "error",
       "react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-structural",
-    "rules": {
-      "arrow-body-style": "error",
-      "curly": [
-        "error",
-        "all",
-      ],
-      "logical-assignment-operators": [
-        "error",
-        "always",
-        {
-          "enforceForIfStatements": true,
-        },
-      ],
-      "max-statements-per-line": [
-        "error",
-        {
-          "max": 1,
-        },
-      ],
-      "no-await-in-loop": "error",
-      "no-else-return": [
-        "error",
-        {
-          "allowElseIf": false,
-        },
-      ],
-      "no-implicit-coercion": "error",
-      "no-lonely-if": "error",
-      "no-multi-assign": "error",
-      "no-negated-condition": "error",
-      "no-nested-ternary": "error",
-      "no-param-reassign": [
-        "error",
-        {
-          "props": true,
-        },
-      ],
-      "no-promise-executor-return": "error",
-      "no-unneeded-ternary": "error",
-      "no-var": "error",
-      "no-warning-comments": "warn",
-      "one-var": [
-        "error",
-        "never",
-      ],
-      "prefer-arrow-callback": [
-        "error",
-        {
-          "allowNamedFunctions": true,
-        },
-      ],
-      "prefer-const": [
-        "error",
-        {
-          "destructuring": "all",
-        },
-      ],
-      "prefer-exponentiation-operator": "error",
-      "prefer-named-capture-group": "error",
-      "prefer-template": "error",
-      "require-unicode-regexp": "error",
-      "sonarjs/no-duplicate-string": [
-        "error",
-        {
-          "threshold": 3,
-        },
-      ],
-    },
-  },
-  {
-    "files": [
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.mts",
-      "**/*.cts",
-    ],
-    "name": "eslint-config-setup/ai-typescript",
-    "rules": {
-      "@typescript-eslint/consistent-type-exports": [
-        "error",
-        {
-          "fixMixedExportsWithInlineTypeSpecifier": true,
-        },
-      ],
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        {
-          "fixStyle": "inline-type-imports",
-        },
-      ],
-      "@typescript-eslint/explicit-function-return-type": [
-        "error",
-        {
-          "allowExpressions": true,
-          "allowHigherOrderFunctions": true,
-          "allowIIFEs": true,
-          "allowTypedFunctionExpressions": true,
-        },
-      ],
-      "@typescript-eslint/explicit-member-accessibility": "error",
-      "@typescript-eslint/member-ordering": [
-        "warn",
-        {
-          "default": [
-            "signature",
-            "call-signature",
-            "public-static-field",
-            "protected-static-field",
-            "private-static-field",
-            "#private-static-field",
-            "static-field",
-            "public-static-method",
-            "protected-static-method",
-            "private-static-method",
-            "#private-static-method",
-            "static-method",
-            "public-decorated-field",
-            "protected-decorated-field",
-            "private-decorated-field",
-            "public-instance-field",
-            "protected-instance-field",
-            "private-instance-field",
-            "#private-instance-field",
-            "public-abstract-field",
-            "protected-abstract-field",
-            "field",
-            "public-constructor",
-            "protected-constructor",
-            "private-constructor",
-            "constructor",
-            [
-              "public-get",
-              "public-set",
-            ],
-            [
-              "protected-get",
-              "protected-set",
-            ],
-            [
-              "private-get",
-              "private-set",
-            ],
-            [
-              "#private-get",
-              "#private-set",
-            ],
-            "public-decorated-method",
-            "protected-decorated-method",
-            "private-decorated-method",
-            "public-instance-method",
-            "protected-instance-method",
-            "private-instance-method",
-            "#private-instance-method",
-            "public-abstract-method",
-            "protected-abstract-method",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/naming-convention": [
-        "error",
-        {
-          "filter": {
-            "match": false,
-            "regex": "[- ]",
-          },
-          "format": [
-            "strictCamelCase",
-            "UPPER_CASE",
-            "StrictPascalCase",
-          ],
-          "leadingUnderscore": "allowSingleOrDouble",
-          "selector": "variable",
-          "trailingUnderscore": "allow",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-            "StrictPascalCase",
-          ],
-          "selector": "function",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-          ],
-          "leadingUnderscore": "allow",
-          "selector": "parameter",
-        },
-        {
-          "format": [
-            "strictCamelCase",
-            "StrictPascalCase",
-            "UPPER_CASE",
-          ],
-          "selector": "import",
-        },
-        {
-          "filter": {
-            "match": false,
-            "regex": "[- ]",
-          },
-          "format": [
-            "strictCamelCase",
-          ],
-          "leadingUnderscore": "allowSingleOrDouble",
-          "selector": [
-            "classProperty",
-            "parameterProperty",
-            "classMethod",
-            "objectLiteralMethod",
-            "typeMethod",
-            "accessor",
-          ],
-          "trailingUnderscore": "allow",
-        },
-        {
-          "format": null,
-          "selector": [
-            "objectLiteralProperty",
-            "typeProperty",
-          ],
-        },
-        {
-          "format": [
-            "StrictPascalCase",
-          ],
-          "selector": "typeLike",
-        },
-        {
-          "custom": {
-            "match": false,
-            "regex": "^I[A-Z]",
-          },
-          "format": [
-            "StrictPascalCase",
-          ],
-          "selector": "interface",
-        },
-        {
-          "custom": {
-            "match": true,
-            "regex": "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
-          },
-          "format": [
-            "PascalCase",
-          ],
-          "selector": "typeParameter",
-        },
-        {
-          "format": [
-            "StrictPascalCase",
-          ],
-          "prefix": [
-            "is",
-            "has",
-            "can",
-            "should",
-            "will",
-            "did",
-          ],
-          "selector": "variable",
-          "types": [
-            "boolean",
-          ],
-        },
-        {
-          "format": null,
-          "modifiers": [
-            "requiresQuotes",
-          ],
-          "selector": [
-            "classProperty",
-            "objectLiteralProperty",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-explicit-any": [
-        "error",
-        {
-          "fixToUnknown": true,
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-        {
-          "checkThenables": true,
-          "ignoreVoid": true,
-        },
-      ],
-      "@typescript-eslint/no-magic-numbers": [
-        "error",
-        {
-          "enforceConst": true,
-          "ignore": [
-            -1,
-            0,
-            1,
-            2,
-          ],
-          "ignoreArrayIndexes": true,
-          "ignoreClassFieldInitialValues": true,
-          "ignoreDefaultValues": true,
-          "ignoreEnums": true,
-          "ignoreNumericLiteralTypes": true,
-          "ignoreReadonlyClassProperties": true,
-          "ignoreTypeIndexes": true,
-        },
-      ],
-      "@typescript-eslint/prefer-enum-initializers": "error",
-      "@typescript-eslint/prefer-readonly": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-unicorn",
-    "rules": {
-      "unicorn/consistent-function-scoping": "error",
-      "unicorn/custom-error-definition": "error",
-      "unicorn/explicit-length-check": "error",
-      "unicorn/no-abusive-eslint-disable": "error",
-      "unicorn/no-array-for-each": "error",
-      "unicorn/no-array-push-push": "error",
-      "unicorn/no-array-reduce": "error",
-      "unicorn/no-for-loop": "error",
-      "unicorn/no-useless-switch-case": "error",
-      "unicorn/prefer-default-parameters": "error",
-      "unicorn/prefer-logical-operator-over-ternary": "error",
-      "unicorn/prefer-math-min-max": "error",
-      "unicorn/prefer-set-size": "error",
-      "unicorn/prefer-switch": [
-        "error",
-        {
-          "minimumCases": 3,
-        },
-      ],
-      "unicorn/prefer-ternary": [
-        "error",
-        "only-single-line",
-      ],
-      "unicorn/prevent-abbreviations": "error",
-      "unicorn/switch-case-braces": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-sonarjs",
-    "rules": {
-      "sonarjs/max-union-size": [
-        "error",
-        {
-          "threshold": 5,
-        },
-      ],
-      "sonarjs/no-collapsible-if": "error",
-      "sonarjs/no-identical-expressions": "error",
-      "sonarjs/no-identical-functions": "error",
-      "sonarjs/no-inverted-boolean-check": "error",
-      "sonarjs/no-nested-switch": "error",
-      "sonarjs/no-nested-template-literals": "error",
-      "sonarjs/no-redundant-boolean": "error",
-      "sonarjs/no-unused-collection": "error",
-      "sonarjs/prefer-immediate-return": "error",
-      "sonarjs/prefer-single-boolean-return": "error",
-      "sonarjs/prefer-type-guard": "error",
-      "sonarjs/public-static-readonly": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-regexp",
-    "rules": {
-      "regexp/prefer-lookaround": "error",
-      "regexp/prefer-named-backreference": "error",
-      "regexp/prefer-named-replacement": "error",
-      "regexp/prefer-quantifier": "error",
-      "regexp/prefer-result-array-groups": "error",
-      "regexp/require-unicode-sets-regexp": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-jsdoc",
-    "rules": {
-      "jsdoc/informative-docs": "error",
-      "jsdoc/require-param": "error",
-      "jsdoc/require-returns": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-node",
-    "rules": {
-      "node/no-unsupported-features/node-builtins": "error",
-    },
-  },
-  {
-    "name": "eslint-config-setup/ai-complexity",
-    "rules": {
-      "complexity": [
-        "error",
-        10,
-      ],
-      "max-depth": [
-        "error",
-        3,
-      ],
-      "max-lines": [
-        "error",
-        {
-          "max": 300,
-          "skipBlankLines": true,
-          "skipComments": true,
-        },
-      ],
-      "max-lines-per-function": [
-        "error",
-        {
-          "max": 100,
-          "skipBlankLines": true,
-          "skipComments": true,
-        },
-      ],
-      "max-nested-callbacks": [
-        "error",
-        2,
-      ],
-      "max-params": [
-        "error",
-        3,
-      ],
-      "max-statements": [
-        "error",
-        15,
-      ],
-      "sonarjs/cognitive-complexity": [
-        "error",
-        10,
-      ],
     },
   },
   {

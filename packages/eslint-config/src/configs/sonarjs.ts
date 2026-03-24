@@ -1,5 +1,6 @@
 import sonarjsPlugin from "eslint-plugin-sonarjs"
 
+import { createConfig } from "../build/config-builder"
 import type { FlatConfigArray } from "../types"
 
 /**
@@ -10,13 +11,13 @@ import type { FlatConfigArray } from "../types"
  *
  * @see https://github.com/SonarSource/SonarJS/tree/master/packages/jsts/src/rules#readme
  */
-export function sonarjsConfig(): FlatConfigArray {
-  return [
-    {
-      name: "eslint-config-setup/sonarjs",
-      plugins: {
-        sonarjs: sonarjsPlugin as Record<string, unknown>,
-      },
+export function sonarjsConfig(opts?: { ai?: boolean }): FlatConfigArray {
+  const isAi = opts?.ai === true
+
+  const builder = createConfig({
+    name: "eslint-config-setup/sonarjs",
+    presets: [{
+      plugins: { sonarjs: sonarjsPlugin as Record<string, unknown> },
       rules: {
         // Detect copy-pasted functions — extract to shared helper instead
         // https://sonarsource.github.io/rspec/#/rspec/S4144/javascript
@@ -98,6 +99,18 @@ export function sonarjsConfig(): FlatConfigArray {
         // https://sonarsource.github.io/rspec/#/rspec/S6418/javascript
         "sonarjs/no-hardcoded-secrets": "warn",
       },
-    },
-  ]
+    }],
+  })
+
+  if (isAi) {
+    // New AI-only rules (not already in base config)
+    builder.addRule("sonarjs/no-nested-switch", "error")
+    builder.addRule("sonarjs/no-nested-template-literals", "error")
+    builder.addRule("sonarjs/max-union-size", ["error", { threshold: 5 }])
+    builder.addRule("sonarjs/prefer-type-guard", "error")
+    builder.addRule("sonarjs/public-static-readonly", "error")
+    builder.addRule("sonarjs/no-duplicate-string", ["error", { threshold: 3 }])
+  }
+
+  return builder.build()
 }

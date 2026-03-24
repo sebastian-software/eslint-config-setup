@@ -436,13 +436,13 @@ describe("rule helpers on composed configs", () => {
 
   it("can reconfigure complexity limits on an AI config", () => {
     const config = composeConfig({ ai: true })
-    const aiComplexity = config.find(
-      (b) => b.name === "eslint-config-setup/ai-complexity",
+    const baseBlock = config.find(
+      (b) => b.name === "eslint-config-setup/base",
     )
-    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 10])
+    expect(baseBlock?.rules?.complexity).toStrictEqual(["error", 10])
 
     configureRule(config, "complexity", [25])
-    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 25])
+    expect(baseBlock?.rules?.complexity).toStrictEqual(["error", 25])
   })
 
   it("can add a custom rule to a composed config", () => {
@@ -454,21 +454,21 @@ describe("rule helpers on composed configs", () => {
   it("can disable AI naming-convention and explicit-return-type", () => {
     const config = composeConfig({ ai: true })
 
-    const aiTsBlock = config.find(
-      (b) => b.name === "eslint-config-setup/ai-typescript",
+    const tsBlock = config.find(
+      (b) => b.name === "eslint-config-setup/typescript",
     )
     expect(
-      aiTsBlock?.rules?.["@typescript-eslint/explicit-function-return-type"],
+      tsBlock?.rules?.["@typescript-eslint/explicit-function-return-type"],
     ).toBeDefined()
 
     disableRule(config, "@typescript-eslint/explicit-function-return-type")
     disableRule(config, "@typescript-eslint/naming-convention")
 
     expect(
-      aiTsBlock?.rules?.["@typescript-eslint/explicit-function-return-type"],
+      tsBlock?.rules?.["@typescript-eslint/explicit-function-return-type"],
     ).toBe("off")
     expect(
-      aiTsBlock?.rules?.["@typescript-eslint/naming-convention"],
+      tsBlock?.rules?.["@typescript-eslint/naming-convention"],
     ).toBe("off")
   })
 
@@ -488,15 +488,15 @@ describe("rule helpers on composed configs", () => {
     addRule(config, "no-alert", "error")
 
     // Verify all changes
-    const aiUnicorn = config.find(
-      (b) => b.name === "eslint-config-setup/ai-unicorn",
+    const unicornBlock = config.find(
+      (b) => b.name === "eslint-config-setup/unicorn",
     )
-    expect(aiUnicorn?.rules?.["unicorn/prevent-abbreviations"]).toBe("off")
+    expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toBe("off")
 
-    const aiComplexity = config.find(
-      (b) => b.name === "eslint-config-setup/ai-complexity",
+    const baseBlock = config.find(
+      (b) => b.name === "eslint-config-setup/base",
     )
-    expect(aiComplexity?.rules?.complexity).toStrictEqual(["error", 20])
+    expect(baseBlock?.rules?.complexity).toStrictEqual(["error", 20])
 
     expect(config[0].rules!["no-alert"]).toBe("error")
   })

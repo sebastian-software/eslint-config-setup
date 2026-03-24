@@ -19,7 +19,10 @@ import { MARKDOWN_CODE_BLOCK_FILES, TYPESCRIPT_SOURCE_FILES } from "../file-patt
  * @see https://typescript-eslint.io/getting-started/
  * @see https://typescript-eslint.io/rules/
  */
-export function typescriptConfig(): FlatConfigArray {
+export function typescriptConfig(opts?: { ai?: boolean; react?: boolean }): FlatConfigArray {
+  const isAi = opts?.ai ?? false
+  const isReact = opts?.react ?? false
+
   const typeChecked = tseslint.configs.strictTypeChecked
   const stylistic = tseslint.configs.stylisticTypeChecked
 
@@ -113,7 +116,7 @@ export function typescriptConfig(): FlatConfigArray {
   // https://typescript-eslint.io/rules/consistent-type-imports
   builder.addRule("@typescript-eslint/consistent-type-imports", [
     "error",
-    { fixStyle: "separate-type-imports" },
+    { fixStyle: isAi ? "inline-type-imports" : "separate-type-imports" },
   ])
 
   // Enforce `export type { T }` — matches import convention
@@ -149,7 +152,7 @@ export function typescriptConfig(): FlatConfigArray {
 
   // Suggest readonly for properties that are never reassigned — clarifies intent
   // https://typescript-eslint.io/rules/prefer-readonly
-  builder.addRule("@typescript-eslint/prefer-readonly", "warn")
+  builder.addRule("@typescript-eslint/prefer-readonly", isAi ? "error" : "warn")
 
   // Require comparator for Array.sort() — [10,2,1].sort() → [1,10,2] without one
   // https://typescript-eslint.io/rules/require-array-sort-compare
@@ -220,6 +223,167 @@ export function typescriptConfig(): FlatConfigArray {
     ["**/*.{js,mjs,cjs}"],
     tseslint.configs.disableTypeChecked.rules ?? {},
   )
+
+  if (isAi) {
+    // ── AI mode: override severity ──────────────────────────────
+    builder.overrideSeverity("@typescript-eslint/no-explicit-any", "error")
+
+    // ── AI mode: override rules with different options ───────────
+    builder.overrideRule("@typescript-eslint/no-floating-promises", [
+      "error",
+      { checkThenables: true, ignoreVoid: true },
+    ])
+
+    // ── AI mode: additional rules ───────────────────────────────
+    builder.addRule("@typescript-eslint/no-magic-numbers", [
+      "error",
+      {
+        ignore: [-1, 0, 1, 2],
+        ignoreArrayIndexes: true,
+        ignoreDefaultValues: true,
+        enforceConst: true,
+        ignoreClassFieldInitialValues: true,
+        ignoreEnums: true,
+        ignoreNumericLiteralTypes: true,
+        ignoreReadonlyClassProperties: true,
+        ignoreTypeIndexes: true,
+      },
+    ])
+    builder.addRule("@typescript-eslint/explicit-function-return-type", [
+      "error",
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
+        allowHigherOrderFunctions: true,
+        allowIIFEs: true,
+      },
+    ])
+    builder.addRule(
+      "@typescript-eslint/explicit-member-accessibility",
+      "error",
+    )
+    builder.addRule(
+      "@typescript-eslint/prefer-enum-initializers",
+      "error",
+    )
+    builder.addRule("@typescript-eslint/naming-convention", [
+      "error",
+      {
+        selector: "variable",
+        format: isReact
+          ? ["strictCamelCase", "UPPER_CASE", "StrictPascalCase"]
+          : ["strictCamelCase", "UPPER_CASE"],
+        leadingUnderscore: "allowSingleOrDouble",
+        trailingUnderscore: "allow",
+        filter: { regex: "[- ]", match: false },
+      },
+      {
+        selector: "function",
+        format: isReact
+          ? ["strictCamelCase", "StrictPascalCase"]
+          : ["strictCamelCase"],
+      },
+      {
+        selector: "parameter",
+        format: ["strictCamelCase"],
+        leadingUnderscore: "allow",
+      },
+      {
+        selector: "import",
+        format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
+      },
+      {
+        selector: [
+          "classProperty",
+          "parameterProperty",
+          "classMethod",
+          "objectLiteralMethod",
+          "typeMethod",
+          "accessor",
+        ],
+        format: ["strictCamelCase"],
+        leadingUnderscore: "allowSingleOrDouble",
+        trailingUnderscore: "allow",
+        filter: { regex: "[- ]", match: false },
+      },
+      {
+        selector: ["objectLiteralProperty", "typeProperty"],
+        format: null,
+      },
+      { selector: "typeLike", format: ["StrictPascalCase"] },
+      {
+        selector: "interface",
+        format: ["StrictPascalCase"],
+        custom: { regex: "^I[A-Z]", match: false },
+      },
+      {
+        selector: "typeParameter",
+        format: ["PascalCase"],
+        custom: {
+          regex: "^(T([A-Z][a-zA-Z]*)?|[A-Z])$",
+          match: true,
+        },
+      },
+      {
+        selector: "variable",
+        types: ["boolean"],
+        format: ["StrictPascalCase"],
+        prefix: ["is", "has", "can", "should", "will", "did"],
+      },
+      {
+        selector: ["classProperty", "objectLiteralProperty"],
+        format: null,
+        modifiers: ["requiresQuotes"],
+      },
+    ])
+    builder.addRule("@typescript-eslint/member-ordering", [
+      "warn",
+      {
+        default: [
+          "signature",
+          "call-signature",
+          "public-static-field",
+          "protected-static-field",
+          "private-static-field",
+          "#private-static-field",
+          "static-field",
+          "public-static-method",
+          "protected-static-method",
+          "private-static-method",
+          "#private-static-method",
+          "static-method",
+          "public-decorated-field",
+          "protected-decorated-field",
+          "private-decorated-field",
+          "public-instance-field",
+          "protected-instance-field",
+          "private-instance-field",
+          "#private-instance-field",
+          "public-abstract-field",
+          "protected-abstract-field",
+          "field",
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "constructor",
+          ["public-get", "public-set"],
+          ["protected-get", "protected-set"],
+          ["private-get", "private-set"],
+          ["#private-get", "#private-set"],
+          "public-decorated-method",
+          "protected-decorated-method",
+          "private-decorated-method",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method",
+          "#private-instance-method",
+          "public-abstract-method",
+          "protected-abstract-method",
+          "method",
+        ],
+      },
+    ])
+  }
 
   return builder.build()
 }
