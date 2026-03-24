@@ -1,9 +1,128 @@
-/* eslint-disable max-lines-per-function, max-statements, complexity -- Rule definition file: one function returning a flat list of rule entries. */
+import type { Linter } from "eslint"
+
 import eslint from "@eslint/js"
 
 import type { FlatConfigArray } from "../types"
 
 import { createConfig } from "../build/config-builder"
+
+type Builder = ReturnType<typeof createConfig>
+
+const ERROR_PREVENTION_RULES = {
+  "accessor-pairs": ["error", { enforceForClassMembers: true }],
+  "array-callback-return": ["error", { allowImplicit: true }],
+  "no-constructor-return": "error",
+  "no-promise-executor-return": "error",
+  "no-self-compare": "error",
+  "no-template-curly-in-string": "error",
+  "no-unreachable-loop": "error",
+  "require-atomic-updates": "error",
+  "no-unmodified-loop-condition": "error",
+  "grouped-accessor-pairs": ["error", "getBeforeSet"],
+  "no-useless-rename": "error",
+  "no-useless-computed-key": ["error", { enforceForClassMembers: true }],
+} satisfies Linter.RulesRecord
+
+const DANGEROUS_PATTERN_RULES = {
+  "no-eval": "error",
+  "no-alert": "error",
+  "no-caller": "error",
+  "no-extend-native": "error",
+  "no-new-func": "error",
+  "no-new-wrappers": "error",
+  "no-object-constructor": "error",
+  "no-proto": "error",
+  "no-iterator": "error",
+  "no-script-url": "error",
+  "no-octal-escape": "error",
+  "no-implicit-globals": "error",
+} satisfies Linter.RulesRecord
+
+const CODE_QUALITY_RULES = {
+  eqeqeq: ["error", "smart"],
+  "guard-for-in": "error",
+  "default-case-last": "error",
+  radix: "error",
+  yoda: "error",
+  "no-sequences": ["error", { allowInParentheses: false }],
+  "no-new": "error",
+  "no-labels": "error",
+  "no-extra-bind": "error",
+  "no-lone-blocks": "error",
+  "no-useless-call": "error",
+  "no-useless-concat": "error",
+  "no-useless-return": "error",
+  "no-return-assign": ["error", "always"],
+  "no-multi-str": "error",
+  "prefer-regex-literals": ["error", { disallowRedundantWrapping: true }],
+} satisfies Linter.RulesRecord
+
+const MODERN_STYLE_RULES = {
+  "no-var": "error",
+  "prefer-const": ["error", { destructuring: "all" }],
+  "prefer-object-has-own": "error",
+  "prefer-object-spread": "error",
+  "prefer-rest-params": "error",
+  "prefer-spread": "error",
+  "symbol-description": "error",
+  "prefer-numeric-literals": "error",
+  "object-shorthand": ["error", "always", { avoidExplicitReturnArrows: true, avoidQuotes: true }],
+} satisfies Linter.RulesRecord
+
+const AI_STRUCTURAL_RULES = {
+  curly: ["error", "all"],
+  "no-else-return": ["error", { allowElseIf: false }],
+  "no-nested-ternary": "error",
+  "no-unneeded-ternary": "error",
+  "no-negated-condition": "error",
+  "no-lonely-if": "error",
+  "no-param-reassign": ["error", { props: true }],
+  "no-multi-assign": "error",
+  "one-var": ["error", "never"],
+  "no-implicit-coercion": "error",
+  "arrow-body-style": "error",
+  "prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
+  "logical-assignment-operators": ["error", "always", { enforceForIfStatements: true }],
+  "max-statements-per-line": ["error", { max: 1 }],
+  "prefer-exponentiation-operator": "error",
+  "prefer-named-capture-group": "error",
+  "require-unicode-regexp": "error",
+  "no-warning-comments": "warn",
+  "no-await-in-loop": "error",
+} satisfies Linter.RulesRecord
+
+function addRules(builder: Builder, rules: Linter.RulesRecord): void {
+  for (const [ruleName, value] of Object.entries(rules)) {
+    builder.addRule(ruleName, value)
+  }
+}
+
+function addBaseOverrides(builder: Builder): void {
+  builder.overrideRule("use-isnan", ["error", { enforceForIndexOf: true, enforceForSwitchCase: true }])
+  builder.overrideRule("valid-typeof", ["error", { requireStringLiterals: true }])
+}
+
+function addComplexityRules(builder: Builder, isAi: boolean): void {
+  builder.addRule("complexity", ["error", isAi ? 10 : 20])
+  builder.addRule("max-depth", ["error", isAi ? 3 : 5])
+  builder.addRule("max-nested-callbacks", ["error", isAi ? 2 : 4])
+  builder.addRule("max-params", ["error", isAi ? 3 : 5])
+  builder.addRule("max-statements", ["error", isAi ? 15 : 25])
+  builder.addRule("max-lines-per-function", [
+    "error",
+    { max: isAi ? 100 : 200, skipBlankLines: true, skipComments: true },
+  ])
+  builder.addRule("max-lines", [
+    "error",
+    { max: isAi ? 300 : 500, skipBlankLines: true, skipComments: true },
+  ])
+  builder.addRule("sonarjs/cognitive-complexity", ["error", isAi ? 10 : 20])
+}
+
+function addModernStyleRules(builder: Builder, isAi: boolean): void {
+  addRules(builder, MODERN_STYLE_RULES)
+  builder.addRule("prefer-template", isAi ? "error" : "warn")
+}
 
 /**
  * Base ESLint config — extends `eslint.configs.recommended` with additional
@@ -23,294 +142,15 @@ export function baseConfig(opts?: { ai?: boolean }): FlatConfigArray {
     presets: [eslint.configs.recommended],
   })
 
-  builder
-    // ── Error prevention ──────────────────────────────────────────
-
-    // Enforce getter/setter pairs — prevents incomplete property accessors
-    // https://eslint.org/docs/latest/rules/accessor-pairs
-    .addRule("accessor-pairs", ["error", { enforceForClassMembers: true }])
-
-    // Require return in array method callbacks — prevents silent bugs in .map/.filter
-    // https://eslint.org/docs/latest/rules/array-callback-return
-    .addRule("array-callback-return", ["error", { allowImplicit: true }])
-
-    // Disallow returning values from constructors — constructors should not return
-    // https://eslint.org/docs/latest/rules/no-constructor-return
-    .addRule("no-constructor-return", "error")
-
-    // Disallow returning values from Promise executors — use resolve/reject instead
-    // https://eslint.org/docs/latest/rules/no-promise-executor-return
-    .addRule("no-promise-executor-return", "error")
-
-    // Disallow self-comparison (x === x) — always a bug, use Number.isNaN instead
-    // https://eslint.org/docs/latest/rules/no-self-compare
-    .addRule("no-self-compare", "error")
-
-    // Detect template literal syntax in regular strings — likely a forgotten backtick
-    // https://eslint.org/docs/latest/rules/no-template-curly-in-string
-    .addRule("no-template-curly-in-string", "error")
-
-    // Detect loops that can only iterate once — logic error indicator
-    // https://eslint.org/docs/latest/rules/no-unreachable-loop
-    .addRule("no-unreachable-loop", "error")
-
-    // Detect race conditions with shared variables in async code
-    // https://eslint.org/docs/latest/rules/require-atomic-updates
-    .addRule("require-atomic-updates", "error")
-
-    // Detect loop conditions that are never modified — likely a bug
-    // https://eslint.org/docs/latest/rules/no-unmodified-loop-condition
-    .addRule("no-unmodified-loop-condition", "error")
-
-    // Keep getter/setter pairs adjacent — easier to find related logic
-    // https://eslint.org/docs/latest/rules/grouped-accessor-pairs
-    .addRule("grouped-accessor-pairs", ["error", "getBeforeSet"])
-
-    // Remove pointless renames — `import { x as x }` is always wrong
-    // https://eslint.org/docs/latest/rules/no-useless-rename
-    .addRule("no-useless-rename", "error")
-
-    // Remove unnecessary computed keys — `{ ["key"]: value }` → `{ key: value }`
-    // https://eslint.org/docs/latest/rules/no-useless-computed-key
-    .addRule("no-useless-computed-key", ["error", { enforceForClassMembers: true }])
-
-    // Require Number.isNaN() — also catches NaN in indexOf/switch where it silently fails
-    // https://eslint.org/docs/latest/rules/use-isnan
-    .overrideRule("use-isnan", ["error", { enforceForIndexOf: true, enforceForSwitchCase: true }])
-
-    // Require string literals in typeof comparisons — prevents typos like `typeof x === myVar`
-    // https://eslint.org/docs/latest/rules/valid-typeof
-    .overrideRule("valid-typeof", ["error", { requireStringLiterals: true }])
-
-    // ── Dangerous patterns ────────────────────────────────────────
-
-    // Forbid eval() — code injection risk, never safe
-    // https://eslint.org/docs/latest/rules/no-eval
-    .addRule("no-eval", "error")
-
-    // Forbid alert/confirm/prompt — not for production code
-    // https://eslint.org/docs/latest/rules/no-alert
-    .addRule("no-alert", "error")
-
-    // Forbid arguments.caller and arguments.callee — deprecated, breaks optimizations
-    // https://eslint.org/docs/latest/rules/no-caller
-    .addRule("no-caller", "error")
-
-    // Forbid extending native prototypes — breaks other code
-    // https://eslint.org/docs/latest/rules/no-extend-native
-    .addRule("no-extend-native", "error")
-
-    // Forbid new Function() — eval in disguise
-    // https://eslint.org/docs/latest/rules/no-new-func
-    .addRule("no-new-func", "error")
-
-    // Forbid new String/Number/Boolean — use primitives
-    // https://eslint.org/docs/latest/rules/no-new-wrappers
-    .addRule("no-new-wrappers", "error")
-
-    // Forbid new Object() — use {} literal instead
-    // https://eslint.org/docs/latest/rules/no-object-constructor
-    .addRule("no-object-constructor", "error")
-
-    // Forbid __proto__ — use Object.getPrototypeOf instead
-    // https://eslint.org/docs/latest/rules/no-proto
-    .addRule("no-proto", "error")
-
-    // Forbid __iterator__ — use Symbol.iterator instead
-    // https://eslint.org/docs/latest/rules/no-iterator
-    .addRule("no-iterator", "error")
-
-    // Forbid javascript: URLs — XSS vector
-    // https://eslint.org/docs/latest/rules/no-script-url
-    .addRule("no-script-url", "error")
-
-    // Forbid octal escape sequences — use unicode escapes instead
-    // https://eslint.org/docs/latest/rules/no-octal-escape
-    .addRule("no-octal-escape", "error")
-
-    // Forbid implicit global variable declarations — safety net for CJS/scripts
-    // https://eslint.org/docs/latest/rules/no-implicit-globals
-    .addRule("no-implicit-globals", "error")
-
-    // ── Code quality ──────────────────────────────────────────────
-
-    // Require strict equality, but allow == null (checks both null and undefined)
-    // https://eslint.org/docs/latest/rules/eqeqeq
-    .addRule("eqeqeq", ["error", "smart"])
-
-    // Require hasOwnProperty check in for-in — prevents prototype chain iteration
-    // https://eslint.org/docs/latest/rules/guard-for-in
-    .addRule("guard-for-in", "error")
-
-    // Require default case to be last in switch — consistent structure
-    // https://eslint.org/docs/latest/rules/default-case-last
-    .addRule("default-case-last", "error")
-
-    // Require radix parameter in parseInt — prevents octal interpretation
-    // https://eslint.org/docs/latest/rules/radix
-    .addRule("radix", "error")
-
-    // Forbid Yoda conditions (if ("red" === color)) — unnatural to read
-    // https://eslint.org/docs/latest/rules/yoda
-    .addRule("yoda", "error")
-
-    // Forbid comma operator — confusing, usually a mistake
-    // https://eslint.org/docs/latest/rules/no-sequences
-    .addRule("no-sequences", ["error", { allowInParentheses: false }])
-
-    // Forbid new for side effects — use function call instead
-    // https://eslint.org/docs/latest/rules/no-new
-    .addRule("no-new", "error")
-
-    // Forbid labels (except in rare loop cases) — goto-like control flow
-    // https://eslint.org/docs/latest/rules/no-labels
-    .addRule("no-labels", "error")
-
-    // Remove unnecessary .bind() calls — no effect without this
-    // https://eslint.org/docs/latest/rules/no-extra-bind
-    .addRule("no-extra-bind", "error")
-
-    // Remove unnecessary block statements — confusing nesting
-    // https://eslint.org/docs/latest/rules/no-lone-blocks
-    .addRule("no-lone-blocks", "error")
-
-    // Remove unnecessary .call()/.apply() — just call the function
-    // https://eslint.org/docs/latest/rules/no-useless-call
-    .addRule("no-useless-call", "error")
-
-    // Remove unnecessary string concatenation — "a" + "b" → "ab"
-    // https://eslint.org/docs/latest/rules/no-useless-concat
-    .addRule("no-useless-concat", "error")
-
-    // Remove unnecessary return statements — let function end naturally
-    // https://eslint.org/docs/latest/rules/no-useless-return
-    .addRule("no-useless-return", "error")
-
-    // Forbid assignments in return statements — almost always a typo (=== vs =)
-    // https://eslint.org/docs/latest/rules/no-return-assign
-    .addRule("no-return-assign", ["error", "always"])
-
-    // Forbid multiline strings via backslash — use template literals
-    // https://eslint.org/docs/latest/rules/no-multi-str
-    .addRule("no-multi-str", "error")
-
-    // Prefer /regex/ over new RegExp("regex") for static patterns
-    // https://eslint.org/docs/latest/rules/prefer-regex-literals
-    .addRule("prefer-regex-literals", [
-      "error",
-      { disallowRedundantWrapping: true },
-    ])
-
-    // ── Complexity limits ────────────────────────────────────────
-
-    // Cyclomatic complexity limit — max branches per function
-    // https://eslint.org/docs/latest/rules/complexity
-    .addRule("complexity", ["error", isAi ? 10 : 20])
-
-    // Max nesting depth — deep nesting signals need for extraction
-    // https://eslint.org/docs/latest/rules/max-depth
-    .addRule("max-depth", ["error", isAi ? 3 : 5])
-
-    // Max nested callbacks — prevents callback hell
-    // https://eslint.org/docs/latest/rules/max-nested-callbacks
-    .addRule("max-nested-callbacks", ["error", isAi ? 2 : 4])
-
-    // Max function parameters — many params suggest a config object
-    // https://eslint.org/docs/latest/rules/max-params
-    .addRule("max-params", ["error", isAi ? 3 : 5])
-
-    // Max statements per function — keeps functions focused
-    // https://eslint.org/docs/latest/rules/max-statements
-    .addRule("max-statements", ["error", isAi ? 15 : 25])
-
-    // Max lines per function — encourages extraction of helpers
-    // https://eslint.org/docs/latest/rules/max-lines-per-function
-    .addRule("max-lines-per-function", [
-      "error",
-      { max: isAi ? 100 : 200, skipBlankLines: true, skipComments: true },
-    ])
-
-    // Max lines per file — encourages modular file organization
-    // https://eslint.org/docs/latest/rules/max-lines
-    .addRule("max-lines", [
-      "error",
-      { max: isAi ? 300 : 500, skipBlankLines: true, skipComments: true },
-    ])
-
-    // Cognitive complexity — measures how hard a function is to understand
-    // https://sonarsource.github.io/rspec/#/rspec/S3776/javascript
-    .addRule("sonarjs/cognitive-complexity", ["error", isAi ? 10 : 20])
-
-    // ── Modern JS style ───────────────────────────────────────────
-
-    // Disallow var — use let/const for block scoping
-    // https://eslint.org/docs/latest/rules/no-var
-    .addRule("no-var", "error")
-
-    // Prefer const for variables never reassigned — only when ALL destructured vars are const
-    // https://eslint.org/docs/latest/rules/prefer-const
-    .addRule("prefer-const", ["error", { destructuring: "all" }])
-
-    // Prefer Object.hasOwn() over Object.prototype.hasOwnProperty.call()
-    // https://eslint.org/docs/latest/rules/prefer-object-has-own
-    .addRule("prefer-object-has-own", "error")
-
-    // Prefer { ...obj } over Object.assign({}, obj) — more readable
-    // https://eslint.org/docs/latest/rules/prefer-object-spread
-    .addRule("prefer-object-spread", "error")
-
-    // Prefer rest parameters over `arguments` object — typed and array-like
-    // https://eslint.org/docs/latest/rules/prefer-rest-params
-    .addRule("prefer-rest-params", "error")
-
-    // Prefer spread syntax over Function.prototype.apply() — cleaner syntax
-    // https://eslint.org/docs/latest/rules/prefer-spread
-    .addRule("prefer-spread", "error")
-
-    // Prefer template literals over string concatenation — more readable
-    // https://eslint.org/docs/latest/rules/prefer-template
-    .addRule("prefer-template", isAi ? "error" : "warn")
-
-    // Require description for Symbol() — aids debugging
-    // https://eslint.org/docs/latest/rules/symbol-description
-    .addRule("symbol-description", "error")
-
-    // Prefer numeric literals over parseInt() with radix — 0b111 over parseInt("111", 2)
-    // https://eslint.org/docs/latest/rules/prefer-numeric-literals
-    .addRule("prefer-numeric-literals", "error")
-
-    // Require object shorthand — { foo } over { foo: foo }, method shorthand over arrows
-    // https://eslint.org/docs/latest/rules/object-shorthand
-    .addRule("object-shorthand", ["error", "always", { avoidExplicitReturnArrows: true, avoidQuotes: true }])
+  addRules(builder, ERROR_PREVENTION_RULES)
+  addBaseOverrides(builder)
+  addRules(builder, DANGEROUS_PATTERN_RULES)
+  addRules(builder, CODE_QUALITY_RULES)
+  addComplexityRules(builder, isAi)
+  addModernStyleRules(builder, isAi)
 
   if (isAi) {
-    // ── AI mode: additional structural rules ─────────────────────
-    builder.addRule("curly", ["error", "all"])
-    builder.addRule("no-else-return", ["error", { allowElseIf: false }])
-    builder.addRule("no-nested-ternary", "error")
-    builder.addRule("no-unneeded-ternary", "error")
-    builder.addRule("no-negated-condition", "error")
-    builder.addRule("no-lonely-if", "error")
-    builder.addRule("no-param-reassign", ["error", { props: true }])
-    builder.addRule("no-multi-assign", "error")
-    builder.addRule("one-var", ["error", "never"])
-    builder.addRule("no-implicit-coercion", "error")
-    builder.addRule("arrow-body-style", "error")
-    builder.addRule("prefer-arrow-callback", [
-      "error",
-      { allowNamedFunctions: true },
-    ])
-    builder.addRule("logical-assignment-operators", [
-      "error",
-      "always",
-      { enforceForIfStatements: true },
-    ])
-    builder.addRule("max-statements-per-line", ["error", { max: 1 }])
-    builder.addRule("prefer-exponentiation-operator", "error")
-    builder.addRule("prefer-named-capture-group", "error")
-    builder.addRule("require-unicode-regexp", "error")
-    builder.addRule("no-warning-comments", "warn")
-    builder.addRule("no-await-in-loop", "error")
+    addRules(builder, AI_STRUCTURAL_RULES)
   }
 
   return builder.build()

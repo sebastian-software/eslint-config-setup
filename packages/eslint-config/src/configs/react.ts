@@ -1,3 +1,5 @@
+import type { Linter } from "eslint"
+
 import eslintReactPlugin from "@eslint-react/eslint-plugin"
 import stylisticPlugin from "@stylistic/eslint-plugin"
 // @ts-expect-error -- no type declarations available
@@ -16,6 +18,8 @@ import {
   translatePresetRules,
 } from "../plugins/react-compat"
 
+type Builder = ReturnType<typeof createConfig>
+
 // ── Derive react/ rules from @eslint-react presets ──────────────────────────
 // Recommended + strict presets are merged and translated to react/ compat names.
 // This way new rules added to the presets are picked up automatically.
@@ -26,6 +30,121 @@ const recommendedRules = typedConfigs.recommended.rules as Record<string, unknow
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Extracting rules from preset config
 const strictRules = typedConfigs.strict.rules as Record<string, unknown>
 const presetRules = translatePresetRules({ ...recommendedRules, ...strictRules })
+
+const EXTRA_REACT_RULES = {
+  "react/jsx-boolean-value": "error",
+  "react/jsx-no-leaked-render": "error",
+  "react/no-duplicate-key": "error",
+  "react/no-implicit-key": "error",
+  "react/no-unused-props": "warn",
+  "react/no-unknown-property": "error",
+  "react/style-prop-object": "error",
+} satisfies Linter.RulesRecord
+
+const JSX_A11Y_ERROR_RULES = {
+  "jsx-a11y/alt-text": "error",
+  "jsx-a11y/anchor-has-content": "error",
+  "jsx-a11y/anchor-is-valid": "error",
+  "jsx-a11y/aria-activedescendant-has-tabindex": "error",
+  "jsx-a11y/aria-props": "error",
+  "jsx-a11y/aria-proptypes": "error",
+  "jsx-a11y/aria-role": "error",
+  "jsx-a11y/aria-unsupported-elements": "error",
+  "jsx-a11y/click-events-have-key-events": "error",
+  "jsx-a11y/heading-has-content": "error",
+  "jsx-a11y/html-has-lang": "error",
+  "jsx-a11y/img-redundant-alt": "error",
+  "jsx-a11y/label-has-associated-control": "error",
+  "jsx-a11y/mouse-events-have-key-events": "error",
+  "jsx-a11y/no-access-key": "error",
+  "jsx-a11y/no-distracting-elements": "error",
+  "jsx-a11y/no-redundant-roles": "error",
+  "jsx-a11y/role-has-required-aria-props": "error",
+  "jsx-a11y/role-supports-aria-props": "error",
+  "jsx-a11y/scope": "error",
+  "jsx-a11y/tabindex-no-positive": "error",
+  "jsx-a11y/lang": "error",
+  "jsx-a11y/autocomplete-valid": "error",
+} satisfies Linter.RulesRecord
+
+const AI_PROMOTED_REACT_RULES = [
+  "react/jsx-no-comment-textnodes",
+  "react/jsx-no-useless-fragment",
+  "react/jsx-no-constructed-context-values",
+  "react/no-array-index-key",
+  "react/no-object-type-as-default-prop",
+  "react/no-unused-state",
+  "react/jsx-no-target-blank",
+  "react/button-has-type",
+  "react/iframe-missing-sandbox",
+  "react/forward-ref-uses-ref",
+  "react/no-context-provider",
+  "react/no-use-context",
+  "react/no-leaked-event-listener",
+  "react/no-leaked-interval",
+  "react/no-leaked-timeout",
+  "react/no-leaked-resize-observer",
+] as const
+
+const AI_A11Y_RULES = [
+  "jsx-a11y/no-static-element-interactions",
+  "jsx-a11y/no-noninteractive-element-interactions",
+  "jsx-a11y/interactive-supports-focus",
+] as const
+
+function addRules(builder: Builder, rules: Linter.RulesRecord): void {
+  for (const [ruleName, value] of Object.entries(rules)) {
+    builder.addRule(ruleName, value)
+  }
+}
+
+function addExtraReactRules(builder: Builder): void {
+  addRules(builder, EXTRA_REACT_RULES)
+}
+
+function addStylisticReactRules(builder: Builder): void {
+  builder.addRule("@stylistic/jsx-self-closing-comp", "error")
+  builder.addRule("@stylistic/jsx-curly-brace-presence", [
+    "error",
+    { props: "never", children: "never" },
+  ])
+}
+
+function addReactRefreshRules(builder: Builder): void {
+  builder.addRule("react-refresh/only-export-components", [
+    "warn",
+    { allowConstantExport: true },
+  ])
+}
+
+function addAccessibilityRules(builder: Builder): void {
+  addRules(builder, JSX_A11Y_ERROR_RULES)
+  builder.addRule("jsx-a11y/no-autofocus", ["error", { ignoreNonDOM: true }])
+}
+
+function applyAiReactRules(builder: Builder): void {
+  for (const ruleName of AI_PROMOTED_REACT_RULES) {
+    builder.overrideSeverity(ruleName, "error")
+  }
+
+  for (const ruleName of AI_A11Y_RULES) {
+    builder.addRule(ruleName, "error")
+  }
+}
+
+function addReactFileOverrides(builder: Builder): void {
+  builder.addFileOverride(
+    "eslint-config-setup/react-typescript",
+    [...TYPESCRIPT_SOURCE_FILES],
+    {
+      // Allow async event handlers — onClick={async () => {...}} is idiomatic React
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        { checksVoidReturn: false },
+      ],
+    },
+  )
+}
 
 /**
  * React config — React 19+, Hooks, JSX accessibility, and Web API leak detection.
@@ -43,7 +162,6 @@ const presetRules = translatePresetRules({ ...recommendedRules, ...strictRules }
  * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
-// eslint-disable-next-line max-lines-per-function, max-statements -- Config builder: many sequential rule additions for React/JSX/a11y
 export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
   const isAi = opts?.ai ?? false
 
@@ -69,116 +187,20 @@ export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
     },
   })
 
-  // ── Extra rules (not in recommended/strict presets) ────────────────
-
-  // Prefer <Foo active /> over <Foo active={true} />
-  builder.addRule("react/jsx-boolean-value", "error")
-  // Prevent `{count && <Foo />}` — renders "0" when count is 0
-  builder.addRule("react/jsx-no-leaked-render", "error")
-  // Prevent duplicate key props in iterators
-  builder.addRule("react/no-duplicate-key", "error")
-  // Detect implicit keys from array position — fragile reconciliation
-  builder.addRule("react/no-implicit-key", "error")
-  // Detect unused props — dead code
-  builder.addRule("react/no-unused-props", "warn")
-  // Prevent unknown DOM properties (e.g., class → className)
-  builder.addRule("react/no-unknown-property", "error")
-  // Prevent `style="color: red"` — must be an object in React
-  builder.addRule("react/style-prop-object", "error")
-
-  // ── @stylistic — JSX formatting rules ─────────────────────────────
-
-  // Enforce self-closing tags for components without children — <Foo />
-  builder.addRule("@stylistic/jsx-self-closing-comp", "error")
-  // Prevent unnecessary string curly braces: title={"foo"} → title="foo"
-  builder.addRule("@stylistic/jsx-curly-brace-presence", [
-    "error",
-    { props: "never", children: "never" },
-  ])
-
-  // ── React Refresh (Fast Refresh / HMR) ────────────────────────────
-
-  // Ensure components are exported in a way that supports Fast Refresh.
-  builder.addRule("react-refresh/only-export-components", [
-    "warn",
-    { allowConstantExport: true },
-  ])
-
-  // ── JSX Accessibility (a11y) ──────────────────────────────────────
-
-  builder.addRule("jsx-a11y/alt-text", "error")
-  builder.addRule("jsx-a11y/anchor-has-content", "error")
-  builder.addRule("jsx-a11y/anchor-is-valid", "error")
-  builder.addRule("jsx-a11y/aria-activedescendant-has-tabindex", "error")
-  builder.addRule("jsx-a11y/aria-props", "error")
-  builder.addRule("jsx-a11y/aria-proptypes", "error")
-  builder.addRule("jsx-a11y/aria-role", "error")
-  builder.addRule("jsx-a11y/aria-unsupported-elements", "error")
-  builder.addRule("jsx-a11y/click-events-have-key-events", "error")
-  builder.addRule("jsx-a11y/heading-has-content", "error")
-  builder.addRule("jsx-a11y/html-has-lang", "error")
-  builder.addRule("jsx-a11y/img-redundant-alt", "error")
-  builder.addRule("jsx-a11y/label-has-associated-control", "error")
-  builder.addRule("jsx-a11y/mouse-events-have-key-events", "error")
-  builder.addRule("jsx-a11y/no-access-key", "error")
-  builder.addRule("jsx-a11y/no-autofocus", ["error", { ignoreNonDOM: true }])
-  builder.addRule("jsx-a11y/no-distracting-elements", "error")
-  builder.addRule("jsx-a11y/no-redundant-roles", "error")
-  builder.addRule("jsx-a11y/role-has-required-aria-props", "error")
-  builder.addRule("jsx-a11y/role-supports-aria-props", "error")
-  builder.addRule("jsx-a11y/scope", "error")
-  builder.addRule("jsx-a11y/tabindex-no-positive", "error")
-  builder.addRule("jsx-a11y/lang", "error")
-  builder.addRule("jsx-a11y/autocomplete-valid", "error")
+  addExtraReactRules(builder)
+  addStylisticReactRules(builder)
+  addReactRefreshRules(builder)
+  addAccessibilityRules(builder)
 
   // ── AI mode: promote preset "warn" rules to "error" ───────────────
   // These rules catch real bugs or patterns AI should always avoid.
   // overrideSeverity validates that the rule exists in the preset —
   // if a future @eslint-react version removes one, we get a build error.
   if (isAi) {
-    // Bug prevention
-    builder.overrideSeverity("react/jsx-no-comment-textnodes", "error")
-    builder.overrideSeverity("react/jsx-no-useless-fragment", "error")
-    builder.overrideSeverity("react/jsx-no-constructed-context-values", "error")
-    builder.overrideSeverity("react/no-array-index-key", "error")
-    builder.overrideSeverity("react/no-object-type-as-default-prop", "error")
-    builder.overrideSeverity("react/no-unused-state", "error")
-
-    // Security / DOM correctness
-    builder.overrideSeverity("react/jsx-no-target-blank", "error")
-    builder.overrideSeverity("react/button-has-type", "error")
-    builder.overrideSeverity("react/iframe-missing-sandbox", "error")
-
-    // React 19 patterns — AI should always use modern APIs
-    builder.overrideSeverity("react/forward-ref-uses-ref", "error")
-    builder.overrideSeverity("react/no-context-provider", "error")
-    builder.overrideSeverity("react/no-use-context", "error")
-
-    // Web API leak prevention
-    builder.overrideSeverity("react/no-leaked-event-listener", "error")
-    builder.overrideSeverity("react/no-leaked-interval", "error")
-    builder.overrideSeverity("react/no-leaked-timeout", "error")
-    builder.overrideSeverity("react/no-leaked-resize-observer", "error")
-
-    // Accessibility — AI should generate semantic HTML
-    builder.addRule("jsx-a11y/no-static-element-interactions", "error")
-    builder.addRule("jsx-a11y/no-noninteractive-element-interactions", "error")
-    builder.addRule("jsx-a11y/interactive-supports-focus", "error")
+    applyAiReactRules(builder)
   }
 
-  // ── File-scoped overrides ─────────────────────────────────────────
-
-  builder.addFileOverride(
-    "eslint-config-setup/react-typescript",
-    [...TYPESCRIPT_SOURCE_FILES],
-    {
-      // Allow async event handlers — onClick={async () => {...}} is idiomatic React
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        { checksVoidReturn: false },
-      ],
-    },
-  )
+  addReactFileOverrides(builder)
 
   return builder.build()
 }
