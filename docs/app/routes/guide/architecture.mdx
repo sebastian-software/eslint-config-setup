@@ -2,8 +2,6 @@
 title: Architecture
 ---
 
-import { FileTree } from "ardo/ui"
-
 # Architecture
 
 ## Why pre-generate?
@@ -15,55 +13,53 @@ import { FileTree } from "ardo/ui"
 
 ## Project structure
 
-<FileTree>
-
-- src/
-  - index.ts — Public API (getEslintConfig, rule helpers, hash utils)
-  - modules.ts — Modular exports for power users
-  - loader.ts — Dynamic config loader
-  - hash.ts — Deterministic bitmask → SHA-1 hash
-  - types.ts — Shared TypeScript types
-  - configs/ — Individual config building blocks
-    - base.ts — ESLint recommended + best practices
-    - typescript.ts — typescript-eslint (strictTypeChecked)
-    - ai.ts — AI mode rules + per-file relaxations
-    - react.ts — React 19+, Hooks, JSX-A11y (80+ rules via react-compat)
-    - react-effect.ts — No unnecessary useEffect
-    - node.ts — Node.js rules and globals
-    - imports.ts — import-x + unused-imports
-    - perfectionist.ts — Import/export/structural sorting
-    - unicorn.ts — Modern JS patterns
-    - regexp.ts — RegExp quality
-    - jsdoc.ts — JSDoc validation
-    - cspell.ts — Spell checking
-    - sonarjs.ts — Code quality
-    - security.ts — Security rules
-    - de-morgan.ts — Boolean expression simplification
-    - compat.ts — Browser compatibility checking
-    - json.ts — JSON/JSONC validation
-    - package-json.ts — package.json validation
-    - markdown.ts — Markdown/MDX linting
-    - prettier.ts — Prettier conflict removal
-  - overrides/ — File-pattern-specific rule overrides
-    - tests.ts — *.test.\{ts,tsx\}
-    - e2e.ts — *.spec.ts
-    - stories.ts — *.stories.\{ts,tsx\}
-    - config-files.ts — *.config.*
-    - declarations.ts — *.d.ts
-    - scripts.ts — scripts/**/*
-  - presets/ — Complexity level presets
-    - standard.ts — Default limits
-  - api/
-    - rule-helpers.ts — Runtime rule manipulation functions
-  - plugins/
-    - react-compat.ts — Unified react/ namespace (legacy names for OxLint)
-  - build/
-    - config-builder.ts — Validated config builder
-    - compose.ts — Assembles full config from options
-    - codegen.ts — Generates ES modules with real imports
-    - plugin-registry.ts — Maps rule namespaces to imports
-    - generate.ts — Generates all 16+8 permutations
-  - oxlint/
-    - integration.ts — eslint-plugin-oxlint rule disabling
-
-</FileTree>
+```text
+src/
+  index.ts                Public API (getEslintConfig, rule helpers, hash utils)
+  modules.ts              Modular exports for power users
+  loader.ts               Dynamic config loader
+  hash.ts                 Deterministic bitmask -> SHA-1 hash
+  types.ts                Shared TypeScript types
+  configs/
+    base.ts               ESLint recommended + best practices
+    typescript.ts         typescript-eslint (strictTypeChecked)
+    ai.ts                 AI mode rules + per-file relaxations
+    react.ts              React 19+, Hooks, JSX-A11y (80+ rules via react-compat)
+    react-effect.ts       No unnecessary useEffect
+    node.ts               Node.js rules and globals
+    imports.ts            import-x + unused-imports
+    perfectionist.ts      Import/export/structural sorting
+    unicorn.ts            Modern JS patterns
+    regexp.ts             RegExp quality
+    jsdoc.ts              JSDoc validation
+    cspell.ts             Spell checking
+    sonarjs.ts            Code quality
+    security.ts           Security rules
+    de-morgan.ts          Boolean expression simplification
+    compat.ts             Browser compatibility checking
+    json.ts               JSON/JSONC validation
+    package-json.ts       package.json validation
+    markdown.ts           Markdown/MDX linting
+    prettier.ts           Prettier conflict removal
+  overrides/
+    tests.ts              *.test.{ts,tsx}
+    e2e.ts                *.spec.ts
+    stories.ts            *.stories.{ts,tsx}
+    config-files.ts       *.config.*
+    declarations.ts       *.d.ts
+    scripts.ts            scripts/**/*
+  presets/
+    standard.ts           Default limits
+  api/
+    rule-helpers.ts       Runtime rule manipulation functions
+  plugins/
+    react-compat.ts       Unified react/ namespace (legacy names for OxLint)
+  build/
+    config-builder.ts     Validated config builder
+    compose.ts            Assembles full config from options
+    codegen.ts            Generates ES modules with real imports
+    plugin-registry.ts    Maps rule namespaces to imports
+    generate.ts           Generates all 16+8 permutations
+  oxlint/
+    integration.ts        eslint-plugin-oxlint rule disabling
+```

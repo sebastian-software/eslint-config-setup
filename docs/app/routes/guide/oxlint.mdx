@@ -2,7 +2,7 @@
 title: OxLint Integration
 ---
 
-import { Steps, Tip } from "ardo/ui"
+import { Tip } from "ardo/ui"
 
 # OxLint Integration
 
@@ -19,8 +19,6 @@ When `react: true` is enabled alongside OxLint, **31 React rules automatically r
 As OxLint expands its React coverage, more rules shift to Rust automatically — no config changes required.
 
 ## Setup
-
-<Steps>
 
 1. Install `oxlint` as a dev dependency:
 
@@ -57,8 +55,6 @@ As OxLint expands its React coverage, more rules shift to Rust automatically —
      }
    }
    ```
-
-</Steps>
 
 <Tip>
 `getOxlintConfig()` loads a pre-generated OxLint config that mirrors your ESLint rules — same rules, same severity, zero runtime overhead.

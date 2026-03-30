@@ -48,6 +48,7 @@ export default defineConfig({
           {
             text: 'Features',
             items: [
+              { text: 'React Linting', link: '/guide/react' },
               { text: 'AI Mode', link: '/guide/ai-mode' },
               { text: 'OxLint Integration', link: '/guide/oxlint' },
               { text: 'Included Plugins', link: '/guide/plugins' },

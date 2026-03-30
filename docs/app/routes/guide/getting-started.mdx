@@ -2,15 +2,13 @@
 title: Getting Started
 ---
 
-import { Steps, Tabs, TabList, Tab, TabPanel, TabPanels, Note, Tip } from "ardo/ui"
+import { Tabs, TabList, Tab, TabPanel, TabPanels, Note, Tip } from "ardo/ui"
 
 # Getting Started
 
 Get a complete ESLint setup in under a minute — with built-in support for AI-generated code and OxLint migration.
 
 ## Installation
-
-<Steps>
 
 1. Install the package and its peer dependencies:
 
@@ -54,10 +52,8 @@ Get a complete ESLint setup in under a minute — with built-in support for AI-g
    npx eslint .
    ```
 
-</Steps>
-
 <Note>
-Requires ESLint >= 9.22 and TypeScript >= 5.0.
+Requires Node.js >= 22, ESLint >= 9.22, and TypeScript >= 5.0.
 </Note>
 
 ## What you get
@@ -104,7 +100,7 @@ export default await getEslintConfig({ react: true, oxlint: true })
 
 // oxlint.config.ts
 import { getOxlintConfig } from "eslint-config-setup"
-export default await getOxlintConfig({ react: true })
+export default getOxlintConfig({ react: true })
 ```
 
 See [OxLint Integration](/guide/oxlint) for the setup guide.

@@ -2,7 +2,7 @@
 title: React Linting
 ---
 
-import { Tip, Steps } from "ardo/ui"
+import { Tip } from "ardo/ui"
 
 # React Linting
 
@@ -104,18 +104,20 @@ These flag code smells and encourage better patterns:
 
 ## Customization
 
-Use the rule helpers API to adjust severity or disable rules:
+Use the rule helpers API to adjust severity or disable rules in place:
 
 ```typescript
-import { getEslintConfig, disableRules, changeRuleSeverity } from "eslint-config-setup"
+import { getEslintConfig, disableRule, setRuleSeverity } from "eslint-config-setup"
 
 const config = await getEslintConfig({ react: true })
 
-export default [
-  ...config,
-  // Downgrade class component rules to warnings (migrating codebase)
-  ...changeRuleSeverity(config, ["react/no-class-component", "react/no-create-ref"], "warn"),
-  // Disable Children API rules (using them intentionally)
-  ...disableRules(config, ["react/no-children-map", "react/no-children-count"]),
-]
+// Downgrade class component rules while migrating a legacy codebase
+setRuleSeverity(config, "react/no-class-component", "warn")
+setRuleSeverity(config, "react/no-create-ref", "warn")
+
+// Disable Children API rules when used intentionally
+disableRule(config, "react/no-children-map")
+disableRule(config, "react/no-children-count")
+
+export default config
 ```

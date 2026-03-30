@@ -19,6 +19,8 @@ pnpm test           # Run tests
 pnpm test:coverage  # Run tests with coverage
 pnpm build          # Build the package
 pnpm generate       # Generate all config permutations
+pnpm docs:dev       # Run the docs site locally
+pnpm docs:build     # Build the docs site
 ```
 
 `pnpm install` also wires the repo-local `pre-push` hook, which runs `pnpm lint` automatically before pushes.
@@ -28,7 +30,7 @@ pnpm generate       # Generate all config permutations
 This package pre-generates ESLint configurations at build time. The build process:
 
 1. Defines per-plugin configs in `src/configs/` (one file per plugin/concern)
-2. Composes them via `src/build/compose.ts` based on feature flags (`strict`, `node`, `react`, etc.)
+2. Composes them via `src/build/compose.ts` based on feature flags (`react`, `node`, `ai`, `oxlint`)
 3. Iterates over all flag combinations to generate permutations
 4. For each combination, generates file-specific configs (base, test, playwright, storybook)
 5. Computes diffs between base and file-specific configs
@@ -56,6 +58,7 @@ When adding new rules or plugins:
 - Keep changes focused — one feature or fix per PR
 - Update tests and snapshots
 - Update the docs if behavior changes
+- Keep `README.md`, `CONTRIBUTING.md`, and the docs site in sync when workflow or API details move
 - Run `pnpm lint && pnpm check && pnpm test && pnpm build` before submitting
 
 ## License

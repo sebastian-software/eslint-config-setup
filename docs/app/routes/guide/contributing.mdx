@@ -2,48 +2,58 @@
 title: Contributing
 ---
 
-import { Steps, Note } from "ardo/ui"
+import { Note } from "ardo/ui"
 
 # Contributing
 
 ## Development setup
-
-<Steps>
 
 1. Clone the repository and install dependencies:
 
    ```bash
    git clone https://github.com/sebastian-software/eslint-config-setup.git
    cd eslint-config-setup
-   npm install
+   pnpm install
    ```
 
-2. Run the tests:
+2. Run the self-lint and type checks:
 
    ```bash
-   npm test
+   pnpm lint
+   pnpm check
    ```
 
-3. Generate all 16 config permutations:
+3. Run the tests:
 
    ```bash
-   npm run generate
+   pnpm test
+   pnpm test:coverage
    ```
 
-4. Build for distribution:
+4. Build and regenerate the published configs:
 
    ```bash
-   npm run build
+   pnpm build
+   pnpm generate
    ```
 
-</Steps>
+## Useful workspace commands
+
+```bash
+pnpm docs:dev
+pnpm docs:build
+```
+
+<Note>
+`pnpm install` wires the repo-local `pre-push` hook automatically. Every `git push` runs `pnpm lint` before the push proceeds.
+</Note>
 
 ## Updating snapshots
 
 When you intentionally change rules or update plugins:
 
 ```bash
-npx vitest run --update
+pnpm --filter eslint-config-setup exec vitest run --update
 ```
 
 <Note>

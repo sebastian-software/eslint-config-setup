@@ -37,6 +37,8 @@ import { getEslintConfig } from "eslint-config-setup"
 export default await getEslintConfig({ react: true })
 ```
 
+Requires Node.js >= 22, ESLint >= 9.22, and TypeScript >= 5.0.
+
 ## Configuration flags
 
 | Flag | Default | What it does |
@@ -64,12 +66,16 @@ export default config
 ## Documentation
 
 - [Getting Started](https://sebastian-software.github.io/eslint-config-setup/guide/getting-started) — installation and setup
+- [React Linting](https://sebastian-software.github.io/eslint-config-setup/guide/react) — React 19 rules, compat layer, and OxLint acceleration
 - [AI Mode](https://sebastian-software.github.io/eslint-config-setup/guide/ai-mode) — why AI-generated code needs different rules
 - [OxLint Integration](https://sebastian-software.github.io/eslint-config-setup/guide/oxlint) — run ESLint + OxLint without conflicts
 - [All 27 Plugins](https://sebastian-software.github.io/eslint-config-setup/guide/plugins) — what's included and why
 - [Configuration](https://sebastian-software.github.io/eslint-config-setup/guide/configuration) — flags and usage examples
 - [Rule API](https://sebastian-software.github.io/eslint-config-setup/guide/rule-api) — rule manipulation and scoped overrides
+- [File Conventions](https://sebastian-software.github.io/eslint-config-setup/guide/file-conventions) — automatic test/config/story/script overrides
+- [Modular Imports](https://sebastian-software.github.io/eslint-config-setup/guide/modular-imports) — compose individual config blocks manually
 - [Architecture](https://sebastian-software.github.io/eslint-config-setup/guide/architecture) — how pre-generation works
+- [Contributing](https://sebastian-software.github.io/eslint-config-setup/guide/contributing) — monorepo workflow, self-linting, and hooks
 
 ## Contributing
 
