@@ -61,7 +61,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.node-version == 24 && matrix.runtime != 'bun'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           files: packages/eslint-config/coverage/coverage-final.json
           token: ${{ secrets.CODECOV_TOKEN }}
