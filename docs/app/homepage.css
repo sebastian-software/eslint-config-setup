@@ -465,66 +465,39 @@
 }
 
 /* Reset ALL Ardo wrappers from MDX snippets embedded in homepage panels */
-.hp-ba-code-wrap,
-.hp-showcase-panel {
-  /* Flatten everything Ardo adds around the code */
+/* Fallback for MDX code blocks rendered via Ardo's generic class names. */
+.ardo-code-block {
+  margin: 20px 0;
+  border: 1px solid var(--ardo-color-codeBorder);
+  border-radius: var(--ardo-radius-base);
+  overflow: hidden;
+  background: var(--ardo-color-codeBg);
+  box-shadow: var(--ardo-color-codeShadow);
 }
 
-.hp-ba-code-wrap .ardo-content-container,
-.hp-ba-code-wrap .ardo-content-body,
-.hp-ba-code-wrap .ardo-content,
-.hp-showcase-panel .ardo-content-container,
-.hp-showcase-panel .ardo-content-body,
-.hp-showcase-panel .ardo-content {
-  all: unset;
-  display: contents;
+.ardo-code-title {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ardo-color-codeBorder);
+  background:
+    linear-gradient(
+      90deg,
+      oklch(0.48 0.15 170 / 0.04) 0%,
+      var(--ardo-color-codeBorder) 100%);
+  font-family: var(--ardo-font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ardo-color-textLight);
 }
 
-.hp-ba-code-wrap .ardo-code-block,
-.hp-showcase-panel .ardo-code-block {
-  all: unset;
-  display: block;
-}
-
-.hp-ba-code-wrap .ardo-code-wrapper,
-.hp-showcase-panel .ardo-code-wrapper {
-  all: unset;
-  display: block;
+.ardo-code-wrapper {
   position: relative;
 }
 
-.hp-ba-code-wrap .shiki,
-.hp-showcase-panel .shiki {
+.ardo-code-wrapper pre {
   margin: 0;
-  padding: 20px;
-  border-radius: 0;
-  font-family: var(--hp-font-mono);
-  font-size: 0.85rem;
-  line-height: 1.75;
+  padding: 16px;
   overflow-x: auto;
-  background: var(--shiki-light-bg, var(--hp-surface-code)) !important;
-}
-
-.dark .hp-ba-code-wrap .shiki,
-.dark .hp-showcase-panel .shiki {
-  background: var(--shiki-dark-bg, var(--hp-surface-code)) !important;
-}
-
-.hp-ba-code-wrap .ardo-code-line,
-.hp-showcase-panel .ardo-code-line {
-  margin: 0;
-  padding: 0;
-  border-left: none;
-}
-
-/* Hide Ardo content footer and copy button in embedded panels */
-.hp-ba-code-wrap .ardo-content-footer,
-.hp-showcase-panel .ardo-content-footer {
-  display: none;
-}
-
-.hp-ba-code-wrap .ardo-copy-button {
-  display: none;
+  background: transparent !important;
 }
 
 /* --- Plugin Ecosystem — Grouped Tile Layout --- */
