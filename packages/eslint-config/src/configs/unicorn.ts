@@ -59,9 +59,11 @@ export function unicornConfig(opts?: { ai?: boolean }): FlatConfigArray {
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-promise-resolve-reject.md
         "unicorn/no-useless-promise-resolve-reject": "error",
 
-        // Disallow `return undefined` — implicit undefined is cleaner
+        // Disallow redundant undefined where omission preserves semantics.
+        // Keep call arguments unchecked: TypeScript often needs explicit
+        // `undefined` for required parameters typed as `T | undefined`.
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-undefined.md
-        "unicorn/no-useless-undefined": "warn",
+        "unicorn/no-useless-undefined": ["warn", { checkArguments: false }],
 
         // Disallow `await` in Promise.all/race arguments — already a promise
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-in-promise-methods.md

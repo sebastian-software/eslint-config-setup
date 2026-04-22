@@ -921,7 +921,12 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
       "unicorn/no-useless-switch-case": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -2904,7 +2909,12 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
       "unicorn/no-useless-switch-case": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -5447,7 +5457,12 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -7094,7 +7109,12 @@ exports[`config snapshots > snapshot: node only 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -9030,7 +9050,12 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
       "unicorn/no-useless-switch-case": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -10918,7 +10943,12 @@ exports[`config snapshots > snapshot: react + node 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -12756,7 +12786,12 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
@@ -15175,7 +15210,12 @@ exports[`config snapshots > snapshot: react only 1`] = `
       "unicorn/no-useless-length-check": "error",
       "unicorn/no-useless-promise-resolve-reject": "error",
       "unicorn/no-useless-spread": "error",
-      "unicorn/no-useless-undefined": "warn",
+      "unicorn/no-useless-undefined": [
+        "warn",
+        {
+          "checkArguments": false,
+        },
+      ],
       "unicorn/no-zero-fractions": "error",
       "unicorn/number-literal-case": "error",
       "unicorn/numeric-separators-style": "error",
