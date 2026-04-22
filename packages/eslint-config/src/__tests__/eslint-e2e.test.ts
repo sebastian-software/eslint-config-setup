@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call, security/detect-non-literal-fs-filename */
+/* eslint-disable security/detect-non-literal-fs-filename */
 import { ESLint } from "eslint"
 import { mkdirSync, symlinkSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"

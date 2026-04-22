@@ -24,15 +24,15 @@ type Builder = ReturnType<typeof createConfig>
 // Recommended + strict presets are merged and translated to react/ compat names.
 // This way new rules added to the presets are picked up automatically.
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the eslint-react configs shape
-const typedConfigs = eslintReactPlugin.configs as Record<string, Record<string, unknown>>
-// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Extracting rules from preset config
-const recommendedRules = typedConfigs.recommended.rules as Record<string, unknown>
-// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Extracting rules from preset config
-const strictRules = typedConfigs.strict.rules as Record<string, unknown>
+const typedConfigs = eslintReactPlugin.configs as unknown as Record<
+  string,
+  { rules: Linter.RulesRecord }
+>
+const recommendedRules = typedConfigs.recommended.rules
+const strictRules = typedConfigs.strict.rules
 const presetRules = translatePresetRules({ ...recommendedRules, ...strictRules })
 
 const EXTRA_REACT_RULES = {
-  "react/jsx-boolean-value": "error",
   "react/jsx-no-leaked-render": "error",
   "react/no-duplicate-key": "error",
   "react/no-implicit-key": "error",

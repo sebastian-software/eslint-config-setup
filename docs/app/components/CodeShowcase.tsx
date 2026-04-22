@@ -1,4 +1,4 @@
-import { CodeBlock } from "ardo"
+import { ArdoCodeBlock as CodeBlock } from "ardo"
 
 export function CodeShowcase() {
   return (

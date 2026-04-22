@@ -21,7 +21,6 @@ export function optionsToBitmask(opts: ConfigOptions): number {
  */
 export function bitmaskToHash(mask: number): string {
   const input = `effective-eslint-config:${mask}`
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- createHash chain returns a string
   return createHash("sha1").update(input).digest("hex").slice(0, 8)
 }
 
@@ -59,7 +58,6 @@ export function oxlintOptionsToBitmask(opts: OxlintConfigOptions): number {
 /** Deterministic hash for OxLint configs (different salt to avoid collisions). */
 export function oxlintBitmaskToHash(mask: number): string {
   const input = `eslint-config-setup-oxlint:${mask}`
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- createHash chain returns a string
   return createHash("sha1").update(input).digest("hex").slice(0, 8)
 }
 

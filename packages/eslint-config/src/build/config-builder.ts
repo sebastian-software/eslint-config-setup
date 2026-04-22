@@ -234,8 +234,7 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
         result.push({
           name: fo.name,
           files: fo.files,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Partial<RulesRecord> is compatible with RulesRecord
-          rules: fo.rules as Linter.RulesRecord,
+          rules: fo.rules,
         })
       }
 

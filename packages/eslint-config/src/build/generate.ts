@@ -1,4 +1,4 @@
-/* eslint-disable max-statements, security/detect-non-literal-fs-filename, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- Build script: sequential file generation steps. All fs paths are computed from deterministic hashes, not user input. Node.js and path APIs have unresolved types in this context. */
+/* eslint-disable max-statements, security/detect-non-literal-fs-filename -- Build script: sequential file generation steps. All fs paths are computed from deterministic hashes, not user input. */
 import { mkdirSync, writeFileSync } from "node:fs"
 import { createRequire } from "node:module"
 import path from "node:path"

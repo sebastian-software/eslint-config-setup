@@ -18,8 +18,7 @@ export function sonarjsConfig(opts?: { ai?: boolean }): FlatConfigArray {
   const builder = createConfig({
     name: "eslint-config-setup/sonarjs",
     presets: [{
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin type is compatible
-      plugins: { sonarjs: sonarjsPlugin as Record<string, unknown> },
+      plugins: { sonarjs: sonarjsPlugin },
       rules: {
         // Detect copy-pasted functions — extract to shared helper instead
         // https://sonarsource.github.io/rspec/#/rspec/S4144/javascript

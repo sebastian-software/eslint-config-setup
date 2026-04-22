@@ -1,6 +1,6 @@
 import type { MetaFunction } from "react-router"
 
-import { ArdoRoot, RootLayout } from "ardo/ui"
+import { ArdoRoot, ArdoRootLayout as RootLayout } from "ardo/ui"
 import config from "virtual:ardo/config"
 import sidebar from "virtual:ardo/sidebar"
 import "ardo/ui/styles.css"

@@ -19,7 +19,7 @@ export function importsConfig(): FlatConfigArray {
       name: "eslint-config-setup/imports",
       plugins: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin type is compatible
-        "import": importXPlugin as Record<string, unknown>,
+        "import": importXPlugin as unknown as Record<string, unknown>,
         "unused-imports": unusedImportsPlugin,
       },
       rules: {

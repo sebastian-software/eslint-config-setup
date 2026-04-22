@@ -1,4 +1,4 @@
-import type { ESLint, Rule } from "eslint"
+import type { ESLint, Linter, Rule } from "eslint"
 
 /**
  * React Compat Plugin — merges all `@eslint-react` sub-plugins into a single
@@ -22,30 +22,26 @@ import eslintReactPlugin from "@eslint-react/eslint-plugin"
 
 type PluginRules = Record<string, Rule.RuleModule>
 
-/**
- * Extracts a sub-plugin's rules object from an `@eslint-react` config entry.
- */
-function extractSubPluginRules(
-  configName: string,
-  pluginKey: string,
-): PluginRules {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the eslint-react plugin config shape
-  const configs = eslintReactPlugin.configs as Record<string, Record<string, unknown>>
-  const config = configs[configName]
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the plugins object shape
-  const plugins = config.plugins as Record<string, { rules: PluginRules }>
-  return plugins[pluginKey].rules
-}
-
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the rules export
 const coreRules = eslintReactPlugin.rules as PluginRules
-const domRules = extractSubPluginRules("dom", "@eslint-react/dom")
-const webApiRules = extractSubPluginRules("web-api", "@eslint-react/web-api")
-const namingRules = extractSubPluginRules(
-  "recommended",
-  "@eslint-react/naming-convention",
-)
-const rscRules = extractSubPluginRules("rsc", "@eslint-react/rsc")
+
+function selectPrefixedRules(prefix: string): PluginRules {
+  const result: PluginRules = {}
+
+  for (const [name, rule] of Object.entries(coreRules)) {
+    if (name.startsWith(prefix)) {
+      result[name.slice(prefix.length)] = rule
+    }
+  }
+
+  return result
+}
+
+const domRules = selectPrefixedRules("dom-")
+const jsxRules = selectPrefixedRules("jsx-")
+const namingRules = selectPrefixedRules("naming-convention-")
+const rscRules = selectPrefixedRules("rsc-")
+const webApiRules = selectPrefixedRules("web-api-")
 
 // ── Legacy name mapping ─────────────────────────────────────────────────────
 // Maps legacy eslint-plugin-react name → { source rules object, original name }
@@ -57,7 +53,7 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     // ── Core: identical names ──────────────────────────────────────────
     "no-access-state-in-setstate": [coreRules, "no-access-state-in-setstate"],
     "no-array-index-key": [coreRules, "no-array-index-key"],
-    "no-children-prop": [coreRules, "no-children-prop"],
+    "no-children-prop": [jsxRules, "no-children-prop"],
     "no-direct-mutation-state": [coreRules, "no-direct-mutation-state"],
     "no-redundant-should-component-update": [
       coreRules,
@@ -68,18 +64,17 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
       "no-unused-class-component-members",
     ],
     "no-unused-state": [coreRules, "no-unused-state"],
-    "jsx-no-comment-textnodes": [coreRules, "jsx-no-comment-textnodes"],
+    "jsx-no-comment-textnodes": [jsxRules, "no-comment-textnodes"],
 
     // ── Core: renamed 1:1 ──────────────────────────────────────────────
-    "jsx-boolean-value": [coreRules, "jsx-shorthand-boolean"],
-    "jsx-fragments": [coreRules, "jsx-shorthand-fragment"],
     "jsx-key": [coreRules, "no-missing-key"],
+    "jsx-key-before-spread": [jsxRules, "no-key-after-spread"],
     "jsx-no-constructed-context-values": [
       coreRules,
       "no-unstable-context-value",
     ],
     "jsx-no-leaked-render": [coreRules, "no-leaked-conditional-rendering"],
-    "jsx-no-useless-fragment": [coreRules, "no-useless-fragment"],
+    "jsx-no-useless-fragment": [jsxRules, "no-useless-fragment"],
     "no-object-type-as-default-prop": [coreRules, "no-unstable-default-props"],
     "no-unstable-nested-components": [
       coreRules,
@@ -111,7 +106,7 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
       "no-dangerously-set-innerhtml-with-children",
     ],
     "no-find-dom-node": [domRules, "no-find-dom-node"],
-    "no-namespace": [domRules, "no-namespace"],
+    "no-namespace": [jsxRules, "no-namespace"],
     "no-render-return-value": [domRules, "no-render-return-value"],
     "jsx-no-script-url": [domRules, "no-script-url"],
     "jsx-no-target-blank": [domRules, "no-unsafe-target-blank"],
@@ -131,6 +126,16 @@ const aliasedOriginals = new Set<string>()
 for (const [source, originalName] of Object.values(LEGACY_ALIASES)) {
   if (source === coreRules) {
     aliasedOriginals.add(originalName)
+  } else if (source === domRules) {
+    aliasedOriginals.add(`dom-${originalName}`)
+  } else if (source === jsxRules) {
+    aliasedOriginals.add(`jsx-${originalName}`)
+  } else if (source === namingRules) {
+    aliasedOriginals.add(`naming-convention-${originalName}`)
+  } else if (source === rscRules) {
+    aliasedOriginals.add(`rsc-${originalName}`)
+  } else if (source === webApiRules) {
+    aliasedOriginals.add(`web-api-${originalName}`)
   }
 }
 
@@ -148,6 +153,7 @@ for (const [name, rule] of Object.entries(coreRules)) {
 //    Skip `prefer-namespace-import` from dom (collides with core).
 const subPlugins: Array<[PluginRules, Set<string>]> = [
   [domRules, new Set(["prefer-namespace-import"])],
+  [jsxRules, new Set()],
   [webApiRules, new Set()],
   [namingRules, new Set()],
   [rscRules, new Set()],
@@ -176,8 +182,19 @@ for (const [legacyName, [source, originalName]] of Object.entries(
 // ── Reverse map: original name → compat name ────────────────────────────────
 // Used by translatePresetRules to convert @eslint-react preset keys to react/ keys.
 const originalToCompat = new Map<string, string>()
-for (const [legacyName, [, originalName]] of Object.entries(LEGACY_ALIASES)) {
+for (const [legacyName, [source, originalName]] of Object.entries(LEGACY_ALIASES)) {
   originalToCompat.set(originalName, legacyName)
+  if (source === domRules) {
+    originalToCompat.set(`dom-${originalName}`, legacyName)
+  } else if (source === jsxRules) {
+    originalToCompat.set(`jsx-${originalName}`, legacyName)
+  } else if (source === namingRules) {
+    originalToCompat.set(`naming-convention-${originalName}`, legacyName)
+  } else if (source === rscRules) {
+    originalToCompat.set(`rsc-${originalName}`, legacyName)
+  } else if (source === webApiRules) {
+    originalToCompat.set(`web-api-${originalName}`, legacyName)
+  }
 }
 
 /**
@@ -187,9 +204,9 @@ for (const [legacyName, [, originalName]] of Object.entries(LEGACY_ALIASES)) {
  * Example: `"@eslint-react/no-missing-key": "error"` → `"react/jsx-key": "error"`
  */
 export function translatePresetRules(
-  presetRules: Record<string, unknown>,
-): Record<string, unknown> {
-  const result: Record<string, unknown> = {}
+  presetRules: Linter.RulesRecord,
+): Linter.RulesRecord {
+  const result: Linter.RulesRecord = {}
 
   for (const [key, value] of Object.entries(presetRules)) {
     // Strip plugin prefix: @eslint-react/dom/X → X, @eslint-react/X → X
@@ -199,6 +216,7 @@ export function translatePresetRules(
         "",
       )
       .replace(/^@eslint-react\//, "")
+      .replace(/^(?:dom|web-api|naming-convention|rsc)-/, "")
 
     const compatName = originalToCompat.get(shortName) ?? shortName
     if (compatName in mergedRules) {

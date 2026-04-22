@@ -15,10 +15,9 @@ import type { FlatConfigArray } from "../types"
  */
 export function markdownConfig(): FlatConfigArray {
   const codeBlockLanguageOptions =
-    (mdxPlugin.flatCodeBlocks.languageOptions as Record<string, unknown> | undefined) ?? {}
+    mdxPlugin.flatCodeBlocks.languageOptions ?? {}
   const codeBlockParserOptions =
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing parserOptions from mdx plugin
-    (codeBlockLanguageOptions.parserOptions as Record<string, unknown> | undefined) ?? {}
+    codeBlockLanguageOptions.parserOptions ?? {}
 
   return [
     // ── MDX / Markdown parsing ─────────────────────────────────────
