@@ -176,16 +176,10 @@ export default await getEslintConfig({
 Run lint from the repo root:
 
 ```bash
-# ESLint 10 (default)
 eslint .
-
-# ESLint 9.30+ (enable per-file config lookup)
-eslint --flag v10_config_lookup_from_file .
 ```
 
 No `root: true` setting is needed with flat config.
-
-For older ESLint 9 releases, use `--flag unstable_config_lookup_from_file` or separate `--config` scripts.
 
 `eslint-plugin-n` resolves the Node target from `engines.node` by default. Prefer this over per-rule overrides.
 

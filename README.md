@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/node/v/eslint-config-setup.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org)
-[![ESLint](https://img.shields.io/badge/ESLint-9.22+-4B32C3.svg)](https://eslint.org)
+[![ESLint](https://img.shields.io/badge/ESLint-10+-4B32C3.svg)](https://eslint.org)
 
 The ESLint config for teams that ship with AI and want to move fast.
 
@@ -37,7 +37,7 @@ import { getEslintConfig } from "eslint-config-setup"
 export default await getEslintConfig({ react: true })
 ```
 
-Requires Node.js >= 22, ESLint >= 9.22, and TypeScript >= 5.0.
+Requires Node.js >= 22, ESLint >= 10, and TypeScript >= 5.0.
 
 ## Configuration flags
 

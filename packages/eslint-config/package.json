@@ -61,7 +61,7 @@
   },
   "sideEffects": false,
   "peerDependencies": {
-    "eslint": ">=9.22",
+    "eslint": ">=10",
     "typescript": ">= 5.0"
   },
   "dependencies": {
