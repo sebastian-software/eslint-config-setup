@@ -65,4 +65,4 @@ When adding new rules or plugins:
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
 
-Copyright (c) 2025 Sebastian Software GmbH
+Copyright (c) 2026 Sebastian Software GmbH

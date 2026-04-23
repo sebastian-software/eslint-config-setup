@@ -83,4 +83,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, architecture overv
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2025 [Sebastian Software GmbH](https://sebastian-software.com)
+[MIT](LICENSE) — Copyright (c) 2026 [Sebastian Software GmbH](https://sebastian-software.com)
