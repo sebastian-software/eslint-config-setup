@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.4.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.3...eslint-config-setup-v0.4.0) (2026-04-23)
+
+
+### Features
+
+* add complexity rules to base config and relax AI limits ([2590a44](https://github.com/sebastian-software/eslint-config-setup/commit/2590a44781c7e2ec9e96ce2e4444bd1ddb88d0f6))
+* **eslint-config:** upgrade [@eslint-react](https://github.com/eslint-react) to v3, preset-based react config with AI domain ownership ([f48f00a](https://github.com/sebastian-software/eslint-config-setup/commit/f48f00a1bbd63a1c8165b024f3d38738e495e98f))
+* React Compat Plugin — unified react/ namespace with OxLint acceleration ([5dbebc8](https://github.com/sebastian-software/eslint-config-setup/commit/5dbebc8155ffbfe14920c22a794b0a34cb0233da))
+* rule-by-rule comparison review with XO, Ultracite, and Antfu ([575d885](https://github.com/sebastian-software/eslint-config-setup/commit/575d8856cf66554cc973b9e6e5d7ef2a4b24a39c))
+
+
+### Bug Fixes
+
+* **eslint-config:** avoid typed TS rules on MDX documents ([12ba0de](https://github.com/sebastian-software/eslint-config-setup/commit/12ba0deab9113e41a117976fc792914bbcba7ddf))
+* **eslint-config:** pass own ESLint rules — zero errors on self-lint ([8a98cc9](https://github.com/sebastian-software/eslint-config-setup/commit/8a98cc9fb4388060eaa5989dfd535caceb2e977c))
+* relax useless undefined arguments ([9813e5b](https://github.com/sebastian-software/eslint-config-setup/commit/9813e5b5a9e941338ee3f71ad9a0fda8ed92adbc))
+
 ## [0.3.3](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.2...eslint-config-setup-v0.3.3) (2026-03-05)
 
 
