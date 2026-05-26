@@ -53,9 +53,8 @@ export function reactEffectConfig(): FlatConfigArray {
         // https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect
         "react-you-might-not-need-an-effect/no-initialize-state": "error",
 
-        // Disallow empty effects — dead code, remove them
-        // https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect
-        "react-you-might-not-need-an-effect/no-empty-effect": "error",
+        // Note: the plugin removed the earlier `no-empty-effect` rule in newer releases.
+        // Empty effects are still covered by general no-empty/no-useless patterns.
       },
     },
   ]
