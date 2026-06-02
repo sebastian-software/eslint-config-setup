@@ -37,6 +37,7 @@ const EXTRA_REACT_RULES = {
   "react/no-duplicate-key": "error",
   "react/no-implicit-key": "error",
   "react/no-unused-props": "warn",
+  "react/no-unused-state": "warn",
   "react/no-unknown-property": "error",
   "react/style-prop-object": "error",
 } satisfies Linter.RulesRecord
@@ -73,7 +74,6 @@ const AI_PROMOTED_REACT_RULES = [
   "react/jsx-no-constructed-context-values",
   "react/no-array-index-key",
   "react/no-object-type-as-default-prop",
-  "react/no-unused-state",
   "react/jsx-no-target-blank",
   "react/button-has-type",
   "react/iframe-missing-sandbox",
