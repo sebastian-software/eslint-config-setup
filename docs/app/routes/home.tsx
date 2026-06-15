@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => [
   {
     name: "description",
     content:
-      "One import. 27 plugins. TypeScript, React, Node.js, AI mode, OxLint — all handled.",
+      "One import for a curated TypeScript, React, Node.js, AI mode, and OxLint rule stack.",
   },
 ]
 

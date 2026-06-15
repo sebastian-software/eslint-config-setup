@@ -5,7 +5,7 @@ export function CTAFooter() {
   return (
     <section className="hp-cta">
       <div className="hp-container hp-stagger">
-        <h2 className="hp-cta-headline hp-animate">Ready in 30 seconds</h2>
+        <h2 className="hp-cta-headline hp-animate">Ready to lint</h2>
         <p className="hp-cta-sub hp-animate">
           Install, import, ship. That's the whole setup.
         </p>

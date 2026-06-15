@@ -47,17 +47,17 @@ export function FeatureGrid() {
               <FeatureCard
                 icon={<Sparkles size={20} strokeWidth={1.5} />}
                 title="AI Guardrails"
-                description="Dedicated AI mode enforces explicit types, strict naming, no magic values, and complexity limits — rules trivial for AI to follow but humans find tedious."
+                description="Dedicated AI mode enforces explicit types, strict naming, no magic values, and complexity limits. AI tools can follow those rules without slowing down review."
               />
               <FeatureCard
                 icon={<Rabbit size={20} strokeWidth={1.5} />}
                 title="OxLint Integration"
-                description="One flag enables 50-100x faster linting. Rules OxLint covers are automatically disabled in ESLint — no gaps, no conflicts, no manual wiring."
+                description="One flag splits supported rules to OxLint. Rules OxLint covers are automatically disabled in ESLint, with no duplicate diagnostics or manual wiring."
               />
               <FeatureCard
                 icon={<Zap size={20} strokeWidth={1.5} />}
                 title="Fast Feedback Loops"
-                description="Pre-resolved configs load instantly. AI coding assistants get near-instant lint results — every rule already decided, no setup lag."
+                description="Pre-resolved configs load quickly. AI coding assistants get consistent lint results because every rule is already decided before your editor starts."
               />
             </div>
           </div>
@@ -80,7 +80,7 @@ export function FeatureGrid() {
               <FeatureCard
                 icon={<Package size={20} strokeWidth={1.5} />}
                 title="Pre-Built Configs"
-                description="All 16 flag combinations are pre-generated with every rule already resolved. No runtime composition, no plugin conflicts — your editor gets results instantly."
+                description="Every supported flag combination is pre-generated with each rule already resolved. No runtime composition, no plugin conflicts, fast editor feedback."
               />
             </div>
           </div>
@@ -92,13 +92,13 @@ export function FeatureGrid() {
             <div className="hp-feature-grid hp-stagger">
               <FeatureCard
                 icon={<Blocks size={20} strokeWidth={1.5} />}
-                title="27 Plugins, Unified"
-                description="TypeScript, React, Unicorn, SonarJS, imports, security, spell checking, JSON, MDX — all pre-resolved and conflict-free."
+                title="Included Plugins, Unified"
+                description="TypeScript, React, Unicorn, SonarJS, imports, security, spell checking, JSON, and MDX are pre-resolved into one consistent rule set."
               />
               <FeatureCard
                 icon={<Zap size={20} strokeWidth={1.5} />}
                 title="One Standard"
-                description='Every team member, every IDE, every CI run — identical results. No more "works on my machine" linting.'
+                description='Every team member, every IDE, every CI run gets the same result. No more "works on my machine" linting.'
               />
               <FeatureCard
                 icon={<Sparkles size={20} strokeWidth={1.5} />}

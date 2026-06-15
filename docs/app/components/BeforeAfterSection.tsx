@@ -8,8 +8,7 @@ export function BeforeAfterSection() {
           The end of config fatigue
         </h2>
         <p className="hp-section-subtitle hp-animate">
-          Replace hundreds of lines of brittle plugin wiring with a single,
-          type-safe import.
+          Replace brittle plugin wiring with a single, type-safe import.
         </p>
         <div className="hp-before-after hp-stagger">
           <div className="hp-ba-panel hp-animate">
@@ -27,7 +26,7 @@ import unicorn from "eslint-plugin-unicorn"
 import sonarjs from "eslint-plugin-sonarjs"
 import security from "eslint-plugin-security"
 import prettier from "eslint-config-prettier"
-// ... 15 more imports
+// ... more plugin imports
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -39,7 +38,7 @@ export default tseslint.config(
   sonarjs.configs.recommended,
   security.configs.recommended,
   prettier,
-  // ... 200 more lines of overrides
+  // ... more overrides
 )
               `}</CodeBlock>
             </div>

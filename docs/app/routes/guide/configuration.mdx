@@ -23,11 +23,24 @@ import {
 | `ai` | `false` | Enforces a consistent standard across human and AI contributors (see [AI Mode](/guide/ai-mode)) |
 | `oxlint` | `false` | Disables ESLint rules that OxLint already covers (see [OxLint Integration](/guide/oxlint)) |
 
-Flags are independent. Combine them however you need. `2^4 = 16` configs exist, all pre-built.
+Flags are independent. Combine them however you need. Every supported flag combination is pre-built.
 
 <Note>
 TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint preset. No "recommended" fallback. This matches TypeScript's own direction toward strict-by-default.
 </Note>
+
+## Which flags should I use?
+
+Start with the runtime and workflow you actually have:
+
+| Project shape | Flags |
+|---------------|-------|
+| Frontend or React project | `react: true` |
+| Backend, CLI, script, worker, or Node.js package | `node: true` |
+| AI-generated code must meet stricter conventions | `ai: true` |
+| OxLint runs before ESLint in your lint script | `oxlint: true` |
+
+Use `oxlint: true` only for split-linting setups where OxLint runs first and ESLint handles the remaining plugin and type-aware rules. If you are only running ESLint, leave `oxlint` off.
 
 ## Usage examples
 
@@ -74,7 +87,7 @@ export default await getEslintConfig({ react: true, ai: true })
 </TabPanel>
 <TabPanel>
 
-For 50-100x faster linting with [OxLint](https://oxc.rs):
+For split-linting with [OxLint](https://oxc.rs):
 
 ```typescript
 // eslint.config.ts
@@ -87,7 +100,7 @@ export default await getEslintConfig({ react: true, oxlint: true })
 // package.json
 {
   "scripts": {
-    "lint": "oxlint && eslint"
+    "lint": "oxlint && eslint ."
   }
 }
 ```

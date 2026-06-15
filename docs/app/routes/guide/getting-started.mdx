@@ -9,98 +9,154 @@ import {
   ArdoTabPanel as TabPanel,
   ArdoTabPanels as TabPanels,
   ArdoTabs as Tabs,
-  ArdoTip as Tip,
 } from "ardo/ui"
 
 # Getting Started
 
-Get a complete ESLint setup in under a minute — with built-in support for AI-generated code and OxLint migration.
+Install the package, add one config file, and run ESLint from the same directory as your `tsconfig.json`.
+
+## Prerequisites
+
+- Node.js >= 22
+- ESLint >= 10
+- TypeScript >= 5
+- An existing `tsconfig.json`
+
+<Note>
+This config uses type-aware TypeScript rules by default. If ESLint cannot find your TypeScript project, run it from the package or workspace directory that owns `tsconfig.json`.
+</Note>
 
 ## Installation
 
-1. Install the package and its peer dependencies:
+Install the package and its peer dependencies:
 
-   <Tabs>
-   <TabList>
-   <Tab>npm</Tab>
-   <Tab>pnpm</Tab>
-   <Tab>bun</Tab>
-   </TabList>
-   <TabPanels>
-   <TabPanel>
-   ```bash
-   npm install -D eslint-config-setup eslint typescript
-   ```
-   </TabPanel>
-   <TabPanel>
-   ```bash
-   pnpm add -D eslint-config-setup eslint typescript
-   ```
-   </TabPanel>
-   <TabPanel>
-   ```bash
-   bun add -D eslint-config-setup eslint typescript
-   ```
-   </TabPanel>
-   </TabPanels>
-   </Tabs>
+<Tabs>
+<TabList>
+<Tab>npm</Tab>
+<Tab>pnpm</Tab>
+<Tab>bun</Tab>
+</TabList>
+<TabPanels>
+<TabPanel>
+```bash
+npm install -D eslint-config-setup eslint typescript
+```
+</TabPanel>
+<TabPanel>
+```bash
+pnpm add -D eslint-config-setup eslint typescript
+```
+</TabPanel>
+<TabPanel>
+```bash
+bun add -D eslint-config-setup eslint typescript
+```
+</TabPanel>
+</TabPanels>
+</Tabs>
 
-2. Create your ESLint config file:
+## Create the ESLint config
 
-   ```typescript
-   // eslint.config.ts
-   import { getEslintConfig } from "eslint-config-setup"
-
-   export default await getEslintConfig({ react: true })
-   ```
-
-3. Run ESLint:
-
-   ```bash
-   npx eslint .
-   ```
-
-<Note>
-Requires Node.js >= 22, ESLint >= 10, and TypeScript >= 5.0.
-</Note>
-
-## What you get
-
-That single `getEslintConfig()` call gives you 27 plugins, configured and tested:
-
-- **TypeScript** — `strictTypeChecked`, the strictest preset available
-- **React 19** — Hooks, JSX-A11y, Storybook, Testing Library
-- **Imports** — cycle detection, auto-sorted, unused removal
-- **Code quality** — SonarJS duplicate detection, cognitive complexity
-- **Security** — eval, ReDoS, command injection, timing attacks
-- **Browser compat** — warns on APIs your browserslist targets don't support
-- **Spell checking** — catches typos in variable names and comments
-- **RegExp** — syntax validation, ReDoS prevention, modern patterns
-- **JSON & Markdown** — structural linting plus code block validation
-- **Vitest & Playwright** — test-specific rules with automatic relaxations
-- **Prettier compatibility** — formatting rules disabled so your formatter wins
-
-No plugin juggling. No dependency research. No copy-pasted config blocks.
-
-## What makes this different
-
-### Built for AI-generated code
-
-Most ESLint configs assume a human is writing the code. But when Cursor, Copilot, or Claude Code write your functions, the failure modes are different: implicit types, magic numbers, inconsistent naming, functions that grow unchecked — at machine speed.
-
-Enable `ai: true` and the config adds strict guardrails that AI tools follow without complaint: explicit return types, naming conventions, complexity limits, no magic values. Rules that would slow a human down are trivial for an AI to satisfy.
+Use `eslint.config.ts` when your toolchain can load TypeScript config files:
 
 ```typescript
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+```
+
+If you prefer a JavaScript config, use the same import from `eslint.config.js`:
+
+```javascript
+// eslint.config.js
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+```
+
+<Note>
+Use `eslint.config.mjs` instead if your package is not ESM and does not set `"type": "module"` in `package.json`.
+</Note>
+
+## Add a lint script
+
+Start with the smallest possible script:
+
+```jsonc
+// package.json
+{
+  "scripts": {
+    "lint": "eslint ."
+  }
+}
+```
+
+Then run it:
+
+<Tabs>
+<TabList>
+<Tab>npm</Tab>
+<Tab>pnpm</Tab>
+<Tab>bun</Tab>
+</TabList>
+<TabPanels>
+<TabPanel>
+```bash
+npm run lint
+```
+</TabPanel>
+<TabPanel>
+```bash
+pnpm lint
+```
+</TabPanel>
+<TabPanel>
+```bash
+bun run lint
+```
+</TabPanel>
+</TabPanels>
+</Tabs>
+
+If the command exits with code `0`, ESLint found no blocking problems. If it prints errors, fix those first. Warnings are intentional signals from the curated rule set and can be tightened, relaxed, or scoped later with the [Rule API](/guide/rule-api).
+
+## Recommended starter configs
+
+### React app
+
+```typescript
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+```
+
+React mode covers `react/*`, `react-hooks/*`, and `jsx-a11y/*`. When `ai: true` is also enabled, AI-only React performance checks run under `react-perf/*`. See [React Linting](/guide/react) for the rule surface.
+
+### AI-assisted repo
+
+```typescript
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
 export default await getEslintConfig({ react: true, ai: true })
 ```
 
-See [AI Mode](/guide/ai-mode) for the full rule set.
+Use `ai: true` when generated code is expected to meet stricter conventions around explicit types, naming, magic values, and complexity. See [AI Mode](/guide/ai-mode) for details.
 
-### Ready for OxLint
+### Node package
 
-OxLint rewrites core ESLint rules in Rust — 50 to 100x faster. But migrating means figuring out which rules overlap, which don't, and keeping both configs in sync. Most teams give up and pick one.
+```typescript
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
 
-This config does the work for you. Enable `oxlint: true` and every ESLint rule that OxLint already covers gets disabled automatically. `getOxlintConfig()` generates a matching OxLint config with the same rules at the same severity. Run both linters, get the full coverage, no conflicts.
+export default await getEslintConfig({ node: true })
+```
+
+Use `node: true` for backend packages, CLIs, scripts, workers, and libraries that run in Node.js.
+
+### React + OxLint
 
 ```typescript
 // eslint.config.ts
@@ -111,11 +167,20 @@ import { getOxlintConfig } from "eslint-config-setup"
 export default getOxlintConfig({ react: true })
 ```
 
-See [OxLint Integration](/guide/oxlint) for the setup guide.
+```jsonc
+// package.json
+{
+  "scripts": {
+    "lint": "oxlint && eslint ."
+  }
+}
+```
+
+Use `oxlint: true` only when OxLint runs before ESLint. `getOxlintConfig()` keeps the OxLint side aligned with the ESLint options. See [OxLint Integration](/guide/oxlint) for the full split-linting setup.
 
 ## Configuration flags
 
-Enable features by setting flags to `true`:
+Enable only the flags that match the project:
 
 ```typescript
 export default await getEslintConfig({
@@ -127,6 +192,46 @@ export default await getEslintConfig({
 ```
 
 Flags are independent — combine them however you need. See [Configuration](/guide/configuration) for details.
+
+## Troubleshooting
+
+### 1. Unsupported runtime or peer dependency
+
+Check the versions ESLint actually sees:
+
+```bash
+node --version
+npx eslint --version
+npx tsc --version
+```
+
+Use Node.js >= 22, ESLint >= 10, and TypeScript >= 5.
+
+### 2. Missing or misdetected `tsconfig.json`
+
+Type-aware linting needs a TypeScript project. Make sure `tsconfig.json` exists and run the lint command from the directory that owns it. In a monorepo, prefer a package-local `eslint.config.*` next to the package `tsconfig.json`.
+
+### 3. Editor and CLI disagree
+
+If the CLI passes but the editor reports different diagnostics, check the editor working directory. Point the ESLint extension at the workspace or package root that contains `eslint.config.*` and `tsconfig.json`.
+
+### 4. Browser and backend code share one repo
+
+Do not rely on one global runtime when browser and Node.js code live together. Use directory-local configs or scoped config blocks so frontend files use `react: true` and backend files use `node: true`. See [Configuration](/guide/configuration#mixed-frontendbackend-repositories).
+
+### 5. OxLint setup reports duplicate or missing rules
+
+Run OxLint first, then ESLint:
+
+```jsonc
+{
+  "scripts": {
+    "lint": "oxlint && eslint ."
+  }
+}
+```
+
+Use `getOxlintConfig()` for `oxlint.config.ts` and enable `oxlint: true` in `eslint.config.ts`. If ESLint runs before OxLint, the split-linting setup cannot provide the intended feedback order.
 
 ## Customizing rules
 

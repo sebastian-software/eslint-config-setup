@@ -9,7 +9,7 @@ Date: 2026-03-02
 
 ## Context
 
-OxLint re-implements ESLint rules in Rust and is 10-100x faster. Many rules have 1:1 equivalents. Manually synchronizing between ESLint and OxLint rules is error-prone and maintenance-intensive.
+OxLint re-implements ESLint rules in Rust and is designed for fast feedback on supported checks. Many rules have 1:1 equivalents. Manually synchronizing between ESLint and OxLint rules is error-prone and maintenance-intensive.
 
 ## Decision
 

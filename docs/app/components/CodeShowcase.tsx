@@ -95,8 +95,8 @@ export default await getEslintConfig({
                 <CodeBlock language="javascript">{`
 import { getEslintConfig } from "eslint-config-setup"
 
-// 50-100x faster — rules OxLint covers are
-// automatically disabled in ESLint
+// Rules OxLint covers are automatically disabled
+// in ESLint for split-linting setups
 export default await getEslintConfig({
   react: true,
   oxlint: true

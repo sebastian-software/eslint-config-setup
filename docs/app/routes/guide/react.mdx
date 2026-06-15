@@ -61,17 +61,17 @@ OxLint implements many React rules in Rust — but it uses the classic `eslint-p
 
 The **React Compat Plugin** bridges this gap for React-specific rules. It registers @eslint-react rule implementations under the legacy names that OxLint expects where a 1:1 mapping exists. Hooks do not go through that adapter; they use the native `react-hooks/*` namespace, which OxLint now also understands.
 
-With the current dependency baseline, active React configs overlap with OxLint as follows:
+The overlapping React surface is split by namespace:
 
-- **28 `react/*` rules**
-- **24 `jsx-a11y/*` rules**
-- **2 `react-hooks/*` rules**
-- **AI mode adds 3 more `jsx-a11y/*` rules and 4 `react-perf/*` rules**
+- `react/*` rules with legacy-compatible names can shift to OxLint.
+- `jsx-a11y/*` rules shift when OxLint supports the same accessibility check.
+- Core `react-hooks/*` rules can run in OxLint while newer React Compiler checks stay in ESLint.
+- `ai: true` can add extra JSX accessibility and AI-only `react-perf/*` overlap.
 
 ```
 Your config                 What actually runs
 ──────────                  ──────────────────
-react/jsx-key        ───►   OxLint (Rust, ~100x faster)
+react/jsx-key        ───►   OxLint (Rust)
 react/no-danger      ───►   OxLint (Rust)
 react-hooks/rules-of-hooks ► OxLint (Rust)
 jsx-a11y/alt-text    ───►   OxLint (Rust)
@@ -82,7 +82,7 @@ react-hooks/void-use-memo ► ESLint (React Compiler rule)
 ...remaining rules
 ```
 
-As OxLint expands React, Hooks, JSX-a11y, and React Perf coverage, the rule-surface guardrail in CI forces us to review the new overlap before the documented counts or config behavior drift.
+As OxLint expands React, Hooks, JSX-a11y, and React Perf coverage, the rule-surface guardrail in CI forces us to review the new overlap before config behavior drifts.
 
 <Tip>
 This follows the same proven pattern as `eslint-plugin-import-x` (registered as `import/`) and `eslint-plugin-n` (registered as `node/`). One namespace, maximum tool compatibility.

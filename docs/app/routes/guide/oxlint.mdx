@@ -6,7 +6,7 @@ import { ArdoTip as Tip } from "ardo/ui"
 
 # OxLint Integration
 
-[OxLint](https://oxc.rs) is a Rust-based linter that's 50-100x faster than ESLint. It already covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively.
+[OxLint](https://oxc.rs) is a Rust-based linter designed for fast feedback. It already covers many core ESLint, TypeScript, unicorn, import, and JSX-A11y rules natively.
 
 With `oxlint: true`, this config automatically disables every ESLint rule that OxLint handles (via [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint)). No manual config, no rule conflicts, no guesswork about which linter covers what.
 
@@ -16,10 +16,10 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
 When `react: true` is enabled alongside OxLint, React-related overlap is disabled in ESLint and handled by OxLint instead. This works through a mix of native namespaces and the [React Compat Plugin](/adr/0020-react-compat-plugin):
 
-- `react/*`: 28 active rules overlap with OxLint through legacy-compatible names
-- `jsx-a11y/*`: 24 active accessibility rules overlap with OxLint
-- `react-hooks/*`: 2 active Hooks rules overlap with OxLint
-- `ai: true` adds 3 more JSX-a11y overlaps and 4 AI-only `react-perf/*` overlaps
+- `react/*` rules overlap through legacy-compatible names.
+- `jsx-a11y/*` rules overlap when OxLint supports the same accessibility check.
+- Core `react-hooks/*` rules can run in OxLint while newer React Compiler checks stay in ESLint.
+- `ai: true` can add extra JSX accessibility and AI-only `react-perf/*` overlap.
 
 Rules like `react/jsx-key`, `react/no-danger`, `jsx-a11y/alt-text`, and `react-hooks/rules-of-hooks` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet, such as Web API leak detection, React 19 migration rules, and newer React Compiler checks.
 
@@ -58,7 +58,7 @@ As OxLint expands its React coverage, more rules can shift to Rust. A QA-gated r
    // package.json
    {
      "scripts": {
-       "lint": "oxlint && eslint"
+       "lint": "oxlint && eslint ."
      }
    }
    ```
