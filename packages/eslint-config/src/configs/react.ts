@@ -4,6 +4,9 @@ import eslintReactPlugin from "@eslint-react/eslint-plugin"
 import stylisticPlugin from "@stylistic/eslint-plugin"
 // @ts-expect-error -- no type declarations available
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y"
+import reactHooksPlugin from "eslint-plugin-react-hooks"
+// @ts-expect-error -- no type declarations available
+import reactPerfPlugin from "eslint-plugin-react-perf"
 import reactRefreshPlugin from "eslint-plugin-react-refresh"
 import globals from "globals"
 
@@ -21,24 +24,68 @@ import {
 type Builder = ReturnType<typeof createConfig>
 
 // ── Derive react/ rules from @eslint-react presets ──────────────────────────
-// Recommended + strict presets are merged and translated to react/ compat names.
-// This way new rules added to the presets are picked up automatically.
+// strict-type-checked is translated to react/ compat names. Hook/compiler rules
+// are intentionally supplied by eslint-plugin-react-hooks under react-hooks/*.
 // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Typing the eslint-react configs shape
 const typedConfigs = eslintReactPlugin.configs as unknown as Record<
   string,
   { rules: Linter.RulesRecord }
 >
-const recommendedRules = typedConfigs.recommended.rules
-const strictRules = typedConfigs.strict.rules
-const presetRules = translatePresetRules({ ...recommendedRules, ...strictRules })
+const strictTypeCheckedRules = typedConfigs["strict-type-checked"].rules
+
+export const REACT_HOOKS_REPLACED_ESLINT_REACT_RULES = [
+  "error-boundaries",
+  "exhaustive-deps",
+  "purity",
+  "rules-of-hooks",
+  "set-state-in-effect",
+  "set-state-in-render",
+  "static-components",
+  "unsupported-syntax",
+  "use-memo",
+] as const
+
+const reactHooksReplacedRules = new Set<string>(
+  REACT_HOOKS_REPLACED_ESLINT_REACT_RULES,
+)
+
+function filterReactHooksRules(rules: Linter.RulesRecord): Linter.RulesRecord {
+  const filtered: Linter.RulesRecord = {}
+
+  for (const [ruleName, value] of Object.entries(rules)) {
+    const shortName = ruleName.replace(/^@eslint-react\//, "")
+    if (!reactHooksReplacedRules.has(shortName)) {
+      filtered[ruleName] = value
+    }
+  }
+
+  return filtered
+}
+
+const presetRules = translatePresetRules(filterReactHooksRules(strictTypeCheckedRules))
+
+const reactHooksRecommendedLatest = reactHooksPlugin.configs.flat[
+  "recommended-latest"
+] as Linter.Config
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- The plugin ships flat config metadata outside ESLint's Plugin type.
+const reactHooksPluginForEslint = reactHooksPlugin as unknown as Record<string, unknown>
 
 const EXTRA_REACT_RULES = {
-  "react/jsx-no-leaked-render": "error",
   "react/no-duplicate-key": "error",
   "react/no-implicit-key": "error",
-  "react/no-unused-props": "warn",
   "react/no-unknown-property": "error",
   "react/style-prop-object": "error",
+} satisfies Linter.RulesRecord
+
+export const AI_ADDED_REACT_RULES = {
+  "react/no-unused-state": "error",
+} satisfies Linter.RulesRecord
+
+export const AI_REACT_PERF_RULES = {
+  "react-perf/jsx-no-jsx-as-prop": "error",
+  "react-perf/jsx-no-new-array-as-prop": "error",
+  "react-perf/jsx-no-new-function-as-prop": "error",
+  "react-perf/jsx-no-new-object-as-prop": "error",
 } satisfies Linter.RulesRecord
 
 const JSX_A11Y_ERROR_RULES = {
@@ -67,13 +114,12 @@ const JSX_A11Y_ERROR_RULES = {
   "jsx-a11y/autocomplete-valid": "error",
 } satisfies Linter.RulesRecord
 
-const AI_PROMOTED_REACT_RULES = [
+export const AI_PROMOTED_REACT_RULES = [
   "react/jsx-no-comment-textnodes",
   "react/jsx-no-useless-fragment",
   "react/jsx-no-constructed-context-values",
   "react/no-array-index-key",
   "react/no-object-type-as-default-prop",
-  "react/no-unused-state",
   "react/jsx-no-target-blank",
   "react/button-has-type",
   "react/iframe-missing-sandbox",
@@ -127,6 +173,9 @@ function applyAiReactRules(builder: Builder): void {
     builder.overrideSeverity(ruleName, "error")
   }
 
+  addRules(builder, AI_ADDED_REACT_RULES)
+  addRules(builder, AI_REACT_PERF_RULES)
+
   for (const ruleName of AI_A11Y_RULES) {
     builder.addRule(ruleName, "error")
   }
@@ -149,16 +198,18 @@ function addReactFileOverrides(builder: Builder): void {
 /**
  * React config — React 19+, Hooks, JSX accessibility, and Web API leak detection.
  *
- * Uses `@eslint-react` (eslint-plugin-react-x) as the primary React linting plugin,
- * replacing the unmaintained eslint-plugin-react. All rules — including DOM, Web API,
- * naming-convention, and RSC sub-plugins — are registered under a single `react/`
- * namespace via the react-compat plugin for maximum OxLint compatibility.
+ * Uses `@eslint-react` (eslint-plugin-react-x) for React, DOM, Web API,
+ * naming-convention, and RSC rules under the `react/` compat namespace.
+ * Rules of Hooks and React Compiler linting come from Meta's
+ * eslint-plugin-react-hooks under the native `react-hooks/` namespace.
  *
- * Base rule severities come from the `recommended` + `strict` presets via
- * `createConfig`. When `ai: true`, preset "warn" rules that AI should always
- * get right are promoted to "error" — validated at build time.
+ * Base React severities come from the `@eslint-react` `strict-type-checked` preset.
+ * When `ai: true`, preset "warn" rules that AI should always get right are
+ * promoted to "error", and React performance rules are enabled as errors.
  *
  * @see https://eslint-react.xyz/docs/rules/overview
+ * @see https://www.npmjs.com/package/eslint-plugin-react-hooks
+ * @see https://github.com/cvazac/eslint-plugin-react-perf
  * @see https://github.com/ArnaudBarre/eslint-plugin-react-refresh
  * @see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules
  */
@@ -167,10 +218,13 @@ export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
 
   const builder = createConfig({
     name: "eslint-config-setup/react",
-    presets: [{ rules: presetRules }],
+    presets: [{ rules: presetRules }, reactHooksRecommendedLatest],
     plugins: {
       react: reactCompatPlugin,
       "@stylistic": stylisticPlugin,
+      "react-hooks": reactHooksPluginForEslint,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin from untyped module
+      "react-perf": reactPerfPlugin as Record<string, unknown>,
       "react-refresh": reactRefreshPlugin,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin from untyped module
       "jsx-a11y": jsxA11yPlugin as Record<string, unknown>,

@@ -123,11 +123,49 @@ describe("config rule stability", () => {
       (b) => b.name === "eslint-config-setup/react",
     )
     expect(reactBlock?.rules).toBeDefined()
-    expect(reactBlock!.rules!["react/rules-of-hooks"]).toBe("error")
-    expect(reactBlock!.rules!["react/exhaustive-deps"]).toBeDefined()
+    expect(reactBlock!.rules!["react-hooks/rules-of-hooks"]).toBe("error")
+    expect(reactBlock!.rules!["react-hooks/exhaustive-deps"]).toBeDefined()
+    expect(reactBlock!.rules!["react-hooks/void-use-memo"]).toBe("error")
+    expect(reactBlock!.rules!["react/rules-of-hooks"]).toBeUndefined()
+    expect(reactBlock!.rules!["react/exhaustive-deps"]).toBeUndefined()
     expect(reactBlock!.rules!["react/no-unknown-property"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/alt-text"]).toBe("error")
     expect(reactBlock!.rules!["jsx-a11y/anchor-is-valid"]).toBe("error")
+  })
+
+  it("react perf rules are AI-only errors", () => {
+    const react = composeConfig({ react: true }).find(
+      (b) => b.name === "eslint-config-setup/react",
+    )
+    const aiReact = composeConfig({ react: true, ai: true }).find(
+      (b) => b.name === "eslint-config-setup/react",
+    )
+
+    expect(react?.rules?.["react-perf/jsx-no-new-object-as-prop"]).toBeUndefined()
+    expect(aiReact?.rules?.["react-perf/jsx-no-new-object-as-prop"]).toBe(
+      "error",
+    )
+    expect(aiReact?.rules?.["react-perf/jsx-no-jsx-as-prop"]).toBe("error")
+  })
+
+  it("oxlint React integration includes hooks and AI-only perf coverage", () => {
+    const reactOxlintNames = composeConfig({ react: true, oxlint: true }).map(
+      (block) => block.name,
+    )
+    const aiReactOxlintNames = composeConfig({
+      react: true,
+      ai: true,
+      oxlint: true,
+    }).map((block) => block.name)
+
+    expect(reactOxlintNames).toContain("eslint-config-setup/oxlint-react-hooks-1")
+    expect(reactOxlintNames).toContain("eslint-config-setup/oxlint-react-hooks-2")
+    expect(reactOxlintNames).not.toContain(
+      "eslint-config-setup/oxlint-react-perf",
+    )
+    expect(aiReactOxlintNames).toContain(
+      "eslint-config-setup/oxlint-react-perf",
+    )
   })
 
   it("security config includes critical rules", () => {

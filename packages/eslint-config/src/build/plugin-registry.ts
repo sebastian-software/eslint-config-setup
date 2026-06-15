@@ -109,7 +109,19 @@ export const pluginRegistry: Record<string, PluginEntry> = {
     importStatement: 'import eslintReactPlugin from "@eslint-react/eslint-plugin"',
     pluginExpr: "reactCompatPlugin",
   },
-"@stylistic": {
+  "react-hooks": {
+    pkg: "eslint-plugin-react-hooks",
+    varName: "reactHooksPlugin",
+    importStatement: 'import reactHooksPlugin from "eslint-plugin-react-hooks"',
+    pluginExpr: "reactHooksPlugin",
+  },
+  "react-perf": {
+    pkg: "eslint-plugin-react-perf",
+    varName: "reactPerfPlugin",
+    importStatement: 'import reactPerfPlugin from "eslint-plugin-react-perf"',
+    pluginExpr: "reactPerfPlugin",
+  },
+  "@stylistic": {
     pkg: "@stylistic/eslint-plugin",
     varName: "stylisticPlugin",
     importStatement: 'import stylisticPlugin from "@stylistic/eslint-plugin"',

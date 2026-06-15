@@ -51,6 +51,10 @@ jobs:
         if: matrix.runtime != 'bun'
         run: pnpm run check
 
+      - name: Check React rule surfaces
+        if: matrix.runtime != 'bun'
+        run: pnpm run react:rules:check
+
       - name: Run tests
         if: matrix.runtime != 'bun'
         run: pnpm run test:coverage

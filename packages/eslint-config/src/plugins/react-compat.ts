@@ -48,17 +48,48 @@ const webApiRules = selectPrefixedRules("web-api-")
 // Based on @eslint-react's `disable-conflict-eslint-plugin-react` config.
 // Only 1:1 mappings are included — 1:many (e.g. `no-unsafe` → 3 rules) are skipped.
 
-const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]> =
+export const REACT_COMPAT_LEGACY_ALIAS_NAMES = [
+  "button-has-type",
+  "display-name",
+  "forward-ref-uses-ref",
+  "hook-use-state",
+  "iframe-missing-sandbox",
+  "jsx-key",
+  "jsx-key-before-spread",
+  "jsx-no-comment-textnodes",
+  "jsx-no-constructed-context-values",
+  "jsx-no-leaked-render",
+  "jsx-no-script-url",
+  "jsx-no-target-blank",
+  "jsx-no-useless-fragment",
+  "no-access-state-in-setstate",
+  "no-array-index-key",
+  "no-children-prop",
+  "no-danger",
+  "no-danger-with-children",
+  "no-did-mount-set-state",
+  "no-did-update-set-state",
+  "no-direct-mutation-state",
+  "no-find-dom-node",
+  "no-namespace",
+  "no-object-type-as-default-prop",
+  "no-render-return-value",
+  "no-unknown-property",
+  "no-unstable-nested-components",
+  "no-unused-class-component-members",
+  "no-unused-state",
+  "no-will-update-set-state",
+  "style-prop-object",
+  "void-dom-elements-no-children",
+] as const
+
+const LEGACY_ALIASES =
   {
     // ── Core: identical names ──────────────────────────────────────────
     "no-access-state-in-setstate": [coreRules, "no-access-state-in-setstate"],
     "no-array-index-key": [coreRules, "no-array-index-key"],
     "no-children-prop": [jsxRules, "no-children-prop"],
     "no-direct-mutation-state": [coreRules, "no-direct-mutation-state"],
-    "no-redundant-should-component-update": [
-      coreRules,
-      "no-redundant-should-component-update",
-    ],
     "no-unused-class-component-members": [
       coreRules,
       "no-unused-class-component-members",
@@ -82,7 +113,6 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     ],
     "display-name": [coreRules, "no-missing-component-display-name"],
     "forward-ref-uses-ref": [coreRules, "no-forward-ref"],
-    "destructuring-assignment": [coreRules, "prefer-destructuring-assignment"],
     "no-did-mount-set-state": [
       coreRules,
       "no-set-state-in-component-did-mount",
@@ -118,7 +148,10 @@ const LEGACY_ALIASES: Record<string, [source: PluginRules, originalName: string]
     "button-has-type": [domRules, "no-missing-button-type"],
     "iframe-missing-sandbox": [domRules, "no-missing-iframe-sandbox"],
     "style-prop-object": [domRules, "no-string-style-prop"],
-  }
+  } satisfies Record<
+    (typeof REACT_COMPAT_LEGACY_ALIAS_NAMES)[number],
+    [source: PluginRules, originalName: string]
+  >
 
 // Build the set of original rule names that are aliased to a legacy name.
 // These will NOT be included under their original name to avoid duplicates.

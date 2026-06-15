@@ -631,13 +631,17 @@ function emitOxlintBlock(opts: ConfigOptions): string {
   // Emit a spread that handles both plain objects and SplittedFlatConfig tuples
   // (eslint-plugin-oxlint ≥1.51.0 returns arrays from flat/* configs)
   const addSpread = (configName: string, blockName: string): void => {
-    lines.push(`  ...[oxlintPlugin.configs[${JSON.stringify(configName)}]].flat().map((c) => ({ name: "eslint-config-setup/${blockName}", ...c })),`)
+    lines.push(`  ...[oxlintPlugin.configs[${JSON.stringify(configName)}]].flat().map((c, index, array) => ({ ...c, name: "eslint-config-setup/${blockName}" + (array.length > 1 ? "-" + (index + 1) : "") })),`)
   }
 
   addSpread("flat/recommended", "oxlint")
   if (opts.react) {
     addSpread("flat/react", "oxlint-react")
     addSpread("flat/jsx-a11y", "oxlint-jsx-a11y")
+    addSpread("flat/react-hooks", "oxlint-react-hooks")
+    if (opts.ai) {
+      addSpread("flat/react-perf", "oxlint-react-perf")
+    }
   }
   if (opts.node) {
     addSpread("flat/node", "oxlint-node")
@@ -688,11 +692,11 @@ function indentJson(obj: Rules, indent: number): string {
  */
 /**
  * Emits inline JS that builds the react-compat plugin from `@eslint-react/eslint-plugin`.
- * Merges all sub-plugins into one namespace and aliases rules to legacy names for OxLint compat.
+ * Merges React-specific rule families into react/* and aliases legacy names for OxLint compat.
  */
 function emitReactCompatHelper(): string[] {
   return [
-    "// React compat plugin — merges @eslint-react sub-plugins into a single `react/` namespace",
+    "// React compat plugin — maps @eslint-react rule families into the `react/` namespace",
     "// and aliases rules to legacy eslint-plugin-react names for OxLint compatibility.",
     "const reactCompatPlugin = (() => {",
     "  const core = eslintReactPlugin.rules",
@@ -718,7 +722,6 @@ function emitReactCompatHelper(): string[] {
     '    "no-unstable-nested-components": [core, "no-nested-component-definitions"],',
     '    "display-name": [core, "no-missing-component-display-name"],',
     '    "forward-ref-uses-ref": [core, "no-forward-ref"],',
-    '    "destructuring-assignment": [core, "prefer-destructuring-assignment"],',
     '    "no-did-mount-set-state": [core, "no-set-state-in-component-did-mount"],',
     '    "no-did-update-set-state": [core, "no-set-state-in-component-did-update"],',
     '    "no-will-update-set-state": [core, "no-set-state-in-component-will-update"],',
@@ -740,7 +743,7 @@ function emitReactCompatHelper(): string[] {
     "  // Identical-name aliases (core rules where legacy name = @eslint-react name)",
     "  const identicalCore = [",
     '    "no-access-state-in-setstate", "no-array-index-key",',
-    '    "no-direct-mutation-state", "no-redundant-should-component-update",',
+    '    "no-direct-mutation-state",',
     '    "no-unused-class-component-members", "no-unused-state",',
     "  ]",
     '  for (const n of identicalCore) aliases[n] = [core, n]',
