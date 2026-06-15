@@ -14,9 +14,16 @@ Everything OxLint doesn't support — type-aware TypeScript checks, SonarJS anal
 
 ### React rules in Rust
 
-When `react: true` is enabled alongside OxLint, **31 React rules automatically run in Rust** instead of JavaScript. This works because the [React Compat Plugin](/adr/0020-react-compat-plugin) registers @eslint-react rule implementations under their classic `eslint-plugin-react` names — the exact names OxLint expects. Rules like `react/jsx-key`, `react/no-danger`, and `react/no-children-prop` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet (Web API leak detection, React 19 migration, type-aware analysis).
+When `react: true` is enabled alongside OxLint, React-related overlap is disabled in ESLint and handled by OxLint instead. This works through a mix of native namespaces and the [React Compat Plugin](/adr/0020-react-compat-plugin):
 
-As OxLint expands its React coverage, more rules shift to Rust automatically — no config changes required.
+- `react/*`: 28 active rules overlap with OxLint through legacy-compatible names
+- `jsx-a11y/*`: 24 active accessibility rules overlap with OxLint
+- `react-hooks/*`: 2 active Hooks rules overlap with OxLint
+- `ai: true` adds 3 more JSX-a11y overlaps and 4 AI-only `react-perf/*` overlaps
+
+Rules like `react/jsx-key`, `react/no-danger`, `jsx-a11y/alt-text`, and `react-hooks/rules-of-hooks` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet, such as Web API leak detection, React 19 migration rules, and newer React Compiler checks.
+
+As OxLint expands its React coverage, more rules can shift to Rust. A QA-gated rule-surface check reviews that drift before dependency upgrades land.
 
 ## Setup
 

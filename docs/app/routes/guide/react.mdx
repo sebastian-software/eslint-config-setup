@@ -12,31 +12,33 @@ Enable React linting with a single flag:
 export default await getEslintConfig({ react: true })
 ```
 
-That's it. No plugin installation, no namespace configuration, no manual rule selection. You get 80+ curated React rules — and if you're using OxLint, 31 of them run in Rust automatically.
+That's it. No plugin installation, no namespace configuration, no manual rule selection. You get a curated React stack across `react/*`, `react-hooks/*`, `jsx-a11y/*`, Fast Refresh, and effect-pattern rules.
 
 ## What's included
 
-### One namespace, six capabilities
+### First-class namespaces
 
-Under the hood, this config uses [@eslint-react](https://eslint-react.xyz/) — a modern, type-aware React linting engine that's 4-7x faster than the legacy `eslint-plugin-react`. It ships six sub-plugins covering different aspects of React development. We merge all of them into a single `react/` namespace:
+Under the hood, this config uses [@eslint-react](https://eslint-react.xyz/) for React-specific linting and keeps Hooks on Meta's official `eslint-plugin-react-hooks` namespace. The result is explicit ownership: React rules stay under `react/*`, Hooks and React Compiler rules stay under `react-hooks/*`, accessibility stays under `jsx-a11y/*`, and AI-only performance checks use `react-perf/*`.
 
 | Capability | What it catches | Example rules |
 |-----------|-----------------|---------------|
 | **Core** | Keys, children, component patterns, class component legacy | `react/jsx-key`, `react/no-children-prop`, `react/no-class-component` |
 | **DOM** | Unsafe HTML, unknown properties, void elements | `react/no-danger`, `react/no-unknown-property`, `react/button-has-type` |
 | **Web API** | Missing cleanup in effects | `react/no-leaked-event-listener`, `react/no-leaked-timeout` |
-| **Hooks** | Unnecessary memoization, setState in effects | `react/no-unnecessary-use-callback`, `react/no-direct-set-state-in-use-effect` |
 | **Naming** | useState destructuring, context names | `react/hook-use-state`, `react/context-name` |
 | **RSC** | Server Component conventions | `react/function-definition` |
+| **Hooks and Compiler** | Rules of Hooks, dependency arrays, compiler constraints | `react-hooks/rules-of-hooks`, `react-hooks/exhaustive-deps`, `react-hooks/void-use-memo` |
+| **AI performance** | New object, array, function, or JSX props in render paths | `react-perf/jsx-no-new-object-as-prop` |
 
 Plus dedicated plugins for hooks, accessibility, fast refresh, and effect patterns:
 
 | Plugin | Purpose |
 |--------|---------|
-| `eslint-plugin-react-hooks` | Rules of Hooks, exhaustive dependency checking |
+| `eslint-plugin-react-hooks` | Rules of Hooks, exhaustive dependency checking, and React Compiler linting via `recommended-latest` |
 | `eslint-plugin-jsx-a11y` | ARIA validation, keyboard navigation, alt text |
 | `eslint-plugin-react-refresh` | Fast Refresh (HMR) compatible exports |
 | `eslint-plugin-react-you-might-not-need-an-effect` | Catches unnecessary useEffect patterns |
+| `eslint-plugin-react-perf` | AI-only performance rules; enabled as errors when `ai: true` |
 | `@stylistic/eslint-plugin` | JSX self-closing tags, curly brace presence |
 
 ### React 19 ready
@@ -49,7 +51,7 @@ Three rules guide your codebase toward React 19 patterns:
 
 ### Strict by default
 
-Rules are based on @eslint-react's `strict-type-checked` preset — the most comprehensive level, including type-aware analysis. Legacy class component patterns, deprecated lifecycle methods, and unsafe APIs are flagged as errors. Modern patterns like unnecessary memoization and naming conventions are flagged as warnings.
+React rules are based on @eslint-react's `strict-type-checked` preset — the most comprehensive level, including type-aware analysis. Hooks and React Compiler rules come from `eslint-plugin-react-hooks` `recommended-latest`. Legacy class component patterns, deprecated lifecycle methods, unsafe APIs, and compiler-invalid patterns are flagged as errors. Modern patterns like naming conventions are flagged as warnings.
 
 ## OxLint acceleration
 
@@ -57,24 +59,30 @@ When you enable `oxlint: true`, something powerful happens behind the scenes.
 
 OxLint implements many React rules in Rust — but it uses the classic `eslint-plugin-react` rule names (`react/jsx-key`, `react/no-danger`). Our config uses the modern @eslint-react implementations, which have different names internally (`no-missing-key`, `no-dangerously-set-innerhtml`).
 
-The **React Compat Plugin** bridges this gap. It registers every @eslint-react rule implementation under the legacy name that OxLint expects. The result: `eslint-plugin-oxlint` correctly identifies which rules OxLint already handles and disables them in ESLint.
+The **React Compat Plugin** bridges this gap for React-specific rules. It registers @eslint-react rule implementations under the legacy names that OxLint expects where a 1:1 mapping exists. Hooks do not go through that adapter; they use the native `react-hooks/*` namespace, which OxLint now also understands.
 
-**31 React rules run in Rust.** Zero configuration on your part.
+With the current dependency baseline, active React configs overlap with OxLint as follows:
+
+- **28 `react/*` rules**
+- **24 `jsx-a11y/*` rules**
+- **2 `react-hooks/*` rules**
+- **AI mode adds 3 more `jsx-a11y/*` rules and 4 `react-perf/*` rules**
 
 ```
 Your config                 What actually runs
 ──────────                  ──────────────────
 react/jsx-key        ───►   OxLint (Rust, ~100x faster)
 react/no-danger      ───►   OxLint (Rust)
-react/no-children-prop ──►  OxLint (Rust)
-...31 rules total
+react-hooks/rules-of-hooks ► OxLint (Rust)
+jsx-a11y/alt-text    ───►   OxLint (Rust)
 
 react/no-leaked-timeout ──► ESLint (no OxLint equivalent yet)
 react/no-context-provider ► ESLint (React 19 rule, new)
+react-hooks/void-use-memo ► ESLint (React Compiler rule)
 ...remaining rules
 ```
 
-As OxLint expands its React coverage, more rules will automatically shift to Rust — no config changes needed. The naming is already aligned.
+As OxLint expands React, Hooks, JSX-a11y, and React Perf coverage, the rule-surface guardrail in CI forces us to review the new overlap before the documented counts or config behavior drift.
 
 <Tip>
 This follows the same proven pattern as `eslint-plugin-import-x` (registered as `import/`) and `eslint-plugin-n` (registered as `node/`). One namespace, maximum tool compatibility.
@@ -97,7 +105,7 @@ These catch bugs, security issues, and broken patterns:
 
 These flag code smells and encourage better patterns:
 
-- **Performance** — unnecessary `useCallback`/`useMemo`, lazy state initialization
+- **Performance** — unnecessary memoization patterns, lazy state initialization, AI-only render-prop allocation checks
 - **Children API** — `Children.count/map/forEach/only/toArray`, `cloneElement`
 - **Naming** — `useState` destructuring, context names, ref names
 - **Style** — destructuring assignment, JSX key placement, boolean shorthand

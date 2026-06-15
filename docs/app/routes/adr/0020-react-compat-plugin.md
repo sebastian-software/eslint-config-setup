@@ -10,34 +10,42 @@ Extends: ADR-0019, ADR-0009
 
 ## Context
 
-ADR-0019 replaced `eslint-plugin-react` with `@eslint-react/eslint-plugin`. This modern plugin organizes its 95 rules across six sub-plugins, each with its own namespace:
+ADR-0019 replaced `eslint-plugin-react` with `@eslint-react/eslint-plugin` for React-specific linting. The React stack now keeps first-class namespaces for adjacent concerns:
 
-| Sub-plugin | Prefix | Rules |
-|------------|--------|-------|
-| Core | `@eslint-react/` | 64 |
-| DOM | `@eslint-react/dom/` | 18 |
-| Web API | `@eslint-react/web-api/` | 4 |
-| Hooks Extra | `@eslint-react/hooks-extra/` | 1 |
-| Naming Convention | `@eslint-react/naming-convention/` | 6 |
-| RSC | `@eslint-react/rsc/` | 1 |
+- `react/*` for @eslint-react React, DOM, Web API, naming, and RSC rules
+- `react-hooks/*` for Meta's Hooks and React Compiler rules
+- `jsx-a11y/*` for accessibility
+- `react-perf/*` for AI-only render performance rules
+
+@eslint-react organizes its rules across several internal families, each with its own upstream naming scheme:
+
+| Family | Prefix |
+|--------|--------|
+| Core | `@eslint-react/` |
+| DOM | `@eslint-react/dom/` |
+| Web API | `@eslint-react/web-api/` |
+| Naming Convention | `@eslint-react/naming-convention/` |
+| RSC | `@eslint-react/rsc/` |
 
 This creates two problems:
 
 1. **OxLint incompatibility.** OxLint implements React rules under the classic `react/` prefix using legacy `eslint-plugin-react` names (e.g., `react/jsx-key`, not `@eslint-react/no-missing-key`). When `eslint-plugin-oxlint` disables ESLint rules that OxLint covers, it looks for `react/jsx-key` — but our config uses `@eslint-react/no-missing-key`. The rule runs in both linters. No speed gain.
 
-2. **Namespace fragmentation.** Users see rules spread across `@eslint-react/`, `@eslint-react/dom/`, and `@eslint-react/web-api/` in editor diagnostics. Three prefixes for one concern.
+2. **Namespace fragmentation.** Users see React-specific rules spread across `@eslint-react/`, `@eslint-react/dom/`, and `@eslint-react/web-api/` in editor diagnostics. Multiple prefixes for one React concern.
 
 ## Decision
 
-Create a **React Compat Plugin** — a thin adapter that merges all six @eslint-react sub-plugins into a single ESLint plugin registered under the `react` namespace. Rules with a 1:1 legacy `eslint-plugin-react` equivalent are registered under the legacy name. Rules without a legacy equivalent keep their @eslint-react short name.
+Create a **React Compat Plugin** — a thin adapter that merges @eslint-react's React-specific rule families into a single ESLint plugin registered under the `react` namespace. Rules with a 1:1 legacy `eslint-plugin-react` equivalent are registered under the legacy name. Rules without a legacy equivalent keep their @eslint-react short name.
+
+Do not route Hooks or performance rules through this adapter. Hooks use `eslint-plugin-react-hooks` under `react-hooks/*`; AI-only performance rules use `eslint-plugin-react-perf` under `react-perf/*`.
 
 ### How it works
 
 The compat plugin builds a unified rules object in three steps:
 
 1. **Core rules** — added under their original name, unless they have a legacy alias
-2. **Sub-plugin rules** (DOM, Web API, Hooks Extra, Naming, RSC) — added under their short name (prefix stripped), unless they have a legacy alias
-3. **Legacy aliases** — 43 rules registered under their classic `eslint-plugin-react` name, pointing to the @eslint-react implementation
+2. **Sub-plugin rules** (DOM, Web API, Naming, RSC) — added under their short name (prefix stripped), unless they have a legacy alias
+3. **Legacy aliases** — reviewed 1:1 rules registered under their classic `eslint-plugin-react` name, pointing to the @eslint-react implementation
 
 ### The mapping source
 
@@ -45,7 +53,9 @@ The compat plugin builds a unified rules object in three steps:
 
 ### What this means for OxLint
 
-Of the 43 mapped rules, **31 have active OxLint implementations.** When users enable `oxlint: true`, `eslint-plugin-oxlint`'s `flat/react` config sets these 31 rules to `"off"` in ESLint — and because our compat plugin uses the exact names OxLint expects, the deduplication works automatically. These 31 rules run in Rust at native speed. ESLint only handles the rules OxLint can't cover yet.
+With the current dependency baseline, 28 active `react/*` rules overlap with OxLint. When users enable `oxlint: true`, `eslint-plugin-oxlint`'s `flat/react` config sets those rules to `"off"` in ESLint — and because our compat plugin uses the exact names OxLint expects, the deduplication works automatically. ESLint only handles the React rules OxLint can't cover yet.
+
+OxLint integration also appends native `flat/react-hooks` coverage for the two core Hooks rules. When both `react: true` and `ai: true` are enabled, it appends `flat/react-perf` so the four AI-only React Perf rules run in Rust.
 
 ### What this means for future growth
 
@@ -58,8 +68,8 @@ The 45 rules without a legacy equivalent (e.g., `no-context-provider`, `no-leake
 
 ## Consequences
 
-- All React rules use a single `react/` prefix — clean editor diagnostics, one namespace to remember
-- 31 rules automatically run in OxLint's Rust engine when `oxlint: true` — measured speedup with zero user configuration
+- @eslint-react React rules use a single `react/` prefix, while Hooks, accessibility, and performance keep their native plugin namespaces
+- React, JSX-a11y, Hooks, and AI-only React Perf overlaps automatically run in OxLint's Rust engine when `oxlint: true`
 - The compat plugin follows the same pattern as `eslint-plugin-import-x` (registered as `import`) and `eslint-plugin-n` (registered as `node`) — proven ESLint convention
-- Future OxLint React rule additions will automatically be deduplicated, as the naming is already aligned
-- The mapping table must be updated when @eslint-react adds new rules with legacy equivalents, but this is low-frequency maintenance tied to @eslint-react releases
+- Future OxLint React rule additions are reviewed by the QA-gated rule-surface check before dependency upgrades land
+- The mapping table must be updated when @eslint-react adds or removes rules with legacy equivalents

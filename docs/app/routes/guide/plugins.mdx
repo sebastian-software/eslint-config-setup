@@ -17,7 +17,7 @@ This config takes a different approach. Every rule from every plugin was reviewe
 | **TypeScript** | `strictTypeChecked` | The strictest official preset. No `recommended` fallback. |
 | **RegExp** | `flat/recommended` + extras | The preset is well-scoped. We add rules for ReDoS prevention and safe replacement strings on top. |
 | **JSDoc** | `flat/recommended-typescript-error` | TypeScript-aware preset with errors instead of warnings. No JSDoc required — only existing annotations are validated. |
-| **React** | `strict-type-checked` | Based on @eslint-react's strictest type-aware preset. 80+ rules across core, DOM, Web API, hooks, naming, and RSC — unified under a single `react/` namespace via the [React Compat Plugin](/adr/0020-react-compat-plugin) for OxLint compatibility. |
+| **React** | `strict-type-checked` + `react-hooks/recommended-latest` | @eslint-react owns React, DOM, Web API, naming, and RSC rules under `react/*`; Meta's Hooks plugin owns `react-hooks/*`; AI mode adds `react-perf/*` errors. |
 | **Unicorn** | Hand-picked | `flat/recommended` includes highly opinionated rules that clash with common patterns. We pick the ones that catch real bugs and enforce modern syntax. |
 | **SonarJS** | Hand-picked | Many SonarJS rules duplicate what typescript-eslint and unicorn already cover. Only non-overlapping rules are enabled. |
 | **Security** | Hand-picked | The default preset enables `detect-object-injection`, which flags every bracket access — too many false positives for real-world code. |
@@ -70,8 +70,9 @@ These plugins activate based on your configuration flags or file patterns.
 
 | Plugin | When active | Purpose |
 |--------|-------------|---------|
-| [`@eslint-react/eslint-plugin`](https://eslint-react.xyz/) | `react: true` | 80+ React rules (core, DOM, Web API, hooks, naming, RSC) under unified `react/` namespace — [31 rules run in OxLint](/adr/0020-react-compat-plugin) |
-| [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks) | `react: true` | Rules of Hooks and exhaustive dependency checking |
+| [`@eslint-react/eslint-plugin`](https://eslint-react.xyz/) | `react: true` | React rules for core, DOM, Web API cleanup, naming, and RSC under the `react/*` compat namespace |
+| [`eslint-plugin-react-hooks`](https://www.npmjs.com/package/eslint-plugin-react-hooks) | `react: true` | Rules of Hooks, exhaustive dependency checking, and React Compiler linting under `react-hooks/*` |
+| [`eslint-plugin-react-perf`](https://github.com/cvazac/eslint-plugin-react-perf) | `react: true` + `ai: true` | AI-only render performance checks under `react-perf/*`; currently carries a stale ESLint peer range but is runtime-tested with ESLint 10 |
 | [`eslint-plugin-react-refresh`](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) | `react: true` | Validates component exports for Fast Refresh (HMR) compatibility |
 | [`eslint-plugin-react-you-might-not-need-an-effect`](https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect) | `react: true` | Catches unnecessary useEffect — derived state, chained updates, prop resets |
 | [`eslint-plugin-jsx-a11y`](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) | `react: true` | JSX accessibility — ARIA validation, keyboard navigation, alt text |
