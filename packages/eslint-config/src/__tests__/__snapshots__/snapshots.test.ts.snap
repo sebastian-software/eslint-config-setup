@@ -980,7 +980,15 @@ exports[`config snapshots > snapshot: ai only 1`] = `
       ],
       "unicorn/prefer-top-level-await": "error",
       "unicorn/prefer-type-error": "error",
-      "unicorn/prevent-abbreviations": "error",
+      "unicorn/prevent-abbreviations": [
+        "error",
+        {
+          "allowList": {
+            "Ref": true,
+            "ref": true,
+          },
+        },
+      ],
       "unicorn/relative-url-style": "error",
       "unicorn/switch-case-braces": "error",
       "unicorn/text-encoding-identifier-case": "error",
@@ -2968,7 +2976,15 @@ exports[`config snapshots > snapshot: all flags 1`] = `
       ],
       "unicorn/prefer-top-level-await": "error",
       "unicorn/prefer-type-error": "error",
-      "unicorn/prevent-abbreviations": "error",
+      "unicorn/prevent-abbreviations": [
+        "error",
+        {
+          "allowList": {
+            "Ref": true,
+            "ref": true,
+          },
+        },
+      ],
       "unicorn/relative-url-style": "error",
       "unicorn/switch-case-braces": "error",
       "unicorn/text-encoding-identifier-case": "error",
@@ -9187,7 +9203,15 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
       ],
       "unicorn/prefer-top-level-await": "error",
       "unicorn/prefer-type-error": "error",
-      "unicorn/prevent-abbreviations": "error",
+      "unicorn/prevent-abbreviations": [
+        "error",
+        {
+          "allowList": {
+            "Ref": true,
+            "ref": true,
+          },
+        },
+      ],
       "unicorn/relative-url-style": "error",
       "unicorn/switch-case-braces": "error",
       "unicorn/text-encoding-identifier-case": "error",

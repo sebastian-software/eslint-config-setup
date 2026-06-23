@@ -104,4 +104,22 @@ describe("composeConfig", () => {
     expect(tlBlocksWithReact.length).toBeGreaterThan(0)
     expect(tlBlocksWithoutReact.length).toBeGreaterThan(0)
   })
+
+  it("allows React ref naming conventions in AI abbreviation checks", () => {
+    const config = composeConfig({ ai: true, react: true })
+
+    const unicornBlock = config.find(
+      (block) => block.name === "eslint-config-setup/unicorn",
+    )
+
+    expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toStrictEqual([
+      "error",
+      {
+        allowList: {
+          Ref: true,
+          ref: true,
+        },
+      },
+    ])
+  })
 })
