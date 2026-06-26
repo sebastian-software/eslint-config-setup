@@ -6,6 +6,8 @@ import { ArdoTip as Tip } from "ardo/ui"
 
 # Included Plugins
 
+ESLint Config Setup ships **30 lint integrations**: ESLint core, TypeScript, React, browser and Node checks, testing/story tooling, formatter-conflict support, and package-file validation. The count refers to lint-facing packages and support configs that affect the generated rule surface; it does not count helper data packages such as `globals`.
+
 ## Curated, not copy-pasted
 
 Most shared configs slap `recommended` on every plugin and call it a day. That gives you whatever the plugin author thought was a good default — including rules that overlap, contradict each other, or don't apply to your stack.
@@ -35,7 +37,7 @@ The result: no duplicate rules, no conflicting severities, no rules that fire on
 
 ## Always active
 
-These plugins run on every project, regardless of flags.
+These lint integrations run on every project, regardless of flags.
 
 | Plugin | Purpose |
 |--------|---------|
@@ -50,11 +52,20 @@ These plugins run on every project, regardless of flags.
 | [`eslint-plugin-sonarjs`](https://github.com/SonarSource/eslint-plugin-sonarjs) | Code quality — duplicate detection, cognitive complexity, dead code |
 | [`eslint-plugin-security`](https://github.com/eslint-community/eslint-plugin-security) | Security patterns — eval, regex DoS, command injection, timing attacks |
 | [`@cspell/eslint-plugin`](https://github.com/streetsidesoftware/cspell) | Spell checking in identifiers and comments |
-| [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) | Disables formatting rules that conflict with your formatter |
 | [`eslint-plugin-de-morgan`](https://github.com/azat-io/eslint-plugin-de-morgan) | Simplifies negated boolean expressions using De Morgan's laws (auto-fixable) |
 | [`eslint-plugin-package-json`](https://github.com/JoshuaKGoldberg/eslint-plugin-package-json) | Semantic package.json validation — malformed fields, duplicate dependencies |
 | [`@eslint/json`](https://github.com/eslint/json) | JSON/JSONC linting — duplicate keys, unsafe values |
 | [`eslint-plugin-mdx`](https://github.com/mdx-js/eslint-mdx) | Lints code blocks inside Markdown and MDX files with your ESLint rules |
+
+
+## Support configs
+
+These packages affect the generated rule surface but are not ordinary recommended-plugin presets. They are included in the 30 lint integrations because they either disable conflicting rule families or provide compatibility coverage used by generated configs.
+
+| Package | Purpose |
+|---------|---------|
+| [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) | Disables formatting rules that conflict with your formatter |
+| [`@stylistic/eslint-plugin`](https://eslint.style/) | Explicitly disables stylistic formatting rules so dedicated formatters own formatting |
 
 ## Formatting
 
@@ -64,7 +75,7 @@ All formatting-related ESLint rules are disabled at build time via `eslint-confi
 
 ## Conditional plugins
 
-These plugins activate based on your configuration flags or file patterns.
+These lint integrations activate based on your configuration flags or file patterns. Rows marked as an additional rule mode reuse an already-listed package and are not counted as another package.
 
 ### By flag
 
@@ -78,8 +89,8 @@ These plugins activate based on your configuration flags or file patterns.
 | [`eslint-plugin-jsx-a11y`](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) | `react: true` | JSX accessibility — ARIA validation, keyboard navigation, alt text |
 | [`eslint-plugin-n`](https://github.com/eslint-community/eslint-plugin-n) | `node: true` | Node.js APIs — deprecated API detection, path handling, hashbang validation |
 | [`eslint-plugin-compat`](https://github.com/amilajack/eslint-plugin-compat) | `node: false` | Browser API compatibility against your [browserslist](https://browsersl.ist/) targets |
-| [`eslint-plugin-perfectionist`](https://perfectionist.dev) | `ai: true` | Structural sorting — objects, interfaces, enums, JSX props, classes, switch cases |
-| [`eslint-plugin-package-json`](https://github.com/JoshuaKGoldberg/eslint-plugin-package-json) | `ai: true` | Package.json property ordering and collection sorting |
+| [`eslint-plugin-perfectionist`](https://perfectionist.dev) | `ai: true` | Additional rule mode: structural sorting — objects, interfaces, enums, JSX props, classes, switch cases |
+| [`eslint-plugin-package-json`](https://github.com/JoshuaKGoldberg/eslint-plugin-package-json) | `ai: true` | Additional rule mode: package.json property ordering and collection sorting |
 | [`eslint-plugin-oxlint`](https://github.com/oxc-project/eslint-plugin-oxlint) | `oxlint: true` | Disables ESLint rules that OxLint already covers |
 
 ### By file pattern

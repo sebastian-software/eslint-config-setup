@@ -16,7 +16,7 @@ Most ESLint configs compose rules at runtime from dozens of plugins. That means 
 
 - **AI guardrails** — a dedicated `ai` mode that enforces what code review can't: explicit types, strict naming, no magic values, complexity limits. Rules that humans find tedious are trivial for an AI to follow. The AI doesn't push back. It just fixes the code.
 - **OxLint-ready** — a single `oxlint` flag disables every ESLint rule that OxLint already covers, and `getOxlintConfig()` generates a matching OxLint config. No manual migration, no rule conflicts, no coverage gaps. Run both linters and keep the full rule surface.
-- **Curated plugin stack, one import** — TypeScript (`strictTypeChecked`), React 19, import cycles, security, browser compat, spell checking, and more. Every rule pre-resolved at build time. No plugin conflicts, no version mismatches.
+- **30 lint integrations, one import** — TypeScript (`strictTypeChecked`), React 19, import cycles, security, browser compat, spell checking, formatter-conflict support, and more. Every rule pre-resolved at build time. No plugin conflicts, no version mismatches.
 
 ```typescript
 // eslint.config.ts
