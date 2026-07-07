@@ -19,10 +19,7 @@ export async function getEslintConfig(
   const configPath = path.join(dirname, "configs", filename)
 
   if (!existsSync(configPath)) {
-    throw new Error(
-      `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
-        `Expected file: configs/${filename}. Run "npm run generate" in the package to build configs.`,
-    )
+    throwMissingConfigError(opts, filename)
   }
 
   const configUrl = pathToFileURL(configPath)
@@ -35,6 +32,10 @@ export async function getEslintConfig(
     )) as { default: FlatConfigArray }
     return module.default
   } catch (error) {
+    if (!existsSync(configPath)) {
+      throwMissingConfigError(opts, filename, error)
+    }
+
     throw new Error(
       `eslint-config-setup: Pre-generated config failed to load for options ${JSON.stringify(opts)}. ` +
         `Expected file: configs/${filename}. Original error: ${getErrorMessage(error)}`,
@@ -67,4 +68,20 @@ export function getOxlintConfig(
 
 function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error)
+}
+
+function throwMissingConfigError(
+  opts: ConfigOptions,
+  filename: string,
+  cause?: unknown,
+): never {
+  const message =
+    `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
+    `Expected file: configs/${filename}. Run "npm run generate" in the package to build configs.`
+
+  if (cause === undefined) {
+    throw new Error(message)
+  }
+
+  throw new Error(message, { cause })
 }

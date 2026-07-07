@@ -50,6 +50,28 @@ describe("getEslintConfig", () => {
       message: expect.stringContaining(path.basename(configPath)),
     })
   })
+
+  it("reports a config as missing when it disappears before import completes", async () => {
+    const opts = { ai: true }
+    writeGeneratedConfig(
+      optionsToFilename(opts),
+      `
+        import { rmSync } from "node:fs"
+
+        const currentModule = new URL(import.meta.url)
+        currentModule.search = ""
+        rmSync(currentModule)
+        throw new Error("removed during import")
+      `,
+    )
+
+    await expect(getEslintConfig(opts)).rejects.toThrow(
+      "eslint-config-setup: No pre-generated config found",
+    )
+    await expect(getEslintConfig(opts)).rejects.not.toThrow(
+      "Pre-generated config failed to load",
+    )
+  })
 })
 
 function writeGeneratedConfig(filename: string, source: string): string {
