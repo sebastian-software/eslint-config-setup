@@ -27,8 +27,11 @@ export function AiSection() {
           get tired of receiving it.
         </p>
         <p className="hp-ai-figures">
-          On a React project the flag takes <span className="hp-num">{withoutAi}</span>{" "}
-          active rules to <span className="hp-num">{withAi}</span>.{" "}
+          On a React project the count only moves from{" "}
+          <span className="hp-num">{withoutAi}</span> to{" "}
+          <span className="hp-num">{withAi}</span> active rules — the flag&apos;s real
+          work is tightening rules that are already on: stricter options, lower
+          thresholds, fewer exceptions.{" "}
           <Link to="/guide/ai-mode">What the AI mode adds</Link>
         </p>
         <p className="hp-ai-strip">
