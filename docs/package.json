@@ -7,8 +7,9 @@
     "node": ">=22.22"
   },
   "scripts": {
-    "dev": "react-router dev",
-    "build": "react-router build",
+    "data": "tsx scripts/generate-config-stats.ts",
+    "dev": "pnpm run data && react-router dev",
+    "build": "pnpm run data && react-router build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,9 +21,13 @@
     "react-router": "^8.1.0"
   },
   "devDependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@fontsource-variable/schibsted-grotesk": "^5.2.8",
+    "@fontsource/fragment-mono": "^5.2.8",
     "@react-router/dev": "^8.1.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "tsx": "^4.23.0",
     "typescript": "^6.0.3",
     "vite": "^8.1.3"
   }

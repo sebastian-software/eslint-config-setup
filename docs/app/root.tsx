@@ -4,6 +4,9 @@ import { ArdoRoot, ArdoRootLayout as RootLayout } from "ardo/ui"
 import config from "virtual:ardo/config"
 import sidebar from "virtual:ardo/sidebar"
 import "ardo/ui/styles.css"
+import "@fontsource-variable/schibsted-grotesk/index.css"
+import "@fontsource/fragment-mono/index.css"
+import "@fontsource-variable/jetbrains-mono/index.css"
 
 import "./homepage.css"
 

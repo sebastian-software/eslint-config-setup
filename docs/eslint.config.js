@@ -28,12 +28,6 @@ config.push(
     },
   },
   {
-    files: ["docs/app/components/CTAFooter.tsx"],
-    rules: {
-      "unicorn/filename-case": "off",
-    },
-  },
-  {
     files: ["docs/app/entry.server.tsx"],
     rules: {
       "max-params": "off",
