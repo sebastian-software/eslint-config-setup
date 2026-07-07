@@ -476,7 +476,7 @@ describe("rule helpers on composed configs", () => {
     const config = composeConfig({ react: true, ai: true })
 
     // Disable a rule
-    disableRule(config, "unicorn/prevent-abbreviations")
+    disableRule(config, "unicorn/prefer-switch")
 
     // Change severity
     setRuleSeverity(config, "no-console", "warn")
@@ -491,7 +491,7 @@ describe("rule helpers on composed configs", () => {
     const unicornBlock = config.find(
       (b) => b.name === "eslint-config-setup/unicorn",
     )
-    expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toBe("off")
+    expect(unicornBlock?.rules?.["unicorn/prefer-switch"]).toBe("off")
 
     const baseBlock = config.find(
       (b) => b.name === "eslint-config-setup/base",

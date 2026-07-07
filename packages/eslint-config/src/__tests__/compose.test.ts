@@ -104,4 +104,15 @@ describe("composeConfig", () => {
     expect(tlBlocksWithReact.length).toBeGreaterThan(0)
     expect(tlBlocksWithoutReact.length).toBeGreaterThan(0)
   })
+
+  it("does not enable abbreviation checks that conflict with React refs", () => {
+    for (const opts of [{ ai: true }, { ai: true, react: true }]) {
+      const config = composeConfig(opts)
+      const unicornBlock = config.find(
+        (block) => block.name === "eslint-config-setup/unicorn",
+      )
+
+      expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toBeUndefined()
+    }
+  })
 })
