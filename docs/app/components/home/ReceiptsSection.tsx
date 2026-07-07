@@ -28,7 +28,7 @@ const EXTERNAL_RECEIPTS: ExternalReceipt[] = [
     href: `${BLOB_URL}/packages/eslint-config/src/__tests__/__snapshots__/snapshots.test.ts.snap`,
   },
   {
-    value: "3 OS × Node 22/24 + Bun",
+    value: "3 OS × Node 22/24/26 + Bun",
     detail: "the CI matrix every release passes",
     href: `${BLOB_URL}/.github/workflows/ci.yml`,
   },

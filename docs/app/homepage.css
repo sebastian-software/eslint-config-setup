@@ -171,9 +171,10 @@
 }
 
 .hp-hero-config {
-  margin: 16px 0 0;
+  margin: 20px 0 0;
   max-width: 100%;
-  display: inline-block;
+  display: block;
+  width: fit-content;
   border: 1px solid var(--hp-line);
   border-radius: var(--hp-radius-lg);
   background: var(--hp-surface);
@@ -218,7 +219,8 @@
 
 /* --- Install command (the CTA) --------------------------------------- */
 .hp-command {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
   gap: 16px;
   margin-top: 40px;
@@ -268,7 +270,7 @@
 /* --- Flag configurator ------------------------------------------------ */
 .hp-configurator {
   display: grid;
-  grid-template-columns: minmax(240px, 5fr) 7fr;
+  grid-template-columns: minmax(240px, 5fr) minmax(0, 7fr);
   gap: 40px;
   margin-top: 44px;
   align-items: start;
