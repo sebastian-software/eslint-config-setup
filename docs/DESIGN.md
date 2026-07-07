@@ -66,6 +66,20 @@ Restraint: "spec sheet, not launch video."
 
 ## Layout devices
 
-- Numbered section heads: hairline top border + Fragment Mono index (01–06).
+- Section heads sit on a hairline top border (no numbered eyebrows).
 - Receipts as a linked ledger (rows), not stat cards.
 - Asymmetric grids (5/7, 7/5) instead of symmetric card grids.
+
+## Code blocks
+
+`ardo`'s `ArdoCodeBlock` only highlights via a build-time Shiki plugin, which
+can't run on the configurator's dynamic snippets. All homepage code uses the
+in-house `CodeBlock` (`components/home/CodeBlock.tsx`) + `highlight.ts`
+tokenizer instead:
+
+- Restrained scheme: green accent carries the semantic tokens (keywords,
+  literals); everything else reads through ink weight (strings/functions in
+  ink, identifiers/punctuation muted, comments faint italic). No rainbow.
+- Standalone blocks (hero, before/after) render as a bordered titled panel;
+  inside the configurator output panel the block is scoped flat (no nested
+  box) via `.hp-configurator-output .hp-code`.

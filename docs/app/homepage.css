@@ -181,37 +181,8 @@
 
 .hp-hero-config {
   margin: 20px 0 0;
-  max-width: 100%;
-  display: block;
   width: fit-content;
-  border: 1px solid var(--hp-line);
-  border-radius: var(--hp-radius-lg);
-  background: var(--hp-surface);
-  overflow: hidden;
-}
-
-.hp-hero-config-label {
-  font-family: var(--hp-font-code);
-  font-size: 0.8rem;
-  color: var(--hp-ink-faint);
-  border-bottom: 1px solid var(--hp-line);
-  padding: 8px 20px;
-}
-
-.hp-hero-config-code {
-  margin: 0;
-  padding: 14px 20px;
-  overflow-x: auto;
-}
-
-.hp-hero-config-code code {
-  font-family: var(--hp-font-code);
-  font-size: clamp(0.85rem, 1.6vw, 1rem);
-  color: var(--hp-ink);
-  background: none;
-  padding: 0;
-  border: none;
-  border-radius: 0;
+  max-width: 100%;
 }
 
 .hp-hero-micro {
@@ -402,6 +373,64 @@
   text-decoration: underline;
 }
 
+/* --- Code blocks ------------------------------------------------------ */
+.hp-code {
+  margin: 0;
+  border: 1px solid var(--hp-line);
+  border-radius: var(--hp-radius-lg);
+  background: var(--hp-surface);
+  overflow: hidden;
+}
+
+.hp-code-title {
+  font-family: var(--hp-font-code);
+  font-size: 0.8rem;
+  color: var(--hp-ink-faint);
+  border-bottom: 1px solid var(--hp-line);
+  padding: 9px 20px;
+}
+
+.hp-code-pre {
+  margin: 0;
+  padding: 16px 20px;
+  overflow-x: auto;
+  font-family: var(--hp-font-code);
+  font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+  line-height: 1.7;
+  color: var(--hp-ink);
+  tab-size: 2;
+}
+
+/* Restrained highlight scheme: green carries the semantic tokens
+   (keywords, literals); everything else reads through ink weight. */
+.hp-tk-keyword,
+.hp-tk-atom {
+  color: var(--hp-accent-ink);
+}
+
+.hp-tk-string {
+  color: var(--hp-ink);
+}
+
+.hp-tk-fn {
+  color: var(--hp-ink);
+  font-weight: 600;
+}
+
+.hp-tk-key {
+  color: var(--hp-ink);
+}
+
+.hp-tk-ident,
+.hp-tk-punc {
+  color: var(--hp-ink-muted);
+}
+
+.hp-tk-comment {
+  color: var(--hp-ink-faint);
+  font-style: italic;
+}
+
 /* --- Config readout --------------------------------------------------- */
 .hp-configurator-output {
   border: 1px solid var(--hp-line);
@@ -410,9 +439,19 @@
   padding: 20px;
 }
 
-.hp-readout-code > div,
-.hp-readout-code pre {
-  margin: 0;
+/* Inside the output panel the code sits flat — no nested box. */
+.hp-configurator-output .hp-code {
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+
+.hp-configurator-output .hp-code-title {
+  padding: 0 0 12px;
+}
+
+.hp-configurator-output .hp-code-pre {
+  padding: 14px 0 0;
 }
 
 .hp-readout-stats {
@@ -526,7 +565,7 @@
   color: var(--hp-accent-ink);
 }
 
-.hp-compare pre {
+.hp-compare .hp-code-pre {
   font-size: 0.78rem;
 }
 
