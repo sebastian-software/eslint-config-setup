@@ -105,14 +105,8 @@ describe("composeConfig", () => {
     expect(tlBlocksWithoutReact.length).toBeGreaterThan(0)
   })
 
-  it("allows React ref naming conventions in AI abbreviation checks", () => {
-    const config = composeConfig({ ai: true, react: true })
-
-    const unicornBlock = config.find(
-      (block) => block.name === "eslint-config-setup/unicorn",
-    )
-
-    expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toStrictEqual([
+  it("allows ref naming conventions in AI abbreviation checks", () => {
+    const expectedRule = [
       "error",
       {
         allowList: {
@@ -120,6 +114,17 @@ describe("composeConfig", () => {
           ref: true,
         },
       },
-    ])
+    ]
+
+    for (const opts of [{ ai: true }, { ai: true, react: true }]) {
+      const config = composeConfig(opts)
+      const unicornBlock = config.find(
+        (block) => block.name === "eslint-config-setup/unicorn",
+      )
+
+      expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toStrictEqual(
+        expectedRule,
+      )
+    }
   })
 })
