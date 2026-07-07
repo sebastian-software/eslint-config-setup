@@ -1,7 +1,6 @@
-import { ArdoCodeBlock } from "ardo/ui"
-
 import type { FlagState, PermutationStats } from "../../lib/configStats"
 
+import { CodeBlock } from "./CodeBlock"
 import { buildConfigSnippet } from "./configuratorData"
 
 type ConfigReadoutProps = {
@@ -17,13 +16,8 @@ type ConfigReadoutProps = {
 export function ConfigReadout({ flags, stats }: ConfigReadoutProps) {
   return (
     <div className="hp-readout">
-      <div className="hp-readout-code">
-        <ArdoCodeBlock
-          code={buildConfigSnippet(flags)}
-          language="typescript"
-          title="eslint.config.ts"
-        />
-      </div>
+      <CodeBlock code={buildConfigSnippet(flags)} title="eslint.config.ts" />
+
       <div aria-atomic="true" aria-live="polite" className="hp-readout-stats">
         <p className="hp-readout-count">
           <span className="hp-readout-number" key={stats.hash}>

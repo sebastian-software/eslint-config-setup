@@ -1,4 +1,4 @@
-import { ArdoCodeBlock } from "ardo/ui"
+import { CodeBlock } from "./CodeBlock"
 
 const BEFORE_SNIPPET = `import js from "@eslint/js"
 import tseslint from "typescript-eslint"
@@ -55,11 +55,11 @@ export function DeterminismSection() {
         <div className="hp-compare">
           <div className="hp-compare-before">
             <p className="hp-compare-label">A config that gets assembled every run</p>
-            <ArdoCodeBlock code={BEFORE_SNIPPET} language="typescript" title="eslint.config.ts" />
+            <CodeBlock code={BEFORE_SNIPPET} title="eslint.config.ts" />
           </div>
           <div className="hp-compare-after">
             <p className="hp-compare-label">A config that already happened</p>
-            <ArdoCodeBlock code={AFTER_SNIPPET} language="typescript" title="eslint.config.ts" />
+            <CodeBlock code={AFTER_SNIPPET} title="eslint.config.ts" />
           </div>
         </div>
         <p className="hp-section-close">
