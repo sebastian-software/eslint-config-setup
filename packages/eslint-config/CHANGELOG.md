@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.5.1...eslint-config-setup-v0.5.2) (2026-07-07)
+
+
+### Bug Fixes
+
+* pin esbuild to patched version ([5cda046](https://github.com/sebastian-software/eslint-config-setup/commit/5cda0464d5ab97de0c55eeec8771c1ec7ccda9bf))
+
 ## [0.5.1](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.5.0...eslint-config-setup-v0.5.1) (2026-07-07)
 
 
