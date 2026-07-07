@@ -401,6 +401,15 @@
   tab-size: 2;
 }
 
+/* Reset the prose inline-code styling; here code fills the block. */
+.hp-code-pre code {
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
 /* Restrained highlight scheme: green carries the semantic tokens
    (keywords, literals); everything else reads through ink weight. */
 .hp-tk-keyword,
