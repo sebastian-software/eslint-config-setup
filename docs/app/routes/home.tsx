@@ -1,34 +1,32 @@
 import type { MetaFunction } from "react-router"
 
-import { BeforeAfterSection } from "../components/BeforeAfterSection"
-import { CodeShowcase } from "../components/CodeShowcase"
-import { CTAFooter } from "../components/CTAFooter"
-import { FeatureGrid } from "../components/FeatureGrid"
-import { HeroSection } from "../components/HeroSection"
-import { PluginEcosystem } from "../components/PluginEcosystem"
-import { StatsBar } from "../components/StatsBar"
-import { WorkflowSection } from "../components/WorkflowSection"
+import { AiSection } from "../components/home/AiSection"
+import { ClosingSection } from "../components/home/ClosingSection"
+import { DeterminismSection } from "../components/home/DeterminismSection"
+import { FlagConfigurator } from "../components/home/FlagConfigurator"
+import { Hero } from "../components/home/Hero"
+import { OxlintSection } from "../components/home/OxlintSection"
+import { ReceiptsSection } from "../components/home/ReceiptsSection"
 
 export const meta: MetaFunction = () => [
   { title: "ESLint Config Setup" },
   {
     name: "description",
     content:
-      "One import for a curated TypeScript, React, Node.js, AI mode, and OxLint rule stack.",
+      "Pre-generated ESLint flat configs for TypeScript and React. Four flags pick from 16 configs built and tested ahead of time — accelerated by OxLint.",
   },
 ]
 
 export default function HomePage() {
   return (
     <div className="hp-page">
-      <HeroSection />
-      <StatsBar />
-      <WorkflowSection />
-      <BeforeAfterSection />
-      <FeatureGrid />
-      <CodeShowcase />
-      <PluginEcosystem />
-      <CTAFooter />
+      <Hero />
+      <FlagConfigurator />
+      <DeterminismSection />
+      <OxlintSection />
+      <AiSection />
+      <ReceiptsSection />
+      <ClosingSection />
     </div>
   )
 }

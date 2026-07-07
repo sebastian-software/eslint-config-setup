@@ -1,0 +1,260 @@
+{
+  "permutations": [
+    {
+      "flags": {
+        "react": false,
+        "node": false,
+        "ai": false,
+        "oxlint": false
+      },
+      "bitmask": 0,
+      "hash": "e4b137fa",
+      "filename": "e4b137fa.js",
+      "activeRules": 575,
+      "moduleKb": 48.2,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": false,
+        "ai": false,
+        "oxlint": false
+      },
+      "bitmask": 1,
+      "hash": "532f50a4",
+      "filename": "532f50a4.js",
+      "activeRules": 698,
+      "moduleKb": 58.8,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": true,
+        "ai": false,
+        "oxlint": false
+      },
+      "bitmask": 2,
+      "hash": "cde010b4",
+      "filename": "cde010b4.js",
+      "activeRules": 588,
+      "moduleKb": 49,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": true,
+        "ai": false,
+        "oxlint": false
+      },
+      "bitmask": 3,
+      "hash": "91e82988",
+      "filename": "91e82988.js",
+      "activeRules": 711,
+      "moduleKb": 59.5,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": false,
+        "ai": true,
+        "oxlint": false
+      },
+      "bitmask": 4,
+      "hash": "52762a42",
+      "filename": "52762a42.js",
+      "activeRules": 640,
+      "moduleKb": 57.6,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": false,
+        "ai": true,
+        "oxlint": false
+      },
+      "bitmask": 5,
+      "hash": "6bc0d588",
+      "filename": "6bc0d588.js",
+      "activeRules": 771,
+      "moduleKb": 68.8,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": true,
+        "ai": true,
+        "oxlint": false
+      },
+      "bitmask": 6,
+      "hash": "c2fecd3d",
+      "filename": "c2fecd3d.js",
+      "activeRules": 654,
+      "moduleKb": 58.5,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": true,
+        "ai": true,
+        "oxlint": false
+      },
+      "bitmask": 7,
+      "hash": "d537b683",
+      "filename": "d537b683.js",
+      "activeRules": 785,
+      "moduleKb": 69.6,
+      "oxlint": null
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": false,
+        "ai": false,
+        "oxlint": true
+      },
+      "bitmask": 8,
+      "hash": "12c62446",
+      "filename": "12c62446.js",
+      "activeRules": 575,
+      "moduleKb": 31.6,
+      "oxlint": {
+        "handledRules": 208,
+        "eslintRemaining": 367,
+        "filename": "58d5e03b.json"
+      }
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": false,
+        "ai": false,
+        "oxlint": true
+      },
+      "bitmask": 9,
+      "hash": "5a302873",
+      "filename": "5a302873.js",
+      "activeRules": 698,
+      "moduleKb": 40,
+      "oxlint": {
+        "handledRules": 262,
+        "eslintRemaining": 436,
+        "filename": "9dc42dc3.json"
+      }
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": true,
+        "ai": false,
+        "oxlint": true
+      },
+      "bitmask": 10,
+      "hash": "1c3f743c",
+      "filename": "1c3f743c.js",
+      "activeRules": 588,
+      "moduleKb": 32.6,
+      "oxlint": {
+        "handledRules": 208,
+        "eslintRemaining": 380,
+        "filename": "3047b7d6.json"
+      }
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": true,
+        "ai": false,
+        "oxlint": true
+      },
+      "bitmask": 11,
+      "hash": "2f6f3a82",
+      "filename": "2f6f3a82.js",
+      "activeRules": 711,
+      "moduleKb": 40.9,
+      "oxlint": {
+        "handledRules": 262,
+        "eslintRemaining": 449,
+        "filename": "78b40daa.json"
+      }
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": false,
+        "ai": true,
+        "oxlint": true
+      },
+      "bitmask": 12,
+      "hash": "0b23ff88",
+      "filename": "0b23ff88.js",
+      "activeRules": 640,
+      "moduleKb": 38.8,
+      "oxlint": {
+        "handledRules": 223,
+        "eslintRemaining": 417,
+        "filename": "7ff0d87e.json"
+      }
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": false,
+        "ai": true,
+        "oxlint": true
+      },
+      "bitmask": 13,
+      "hash": "196d687e",
+      "filename": "196d687e.js",
+      "activeRules": 771,
+      "moduleKb": 47.5,
+      "oxlint": {
+        "handledRules": 284,
+        "eslintRemaining": 487,
+        "filename": "d46cb9b7.json"
+      }
+    },
+    {
+      "flags": {
+        "react": false,
+        "node": true,
+        "ai": true,
+        "oxlint": true
+      },
+      "bitmask": 14,
+      "hash": "4eb62e57",
+      "filename": "4eb62e57.js",
+      "activeRules": 654,
+      "moduleKb": 39.8,
+      "oxlint": {
+        "handledRules": 223,
+        "eslintRemaining": 431,
+        "filename": "85912bf0.json"
+      }
+    },
+    {
+      "flags": {
+        "react": true,
+        "node": true,
+        "ai": true,
+        "oxlint": true
+      },
+      "bitmask": 15,
+      "hash": "db69ebb6",
+      "filename": "db69ebb6.js",
+      "activeRules": 785,
+      "moduleKb": 48.4,
+      "oxlint": {
+        "handledRules": 284,
+        "eslintRemaining": 501,
+        "filename": "ef643c60.json"
+      }
+    }
+  ]
+}

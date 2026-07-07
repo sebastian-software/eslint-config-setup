@@ -234,7 +234,7 @@ function resolveRulesForAllProbes(
  * Skips configs with `language` (JSON, JSONC) or `processor` (markdown)
  * since those use different parsers.
  */
-function resolveRulesForFile(config: FlatConfigArray, filename: string): Rules {
+export function resolveRulesForFile(config: FlatConfigArray, filename: string): Rules {
   const merged: Rules = {}
 
   for (const block of config) {
