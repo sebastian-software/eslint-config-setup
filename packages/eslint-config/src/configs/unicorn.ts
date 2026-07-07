@@ -153,6 +153,7 @@ export function unicornConfig(opts?: { ai?: boolean }): FlatConfigArray {
               pascalCase: true,
               kebabCase: true,
             },
+            ignore: ["__tests__"],
           },
         ],
 
@@ -294,7 +295,7 @@ export function unicornConfig(opts?: { ai?: boolean }): FlatConfigArray {
 
         // Prefer `export { x } from 'y'` over import then re-export
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-export-from.md
-        "unicorn/prefer-export-from": ["error", { ignoreUsedVariables: true }],
+        "unicorn/prefer-export-from": ["error", { checkUsedVariables: false }],
 
         // Prefer built-in coercion (String, Number, Boolean) over wrapper functions
         // https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-native-coercion-functions.md
@@ -351,7 +352,7 @@ export function unicornConfig(opts?: { ai?: boolean }): FlatConfigArray {
     builder.overrideSeverity("unicorn/no-for-loop", "error")
 
     // New AI-only rules
-    builder.addRule("unicorn/no-array-for-each", "error")
+    builder.addRule("unicorn/no-for-each", "error")
     builder.addRule("unicorn/prefer-ternary", ["error", "only-single-line"])
     builder.addRule("unicorn/prefer-switch", ["error", { minimumCases: 3 }])
     builder.addRule("unicorn/prevent-abbreviations", "error")

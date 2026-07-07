@@ -49,13 +49,13 @@ export function reactEffectConfig(): FlatConfigArray {
         // https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect
         "react-you-might-not-need-an-effect/no-pass-data-to-parent": "error",
 
+        // Disallow external-store subscriptions in an effect — use useSyncExternalStore
+        // https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect
+        "react-you-might-not-need-an-effect/no-external-store-subscription": "error",
+
         // Disallow initializing state in an effect — pass initial value to useState
         // https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect
         "react-you-might-not-need-an-effect/no-initialize-state": "error",
-
-        // Disallow empty effects — dead code, remove them
-        // https://github.com/nickjvandyke/eslint-plugin-react-you-might-not-need-an-effect
-        "react-you-might-not-need-an-effect/no-empty-effect": "error",
       },
     },
   ]

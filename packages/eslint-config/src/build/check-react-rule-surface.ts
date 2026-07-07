@@ -99,6 +99,7 @@ const EXPECTED_REACT_HOOKS_CONFLICT_RULES = [
   "react-hooks/rules-of-hooks",
   "react-hooks/set-state-in-effect",
   "react-hooks/set-state-in-render",
+  "react-hooks/static-components",
   "react-hooks/unsupported-syntax",
   "react-hooks/use-memo",
 ] as const
@@ -144,6 +145,7 @@ const EXPECTED_OXLINT_REACT_RULES = [
   "react/jsx-no-comment-textnodes",
   "react/jsx-no-constructed-context-values",
   "react/jsx-no-duplicate-props",
+  "react/jsx-no-literals",
   "react/jsx-no-script-url",
   "react/jsx-no-target-blank",
   "react/jsx-no-undef",

@@ -9,11 +9,11 @@ type ConfigBuilderOptions = {
   name: string
   presets?: FlatConfig[]
   passthrough?: FlatConfigArray
-  plugins?: FlatConfig["plugins"]
-  languageOptions?: FlatConfig["languageOptions"]
-  settings?: FlatConfig["settings"]
-  files?: FlatConfig["files"]
-  ignores?: FlatConfig["ignores"]
+  plugins?: NonNullable<FlatConfig["plugins"]>
+  languageOptions?: NonNullable<FlatConfig["languageOptions"]>
+  settings?: NonNullable<FlatConfig["settings"]>
+  files?: NonNullable<FlatConfig["files"]>
+  ignores?: NonNullable<FlatConfig["ignores"]>
 }
 
 type Severity = "error" | "off" | "warn"
