@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "tsup",
+    "build": "tsdown",
     "generate": "node --import tsx src/build/generate.ts",
     "react:rules:check": "tsx src/build/check-react-rule-surface.ts",
     "prepublishOnly": "npm run build && npm run generate",
@@ -107,7 +107,7 @@
     "oxlint": "^1.72.0",
     "picomatch": "^4.0.5",
     "storybook": "^10.4.6",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.22.3",
     "tsx": "^4.23.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
