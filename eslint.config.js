@@ -10,6 +10,7 @@ config.unshift({
     "packages/*/dist/",
     "packages/*/coverage/",
     ".claude/",
+    "scripts/",
     "**/*.md",
     "**/*.mdx",
     "**/*.json",
