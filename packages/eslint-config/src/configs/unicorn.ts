@@ -354,15 +354,6 @@ export function unicornConfig(opts?: { ai?: boolean }): FlatConfigArray {
     builder.addRule("unicorn/no-array-for-each", "error")
     builder.addRule("unicorn/prefer-ternary", ["error", "only-single-line"])
     builder.addRule("unicorn/prefer-switch", ["error", { minimumCases: 3 }])
-    builder.addRule("unicorn/prevent-abbreviations", [
-      "error",
-      {
-        allowList: {
-          Ref: true,
-          ref: true,
-        },
-      },
-    ])
     builder.addRule("unicorn/no-useless-switch-case", "error")
     builder.addRule("unicorn/custom-error-definition", "error")
     builder.addRule("unicorn/prefer-default-parameters", "error")
