@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.4.0...eslint-config-setup-v0.5.0) (2026-07-07)
+
+
+### Features
+
+* migrate react lint strategy ([f987133](https://github.com/sebastian-software/eslint-config-setup/commit/f9871339b29e4c79a36a098a563161c13e3c33de))
+
 ## [0.4.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.3.3...eslint-config-setup-v0.4.0) (2026-04-23)
 
 
