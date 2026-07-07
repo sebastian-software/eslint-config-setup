@@ -21,7 +21,6 @@ pnpm build          # Build the package
 pnpm generate       # Generate all config permutations
 pnpm docs:dev       # Run the docs site locally
 pnpm docs:build     # Build the docs site
-pnpm audit --audit-level moderate  # Review dependency advisories
 pnpm outdated --recursive          # Review dependency drift
 ```
 
@@ -69,7 +68,7 @@ When adding new rules or plugins:
   - `pnpm generate`
   - `pnpm docs:build` when docs, routing, or generated API output may change
   - `npm pack --dry-run --json` from `packages/eslint-config` when package contents, exports, or build output change
-  - `pnpm audit --audit-level moderate` and `pnpm outdated --recursive` for dependency-maintenance PRs
+  - `pnpm outdated --recursive` for dependency-maintenance PRs
 
 ## Dependency Maintenance
 
