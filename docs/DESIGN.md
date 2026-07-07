@@ -34,6 +34,12 @@ Monochrome OKLCH ramp + one accent: deep signal green, hue **155**
   `--hp-ink-muted`, `--hp-ink-faint`) is aliased to Ardo's bg/border/text
   tokens so the homepage and shell never drift; dark mode comes for free via
   Ardo's `.dark` class on the root element.
+- `--hp-accent-deep` (light: `oklch(0.37 0.115 155)`, dark: `oklch(0.33 0.1 155)`)
+  is the full-drench surface. It is used exactly once: the closing section
+  inverts onto it by re-declaring the scoped `--hp-*` tokens (see
+  `.hp-closing`). One drenched moment per page — don't add more.
+- Text selection (`::selection`) uses the accent as background; part of the
+  "green = decided" commitment.
 
 ## Typography
 

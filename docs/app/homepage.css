@@ -24,6 +24,9 @@
   /* Accent tuned for body-text contrast (>= 4.5:1 on --hp-bg). */
   --hp-accent-ink: oklch(0.43 0.11 var(--hp-hue));
 
+  /* Full-drench surface for the closing band. */
+  --hp-accent-deep: oklch(0.37 0.115 var(--hp-hue));
+
   /* Monochrome ramp — near-zero chroma, keyed to the shell tokens
      so header/footer and page never drift apart. */
   --hp-bg: var(--ardo-color-bg, oklch(0.99 0.002 155));
@@ -50,6 +53,12 @@
 
 .dark {
   --hp-accent-ink: oklch(0.78 0.12 var(--hp-hue));
+  --hp-accent-deep: oklch(0.33 0.1 var(--hp-hue));
+}
+
+.hp-page ::selection {
+  background: var(--hp-accent);
+  color: oklch(0.99 0.003 var(--hp-hue));
 }
 
 /* --- Page base ------------------------------------------------------ */
@@ -105,12 +114,12 @@
 }
 
 .hp-section-title {
-  font-size: clamp(1.6rem, 3.4vw, 2.3rem);
-  font-weight: 640;
-  letter-spacing: -0.022em;
-  line-height: 1.12;
+  font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.026em;
+  line-height: 1.08;
   margin: 0;
-  max-width: 26ch;
+  max-width: 24ch;
   text-wrap: balance;
 }
 
@@ -142,10 +151,10 @@
 }
 
 .hp-hero-title {
-  font-size: clamp(2.3rem, 6.2vw, 4.1rem);
-  font-weight: 680;
-  letter-spacing: -0.028em;
-  line-height: 1.06;
+  font-size: clamp(2.6rem, 7.6vw, 5.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
   margin: 0;
   animation: hp-fade-up 500ms var(--hp-ease) both;
 }
@@ -425,8 +434,8 @@
 .hp-readout-number {
   display: inline-block;
   font-family: var(--hp-font-mono);
-  font-size: 1.9rem;
-  color: var(--hp-ink);
+  font-size: clamp(2.3rem, 4vw, 3.2rem);
+  color: var(--hp-accent-ink);
   line-height: 1;
   animation: hp-swap 300ms var(--hp-ease) both;
 }
@@ -581,7 +590,7 @@
 
 .hp-receipt-value {
   font-family: var(--hp-font-mono);
-  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
   color: var(--hp-ink);
   transition: color 150ms var(--hp-ease);
 }
@@ -613,6 +622,29 @@
 }
 
 /* --- Closing ------------------------------------------------------------- */
+/* The one drenched moment: the close inverts onto the brand green.
+   All children adapt through the scoped token overrides. */
+.hp-closing {
+  margin-top: var(--hp-section-gap);
+  padding: var(--hp-section-gap) 0;
+  background: var(--hp-accent-deep);
+  --hp-bg: oklch(0.3 0.1 155);
+  --hp-ink: oklch(0.985 0.004 155);
+  --hp-ink-muted: oklch(0.91 0.025 155);
+  --hp-ink-faint: oklch(0.86 0.035 155);
+  --hp-line: oklch(0.55 0.09 155);
+  --hp-line-soft: oklch(0.5 0.085 155);
+  --hp-surface: oklch(0.41 0.115 155);
+  --hp-surface-deep: oklch(0.32 0.105 155);
+  --hp-accent-ink: oklch(0.985 0.004 155);
+  color: var(--hp-ink);
+}
+
+.hp-closing .hp-section-head {
+  border-top: none;
+  padding-top: 0;
+}
+
 .hp-closing .hp-command {
   margin-top: 32px;
 }
