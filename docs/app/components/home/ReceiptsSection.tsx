@@ -3,24 +3,26 @@ import { Link } from "react-router"
 import { REPO_URL } from "./configuratorData"
 
 const BLOB_URL = `${REPO_URL}/blob/main`
+const TREE_URL = `${REPO_URL}/tree/main`
 
-type ExternalReceipt = {
-  detail: string
-  href: string
+type Receipt = {
   value: string
+  detail: string
+  to?: string
+  href?: string
 }
 
-type InternalReceipt = {
-  detail: string
-  to: string
-  value: string
-}
-
-const EXTERNAL_RECEIPTS: ExternalReceipt[] = [
+/** Ordered as a narrative: what's generated, how it's verified, how it's decided. */
+const RECEIPTS: Receipt[] = [
+  {
+    value: "16 + 8",
+    detail: "ESLint and OxLint configs pre-generated, named by hash",
+    to: "/guide/architecture",
+  },
   {
     value: "202",
     detail: "tests, including end-to-end runs against every permutation",
-    href: `${REPO_URL}/tree/main/packages/eslint-config/src/__tests__`,
+    href: `${TREE_URL}/packages/eslint-config/src/__tests__`,
   },
   {
     value: "16,603",
@@ -28,22 +30,14 @@ const EXTERNAL_RECEIPTS: ExternalReceipt[] = [
     href: `${BLOB_URL}/packages/eslint-config/src/__tests__/__snapshots__/snapshots.test.ts.snap`,
   },
   {
-    value: "3 OS × Node 22/24/26 + Bun",
-    detail: "the CI matrix every release passes",
+    value: "10",
+    detail: "CI legs per release — 3 operating systems × Node 22/24/26, plus a Bun run",
     href: `${BLOB_URL}/.github/workflows/ci.yml`,
   },
   {
     value: "0",
     detail: "lint errors on its own codebase, checked with its own strictest config",
     href: `${BLOB_URL}/eslint.config.js`,
-  },
-]
-
-const INTERNAL_RECEIPTS: InternalReceipt[] = [
-  {
-    value: "16 + 8",
-    detail: "ESLint and OxLint configs pre-generated, named by hash",
-    to: "/guide/architecture",
   },
   {
     value: "24",
@@ -57,6 +51,15 @@ const INTERNAL_RECEIPTS: InternalReceipt[] = [
   },
 ]
 
+function ReceiptRow({ value, detail }: { value: string; detail: string }) {
+  return (
+    <>
+      <span className="hp-receipt-value">{value}</span>
+      <span className="hp-receipt-detail">{detail}</span>
+    </>
+  )
+}
+
 export function ReceiptsSection() {
   return (
     <section aria-labelledby="hp-receipts-title" className="hp-section">
@@ -67,29 +70,26 @@ export function ReceiptsSection() {
           </h2>
         </div>
         <p className="hp-section-lead">
-          Every number below links to the artifact behind it. Nothing here is a
-          marketing estimate.
+          Every number links to the artifact behind it. Nothing here is a marketing
+          estimate.
         </p>
         <ul className="hp-receipts">
-          {INTERNAL_RECEIPTS.map((receipt) => (
+          {RECEIPTS.map((receipt) => (
             <li className="hp-receipt" key={receipt.value}>
-              <Link className="hp-receipt-link" to={receipt.to}>
-                <span className="hp-receipt-value">{receipt.value}</span>
-                <span className="hp-receipt-detail">{receipt.detail}</span>
-              </Link>
-            </li>
-          ))}
-          {EXTERNAL_RECEIPTS.map((receipt) => (
-            <li className="hp-receipt" key={receipt.value}>
-              <a
-                className="hp-receipt-link"
-                href={receipt.href}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <span className="hp-receipt-value">{receipt.value}</span>
-                <span className="hp-receipt-detail">{receipt.detail}</span>
-              </a>
+              {receipt.to === undefined ? (
+                <a
+                  className="hp-receipt-link"
+                  href={receipt.href}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <ReceiptRow detail={receipt.detail} value={receipt.value} />
+                </a>
+              ) : (
+                <Link className="hp-receipt-link" to={receipt.to}>
+                  <ReceiptRow detail={receipt.detail} value={receipt.value} />
+                </Link>
+              )}
             </li>
           ))}
         </ul>
