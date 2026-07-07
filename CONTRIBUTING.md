@@ -21,6 +21,7 @@ pnpm build          # Build the package
 pnpm generate       # Generate all config permutations
 pnpm docs:dev       # Run the docs site locally
 pnpm docs:build     # Build the docs site
+pnpm outdated --recursive          # Review dependency drift
 ```
 
 `pnpm install` also wires the repo-local `pre-push` hook, which runs `pnpm lint` automatically before pushes.
@@ -59,7 +60,19 @@ When adding new rules or plugins:
 - Update tests and snapshots
 - Update the docs if behavior changes
 - Keep `README.md`, `CONTRIBUTING.md`, and the docs site in sync when workflow or API details move
-- Run `pnpm lint && pnpm check && pnpm test && pnpm build` before submitting
+- Run the release-quality checklist before submitting:
+  - `pnpm lint`
+  - `pnpm check`
+  - `pnpm test` or `pnpm test:coverage` when touching rules
+  - `pnpm build`
+  - `pnpm generate`
+  - `pnpm docs:build` when docs, routing, or generated API output may change
+  - `npm pack --dry-run --json` from `packages/eslint-config` when package contents, exports, or build output change
+  - `pnpm outdated --recursive` for dependency-maintenance PRs
+
+## Dependency Maintenance
+
+Dependency updates are expected to go through the repository automation configured by maintainers. Before changing dependency policy, update the automation config and this section together so contributors know whether updates are handled by Renovate, Dependabot security alerts, or a one-off manual review.
 
 ## License
 

@@ -42,11 +42,46 @@ import { ArdoNote as Note } from "ardo/ui"
 ```bash
 pnpm docs:dev
 pnpm docs:build
+pnpm outdated --recursive
 ```
 
 <Note>
 `pnpm install` wires the repo-local `pre-push` hook automatically. Every `git push` runs `pnpm lint` before the push proceeds.
 </Note>
+
+## Release-quality checklist
+
+Before opening a PR, run the checks that match the files you touched:
+
+```bash
+pnpm lint
+pnpm check
+pnpm test
+pnpm build
+pnpm generate
+```
+
+When docs, route metadata, or generated API output may change, also run:
+
+```bash
+pnpm docs:build
+```
+
+When package exports, generated files, or publish payloads may change, verify the packed package from `packages/eslint-config`:
+
+```bash
+cd packages/eslint-config
+npm pack --dry-run --json
+```
+
+For dependency-maintenance work, review both security advisories and version drift:
+
+```bash
+pnpm audit --audit-level moderate
+pnpm outdated --recursive
+```
+
+Dependency updates should follow the repository automation policy configured by maintainers. If that policy changes, update the automation config and this guide in the same PR.
 
 ## Updating snapshots
 
