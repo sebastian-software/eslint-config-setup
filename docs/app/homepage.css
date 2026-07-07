@@ -170,6 +170,40 @@
   margin: 32px 0 0;
 }
 
+.hp-hero-config {
+  margin: 16px 0 0;
+  max-width: 100%;
+  display: inline-block;
+  border: 1px solid var(--hp-line);
+  border-radius: var(--hp-radius-lg);
+  background: var(--hp-surface);
+  overflow: hidden;
+}
+
+.hp-hero-config-label {
+  font-family: var(--hp-font-code);
+  font-size: 0.8rem;
+  color: var(--hp-ink-faint);
+  border-bottom: 1px solid var(--hp-line);
+  padding: 8px 20px;
+}
+
+.hp-hero-config-code {
+  margin: 0;
+  padding: 14px 20px;
+  overflow-x: auto;
+}
+
+.hp-hero-config-code code {
+  font-family: var(--hp-font-code);
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  color: var(--hp-ink);
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
 .hp-hero-micro {
   font-size: 0.92rem;
   color: var(--hp-ink-faint);
