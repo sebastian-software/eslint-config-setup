@@ -1,6 +1,7 @@
 /* eslint-disable security/detect-non-literal-fs-filename, @typescript-eslint/no-unsafe-type-assertion -- Paths are computed from deterministic hashes in dist/, not from user input. */
-import { readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
+import { pathToFileURL } from "node:url"
 
 import type { ConfigOptions, FlatConfigArray, OxlintConfigOptions, OxlintConfigResult } from "./types"
 
@@ -17,16 +18,28 @@ export async function getEslintConfig(
   const dirname = import.meta.dirname
   const configPath = path.join(dirname, "configs", filename)
 
+  if (!existsSync(configPath)) {
+    throwMissingConfigError(opts, filename)
+  }
+
+  const configUrl = pathToFileURL(configPath)
+  configUrl.search = String(Date.now())
+
   try {
     const module = (await import(
       /* webpackIgnore: true */
-      `${configPath}?${Date.now()}`
+      configUrl.href
     )) as { default: FlatConfigArray }
     return module.default
-  } catch {
+  } catch (error) {
+    if (!existsSync(configPath)) {
+      throwMissingConfigError(opts, filename, error)
+    }
+
     throw new Error(
-      `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
-        `Expected file: configs/${filename}. Run "npm run generate" in the package to build configs.`,
+      `eslint-config-setup: Pre-generated config failed to load for options ${JSON.stringify(opts)}. ` +
+        `Expected file: configs/${filename}. Original error: ${getErrorMessage(error)}`,
+      { cause: error },
     )
   }
 }
@@ -51,4 +64,24 @@ export function getOxlintConfig(
         `Expected file: oxlint-configs/${filename}. Run "npm run generate" in the package to build configs.`,
     )
   }
+}
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
+}
+
+function throwMissingConfigError(
+  opts: ConfigOptions,
+  filename: string,
+  cause?: unknown,
+): never {
+  const message =
+    `eslint-config-setup: No pre-generated config found for options ${JSON.stringify(opts)}. ` +
+    `Expected file: configs/${filename}. Run "npm run generate" in the package to build configs.`
+
+  if (cause === undefined) {
+    throw new Error(message)
+  }
+
+  throw new Error(message, { cause })
 }
