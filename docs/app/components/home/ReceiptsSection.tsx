@@ -95,16 +95,20 @@ export function ReceiptsSection() {
         </ul>
         <aside className="hp-pratfall">
           <p>
-            This is v0.5 and it is opinionated. One candidate plugin brought 29 rules;
-            after evaluation we adopted zero —{" "}
-            <Link to="/adr/0018-no-shopify">the rejection is documented</Link>.
-            Curation is mostly saying no. When you genuinely need an exception,{" "}
-            <Link to="/guide/rule-api">rule helpers</Link> are the escape hatch — a
-            small API, not a fork.
+            This is v0.5, and it&apos;s opinionated on purpose. Most of the code it
+            checks today was written by a machine, and debating style on
+            machine-written code is time nobody gets back. Prettier ended that argument
+            for formatting; this settles it for lint rules — with every choice, and
+            every plugin we{" "}
+            <Link to="/adr/0018-no-shopify">evaluated and turned down</Link>, written
+            down as an ADR.
           </p>
           <p>
-            If you want a config that adapts to your taste, this isn&apos;t it. If you
-            want one that&apos;s finished deciding, install it.
+            Opinionated isn&apos;t rigid. When you genuinely need an exception,
+            scope-aware <Link to="/guide/rule-api">rule helpers</Link> —{" "}
+            <code>disableRule</code>, <code>setRuleSeverity</code>, <code>addRule</code>{" "}
+            — retune a single rule without forking anything. Strong defaults, still
+            yours to override.
           </p>
         </aside>
       </div>
