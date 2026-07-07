@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.1](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.5.0...eslint-config-setup-v0.5.1) (2026-07-07)
+
+
+### Bug Fixes
+
+* allow React ref names in AI abbreviation checks ([#84](https://github.com/sebastian-software/eslint-config-setup/issues/84)) ([d77746d](https://github.com/sebastian-software/eslint-config-setup/commit/d77746dce6c9f3adb8f25705e7036a88157b4f5c))
+* preserve generated config import failures ([#80](https://github.com/sebastian-software/eslint-config-setup/issues/80)) ([d5624b2](https://github.com/sebastian-software/eslint-config-setup/commit/d5624b212c0b5266ef9fdbeb3c501e88df6fb489))
+
 ## [0.5.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.4.0...eslint-config-setup-v0.5.0) (2026-07-07)
 
 
