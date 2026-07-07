@@ -1,0 +1,55 @@
+# eslint-config-setup
+
+> Pre-generated ESLint flat configs for TypeScript, React, Node.js, AI-assisted codebases, and OxLint split-linting.
+
+## Use this package
+
+- Package: `eslint-config-setup`
+- Runtime: Node.js >= 22
+- Peers: ESLint >= 10, TypeScript >= 5
+- Public API: `getEslintConfig()`, `getOxlintConfig()`, rule helper functions
+- Docs: https://sebastian-software.github.io/eslint-config-setup/
+- Source: https://github.com/sebastian-software/eslint-config-setup
+
+## Agent installation
+
+When installing this package into another repository, do not blindly overwrite the existing lint setup. Inspect the target repository first, choose the right flags, propose a plan when conflicts exist, then apply the smallest safe change.
+
+Read:
+
+- `llms-full.txt` for the complete agent install workflow
+- `docs/app/routes/guide/agent-install.mdx` for the guide page source
+- `docs/app/routes/guide/getting-started.mdx` for human installation examples
+- `docs/app/routes/guide/configuration.mdx` for option semantics
+- `docs/app/routes/guide/oxlint.mdx` for split-linting with OxLint
+- `docs/app/routes/guide/react.mdx` for React linting behavior
+- `docs/app/routes/guide/ai-mode.mdx` for strict AI-assisted development rules
+
+Preferred agent flow:
+
+1. Detect package manager and workspace layout.
+2. Inspect existing ESLint, OxLint, Prettier, and package scripts.
+3. Choose only the flags that match the target project: `react`, `node`, `ai`, `oxlint`.
+4. Plan dependency and file changes before editing.
+5. Preserve existing project-specific config unless the user explicitly approves replacing it.
+6. Use the public API from `eslint-config-setup`; never copy generated config files.
+7. Run the target repo's install and lint/check commands.
+8. Report changed files, validation results, and unresolved conflicts.
+
+## Minimal config
+
+```ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+```
+
+## OxLint config
+
+Use `oxlint: true` in ESLint only when OxLint runs before ESLint.
+
+```ts
+import { getOxlintConfig } from "eslint-config-setup"
+
+export default getOxlintConfig({ react: true })
+```

@@ -4,7 +4,7 @@ title: Architecture Decision Records
 
 # Architecture Decision Records
 
-This project documents significant architectural decisions as ADRs. They are ordered by impact — from core architecture down to individual plugin choices.
+This project documents significant architectural decisions as ADRs. They are ordered by decision number, from the core architecture through plugin choices and installation guidance.
 
 ## Core Architecture
 
@@ -60,3 +60,14 @@ Plugins and tools that were evaluated and intentionally not adopted.
 | [ADR-0018](/adr/0018-no-shopify) | No @shopify/eslint-plugin | Only 2-3 useful rules out of 29 |
 | [ADR-0019](/adr/0019-eslint-react-migration) | Migration to @eslint-react | Replaces unmaintained eslint-plugin-react with modern engine |
 | [ADR-0020](/adr/0020-react-compat-plugin) | React Compat Plugin | Unified `react/` namespace for OxLint-compatible legacy names |
+
+## Consumer Experience
+
+How the package is exposed, documented, and installed by humans or agents.
+
+| # | Decision | Summary |
+|---|----------|---------|
+| [ADR-0021](/adr/0021-public-loader-api) | Public Loader API | Consumers use stable loader functions instead of generated file imports |
+| [ADR-0022](/adr/0022-documentation-site-as-product-surface) | Documentation Site | The docs site is the canonical long-form product documentation surface |
+| [ADR-0023](/adr/0023-agent-first-installation) | Agent-First Installation | Repository-aware agent setup over a broad install script |
+| [ADR-0024](/adr/0024-llms-entrypoints) | llms.txt Entry Points | Root agent files point agents to install guidance and references |

@@ -1,0 +1,158 @@
+---
+title: Agent Installation
+---
+
+import { ArdoNote as Note } from "ardo/ui"
+
+# Agent Installation
+
+`eslint-config-setup` does not need a large install wizard to be useful in real projects. A coding agent can inspect the target repository, choose the right config shape, make the smallest safe edits, and validate the result.
+
+This guide describes the target behavior for agents installing `eslint-config-setup` into another repository.
+
+<Note>
+This is an agent-facing install contract, not an install script. Agents should adapt it to the target repository instead of applying every example literally.
+</Note>
+
+## Start by inspecting the repo
+
+Before editing, identify:
+
+- package manager and lockfile (`npm`, `pnpm`, or `bun`)
+- single package vs. monorepo layout
+- `package.json` scripts and `packageManager`
+- `tsconfig.json` location
+- existing `eslint.config.*`, `.eslintrc.*`, `oxlint.config.*`, Prettier, Biome, and hook config
+- runtime shape: React/browser, Node.js, mixed runtime, library, app, tests, generated code
+
+If the repository already has substantial lint config, do not replace it silently. Compose with it or present a migration plan first.
+
+## Choose the config flags
+
+Use only the flags that match the target repository:
+
+| Flag | Use when |
+| --- | --- |
+| `react` | The repo contains React, JSX/TSX, component packages, Storybook, or Testing Library. |
+| `node` | The repo contains CLIs, servers, scripts, workers, or Node.js packages. |
+| `ai` | The repo wants stricter conventions for AI-assisted development and generated code review. |
+| `oxlint` | OxLint runs before ESLint in the lint script. |
+
+Mixed frontend/backend repositories often need package-local configs or scoped flat-config blocks. Avoid one global runtime assumption when browser and Node.js code live together.
+
+## Install dependencies
+
+Install the package and peer dependencies with the target repo's package manager:
+
+```bash
+npm install -D eslint-config-setup eslint typescript
+pnpm add -D eslint-config-setup eslint typescript
+bun add -D eslint-config-setup eslint typescript
+```
+
+Do not switch package managers. Do not remove existing formatter, linter, or hook tooling unless the user explicitly asks for a migration.
+
+## Add the ESLint config
+
+Use the public API:
+
+```typescript
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+```
+
+For JavaScript config files:
+
+```javascript
+// eslint.config.js
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true })
+```
+
+Never copy generated config files from `eslint-config-setup` internals into the target repository.
+
+## Add OxLint only when it runs first
+
+Use `oxlint: true` only when the lint script runs OxLint before ESLint:
+
+```typescript
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({ react: true, oxlint: true })
+```
+
+```typescript
+// oxlint.config.ts
+import { getOxlintConfig } from "eslint-config-setup"
+
+export default getOxlintConfig({ react: true })
+```
+
+```jsonc
+// package.json
+{
+  "scripts": {
+    "lint": "oxlint && eslint ."
+  }
+}
+```
+
+If the target repo already has `oxlint.config.*`, merge deliberately or ask before replacing it.
+
+## Scripts
+
+Prefer the smallest script that fits the repository:
+
+```jsonc
+{
+  "scripts": {
+    "lint": "eslint ."
+  }
+}
+```
+
+If a `lint` script already exists, preserve its semantics. Add `eslint-config-setup` to the existing flow only when the effect is clear.
+
+## Conflict policy
+
+Stop and present a plan before changing:
+
+- existing non-trivial `eslint.config.*`
+- existing legacy `.eslintrc.*`
+- existing `oxlint.config.*`
+- `lint` scripts with project-specific behavior
+- ambiguous `tsconfig.json` ownership
+- monorepos with multiple package roots
+- mixed browser and Node.js code without clear directory boundaries
+
+The plan should say what exists, what should change, which files would be touched, and which validation commands will run.
+
+## Validate the result
+
+After edits, run the target repo's install command if dependencies changed. Then run the smallest meaningful checks available:
+
+```bash
+npm run lint
+pnpm lint
+bun run lint
+```
+
+Also run `check`, typecheck, or package-local lint commands when the target repo already uses them.
+
+Report whether failures are caused by the new setup, pre-existing lint findings, or local environment problems.
+
+## Agent report
+
+Finish with:
+
+- files changed
+- selected flags and why
+- dependencies added or left unchanged
+- validation commands and results
+- unresolved conflicts or follow-up recommendations
+
+Do not report the setup as complete unless validation ran or the reason it could not run is explicit.
