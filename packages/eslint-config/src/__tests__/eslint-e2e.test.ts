@@ -1,6 +1,6 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
 import { ESLint } from "eslint"
-import { mkdirSync, symlinkSync, writeFileSync } from "node:fs"
+import { mkdirSync, readdirSync, realpathSync, symlinkSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
@@ -27,6 +27,37 @@ var greeting: string = "hello"
  * all plugin imports. We symlink from the temp dir into the real one.
  */
 const NODE_MODULES = path.resolve(import.meta.dirname, "../../node_modules")
+
+function linkPackageNodeModules(dir: string): void {
+  const nodeModules = path.join(dir, "node_modules")
+  mkdirSync(nodeModules, { recursive: true })
+
+  for (const entry of readdirSync(NODE_MODULES, { withFileTypes: true })) {
+    if (entry.name.startsWith(".")) {
+      continue
+    }
+
+    const source = path.join(NODE_MODULES, entry.name)
+
+    if (entry.name.startsWith("@")) {
+      const scopeDir = path.join(nodeModules, entry.name)
+      mkdirSync(scopeDir, { recursive: true })
+
+      for (const scopedEntry of readdirSync(source, { withFileTypes: true })) {
+        const scopedSource = path.join(source, scopedEntry.name)
+        symlinkSync(
+          realpathSync(scopedSource),
+          path.join(scopeDir, scopedEntry.name),
+          "junction",
+        )
+      }
+
+      continue
+    }
+
+    symlinkSync(realpathSync(source), path.join(nodeModules, entry.name), "junction")
+  }
+}
 
 /** All 16 option permutations. */
 const PERMUTATIONS: Array<{ label: string; opts: ConfigOptions }> = [
@@ -65,9 +96,10 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
         JSON.stringify({ compilerOptions: { strict: true }, include: ["*.ts"] }),
       )
 
-      // Link node_modules so plugin imports resolve.
-      // Use "junction" on Windows (no admin rights needed), symlink elsewhere.
-      symlinkSync(NODE_MODULES, path.join(dir, "node_modules"), "junction")
+      // Link direct package targets so plugin imports resolve on Windows too.
+      // A single node_modules junction preserves pnpm's relative symlink chain,
+      // which points at the wrong location when the temp project lives elsewhere.
+      linkPackageNodeModules(dir)
 
       // 3. Run ESLint with the generated config — just like a real user.
       //    Override tsconfigRootDir to pin the project service to this dir
@@ -119,7 +151,7 @@ describe("ESLint E2E — MDX handling", () => {
         JSON.stringify({ compilerOptions: { jsx: "react-jsx", strict: true }, include: ["*.ts", "*.tsx"] }),
       )
 
-      symlinkSync(NODE_MODULES, path.join(dir, "node_modules"), "junction")
+      linkPackageNodeModules(dir)
 
       const eslint = new ESLint({
         cwd: dir,
@@ -156,7 +188,7 @@ describe("ESLint E2E — MDX handling", () => {
       JSON.stringify({ compilerOptions: { strict: true }, include: ["*.ts"] }),
     )
 
-    symlinkSync(NODE_MODULES, path.join(dir, "node_modules"), "junction")
+    linkPackageNodeModules(dir)
 
     const eslint = new ESLint({
       cwd: dir,
