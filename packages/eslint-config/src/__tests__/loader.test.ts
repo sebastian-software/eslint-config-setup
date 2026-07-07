@@ -39,16 +39,19 @@ describe("getEslintConfig", () => {
       'throw new Error("plugin exploded during evaluation")',
     )
 
-    await expect(getEslintConfig(opts)).rejects.toThrow(
-      "Pre-generated config failed to load",
-    )
-    await expect(getEslintConfig(opts)).rejects.toThrow(
-      "plugin exploded during evaluation",
-    )
-    await expect(getEslintConfig(opts)).rejects.toMatchObject({
-      cause: expect.any(Error),
-      message: expect.stringContaining(path.basename(configPath)),
-    })
+    let thrown: unknown
+    try {
+      await getEslintConfig(opts)
+    }
+    catch (error) {
+      thrown = error
+    }
+
+    assertError(thrown)
+    expect(thrown.message).toContain("Pre-generated config failed to load")
+    expect(thrown.message).toContain(path.basename(configPath))
+    assertError(thrown.cause)
+    expect(thrown.cause.message).toBe("plugin exploded during evaluation")
   })
 
   it("reports a config as missing when it disappears before import completes", async () => {
@@ -80,6 +83,10 @@ function writeGeneratedConfig(filename: string, source: string): string {
   writeFileSync(configPath, source)
   generatedTestFiles.add(configPath)
   return configPath
+}
+
+function assertError(value: unknown): asserts value is Error {
+  expect(value).toBeInstanceOf(Error)
 }
 
 describe("getOxlintConfig", () => {

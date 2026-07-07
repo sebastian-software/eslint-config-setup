@@ -35,6 +35,7 @@ export default defineConfig({
             items: [
               { text: 'Why This Exists', link: '/guide/why' },
               { text: 'Getting Started', link: '/guide/getting-started' },
+              { text: 'Agent Installation', link: '/guide/agent-install' },
             ],
           },
           {
@@ -91,6 +92,12 @@ export default defineConfig({
               { text: '0016 No Framework Linting', link: '/adr/0016-no-frameworks' },
               { text: '0017 @eslint-react Deferred', link: '/adr/0017-eslint-react-deferred' },
               { text: '0018 No Shopify Plugin', link: '/adr/0018-no-shopify' },
+              { text: '0019 @eslint-react Migration', link: '/adr/0019-eslint-react-migration' },
+              { text: '0020 React Compat Plugin', link: '/adr/0020-react-compat-plugin' },
+              { text: '0021 Public Loader API', link: '/adr/0021-public-loader-api' },
+              { text: '0022 Documentation Site', link: '/adr/0022-documentation-site-as-product-surface' },
+              { text: '0023 Agent-First Installation', link: '/adr/0023-agent-first-installation' },
+              { text: '0024 llms.txt Entry Points', link: '/adr/0024-llms-entrypoints' },
             ],
           },
           { text: 'API Reference', link: '/api-reference' },

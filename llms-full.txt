@@ -1,0 +1,207 @@
+# eslint-config-setup agent reference
+
+`eslint-config-setup` provides pre-generated ESLint flat configs for modern TypeScript projects. It is meant to be installed by humans or agents without copying internal generated config output into the target repository.
+
+Use this file when you are an AI agent installing, reviewing, or repairing `eslint-config-setup` in another repository.
+
+## Core facts
+
+- Package name: `eslint-config-setup`
+- Node.js requirement: >= 22
+- Peer requirements: ESLint >= 10, TypeScript >= 5
+- Main ESLint API: `getEslintConfig(options)`
+- OxLint API: `getOxlintConfig(options)`
+- Rule helper APIs: `disableRule`, `configureRule`, `setRuleSeverity`, `addRule`
+- Supported flags: `react`, `node`, `ai`, `oxlint`
+- Do not import from `dist/configs/*` or copy generated config files into the target repo.
+
+## Installation mindset
+
+Do not behave like a one-size-fits-all install script. Treat the target repository as an existing system.
+
+Before editing:
+
+1. Identify the package manager from lockfiles and `packageManager`.
+2. Identify whether the target is a single package or a monorepo.
+3. Locate `package.json`, `tsconfig.json`, and any existing ESLint, OxLint, Prettier, Biome, or hook config.
+4. Detect whether code is React/browser, Node.js, mixed runtime, library, app, test-heavy, or generated-code-heavy.
+5. Decide whether the setup can be applied directly or needs a conflict plan.
+
+If the target repo already has substantial lint config, do not replace it silently. Either compose `eslint-config-setup` into the existing flat config or present a migration plan.
+
+## Flag selection
+
+Use only the flags that match the target repository.
+
+- `react: true`: React, JSX/TSX, browser UI apps, component packages, Storybook, Testing Library.
+- `node: true`: Node.js packages, CLIs, servers, scripts, workers, build tooling.
+- `ai: true`: repositories that want stricter conventions for AI-assisted development, explicit types, naming, complexity, and maintainability.
+- `oxlint: true`: only when the target repo runs `oxlint` before `eslint`.
+
+Mixed frontend/backend repositories usually need scoped flat-config blocks or package-local configs. Do not assume one global runtime is correct for the whole repo.
+
+## Dependency changes
+
+Install `eslint-config-setup`, ESLint, and TypeScript as development dependencies unless the target repo already has compatible versions.
+
+Common commands:
+
+```sh
+npm install -D eslint-config-setup eslint typescript
+pnpm add -D eslint-config-setup eslint typescript
+bun add -D eslint-config-setup eslint typescript
+```
+
+If enabling OxLint, also install the target repo's preferred OxLint package if it is absent.
+
+Do not change package managers. Do not remove existing formatter or lint dependencies unless the user asked for migration.
+
+## ESLint config target state
+
+Use `eslint.config.ts` when the target tooling supports TypeScript config files:
+
+```ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  react: true,
+})
+```
+
+Use `eslint.config.js` or `eslint.config.mjs` when that better matches the target repo:
+
+```js
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  react: true,
+})
+```
+
+For mixed repos, keep boundaries explicit:
+
+```ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default [
+  ...await getEslintConfig({ react: true }),
+  {
+    files: ["scripts/**/*.{js,ts}", "server/**/*.{js,ts}"],
+    rules: {
+      // Add project-local runtime overrides here.
+    },
+  },
+]
+```
+
+Prefer project-specific scoped blocks over broad global disables.
+
+## OxLint target state
+
+Only use `oxlint: true` in ESLint if OxLint runs first.
+
+```ts
+// eslint.config.ts
+import { getEslintConfig } from "eslint-config-setup"
+
+export default await getEslintConfig({
+  react: true,
+  oxlint: true,
+})
+```
+
+```ts
+// oxlint.config.ts
+import { getOxlintConfig } from "eslint-config-setup"
+
+export default getOxlintConfig({
+  react: true,
+})
+```
+
+Example script:
+
+```json
+{
+  "scripts": {
+    "lint": "oxlint && eslint ."
+  }
+}
+```
+
+If the repo already has an OxLint config, merge carefully or present a conflict plan.
+
+## Script target state
+
+Prefer the smallest script that fits the target repo:
+
+```json
+{
+  "scripts": {
+    "lint": "eslint ."
+  }
+}
+```
+
+If existing scripts already run typecheck, tests, or formatting, do not fold them into lint unless that is the repo's convention. Keep `lint`, `lint:fix`, `check`, and `test` semantics aligned with the existing project.
+
+## Conflict handling
+
+Hard conflicts:
+
+- existing non-trivial `eslint.config.*`
+- existing legacy `.eslintrc.*`
+- existing `oxlint.config.*`
+- existing `lint` script with different semantics
+- missing or ambiguous `tsconfig.json`
+- monorepo with multiple package roots
+- mixed browser and Node.js code without clear directory boundaries
+
+When a hard conflict exists:
+
+1. Stop before editing that area.
+2. Explain what exists.
+3. Propose the smallest safe change.
+4. Ask for approval if replacement or semantic migration is needed.
+
+Safe direct edits:
+
+- add missing dependency entries using the existing package manager
+- add a new config file when no lint config exists
+- add `lint` only when no `lint` script exists
+- add documentation comments only where they clarify project-specific boundaries
+
+## Validation
+
+After applying changes, run the target repo's install command if dependencies changed.
+
+Then run the smallest meaningful checks available:
+
+- package manager install in frozen/lockfile mode when appropriate
+- `npm run lint`, `pnpm lint`, or `bun run lint`
+- `npm run check`, `pnpm check`, or `bun run check` if present
+- package-specific lint/check commands in monorepos
+
+If validation fails, distinguish between:
+
+- install/config problems caused by your change
+- pre-existing lint errors revealed by the new config
+- environment or network failures
+
+Report all commands run and the exact remaining blocker.
+
+## Reporting format
+
+When finished, report:
+
+- files changed
+- flags selected and why
+- dependencies added or left unchanged
+- validation commands and results
+- unresolved conflicts or follow-up recommendations
+
+Do not claim the setup is complete unless validation ran or you clearly explain why it could not run.
+
+## Future validator
+
+A separate `doctor` validator is planned as a follow-up. It should verify the target state read-only after agent-guided setup. Installation guidance should not depend on `doctor` existing.
