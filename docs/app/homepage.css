@@ -353,6 +353,46 @@
   color: var(--hp-ink-faint);
 }
 
+/* --- Foundations strip ------------------------------------------------- */
+.hp-foundations {
+  padding: 12px 0 40px;
+}
+
+.hp-foundations-lead {
+  font-family: var(--hp-font-code);
+  font-size: 0.8rem;
+  color: var(--hp-ink-faint);
+  border-top: 1px solid var(--hp-line);
+  padding-top: 20px;
+  margin: 0 0 16px;
+}
+
+.hp-foundations-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 32px;
+  row-gap: 14px;
+}
+
+.hp-page a.hp-foundation {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--hp-ink-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: color 150ms var(--hp-ease);
+}
+
+.hp-page a.hp-foundation:hover {
+  color: var(--hp-ink);
+  text-decoration: underline;
+}
+
 /* --- Config readout --------------------------------------------------- */
 .hp-configurator-output {
   border: 1px solid var(--hp-line);
