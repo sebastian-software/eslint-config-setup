@@ -4,6 +4,7 @@ import { AiSection } from "../components/home/AiSection"
 import { ClosingSection } from "../components/home/ClosingSection"
 import { DeterminismSection } from "../components/home/DeterminismSection"
 import { FlagConfigurator } from "../components/home/FlagConfigurator"
+import { FoundationsStrip } from "../components/home/FoundationsStrip"
 import { Hero } from "../components/home/Hero"
 import { OxlintSection } from "../components/home/OxlintSection"
 import { ReceiptsSection } from "../components/home/ReceiptsSection"
@@ -25,6 +26,7 @@ export default function HomePage() {
       <DeterminismSection />
       <OxlintSection />
       <AiSection />
+      <FoundationsStrip />
       <ReceiptsSection />
       <ClosingSection />
     </div>
