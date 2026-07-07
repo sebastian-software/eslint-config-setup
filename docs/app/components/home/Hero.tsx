@@ -1,7 +1,17 @@
 import { Link } from "react-router"
 
-import { GETTING_STARTED_PATH, REPO_URL } from "./configuratorData"
+import { buildConfigSnippet, GETTING_STARTED_PATH, REPO_URL } from "./configuratorData"
 import { InstallCommand } from "./InstallCommand"
+
+const HERO_SNIPPET = buildConfigSnippet({
+  react: true,
+  node: false,
+  ai: false,
+  oxlint: false,
+})
+  .split("\n")
+  .filter(Boolean)
+  .join("\n")
 
 export function Hero() {
   return (
@@ -19,11 +29,14 @@ export function Hero() {
           handling the rest. No composition. No plugin resolution. No sync to maintain.
         </p>
         <InstallCommand />
-        <p className="hp-hero-micro">
-          Two lines of config after this. That&apos;s the entire setup.
-        </p>
+        <figure className="hp-hero-config">
+          <figcaption className="hp-hero-config-label">eslint.config.ts</figcaption>
+          <pre className="hp-hero-config-code">
+            <code>{HERO_SNIPPET}</code>
+          </pre>
+        </figure>
+        <p className="hp-hero-micro">That&apos;s the entire setup.</p>
         <p className="hp-hero-links">
-          Set up in two lines —{" "}
           <Link to={GETTING_STARTED_PATH}>Getting Started</Link>
           <span aria-hidden="true"> · </span>
           <a href={REPO_URL} rel="noreferrer" target="_blank">
