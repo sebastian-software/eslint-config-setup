@@ -121,6 +121,15 @@
   line-height: 1.6;
 }
 
+.hp-kicker {
+  margin: 0 0 8px;
+  color: var(--hp-accent-teal);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* --- Hero Section --- */
 .hp-hero {
   position: relative;
@@ -230,39 +239,141 @@
   border-color: var(--hp-text-faint);
 }
 
-/* --- Stats Bar --- */
-.hp-stats {
+/* --- Trust Section --- */
+.hp-trust-section {
+  padding: 24px 0 72px;
+}
+
+.hp-trust {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--hp-border);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.5fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.hp-trust-intro {
+  background: var(--hp-surface-alt);
   border: 1px solid var(--hp-border);
   border-radius: var(--hp-radius-lg);
-  overflow: hidden;
+  padding: 28px;
 }
 
-.hp-stat {
-  background: var(--hp-surface);
-  padding: 32px 16px;
-  text-align: center;
-}
-
-.hp-stat-number {
+.hp-trust-intro h2 {
   font-family: var(--hp-font-display);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.15;
   letter-spacing: -0.03em;
+  margin: 0 0 12px;
+}
+
+.hp-trust-intro p:last-child {
+  color: var(--hp-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hp-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hp-trust-card {
+  background: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius);
+  min-height: 132px;
+  padding: 32px 16px;
+}
+
+.hp-trust-label {
+  font-family: var(--hp-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 8px;
   background: var(--hp-gradient-headline);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.hp-stat-label {
-  font-size: 0.875rem;
+.hp-trust-copy {
+  font-size: 0.9rem;
   color: var(--hp-text-muted);
-  margin-top: 4px;
-  font-weight: 500;
+  line-height: 1.55;
+}
+
+/* --- Workflow Section --- */
+.hp-workflow-section {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--hp-surface-alt) 70%, transparent),
+    transparent
+  );
+}
+
+.hp-workflow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.hp-workflow-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  min-height: 220px;
+  padding: 24px;
+  background: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-lg);
+}
+
+.hp-workflow-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -17px;
+  width: 17px;
+  height: 1px;
+  background: var(--hp-border);
+}
+
+.hp-workflow-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--hp-accent-teal);
+  color: #fff;
+  font-weight: 700;
+}
+
+.hp-workflow-label {
+  color: var(--hp-accent-teal);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hp-workflow-title {
+  font-family: var(--hp-font-display);
+  font-size: 1.1rem;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+
+.hp-workflow-copy {
+  color: var(--hp-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* --- Before / After Section --- */
@@ -419,11 +530,11 @@
 
 /* Show panel when its corresponding radio is checked.
    Panels are <pre> inside .hp-showcase-panels, so nth-of-type counts correctly. */
-.hp-showcase-radio:nth-of-type(1):checked ~ .hp-code-block .hp-showcase-panels > :nth-child(1),
-.hp-showcase-radio:nth-of-type(2):checked ~ .hp-code-block .hp-showcase-panels > :nth-child(2),
-.hp-showcase-radio:nth-of-type(3):checked ~ .hp-code-block .hp-showcase-panels > :nth-child(3),
-.hp-showcase-radio:nth-of-type(4):checked ~ .hp-code-block .hp-showcase-panels > :nth-child(4),
-.hp-showcase-radio:nth-of-type(5):checked ~ .hp-code-block .hp-showcase-panels > :nth-child(5) {
+.hp-showcase-radio:nth-of-type(1):checked ~ .hp-configurator-shell .hp-showcase-panels > :nth-child(1),
+.hp-showcase-radio:nth-of-type(2):checked ~ .hp-configurator-shell .hp-showcase-panels > :nth-child(2),
+.hp-showcase-radio:nth-of-type(3):checked ~ .hp-configurator-shell .hp-showcase-panels > :nth-child(3),
+.hp-showcase-radio:nth-of-type(4):checked ~ .hp-configurator-shell .hp-showcase-panels > :nth-child(4),
+.hp-showcase-radio:nth-of-type(5):checked ~ .hp-configurator-shell .hp-showcase-panels > :nth-child(5) {
   display: block;
 }
 
@@ -443,6 +554,63 @@
   border: 1px solid var(--hp-border);
   border-radius: var(--hp-radius-lg);
   overflow: hidden;
+}
+
+.hp-configurator-shell {
+  background: var(--hp-surface-alt);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius-lg);
+  padding: 16px;
+}
+
+.hp-configurator-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.hp-configurator-copy {
+  background: var(--hp-surface);
+  border: 1px solid var(--hp-border);
+  border-radius: var(--hp-radius);
+  padding: 24px;
+}
+
+.hp-configurator-copy h3 {
+  font-family: var(--hp-font-display);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+
+.hp-configurator-copy p {
+  color: var(--hp-text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hp-configurator-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.hp-configurator-flags span {
+  border: 1px solid color-mix(in srgb, var(--hp-accent-teal) 36%, var(--hp-border));
+  border-radius: 999px;
+  color: var(--hp-accent-teal);
+  font-family: var(--hp-font-mono);
+  font-size: 0.78rem;
+  padding: 5px 10px;
+}
+
+.hp-configurator-note {
+  padding-top: 16px;
+  border-top: 1px solid var(--hp-border);
 }
 
 .hp-code-header {
@@ -647,6 +815,28 @@
   .hp-eco-categories {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .hp-trust,
+  .hp-configurator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hp-workflow {
+    grid-template-columns: 1fr;
+  }
+
+  .hp-workflow-step {
+    min-height: auto;
+  }
+
+  .hp-workflow-step:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -17px;
+    left: 42px;
+    width: 1px;
+    height: 17px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -658,8 +848,8 @@
     padding: 48px 0 40px;
   }
 
-  .hp-stats {
-    grid-template-columns: repeat(2, 1fr);
+  .hp-trust-grid {
+    grid-template-columns: 1fr;
   }
 
   .hp-before-after {

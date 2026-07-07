@@ -7,6 +7,7 @@ import { FeatureGrid } from "../components/FeatureGrid"
 import { HeroSection } from "../components/HeroSection"
 import { PluginEcosystem } from "../components/PluginEcosystem"
 import { StatsBar } from "../components/StatsBar"
+import { WorkflowSection } from "../components/WorkflowSection"
 
 export const meta: MetaFunction = () => [
   { title: "ESLint Config Setup" },
@@ -22,6 +23,7 @@ export default function HomePage() {
     <div className="hp-page">
       <HeroSection />
       <StatsBar />
+      <WorkflowSection />
       <BeforeAfterSection />
       <FeatureGrid />
       <CodeShowcase />
