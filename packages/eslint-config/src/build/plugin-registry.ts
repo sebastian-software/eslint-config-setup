@@ -91,6 +91,13 @@ export const pluginRegistry: Record<string, PluginEntry> = {
     importStatement: 'import deMorganPlugin from "eslint-plugin-de-morgan"',
     pluginExpr: "deMorganPlugin",
   },
+  "@eslint-community/eslint-comments": {
+    pkg: "@eslint-community/eslint-plugin-eslint-comments",
+    varName: "eslintCommentsPlugin",
+    importStatement:
+      'import eslintCommentsPlugin from "@eslint-community/eslint-plugin-eslint-comments"',
+    pluginExpr: "eslintCommentsPlugin",
+  },
   compat: {
     pkg: "eslint-plugin-compat",
     varName: "compatPlugin",

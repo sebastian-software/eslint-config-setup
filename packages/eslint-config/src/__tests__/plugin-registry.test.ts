@@ -16,6 +16,7 @@ describe("pluginRegistry", () => {
       "@cspell",
       "security",
       "de-morgan",
+      "@eslint-community/eslint-comments",
       "compat",
       "node",
       "react",

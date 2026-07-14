@@ -371,16 +371,25 @@ function collectNamespaces(rules: Rules): Set<string> {
 }
 
 function extractNamespace(ruleName: string): null | string {
-  // Scoped namespace: @scope/plugin/rule-name → @scope/plugin
-  // Example: @typescript-eslint/no-unused-vars → @typescript-eslint
-  // Example: @cspell/spellchecker → @cspell
+  // Scoped namespace with a scoped plugin package:
+  // @scope/plugin/rule-name → @scope/plugin
+  // Example: @eslint-community/eslint-comments/no-unused-disable → @eslint-community/eslint-comments
   if (ruleName.startsWith("@")) {
-    const scopeSlash = ruleName.indexOf("/")
-    if (scopeSlash !== -1) {
-      // Check for second slash (e.g. @typescript-eslint/no-unused-vars)
-      return ruleName.slice(0, scopeSlash)
+    const firstSlash = ruleName.indexOf("/")
+    if (firstSlash === -1) return null
+
+    const secondSlash = ruleName.indexOf("/", firstSlash + 1)
+    if (secondSlash !== -1) {
+      const scopedPluginNamespace = ruleName.slice(0, secondSlash)
+      if (scopedPluginNamespace in pluginRegistry) {
+        return scopedPluginNamespace
+      }
     }
-    return null
+
+    // Scoped single-segment namespace:
+    // @typescript-eslint/no-unused-vars → @typescript-eslint
+    // @cspell/spellchecker → @cspell
+    return ruleName.slice(0, firstSlash)
   }
   // Regular namespace: plugin/rule-name → plugin
   const slashIndex = ruleName.indexOf("/")

@@ -5,6 +5,7 @@ import { baseConfig } from "../configs/base"
 import { compatConfig } from "../configs/compat"
 import { cspellConfig } from "../configs/cspell"
 import { deMorganConfig } from "../configs/de-morgan"
+import { eslintCommentsConfig } from "../configs/eslint-comments"
 import { importsConfig } from "../configs/imports"
 import { jsdocConfig } from "../configs/jsdoc"
 import { jsonConfig } from "../configs/json"
@@ -48,6 +49,7 @@ function addCoreConfigs(config: FlatConfigArray, opts: ConfigOptions): void {
     ...sonarjsConfig({ ai }),
     ...securityConfig(),
     ...deMorganConfig(),
+    ...eslintCommentsConfig(),
   )
 }
 
