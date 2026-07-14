@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `30`;
+exports[`config block counts per permutation > base config has a stable number of blocks 1`] = `31`;
 
 exports[`config snapshots > snapshot: ai only 1`] = `
 [
@@ -1231,6 +1231,22 @@ exports[`config snapshots > snapshot: ai only 1`] = `
     "rules": {
       "de-morgan/no-negated-conjunction": "error",
       "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
     },
   },
   {
@@ -3226,6 +3242,22 @@ exports[`config snapshots > snapshot: all flags 1`] = `
     "rules": {
       "de-morgan/no-negated-conjunction": "error",
       "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
     },
   },
   {
@@ -5835,6 +5867,22 @@ exports[`config snapshots > snapshot: base (no flags) 1`] = `
     },
   },
   {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
+    },
+  },
+  {
     "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
@@ -7492,6 +7540,22 @@ exports[`config snapshots > snapshot: node only 1`] = `
     "rules": {
       "de-morgan/no-negated-conjunction": "error",
       "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
     },
   },
   {
@@ -9481,6 +9545,22 @@ exports[`config snapshots > snapshot: react + ai 1`] = `
     },
   },
   {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
+    },
+  },
+  {
     "name": "eslint-config-setup/compat",
     "rules": {
       "compat/compat": "warn",
@@ -11355,6 +11435,22 @@ exports[`config snapshots > snapshot: react + node 1`] = `
     },
   },
   {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
+    },
+  },
+  {
     "name": "eslint-config-setup/complexity",
     "rules": {
       "complexity": [
@@ -13209,6 +13305,22 @@ exports[`config snapshots > snapshot: react + oxlint 1`] = `
     "rules": {
       "de-morgan/no-negated-conjunction": "error",
       "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
     },
   },
   {
@@ -15712,6 +15824,22 @@ exports[`config snapshots > snapshot: react only 1`] = `
     "rules": {
       "de-morgan/no-negated-conjunction": "error",
       "de-morgan/no-negated-disjunction": "error",
+    },
+  },
+  {
+    "name": "eslint-config-setup/eslint-comments",
+    "rules": {
+      "@eslint-community/eslint-comments/disable-enable-pair": [
+        "error",
+        {
+          "allowWholeFile": true,
+        },
+      ],
+      "@eslint-community/eslint-comments/no-aggregating-enable": "error",
+      "@eslint-community/eslint-comments/no-duplicate-disable": "error",
+      "@eslint-community/eslint-comments/no-unlimited-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
+      "@eslint-community/eslint-comments/no-unused-enable": "error",
     },
   },
   {

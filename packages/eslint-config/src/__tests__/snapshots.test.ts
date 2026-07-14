@@ -180,6 +180,24 @@ describe("config rule stability", () => {
     expect(secBlock!.rules!["security/detect-unsafe-regex"]).toBe("error")
   })
 
+  it("eslint-comments config includes directive hygiene rules", () => {
+    const config = composeConfig({})
+    const commentsBlock = config.find(
+      (b) => b.name === "eslint-config-setup/eslint-comments",
+    )
+    expect(commentsBlock?.rules).toBeDefined()
+    expect(
+      commentsBlock!.rules![
+        "@eslint-community/eslint-comments/no-unused-disable"
+      ],
+    ).toBe("error")
+    expect(
+      commentsBlock!.rules![
+        "@eslint-community/eslint-comments/disable-enable-pair"
+      ],
+    ).toStrictEqual(["error", { allowWholeFile: true }])
+  })
+
   it("json config targets .json files with correct language", () => {
     const config = composeConfig({})
     const jsonBlock = config.find((b) => b.name === "eslint-config-setup/json")
