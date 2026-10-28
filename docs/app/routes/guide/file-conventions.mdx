@@ -23,7 +23,7 @@ Generated configs always include a shared base block plus file-scoped overrides:
 
 | Block | Files | Purpose |
 |-------|-------|---------|
-| `eslint-config-setup/base` | all files | Shared core rules (TypeScript, imports, quality, etc.) |
+| `eslint-config-setup/base` | JS/TS code files: `**/*.{ts,tsx,mts,cts}`, `**/*.{js,mjs,cjs}` | Shared core rules (TypeScript, imports, quality, etc.) |
 | `eslint-config-setup/tests` | `**/*.test.{ts,tsx}`, `**/__tests__/**/*.{ts,tsx}` | Vitest rules + relaxed strictness |
 | `eslint-config-setup/tests-testing-library` | same as tests | Testing Library rules |
 | `eslint-config-setup/e2e` | `**/*.spec.ts` | Playwright rules + relaxed strictness |
@@ -33,6 +33,8 @@ Generated configs always include a shared base block plus file-scoped overrides:
 | `eslint-config-setup/scripts` | `**/scripts/**/*.{ts,mts,js,mjs}` | Relaxed rules for scripts |
 | `eslint-config-setup/json`, `eslint-config-setup/jsonc`, `eslint-config-setup/markdown` | matching file types | JSON/JSONC/Markdown linting |
 | `eslint-config-setup/prettier` | all files | Disables Prettier-conflicting formatting rules |
+
+The base block is scoped to these JS/TS code files, so JSON files only get the rules of their own blocks. Files with other extensions (e.g. `.jsx`, `.vue`) do not receive the base rules. If they should, add your own block for them in `eslint.config.ts` and register the plugins those rules come from in that block.
 
 Additional optional blocks are enabled by flags:
 
