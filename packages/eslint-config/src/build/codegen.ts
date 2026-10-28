@@ -12,7 +12,11 @@ import picomatch from "picomatch"
 
 import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types"
 
-import { MARKDOWN_DOCUMENT_FILES } from "../file-patterns"
+import {
+  JAVASCRIPT_SOURCE_FILES,
+  MARKDOWN_DOCUMENT_FILES,
+  TYPESCRIPT_SOURCE_FILES,
+} from "../file-patterns"
 import { composeConfig } from "./compose"
 import { pluginRegistry, standaloneImports } from "./plugin-registry"
 
@@ -79,14 +83,14 @@ export function generateConfigModule(opts: ConfigOptions): string {
   // Build the config blocks
   const blocks: string[] = [ "  // TypeScript parser setup", "  ...tseslint.configs.strictTypeChecked.slice(0, 2),", ""]
 
-  // Main base block — all effective rules for *.ts
+  // Main base block — all effective rules for JS/TS code files
   blocks.push(emitBaseBlock(baseRules, baseNamespaces, { hasReact, hasNode }))
 
   // 3. JS Compat — disable type-checked rules for .js files
   if (Object.keys(jsCompatDiff).length > 0) {
     blocks.push(emitOverrideBlock(
       "eslint-config-setup/js-compat",
-      ["**/*.{js,mjs,cjs}"],
+      [...JAVASCRIPT_SOURCE_FILES],
       jsCompatDiff,
     ))
   }
@@ -442,7 +446,20 @@ function emitBaseBlock(
   namespaces: Set<string>,
   features: { hasReact: boolean; hasNode: boolean },
 ): string {
-  const lines: string[] = [ "  // Base rules — all effective rules for TS plus shared JS/TS rules", "  {", '    name: "eslint-config-setup/base",', `    ignores: ${JSON.stringify([...MARKDOWN_DOCUMENT_FILES])},`, "    plugins: {"]
+  // Scoped to JS/TS code files: without `files`, the JS/TS rules would also
+  // reach JSON files (and ```json fences in Markdown), which ESLint rejects
+  // for the json/json and json/jsonc languages.
+  const files = [...TYPESCRIPT_SOURCE_FILES, ...JAVASCRIPT_SOURCE_FILES]
+  const lines: string[] = [
+    "  // Base rules — all effective rules for JS/TS code files",
+    "  {",
+    '    name: "eslint-config-setup/base",',
+    `    files: ${JSON.stringify(files)},`,
+    // Redundant while `files` lists only code extensions; kept as a guard so
+    // Markdown/MDX documents stay excluded if `files` is ever widened.
+    `    ignores: ${JSON.stringify([...MARKDOWN_DOCUMENT_FILES])},`,
+    "    plugins: {",
+  ]
 
   // Plugins object
   for (const ns of [...namespaces].sort()) {
