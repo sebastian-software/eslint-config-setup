@@ -13,6 +13,7 @@ Use this file when you are an AI agent installing, reviewing, or repairing `esli
 - OxLint API: `getOxlintConfig(options)`
 - Rule helper APIs: `disableRule`, `configureRule`, `setRuleSeverity`, `addRule`
 - Supported flags: `react`, `node`, `ai`, `oxlint`
+- Load-time option (not a flag): `spellcheck` (`false` or `{ language, dictionaries, words, import, checkIdentifiers, checkComments }`)
 - Do not import from `dist/configs/*` or copy generated config files into the target repo.
 
 ## Installation mindset
@@ -37,6 +38,16 @@ Use only the flags that match the target repository.
 - `node: true`: Node.js packages, CLIs, servers, scripts, workers, build tooling.
 - `ai: true`: repositories that want stricter conventions for AI-assisted development, explicit types, naming, complexity, and maintainability.
 - `oxlint: true`: only when the target repo runs `oxlint` before `eslint`.
+
+## Spell checking
+
+`@cspell/spellchecker` is on by default (warn, identifiers and comments) and is the most expensive rule; on large codebases it can dominate lint time. It reports ordinary words in non-English codebases.
+
+- `spellcheck: false` turns it off. The `@cspell` plugin stays registered, so existing `eslint-disable` comments for the rule keep working (they may show as unused directives).
+- `spellcheck: { language: "en,de", import: ["@cspell/dict-de-de/cspell-ext.json"] }` adds German. Install `@cspell/dict-de-de` in the directory ESLint runs from, and set BOTH `import` and `language`.
+- `spellcheck: { words: [...] }` adds accepted words. A `language` in a project cspell config replaces `spellcheck.language`.
+- `spellcheck` is not a flag: it does not select a pre-built config and is applied when the config loads. `getOxlintConfig` ignores it (an object literal with `spellcheck` is a type error; a shared `ConfigOptions` object is accepted and the key ignored).
+- Details: https://sebastian-software.github.io/eslint-config-setup/guide/configuration#spell-checking
 
 Mixed frontend/backend repositories usually need scoped flat-config blocks or package-local configs. Do not assume one global runtime is correct for the whole repo.
 

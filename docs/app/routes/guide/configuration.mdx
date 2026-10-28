@@ -25,9 +25,96 @@ import {
 
 Flags are independent. Combine them however you need. Every supported flag combination is pre-built.
 
+`spellcheck` is the one option that is **not** a pre-built flag. It never changes which generated config is loaded; `getEslintConfig()` applies it to the loaded config. See [Spell checking](#spell-checking).
+
 <Note>
 TypeScript always uses `strictTypeChecked` — the strictest typescript-eslint preset. No "recommended" fallback. This matches TypeScript's own direction toward strict-by-default.
 </Note>
+
+## Spell checking
+
+`@cspell/spellchecker` is part of every config: severity `warn`, identifiers and comments checked, plain strings not checked, no autofix, English dictionary. The `spellcheck` option changes that at load time.
+
+```typescript
+type SpellcheckOptions = {
+  /** cspell locale(s), comma-separated, e.g. "en" or "en,de" (cspell.language) */
+  language?: string
+  /** Dictionary names to enable (cspell.dictionaries) */
+  dictionaries?: readonly string[]
+  /** Extra accepted words (cspell.words) */
+  words?: readonly string[]
+  /** cspell config files to import (cspell.import) */
+  import?: readonly string[]
+  /** Default: true */
+  checkIdentifiers?: boolean
+  /** Default: true */
+  checkComments?: boolean
+}
+
+// getEslintConfig({ spellcheck?: boolean | SpellcheckOptions })
+```
+
+| Value | Result |
+|-------|--------|
+| `undefined` or `true` | Default behaviour, config returned unchanged |
+| `false` | Spell checking off |
+| `{ ... }` | Options merged into the default rule entry. Fields you omit (or set to `undefined`) keep their default. |
+
+`spellcheck` is not a flag: it does not take part in the hash and does not select a pre-built config. The 16 pre-built permutations are unchanged, and `getEslintConfig()` applies the option to the loaded array without mutating the generated module. Any other top-level value (`null`, a string, an array) throws a `TypeError` that names `spellcheck`. `getOxlintConfig()` ignores the option: an object literal with `spellcheck` is a type error, while a shared options object (a variable typed `ConfigOptions`, or one passed from JavaScript) is accepted and the key is ignored.
+
+### Turn it off
+
+```typescript
+const config = await getEslintConfig({ react: true, spellcheck: false })
+```
+
+The rule is removed but the `@cspell` plugin stays registered. Existing `// eslint-disable ... @cspell/spellchecker` comments therefore do not fail with "rule not found". ESLint 10 reports them as "Unused eslint-disable directive" warnings by default. `addRule(config, "@cspell/spellchecker", "warn")` turns the rule back on with the plugin's own defaults, and `disableRule` afterwards is a no-op.
+
+`{ checkIdentifiers: false, checkComments: false }` does not switch checking off completely, because template strings and JSX text follow the plugin defaults. Use `false`.
+
+The rule helpers still work: `disableRule(config, "@cspell/spellchecker")` or a trailing `{ rules: { "@cspell/spellchecker": "off" } }` block.
+
+### Check German (or another language)
+
+Two settings are needed, and both are required:
+
+```bash
+pnpm add -D @cspell/dict-de-de
+```
+
+```typescript
+const config = await getEslintConfig({
+  spellcheck: {
+    import: ["@cspell/dict-de-de/cspell-ext.json"],
+    language: "en,de",
+    words: ["Mandant"],
+  },
+})
+```
+
+- `import` without a matching locale in `language` has no effect: `@cspell/dict-de-de` only enables its dictionary for locale `de`.
+- A non-English `language` without the dictionary `import` keeps reporting words.
+- Imports resolve relative to the directory ESLint runs from. Install the dictionary package there (in a monorepo, usually the workspace root or the package you lint from).
+- A missing `import` package does not stop linting. Every linted file gets a `Failed to resolve configuration file: "<import>" referenced from "<cwd>/eslint-configuration-file"` warning. An additional `Configuration Error: ...` warning appears only once per process, on the first file. Other words are still checked.
+- An unknown dictionary name in `dictionaries` is silently ignored.
+
+### Precedence
+
+- A project cspell config (for example `cspell.json`) found from the linted file is merged on top of the `spellcheck` options. `words`, `dictionaries` and imports are combined.
+- A `language` set in that project config **replaces** `spellcheck.language`. If you keep a cspell config with `language`, set the language there.
+- `configureRule(config, "@cspell/spellchecker", ...)` called afterwards replaces the rule options **entirely**, including the `cspell` settings from `spellcheck`.
+
+### Runtime cost
+
+Spell checking is by far the most expensive rule. Measured with eslint 10.13.0, eslint-config-setup 0.5.2 (`{ node: true }`) and @cspell/eslint-plugin 10.4.0 (issue [#101](https://github.com/sebastian-software/eslint-config-setup/issues/101)):
+
+| Project | cspell share of rule time |
+|---------|--------------------------:|
+| Two generated files, 300 lines each (single-file run, includes dictionary loading) | 86 to 90 % |
+| Client React app, 57 files (95 s of cspell time) | 94 % |
+| Client Node service, 40 files (47 s of cspell time) | 94 % |
+
+That is roughly 1.2 to 1.7 seconds per file on the client projects. Linting a whole React app of about 1,700 files had not finished after 30 minutes, and took 112 s with cspell off. In the same projects, 82 to 84 % of all messages came from cspell, mostly ordinary German words. Your numbers will differ with codebase and hardware. If lint time matters, use `spellcheck: false` or `checkIdentifiers: false`.
 
 ## Which flags should I use?
 
