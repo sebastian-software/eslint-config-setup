@@ -108,8 +108,10 @@ async function lintProject({
   lint: string[]
   opts: ConfigOptions
 }): Promise<Map<string, Array<{ fatal?: boolean; message: string; ruleId: null | string }>>> {
+  // Real path: on macOS tmpdir() is a symlink (/var → /private/var), and
+  // import-x compares resolved real paths when it detects cycles.
   const dir = path.join(
-    tmpdir(),
+    realpathSync(tmpdir()),
     `eslint-e2e-${label}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
   )
   mkdirSync(dir, { recursive: true })
