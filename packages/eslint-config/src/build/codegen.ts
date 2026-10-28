@@ -10,7 +10,7 @@
  */
 import picomatch from "picomatch"
 
-import type { ConfigOptions, FlatConfig, FlatConfigArray } from "../types"
+import type { ConfigFlags, FlatConfig, FlatConfigArray } from "../types"
 
 import { MARKDOWN_DOCUMENT_FILES } from "../file-patterns"
 import { composeConfig } from "./compose"
@@ -35,7 +35,7 @@ const FILE_PROBES = {
  * Generates a complete ES module string for a given set of config options.
  * The module exports a valid ESLint flat config array with real imports.
  */
-export function generateConfigModule(opts: ConfigOptions): string {
+export function generateConfigModule(opts: ConfigFlags): string {
   const config = composeConfig(opts)
   const resolved = resolveRulesForAllProbes(config)
 
@@ -625,7 +625,7 @@ function emitMarkdownBlock(markdownCodeBlocksDiff: Rules): string {
   ].join("\n")
 }
 
-function emitOxlintBlock(opts: ConfigOptions): string {
+function emitOxlintBlock(opts: ConfigFlags): string {
   const lines: string[] = [ "  // OxLint integration — disables rules already covered by OxLint"]
 
   // Emit a spread that handles both plain objects and SplittedFlatConfig tuples

@@ -18,6 +18,15 @@ describe("generateConfigModule", () => {
     expect(output).toContain('ignores: ["**/*.{md,mdx}"]')
   })
 
+  it("registers the spellchecker rule in the base block", () => {
+    const output = generateConfigModule({})
+    const start = output.indexOf('"eslint-config-setup/base"')
+    const end = output.indexOf('"eslint-config-setup/js-compat"')
+    expect(start).toBeGreaterThan(-1)
+    expect(end).toBeGreaterThan(start)
+    expect(output.slice(start, end)).toContain("@cspell/spellchecker")
+  })
+
   it("includes JS compat override", () => {
     const output = generateConfigModule({})
     expect(output).toContain('"eslint-config-setup/js-compat"')
