@@ -12,8 +12,9 @@ export type ImportXResolver =
  * then plain Node resolution as fallback.
  *
  * Shared by the composed config (`importsConfig()`) and the generated config
- * modules, which import it from `eslint-config-setup/modules`, so resolver
- * options cannot drift between the two.
+ * modules, which import it from the minimal `eslint-config-setup/import-resolvers`
+ * entry (built from this file only), so resolver options cannot drift between
+ * the two. `eslint-config-setup/modules` re-exports it as well.
  *
  * Note: this file is loaded via Node's native type stripping in the e2e
  * tests — keep it free of relative imports and non-erasable TS syntax.

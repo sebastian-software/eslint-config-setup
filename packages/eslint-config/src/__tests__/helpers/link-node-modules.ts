@@ -9,7 +9,7 @@ import { pathToFileURL } from "node:url"
  */
 const NODE_MODULES = path.resolve(import.meta.dirname, "../../../node_modules")
 
-/** Source file the generated configs' `eslint-config-setup/modules` import resolves to. */
+/** Source file the generated configs' `eslint-config-setup/import-resolvers` import resolves to. */
 const IMPORT_RESOLVERS_SOURCE = path.resolve(
   import.meta.dirname,
   "../../configs/import-resolvers.ts",
@@ -17,11 +17,11 @@ const IMPORT_RESOLVERS_SOURCE = path.resolve(
 
 /**
  * Generated configs import `createImportXResolvers` from
- * `eslint-config-setup/modules`. Tests run before `pnpm build`, so instead of
- * depending on dist/ we install a stub package that re-exports the TS source
- * (loaded via Node's native type stripping).
+ * `eslint-config-setup/import-resolvers`. Tests run before `pnpm build`, so
+ * instead of depending on dist/ we install a stub package that re-exports the
+ * TS source (loaded via Node's native type stripping).
  */
-function writeModulesStub(dir: string): void {
+function writeImportResolversStub(dir: string): void {
   const stubDir = path.join(dir, "node_modules", "eslint-config-setup")
   mkdirSync(stubDir, { recursive: true })
   writeFileSync(
@@ -29,11 +29,11 @@ function writeModulesStub(dir: string): void {
     JSON.stringify({
       name: "eslint-config-setup",
       type: "module",
-      exports: { "./modules": "./modules.js" },
+      exports: { "./import-resolvers": "./import-resolvers.js" },
     }),
   )
   writeFileSync(
-    path.join(stubDir, "modules.js"),
+    path.join(stubDir, "import-resolvers.js"),
     `export { createImportXResolvers } from ${JSON.stringify(pathToFileURL(IMPORT_RESOLVERS_SOURCE).href)}\n`,
   )
 }
@@ -72,5 +72,5 @@ export function linkPackageNodeModules(dir: string): void {
     symlinkSync(realpathSync(source), path.join(nodeModules, entry.name), "junction")
   }
 
-  writeModulesStub(dir)
+  writeImportResolversStub(dir)
 }

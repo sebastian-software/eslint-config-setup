@@ -13,6 +13,10 @@
     "./modules": {
       "types": "./dist/modules.d.ts",
       "import": "./dist/modules.js"
+    },
+    "./import-resolvers": {
+      "types": "./dist/import-resolvers.d.ts",
+      "import": "./dist/import-resolvers.js"
     }
   },
   "files": [
