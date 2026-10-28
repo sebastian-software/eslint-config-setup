@@ -18,7 +18,7 @@ This package solves both problems at once. A complete, pre-generated ESLint conf
 
 ## How it works
 
-Four boolean flags. Sixteen combinations. All pre-generated at build time.
+Four boolean flags. Sixteen combinations. All rules pre-resolved at build time. The only load-time step is the optional [`spellcheck`](/guide/configuration#spell-checking) setting.
 
 ```
 Build Time                          Runtime
@@ -29,7 +29,7 @@ ConfigOptions → Bitmask → SHA-1     getEslintConfig(opts) → same hash
                    dist/configs/{hash}.js ◄──── dynamic import
 ```
 
-When you call `getEslintConfig({ react: true })`, it computes a hash and loads a static JS file. No composition logic runs. No plugins get resolved. The config is just there — a plain array of objects, ready to go.
+When you call `getEslintConfig({ react: true })`, it computes a hash and loads a static JS file. No composition logic runs. No plugins get resolved. The config is just there — a plain array of objects, ready to go. The one exception is the `spellcheck` option, which adjusts a single rule entry on the loaded array.
 
 This means:
 

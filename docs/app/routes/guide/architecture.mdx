@@ -6,7 +6,7 @@ title: Architecture
 
 ## Why pre-generate?
 
-1. **No startup cost.** The config file is a static array of objects. Nothing gets composed, resolved, or merged at runtime.
+1. **No startup cost.** The config file is a static array of objects. Nothing gets composed, resolved, or merged at runtime. The only load-time step is the optional [`spellcheck`](/guide/configuration#spell-checking) option, which adjusts one rule entry on the loaded array.
 2. **Deterministic.** The same hash always loads the same config. No plugin loading order surprises.
 3. **Snapshot-testable.** Generated configs are snapshotted. When a plugin update changes rule defaults, the diff shows exactly what moved.
 4. **Inspectable.** Open `dist/configs/{hash}.js` and read what's active. No guessing.

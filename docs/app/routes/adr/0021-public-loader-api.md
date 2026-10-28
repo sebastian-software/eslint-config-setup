@@ -26,7 +26,7 @@ Expose loader functions as the stable public installation API:
 - `getEslintConfig(options)` for ESLint flat config arrays
 - `getOxlintConfig(options)` for generated OxLint config data
 
-Consumers select behavior with documented option flags (`react`, `node`, `ai`, `oxlint`) and never import from `dist/configs/*` or `dist/oxlint-configs/*`.
+Consumers select behavior with documented option flags (`react`, `node`, `ai`, `oxlint`) and the load-time `spellcheck` option (ADR-0025), and never import from `dist/configs/*` or `dist/oxlint-configs/*`.
 
 The loader owns filename calculation, module loading, missing-file errors, and import-failure diagnostics. Generated files remain inspectable output, not a supported import surface.
 

@@ -1,4 +1,4 @@
-import type { ConfigOptions, FlatConfigArray } from "../types"
+import type { ConfigFlags, FlatConfigArray } from "../types"
 
 import { aiConfig } from "../configs/ai"
 import { baseConfig } from "../configs/base"
@@ -33,7 +33,7 @@ import { standardComplexity } from "../presets/standard"
  * Composes a full flat config array from the given options.
  * This is the core logic used by the build system to generate configs.
  */
-function addCoreConfigs(config: FlatConfigArray, opts: ConfigOptions): void {
+function addCoreConfigs(config: FlatConfigArray, opts: ConfigFlags): void {
   const ai = opts.ai
 
   config.push(
@@ -51,7 +51,7 @@ function addCoreConfigs(config: FlatConfigArray, opts: ConfigOptions): void {
   )
 }
 
-function addConditionalConfigs(config: FlatConfigArray, opts: ConfigOptions): void {
+function addConditionalConfigs(config: FlatConfigArray, opts: ConfigFlags): void {
   if (!opts.node) {
     config.push(...compatConfig())
   }
@@ -87,7 +87,7 @@ function addFileTypeOverrides(config: FlatConfigArray): void {
   )
 }
 
-function addFinalConfigs(config: FlatConfigArray, opts: ConfigOptions): void {
+function addFinalConfigs(config: FlatConfigArray, opts: ConfigFlags): void {
   config.push(...jsonConfig(), ...packageJsonConfig(), ...markdownConfig(), ...prettierCompatConfig())
 
   if (opts.oxlint) {
@@ -95,7 +95,7 @@ function addFinalConfigs(config: FlatConfigArray, opts: ConfigOptions): void {
   }
 }
 
-export function composeConfig(opts: ConfigOptions): FlatConfigArray {
+export function composeConfig(opts: ConfigFlags): FlatConfigArray {
   const config: FlatConfigArray = []
 
   addCoreConfigs(config, opts)

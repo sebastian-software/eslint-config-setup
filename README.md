@@ -12,11 +12,11 @@
 
 The ESLint config for teams that ship with AI and want to move fast.
 
-Most ESLint configs compose rules at runtime from dozens of plugins. That means version conflicts, plugin mismatches, and "works on my machine" differences. **ESLint Config Setup** resolves every rule at build time — you get a flat, pre-built config where every rule is already decided. No runtime composition, no surprises.
+Most ESLint configs compose rules at runtime from dozens of plugins. That means version conflicts, plugin mismatches, and "works on my machine" differences. **ESLint Config Setup** resolves every rule at build time — you get a flat, pre-built config where every rule is already decided. No runtime composition of rules, no surprises. The one thing applied at load time is the optional `spellcheck` setting.
 
 - **AI guardrails** — a dedicated `ai` mode that enforces what code review can't: explicit types, strict naming, no magic values, complexity limits. Rules that humans find tedious are trivial for an AI to follow. The AI doesn't push back. It just fixes the code.
 - **OxLint-ready** — a single `oxlint` flag disables every ESLint rule that OxLint already covers, and `getOxlintConfig()` generates a matching OxLint config. No manual migration, no rule conflicts, no coverage gaps. Run both linters and keep the full rule surface.
-- **30 lint integrations, one import** — TypeScript (`strictTypeChecked`), React 19, import cycles, security, browser compat, spell checking, formatter-conflict support, and more. Every rule pre-resolved at build time. No plugin conflicts, no version mismatches.
+- **30 lint integrations, one import** — TypeScript (`strictTypeChecked`), React 19, import cycles, security, browser compat, spell checking, formatter-conflict support, and more. Rules pre-resolved at build time; `spellcheck` options applied at load time. No plugin conflicts, no version mismatches.
 
 ```typescript
 // eslint.config.ts
@@ -50,6 +50,22 @@ Requires Node.js >= 22, ESLint >= 10, and TypeScript >= 5.0.
 | `oxlint` | `false` | Disables ESLint rules already covered by OxLint |
 
 Flags are independent. Combine them however you need.
+
+### Spell checking
+
+Spell checking (`@cspell/eslint-plugin`, on identifiers and comments) is on by default and comes with a runtime cost: it is by far the most expensive rule in the config, and on large codebases it can dominate total lint time. In codebases that are not written in English it also reports ordinary words in large numbers. Configure it with the `spellcheck` option, or turn it off:
+
+```typescript
+// Turn spell checking off
+const config = await getEslintConfig({ react: true, spellcheck: false })
+
+// Or add a language and accepted words
+const config = await getEslintConfig({
+  spellcheck: { language: "en,de", words: ["Mandant"] },
+})
+```
+
+`spellcheck` is not a build-time flag. It does not change which pre-built config is loaded and is applied when the config loads. See the [configuration guide](https://sebastian-software.github.io/eslint-config-setup/guide/configuration) for languages, dictionaries and measurements.
 
 ## Customizing rules
 

@@ -76,6 +76,29 @@ describe("bitmaskToHash", () => {
   })
 })
 
+describe("spellcheck does not influence hashing", () => {
+  const bases = [
+    {},
+    { react: true },
+    { node: true, ai: true },
+    { react: true, node: true, ai: true, oxlint: true },
+  ]
+
+  it("resolves the same filename and bitmask with and without spellcheck", () => {
+    for (const base of bases) {
+      for (const spellcheck of [false, true, {}, { words: ["x"], language: "de" }]) {
+        expect(optionsToFilename({ ...base, spellcheck })).toBe(optionsToFilename(base))
+        expect(optionsToBitmask({ ...base, spellcheck })).toBe(optionsToBitmask(base))
+      }
+    }
+  })
+
+  it("keeps TOTAL_PERMUTATIONS at 16", () => {
+    expect(TOTAL_PERMUTATIONS).toBe(16)
+    expect([...allPermutations()]).toHaveLength(16)
+  })
+})
+
 describe("optionsToFilename", () => {
   it("returns a .js filename", () => {
     const filename = optionsToFilename({ react: true })

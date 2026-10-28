@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs"
 import { createRequire } from "node:module"
 import path from "node:path"
 
-import type { ConfigOptions, OxlintConfigOptions } from "../types"
+import type { ConfigFlags, OxlintConfigOptions } from "../types"
 
 import {
   allOxlintPermutations,
@@ -23,7 +23,7 @@ const dirname = import.meta.dirname
 const outDir = path.resolve(dirname, "../../dist/configs")
 const oxlintOutDir = path.resolve(dirname, "../../dist/oxlint-configs")
 
-function describeOptions(opts: ConfigOptions | OxlintConfigOptions): string {
+function describeOptions(opts: ConfigFlags | OxlintConfigOptions): string {
   const flags = Object.entries(opts)
     .filter(([, v]) => v)
     .map(([k]) => k)

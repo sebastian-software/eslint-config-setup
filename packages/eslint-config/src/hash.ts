@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto"
 
-import type { ConfigOptions, OxlintConfigOptions } from "./types"
+import type { ConfigFlags, ConfigOptions, OxlintConfigOptions } from "./types"
 
 /**
  * Converts config options to a deterministic bitmask.
@@ -33,7 +33,7 @@ export function optionsToFilename(opts: ConfigOptions): string {
 export const TOTAL_PERMUTATIONS = 16
 
 /** Iterate all possible option combinations. */
-export function* allPermutations(): Generator<ConfigOptions> {
+export function* allPermutations(): Generator<ConfigFlags> {
   for (let mask = 0; mask < TOTAL_PERMUTATIONS; mask++) {
     yield {
       react: Boolean(mask & (1 << 0)),
