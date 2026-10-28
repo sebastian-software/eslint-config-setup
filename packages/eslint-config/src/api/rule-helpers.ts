@@ -9,6 +9,9 @@ import type {
 
 const CONFIG_PREFIX = "eslint-config-setup/"
 
+/** Name of the generated block that registers the active feature set's plugins. */
+const BASE_BLOCK_NAME = `${CONFIG_PREFIX}base`
+
 /** Maps user-facing scope names to config block name segments. */
 const SCOPE_TO_BLOCK: Record<string, string> = {
   configs: "config-files",
@@ -96,7 +99,9 @@ export function disableRule(
 }
 
 /**
- * Add a new rule to the first (base) config block.
+ * Add a new rule to the `eslint-config-setup/base` block, which registers the
+ * plugins of the active feature set. Falls back to `config[0]` when no block
+ * carries that name. A later block that sets the same rule still overrides it.
  * With scope: adds to the first matching block instead.
  */
 export function addRule(
@@ -125,7 +130,7 @@ export function addRule(
     const { scope } = scopeOpts
     target = config.find((b) => blockMatchesScope(b, scope))
   } else {
-    target = config[0]
+    target = config.find((b) => b.name === BASE_BLOCK_NAME) ?? config[0]
   }
 
   if (!target) return

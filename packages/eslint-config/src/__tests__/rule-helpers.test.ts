@@ -179,20 +179,20 @@ describe("disableRule", () => {
 // --- addRule ---
 
 describe("addRule", () => {
-  it("adds a simple rule to the first block", () => {
+  it("falls back to config[0] for a simple rule", () => {
     const config = makeConfig()
     addRule(config, "new-rule", "error")
     expect(config[0].rules!["new-rule"]).toBe("error")
     expect(config[1].rules!["new-rule"]).toBeUndefined()
   })
 
-  it("adds a rule with options to the first block", () => {
+  it("falls back to config[0] for a rule with options", () => {
     const config = makeConfig()
     addRule(config, "max-depth", "error", [3])
     expect(config[0].rules!["max-depth"]).toStrictEqual(["error", 3])
   })
 
-  it("adds a rule with complex options", () => {
+  it("falls back to config[0] for a rule with complex options", () => {
     const config = makeConfig()
     addRule(config, "max-lines-per-function", "error", [
       { max: 50, skipBlankLines: true, skipComments: true },
@@ -203,13 +203,13 @@ describe("addRule", () => {
     ])
   })
 
-  it("overwrites an existing rule in the first block", () => {
+  it("falls back to config[0] and overwrites an existing rule", () => {
     const config = makeConfig()
     addRule(config, "no-console", "warn")
     expect(config[0].rules!["no-console"]).toBe("warn")
   })
 
-  it("creates rules object if first block has none", () => {
+  it("falls back to config[0] and creates its rules object", () => {
     const config: FlatConfigArray = [{ name: "empty" }]
     addRule(config, "new-rule", "error")
     expect(config[0].rules!["new-rule"]).toBe("error")
@@ -219,6 +219,20 @@ describe("addRule", () => {
     const config: FlatConfigArray = []
     addRule(config, "new-rule", "error")
     expect(config).toHaveLength(0)
+  })
+
+  it("targets the eslint-config-setup/base block in generated block order", () => {
+    const config: FlatConfigArray = [
+      { name: "typescript-eslint/base", plugins: {} },
+      { name: "typescript-eslint/eslint-recommended", files: ["**/*.ts"], rules: {} },
+      { name: "eslint-config-setup/base", rules: { "no-console": "error" } },
+      { name: "eslint-config-setup/tests", files: ["**/*.test.ts"], rules: {} },
+    ]
+    addRule(config, "react/display-name", "error")
+    expect(config[2].rules!["react/display-name"]).toBe("error")
+    expect(config[0].rules).toBeUndefined()
+    expect(config[1].rules!["react/display-name"]).toBeUndefined()
+    expect(config[3].rules!["react/display-name"]).toBeUndefined()
   })
 })
 
