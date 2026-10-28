@@ -98,6 +98,7 @@ export default defineConfig({
               { text: '0022 Documentation Site', link: '/adr/0022-documentation-site-as-product-surface' },
               { text: '0023 Agent-First Installation', link: '/adr/0023-agent-first-installation' },
               { text: '0024 llms.txt Entry Points', link: '/adr/0024-llms-entrypoints' },
+              { text: '0025 Runtime Spellcheck Options', link: '/adr/0025-runtime-spellcheck-options' },
             ],
           },
           { text: 'API Reference', link: '/api-reference' },

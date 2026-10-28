@@ -7,7 +7,7 @@
 - Package: `eslint-config-setup`
 - Runtime: Node.js >= 22
 - Peers: ESLint >= 10, TypeScript >= 5
-- Public API: `getEslintConfig()`, `getOxlintConfig()`, rule helper functions
+- Public API: `getEslintConfig()` (flags `react`, `node`, `ai`, `oxlint` plus the load-time `spellcheck` option), `getOxlintConfig()`, rule helper functions
 - Docs: https://sebastian-software.github.io/eslint-config-setup/
 - Source: https://github.com/sebastian-software/eslint-config-setup
 
@@ -29,7 +29,7 @@ Preferred agent flow:
 
 1. Detect package manager and workspace layout.
 2. Inspect existing ESLint, OxLint, Prettier, and package scripts.
-3. Choose only the flags that match the target project: `react`, `node`, `ai`, `oxlint`.
+3. Choose only the flags that match the target project: `react`, `node`, `ai`, `oxlint`. Spell checking is on by default and costly on large or non-English codebases; configure or disable it with the load-time `spellcheck` option (not a flag).
 4. Plan dependency and file changes before editing.
 5. Preserve existing project-specific config unless the user explicitly approves replacing it.
 6. Use the public API from `eslint-config-setup`; never copy generated config files.

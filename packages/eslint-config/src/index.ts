@@ -11,6 +11,7 @@ export { bitmaskToHash, optionsToBitmask, optionsToFilename } from "./hash"
 export { getEslintConfig, getOxlintConfig } from "./loader"
 
 export type {
+  ConfigFlags,
   ConfigOptions,
   FlatConfigArray,
   OxlintConfigOptions,
@@ -18,4 +19,5 @@ export type {
   RuleOptions,
   RuleScope,
   RuleSeverity,
+  SpellcheckOptions,
 } from "./types"

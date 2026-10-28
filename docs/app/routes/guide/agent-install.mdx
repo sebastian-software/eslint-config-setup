@@ -38,6 +38,8 @@ Use only the flags that match the target repository:
 | `ai` | The repo wants stricter conventions for AI-assisted development and generated code review. |
 | `oxlint` | OxLint runs before ESLint in the lint script. |
 
+Spell checking is on by default and costly on large codebases. If the repository is not written in English, or lint time matters, set the `spellcheck` option (`false`, or `{ language, import }` with a dictionary package). It is not a flag and does not select a pre-built config. See [Configuration](/guide/configuration#spell-checking).
+
 Mixed frontend/backend repositories often need package-local configs or scoped flat-config blocks. Avoid one global runtime assumption when browser and Node.js code live together.
 
 ## Install dependencies

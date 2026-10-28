@@ -55,6 +55,10 @@ Each scope matches generated blocks whose name starts with `eslint-config-setup/
 
 For custom file patterns (for example browser vs server folders), add your own flat config blocks with `files` globs. See [Configuration](/guide/configuration#mixed-frontendbackend-repositories).
 
+## Spell checking
+
+To disable or configure `@cspell/spellchecker`, prefer the `spellcheck` option of `getEslintConfig()` (see [Configuration](/guide/configuration#spell-checking)). `configureRule` on that rule replaces its options entirely, including the `cspell` settings.
+
 ## Why not just spread?
 
 ESLint flat configs are arrays of objects. A rule like `complexity` might appear in multiple blocks (base, AI, complexity). Finding and modifying it by hand is error-prone. These helpers walk all blocks and apply the change consistently.

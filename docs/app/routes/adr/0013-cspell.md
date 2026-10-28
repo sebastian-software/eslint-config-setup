@@ -24,3 +24,4 @@ Severity is set to `warn` (not `error`) because dictionary misses are common for
 - Projects with specialized vocabulary need a custom `cspell.json` dictionary
 - No auto-fix: developers must review and correct spelling manually
 - Always active regardless of flags — spell checking applies to all projects
+- Runtime configuration and opt-out via the `spellcheck` option are described in ADR-0025

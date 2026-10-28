@@ -1,14 +1,14 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
 import { ESLint } from "eslint"
-import { mkdirSync, readdirSync, realpathSync, symlinkSync, writeFileSync } from "node:fs"
+import { mkdirSync, realpathSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
-import { pathToFileURL } from "node:url"
 import { describe, expect, it } from "vitest"
 
 import type { ConfigOptions } from "../types"
 
 import { generateConfigModule } from "../build/codegen"
+import { linkPackageNodeModules } from "./helpers/link-node-modules"
 
 /** Minimal valid TS file — should not trigger fatal config errors. */
 const FIXTURE_TS = `const greeting: string = "hello"\nconsole.log(greeting)\n`
@@ -101,78 +101,6 @@ function enabledRuleNamespaces(config: unknown): string[] {
   }
 
   return [...namespaces].sort()
-}
-
-/**
- * node_modules root so that the generated eslint.config.js can resolve
- * all plugin imports. We symlink from the temp dir into the real one.
- */
-const NODE_MODULES = path.resolve(import.meta.dirname, "../../node_modules")
-
-/** Source file the generated configs' `eslint-config-setup/modules` import resolves to. */
-const IMPORT_RESOLVERS_SOURCE = path.resolve(
-  import.meta.dirname,
-  "../configs/import-resolvers.ts",
-)
-
-/**
- * Generated configs import `createImportXResolvers` from
- * `eslint-config-setup/modules`. Tests run before `pnpm build`, so instead of
- * depending on dist/ we install a stub package that re-exports the TS source
- * (loaded via Node's native type stripping).
- */
-function writeModulesStub(dir: string): void {
-  const stubDir = path.join(dir, "node_modules", "eslint-config-setup")
-  mkdirSync(stubDir, { recursive: true })
-  writeFileSync(
-    path.join(stubDir, "package.json"),
-    JSON.stringify({
-      name: "eslint-config-setup",
-      type: "module",
-      exports: { "./modules": "./modules.js" },
-    }),
-  )
-  writeFileSync(
-    path.join(stubDir, "modules.js"),
-    `export { createImportXResolvers } from ${JSON.stringify(pathToFileURL(IMPORT_RESOLVERS_SOURCE).href)}\n`,
-  )
-}
-
-function linkPackageNodeModules(dir: string): void {
-  const nodeModules = path.join(dir, "node_modules")
-  mkdirSync(nodeModules, { recursive: true })
-
-  for (const entry of readdirSync(NODE_MODULES, { withFileTypes: true })) {
-    if (entry.name.startsWith(".")) {
-      continue
-    }
-
-    const source = path.join(NODE_MODULES, entry.name)
-
-    if (entry.name.startsWith("@")) {
-      const scopeDir = path.join(nodeModules, entry.name)
-      mkdirSync(scopeDir, { recursive: true })
-
-      for (const scopedEntry of readdirSync(source, { withFileTypes: true })) {
-        const scopedSource = path.join(source, scopedEntry.name)
-        symlinkSync(
-          realpathSync(scopedSource),
-          path.join(scopeDir, scopedEntry.name),
-          "junction",
-        )
-      }
-
-      continue
-    }
-
-    if (entry.name === "eslint-config-setup") {
-      continue
-    }
-
-    symlinkSync(realpathSync(source), path.join(nodeModules, entry.name), "junction")
-  }
-
-  writeModulesStub(dir)
 }
 
 /** Writes files into a fresh temp project, links node_modules, lints and returns messages per file. */
