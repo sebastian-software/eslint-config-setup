@@ -23,6 +23,7 @@ export default defineConfig({
       "globals",
       "typescript-eslint",
       "eslint-config-prettier",
+      "eslint-import-resolver-typescript",
     ],
   },
   dts: true,

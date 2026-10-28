@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function, max-statements, complexity -- Rule definition file: sequential builder calls that configure the TypeScript preset. */
-import tseslint from "typescript-eslint"
+import { configs as tseslintConfigs } from "typescript-eslint"
 
 import type { FlatConfig, FlatConfigArray } from "../types"
 
@@ -14,8 +14,8 @@ import {
  * TypeScript config — extends typescript-eslint strict presets with project-wide type checking.
  *
  * Presets used:
- * - `tseslint.configs.strictTypeChecked` — all recommended + strict rules with type info
- * - `tseslint.configs.stylisticTypeChecked` — consistent code style with type info
+ * - `tseslintConfigs.strictTypeChecked` — all recommended + strict rules with type info
+ * - `tseslintConfigs.stylisticTypeChecked` — consistent code style with type info
  *
  * The presets already handle many core ESLint rules by disabling them and enabling
  * TS-aware equivalents (no-implied-eval, dot-notation, no-throw-literal, etc.).
@@ -27,8 +27,8 @@ export function typescriptConfig(opts?: { ai?: boolean; react?: boolean }): Flat
   const isAi = opts?.ai ?? false
   const isReact = opts?.react ?? false
 
-  const typeChecked = tseslint.configs.strictTypeChecked
-  const stylistic = tseslint.configs.stylisticTypeChecked
+  const typeChecked = tseslintConfigs.strictTypeChecked
+  const stylistic = tseslintConfigs.stylisticTypeChecked
 
   // Blocks 0+1: parser setup + ESLint-core replacements (structural, not validated)
   // Block 2 from each: the actual @typescript-eslint/* rules (validated)
@@ -225,7 +225,7 @@ export function typescriptConfig(opts?: { ai?: boolean; react?: boolean }): Flat
   builder.addFileOverride(
     "eslint-config-setup/typescript-js-compat",
     [...JAVASCRIPT_SOURCE_FILES],
-    tseslint.configs.disableTypeChecked.rules ?? {},
+    tseslintConfigs.disableTypeChecked.rules ?? {},
   )
 
   if (isAi) {

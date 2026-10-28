@@ -19,5 +19,6 @@ Perfectionist for all sorting needs. Base rules (mechanical sorting like imports
 
 - One plugin instead of two: fewer dependencies, consistent configuration
 - Semantic blank lines are preserved — sorting does not break across blank lines
+- The shared perfectionist settings (natural order, ascending, `partitionByNewLine`) are emitted into the generated base block and apply to consumers (see ADR-0002)
 - Structural sorting in AI mode enforces consistent ordering in AI-generated code
 - Trade-off: perfectionist is more comprehensive than simple-import-sort and has more configuration options

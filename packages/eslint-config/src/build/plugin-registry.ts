@@ -188,3 +188,27 @@ export const standaloneImports = {
   globals: 'import globals from "globals"',
   oxlintPlugin: 'import oxlintPlugin from "eslint-plugin-oxlint"',
 } as const
+
+/**
+ * JS expression (plus the imports it needs) emitted in place of a setting
+ * value that cannot be serialized as JSON (e.g. resolver instances).
+ */
+export type SettingExpression = {
+  /** Expression emitted verbatim as the setting value */
+  expression: string
+  /** Import statements (full lines) the expression depends on */
+  imports: readonly string[]
+}
+
+/**
+ * Setting keys whose values are emitted as JS expressions in generated config
+ * modules. The expressions import from the package itself
+ * (`eslint-config-setup/modules`), so generated configs reuse the exact
+ * factory used by the composed config and the options cannot drift.
+ */
+export const settingExpressions: Readonly<Record<string, SettingExpression>> = {
+  "import-x/resolver-next": {
+    expression: "createImportXResolvers()",
+    imports: ['import { createImportXResolvers } from "eslint-config-setup/modules"'],
+  },
+}

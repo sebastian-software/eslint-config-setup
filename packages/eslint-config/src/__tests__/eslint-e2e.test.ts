@@ -3,6 +3,7 @@ import { ESLint } from "eslint"
 import { mkdirSync, readdirSync, realpathSync, symlinkSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
+import { pathToFileURL } from "node:url"
 import { describe, expect, it } from "vitest"
 
 import type { ConfigOptions } from "../types"
@@ -18,6 +19,7 @@ export const Demo = () => <button type="button">Go</button>
 const FIXTURE_MDX_TS_BLOCK = `# Types
 
 \`\`\`typescript
+import { x } from "./missing"
 var greeting: string = "hello"
 \`\`\`
 
@@ -107,6 +109,35 @@ function enabledRuleNamespaces(config: unknown): string[] {
  */
 const NODE_MODULES = path.resolve(import.meta.dirname, "../../node_modules")
 
+/** Source file the generated configs' `eslint-config-setup/modules` import resolves to. */
+const IMPORT_RESOLVERS_SOURCE = path.resolve(
+  import.meta.dirname,
+  "../configs/import-resolvers.ts",
+)
+
+/**
+ * Generated configs import `createImportXResolvers` from
+ * `eslint-config-setup/modules`. Tests run before `pnpm build`, so instead of
+ * depending on dist/ we install a stub package that re-exports the TS source
+ * (loaded via Node's native type stripping).
+ */
+function writeModulesStub(dir: string): void {
+  const stubDir = path.join(dir, "node_modules", "eslint-config-setup")
+  mkdirSync(stubDir, { recursive: true })
+  writeFileSync(
+    path.join(stubDir, "package.json"),
+    JSON.stringify({
+      name: "eslint-config-setup",
+      type: "module",
+      exports: { "./modules": "./modules.js" },
+    }),
+  )
+  writeFileSync(
+    path.join(stubDir, "modules.js"),
+    `export { createImportXResolvers } from ${JSON.stringify(pathToFileURL(IMPORT_RESOLVERS_SOURCE).href)}\n`,
+  )
+}
+
 function linkPackageNodeModules(dir: string): void {
   const nodeModules = path.join(dir, "node_modules")
   mkdirSync(nodeModules, { recursive: true })
@@ -134,8 +165,51 @@ function linkPackageNodeModules(dir: string): void {
       continue
     }
 
+    if (entry.name === "eslint-config-setup") {
+      continue
+    }
+
     symlinkSync(realpathSync(source), path.join(nodeModules, entry.name), "junction")
   }
+
+  writeModulesStub(dir)
+}
+
+/** Writes files into a fresh temp project, links node_modules, lints and returns messages per file. */
+async function lintProject({
+  files,
+  label,
+  lint,
+  opts,
+}: {
+  files: Record<string, string>
+  label: string
+  lint: string[]
+  opts: ConfigOptions
+}): Promise<Map<string, Array<{ fatal?: boolean; message: string; ruleId: null | string }>>> {
+  // Real path: on macOS tmpdir() is a symlink (/var → /private/var), and
+  // import-x compares resolved real paths when it detects cycles.
+  const dir = path.join(
+    realpathSync(tmpdir()),
+    `eslint-e2e-${label}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+  )
+  mkdirSync(dir, { recursive: true })
+  writeFileSync(path.join(dir, "eslint.config.js"), generateConfigModule(opts))
+  writeFileSync(
+    path.join(dir, "tsconfig.json"),
+    JSON.stringify({ compilerOptions: { strict: true }, include: ["*.ts"] }),
+  )
+  for (const [name, content] of Object.entries(files)) {
+    writeFileSync(path.join(dir, name), content)
+  }
+  linkPackageNodeModules(dir)
+
+  const eslint = new ESLint({
+    cwd: dir,
+    overrideConfig: [{ languageOptions: { parserOptions: { tsconfigRootDir: dir } } }],
+  })
+  const results = await eslint.lintFiles(lint.map((name) => path.join(dir, name)))
+  return new Map(results.map((r) => [path.basename(r.filePath), r.messages]))
 }
 
 /** All 16 option permutations. */
@@ -205,8 +279,57 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
         fatal,
         `Fatal errors:\n${fatal.map((m) => `  ${m.message}`).join("\n")}`,
       ).toHaveLength(0)
+
+      // Resolver misconfiguration surfaces as non-fatal "Resolve error" messages
+      const resolveErrors = results[0].messages.filter((m) => m.message.startsWith("Resolve error"))
+      expect(
+        resolveErrors,
+        `Resolve errors:\n${resolveErrors.map((m) => `  ${m.message}`).join("\n")}`,
+      ).toHaveLength(0)
     })
   }
+})
+
+describe("ESLint E2E — settings reach the generated config", () => {
+  const CYCLE_PERMUTATIONS: Array<{ label: string; opts: ConfigOptions }> = [
+    { label: "base", opts: {} },
+    { label: "node", opts: { node: true } },
+  ]
+
+  for (const { label, opts } of CYCLE_PERMUTATIONS) {
+    it(`reports import/no-cycle for circular imports only: ${label}`, { timeout: 60_000 }, async () => {
+      const messages = await lintProject({ label: `cycle-${label}`, opts, lint: ["a.ts", "e.ts"], files: {
+        "a.ts": `import { b } from "./b"\nexport const a = (): number => b() + 1\n`,
+        "b.ts": `import { a } from "./a"\nexport const b = (): number => a() + 1\n`,
+        "d.ts": `export const d = (): number => 1\n`,
+        "e.ts": `import { d } from "./d"\nexport const e = (): number => d() + 1\n`,
+      } })
+
+      expect(messages.get("a.ts")?.some((m) => m.ruleId === "import/no-cycle")).toBe(true)
+      expect(messages.get("e.ts")?.some((m) => m.ruleId === "import/no-cycle")).toBe(false)
+    })
+  }
+
+  it("applies natural sort order to object keys (ai)", { timeout: 60_000 }, async () => {
+    const messages = await lintProject({ label: "natural-objects", opts: { ai: true }, lint: ["sorted.ts", "unsorted.ts"], files: {
+      "sorted.ts": `export const sorted = { item2: 1, item10: 2 }\n`,
+      "unsorted.ts": `export const unsorted = { item10: 1, item2: 2 }\n`,
+    } })
+
+    expect(messages.get("sorted.ts")?.some((m) => m.ruleId === "perfectionist/sort-objects")).toBe(false)
+    expect(messages.get("unsorted.ts")?.some((m) => m.ruleId === "perfectionist/sort-objects")).toBe(true)
+  })
+
+  it("applies natural sort order to named imports", { timeout: 60_000 }, async () => {
+    const messages = await lintProject({ label: "natural-imports", opts: {}, lint: ["sorted.ts", "unsorted.ts"], files: {
+      "x.ts": `export const item2 = 1\nexport const item10 = 2\n`,
+      "sorted.ts": `import { item2, item10 } from "./x"\n\nexport const sorted = item2 + item10\n`,
+      "unsorted.ts": `import { item10, item2 } from "./x"\n\nexport const unsorted = item2 + item10\n`,
+    } })
+
+    expect(messages.get("sorted.ts")?.some((m) => m.ruleId === "perfectionist/sort-named-imports")).toBe(false)
+    expect(messages.get("unsorted.ts")?.some((m) => m.ruleId === "perfectionist/sort-named-imports")).toBe(true)
+  })
 })
 
 describe("ESLint E2E — base block stays on JS/TS files", () => {
@@ -339,6 +462,7 @@ describe("ESLint E2E — MDX handling", () => {
 
     const fatal = result.messages.filter((message) => message.fatal)
     expect(fatal).toHaveLength(0)
+    expect(result.messages.filter((message) => message.message.startsWith("Resolve error"))).toHaveLength(0)
     expect(result.messages.some((message) => message.ruleId === "no-var")).toBe(
       true,
     )

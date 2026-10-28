@@ -72,3 +72,23 @@ describe("oxlint E2E — generated configs are valid", async () => {
     })
   }
 })
+
+describe("oxlint migration — ESLint-only settings do not leak", async () => {
+  const migrateModule = await import("@oxlint/migrate")
+  const migrate = migrateModule.default
+
+  for (const { label, opts } of PERMUTATIONS) {
+    it(`migrated config carries no import-x or perfectionist settings: ${label}`, { timeout: 30_000 }, async () => {
+      const eslintConfig = composeConfig({ ...opts, oxlint: false })
+      const oxlintConfig = await migrate(eslintConfig)
+      const configJson = serializeOxlintConfig(oxlintConfig)
+
+      expect(configJson).not.toContain('"import-x/resolver')
+      const parsed: unknown = JSON.parse(configJson)
+      const settings = typeof parsed === "object" && parsed !== null && "settings" in parsed ? parsed.settings : {}
+      const serializedSettings = JSON.stringify(settings ?? {})
+      expect(serializedSettings).not.toContain("import-x/")
+      expect(serializedSettings).not.toContain("perfectionist")
+    })
+  }
+})

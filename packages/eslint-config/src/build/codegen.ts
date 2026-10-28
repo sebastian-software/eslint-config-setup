@@ -2,8 +2,11 @@
 /**
  * Code generator — produces valid ES module strings for pre-generated ESLint
  * flat configs. Merges rules from the composed config array by matching file
- * patterns, then emits a JS module with real import statements and only the
- * resolved rules (pure JSON).
+ * patterns, then emits a JS module with real import statements, the resolved
+ * rules (pure JSON) and the settings of global config blocks. Settings are
+ * emitted as JSON, except for registered keys (see `settingExpressions`) whose
+ * non-serializable values (e.g. resolver instances) are emitted as JS
+ * expressions with their own imports.
  *
  * This replaces the old `serializeConfig()` approach that broke on
  * functions, class instances, and circular references.
@@ -18,7 +21,12 @@ import {
   TYPESCRIPT_SOURCE_FILES,
 } from "../file-patterns"
 import { composeConfig } from "./compose"
-import { pluginRegistry, standaloneImports } from "./plugin-registry"
+import {
+  pluginRegistry,
+  type SettingExpression,
+  settingExpressions,
+  standaloneImports,
+} from "./plugin-registry"
 
 type Rules = Record<string, unknown>
 
@@ -77,14 +85,22 @@ export function generateConfigModule(opts: ConfigOptions): string {
   const hasNode = opts.node === true
   const hasOxlint = opts.oxlint === true
 
-  // Build the import block
-  const imports = buildImports(requiredNamespaces, { hasReact, hasNode, hasOxlint })
+  // Settings from global blocks (e.g. perfectionist, import-x resolvers)
+  const baseSettings = emitSettings(collectBaseSettings(config))
+
+  // Build the import block (plugin imports plus imports needed by settings)
+  const imports = [
+    ...new Set([
+      ...buildImports(requiredNamespaces, { hasReact, hasNode, hasOxlint }),
+      ...baseSettings.imports,
+    ]),
+  ].sort()
 
   // Build the config blocks
   const blocks: string[] = [ "  // TypeScript parser setup", "  ...tseslint.configs.strictTypeChecked.slice(0, 2),", ""]
 
   // Main base block — all effective rules for JS/TS code files
-  blocks.push(emitBaseBlock(baseRules, baseNamespaces, { hasReact, hasNode }))
+  blocks.push(emitBaseBlock(baseRules, baseNamespaces, baseSettings.code, { hasReact, hasNode }))
 
   // 3. JS Compat — disable type-checked rules for .js files
   if (Object.keys(jsCompatDiff).length > 0) {
@@ -308,6 +324,124 @@ function configMatchesFile(block: FlatConfig, filename: string): boolean {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
+// Settings collection and emission
+// ────────────────────────────────────────────────────────────────────────────
+
+type Settings = Record<string, unknown>
+
+/**
+ * Collects the settings of all fully global config blocks (no `files`,
+ * `ignores`, `language` or `processor`) in composition order, merged like
+ * ESLint's flat config: plain objects merge recursively, arrays and all other
+ * values are replaced by the later block. Values are kept by reference.
+ *
+ * Settings on any other block cannot be represented in the generated base
+ * block, so they are rejected instead of being silently dropped.
+ */
+export function collectBaseSettings(config: FlatConfigArray): Settings {
+  let merged: Settings = {}
+
+  for (const [index, block] of config.entries()) {
+    const settings: unknown = block.settings
+    if (!isPlainObject(settings)) continue
+
+    if (!isGlobalBlock(block)) {
+      if (Object.keys(settings).length === 0) continue
+      const label = block.name === undefined ? `#${index}` : `"${block.name}"`
+      throw new Error(
+        `Config block ${label} defines settings but is not global (files, ignores, language or processor set). Generated configs only support settings on global blocks.`,
+      )
+    }
+
+    merged = deepMergeSettings(merged, settings)
+  }
+
+  return merged
+}
+
+/**
+ * Emits a settings object as JS source for the base block. JSON-serializable
+ * values are emitted as JSON; keys registered in `mappings` are always emitted
+ * as their expression, and the imports those expressions need are returned.
+ *
+ * @throws {Error} If a value is not JSON-serializable and has no mapping, or if a
+ *   registered mapping key is missing from `settings`.
+ */
+export function emitSettings(
+  settings: Settings,
+  mappings: Readonly<Record<string, SettingExpression>> = settingExpressions,
+): { code: string; imports: string[] } {
+  const imports = new Set<string>()
+  const entries: string[] = []
+
+  for (const key of Object.keys(mappings)) {
+    if (!Object.hasOwn(settings, key)) {
+      throw new Error(`Setting expression registered for "${key}", but no config block defines this setting.`)
+    }
+  }
+
+  for (const key of Object.keys(settings).sort()) {
+    const value = settings[key]
+    let code: string
+
+    if (Object.hasOwn(mappings, key)) {
+      const mapping = mappings[key]
+      code = mapping.expression
+      for (const statement of mapping.imports) {
+        imports.add(statement)
+      }
+    } else if (isJsonSerializable(value)) {
+      code = JSON.stringify(value, null, 2).replaceAll("\n", "\n  ")
+    } else {
+      throw new Error(
+        `Setting "${key}" is not JSON-serializable. Register a setting expression for it in plugin-registry.ts.`,
+      )
+    }
+
+    entries.push(`  ${JSON.stringify(key)}: ${code},`)
+  }
+
+  const body = entries.length === 0 ? "{}" : `{\n${entries.join("\n")}\n}`
+  // Indent all lines except the first to match the base block (4 spaces)
+  return { code: body.replaceAll("\n", "\n    "), imports: [...imports].sort() }
+}
+
+/** A block is global when it applies to every file ESLint lints as JS/TS. */
+function isGlobalBlock(block: FlatConfig): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Checking dynamic properties on config block
+  const b = block as Record<string, unknown>
+  return b.files === undefined && b.ignores === undefined && !hasNonJsFields(block)
+}
+
+/** Plain object: prototype is `Object.prototype` or `null` (no arrays, no class instances). */
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (typeof value !== "object" || value === null) return false
+  const proto: unknown = Object.getPrototypeOf(value)
+  return proto === Object.prototype || proto === null
+}
+
+/** Replicates ESLint's flat-config `deepMerge` for settings (no cloning). */
+function deepMergeSettings(target: Settings, source: Settings): Settings {
+  const result: Settings = { ...target }
+  for (const [key, value] of Object.entries(source)) {
+    const existing = result[key]
+    result[key] = isPlainObject(existing) && isPlainObject(value)
+      ? deepMergeSettings(existing, value)
+      : value
+  }
+  return result
+}
+
+/** Recursively: null, boolean, finite number, string, array or plain object. */
+function isJsonSerializable(value: unknown): boolean {
+  if (value === null || typeof value === "boolean" || typeof value === "string") return true
+  if (typeof value === "number") return Number.isFinite(value)
+  if (Array.isArray(value)) return value.every((item) => isJsonSerializable(item))
+  if (isPlainObject(value)) return Object.values(value).every((item) => isJsonSerializable(item))
+  return false
+}
+
+// ────────────────────────────────────────────────────────────────────────────
 // Rule diffing
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -444,6 +578,7 @@ function buildImports(
 function emitBaseBlock(
   rules: Rules,
   namespaces: Set<string>,
+  settingsCode: string,
   features: { hasReact: boolean; hasNode: boolean },
 ): string {
   // Scoped to JS/TS code files: without `files`, the JS/TS rules would also
@@ -483,6 +618,9 @@ function emitBaseBlock(
     lines.push("      },")
   }
   lines.push("    },")
+
+  // Settings (shared by all files the base block applies to)
+  lines.push(`    settings: ${settingsCode},`)
 
   // Rules
   lines.push(`    rules: ${indentJson(rules, 4)},`, "  },", "")
