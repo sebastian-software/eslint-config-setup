@@ -4,7 +4,11 @@ import { configs as tseslintConfigs } from "typescript-eslint"
 import type { FlatConfig, FlatConfigArray } from "../types"
 
 import { createConfig } from "../build/config-builder"
-import { MARKDOWN_CODE_BLOCK_FILES, TYPESCRIPT_SOURCE_FILES } from "../file-patterns"
+import {
+  JAVASCRIPT_SOURCE_FILES,
+  MARKDOWN_CODE_BLOCK_FILES,
+  TYPESCRIPT_SOURCE_FILES,
+} from "../file-patterns"
 
 /**
  * TypeScript config — extends typescript-eslint strict presets with project-wide type checking.
@@ -220,7 +224,7 @@ export function typescriptConfig(opts?: { ai?: boolean; react?: boolean }): Flat
   // https://typescript-eslint.io/users/configs#disable-type-checked
   builder.addFileOverride(
     "eslint-config-setup/typescript-js-compat",
-    ["**/*.{js,mjs,cjs}"],
+    [...JAVASCRIPT_SOURCE_FILES],
     tseslintConfigs.disableTypeChecked.rules ?? {},
   )
 
