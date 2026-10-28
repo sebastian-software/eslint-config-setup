@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.6.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.5.2...eslint-config-setup-v0.6.0) (2026-10-28)
+
+
+### Features
+
+* **cspell:** make spell checking configurable via spellcheck option ([#108](https://github.com/sebastian-software/eslint-config-setup/issues/108)) ([e76c69a](https://github.com/sebastian-software/eslint-config-setup/commit/e76c69a361be7aa3dfcd21c0f33a7be9fcb7b526)), closes [#101](https://github.com/sebastian-software/eslint-config-setup/issues/101)
+
+
+### Bug Fixes
+
+* **codegen:** emit settings from global config blocks in generated configs ([#106](https://github.com/sebastian-software/eslint-config-setup/issues/106)) ([efb42e1](https://github.com/sebastian-software/eslint-config-setup/commit/efb42e1e99988a65b6d4ad4588249799f27e41ac))
+* **codegen:** load only the import resolvers in generated configs ([#111](https://github.com/sebastian-software/eslint-config-setup/issues/111)) ([b535b67](https://github.com/sebastian-software/eslint-config-setup/commit/b535b67a55ecccc48f0c8ec9416f73b00646ace6))
+* **codegen:** scope base block to JS/TS files so JSON linting no longer aborts ([#105](https://github.com/sebastian-software/eslint-config-setup/issues/105)) ([0dd308c](https://github.com/sebastian-software/eslint-config-setup/commit/0dd308c078b28b34957e4ae3c973e6adb9e5632f))
+* **deps:** refresh lockfile to clear audit advisories ([0954bd7](https://github.com/sebastian-software/eslint-config-setup/commit/0954bd73d402d5bfbc04ddb11ce04264631ce63f))
+* **deps:** refresh lockfile to clear audit advisories ([0f80475](https://github.com/sebastian-software/eslint-config-setup/commit/0f80475ef221868d6da8b8149a597d84addfec36))
+* **react:** scope type-aware rules away from Markdown code blocks ([#110](https://github.com/sebastian-software/eslint-config-setup/issues/110)) ([d14a0b9](https://github.com/sebastian-software/eslint-config-setup/commit/d14a0b9e559a8871ac8efe36c3fe107678160bd4)), closes [#104](https://github.com/sebastian-software/eslint-config-setup/issues/104)
+* **rule-helpers:** add unscoped rules to the eslint-config-setup/base block ([#103](https://github.com/sebastian-software/eslint-config-setup/issues/103)) ([0330c7c](https://github.com/sebastian-software/eslint-config-setup/commit/0330c7c6365102b5374ad876dbc6d1627995af3a)), closes [#102](https://github.com/sebastian-software/eslint-config-setup/issues/102)
+
 ## [0.5.2](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.5.1...eslint-config-setup-v0.5.2) (2026-07-07)
 
 
