@@ -450,6 +450,93 @@ describe("ESLint E2E — MDX handling", () => {
   })
 })
 
+/** Rules that need type information and must not be active in code blocks. */
+const REACT_TYPE_AWARE_RULE_NAMES = [
+  "@typescript-eslint/no-misused-promises",
+  "react/no-implicit-key",
+  "react/no-unused-props",
+  "react/jsx-no-leaked-render",
+]
+
+const CODE_BLOCK_README = [
+  "# Docs",
+  "",
+  "```ts",
+  "var a = 1",
+  "export const f = async (p: { x?: number[] }) => p.x && [1].map((n) => n)",
+  "```",
+  "",
+  "```tsx",
+  "var b = 2",
+  "export function C(p: { x?: boolean }) { return <div>{p.x && <span />}</div> }",
+  "```",
+  "",
+  "```js",
+  "var c = 3",
+  "const d = <div>{c && <span />}</div>",
+  "const e = [1, 2].reverse()",
+  "const g = [1, 2].reduce((a, b) => a + b)",
+  "```",
+  "",
+].join("\n")
+
+describe("ESLint E2E — Markdown code blocks without type information", () => {
+  for (const { label, opts } of PERMUTATIONS) {
+    // Virtual file indices: the (doc) block takes index 0.
+    const virtualFiles = opts.react
+      ? ["README.md/1_0.ts", "README.md/2_1.tsx", "README.md/3_2.js"]
+      : []
+
+    it(`lints code blocks without crashing: ${label}`, { timeout: 60_000 }, async () => {
+      const dir = path.join(
+        tmpdir(),
+        `eslint-md-blocks-${Date.now()}-${label.replaceAll(" ", "-")}`,
+      )
+      mkdirSync(dir, { recursive: true })
+
+      writeFileSync(path.join(dir, "eslint.config.js"), generateConfigModule(opts))
+      writeFileSync(path.join(dir, "README.md"), CODE_BLOCK_README)
+      writeFileSync(
+        path.join(dir, "tsconfig.json"),
+        JSON.stringify({ compilerOptions: { jsx: "react-jsx", strict: true }, include: ["*.ts", "*.tsx"] }),
+      )
+
+      linkPackageNodeModules(dir)
+
+      const eslint = new ESLint({
+        cwd: dir,
+        overrideConfig: [{ languageOptions: { parserOptions: { tsconfigRootDir: dir } } }],
+      })
+
+      const results = await eslint.lintFiles([path.join(dir, "README.md")])
+      const messages = results.flatMap((result) => result.messages)
+
+      expect(messages.filter((m) => m.fatal)).toStrictEqual([])
+
+      const expectedLines = CODE_BLOCK_README.split("\n")
+        .map((line, index) => (line.startsWith("var ") ? index + 1 : -1))
+        .filter((line) => line > 0)
+      const noVarLines = messages
+        .filter((m) => m.ruleId === "no-var")
+        .map((m) => m.line)
+        .sort((a, b) => a - b)
+      expect(noVarLines).toStrictEqual(expectedLines)
+      expect(expectedLines).toHaveLength(3)
+
+      for (const virtual of virtualFiles) {
+        const resolved = await eslint.calculateConfigForFile(path.join(dir, virtual))
+        const rules: Record<string, unknown> = resolved?.rules ?? {}
+        const enabled = REACT_TYPE_AWARE_RULE_NAMES.filter((name) => {
+          const entry = rules[name]
+          const severity = Array.isArray(entry) ? entry[0] : entry
+          return severity !== undefined && severity !== "off" && severity !== 0
+        })
+        expect(enabled, `${virtual} has type-aware rules enabled`).toStrictEqual([])
+      }
+    })
+  }
+})
+
 /** Write a generated react config plus a README into a fresh temp project. */
 function setupReactProject(): string {
   const dir = path.join(tmpdir(), `eslint-add-rule-e2e-${Date.now()}-${Math.random().toString(36).slice(2)}`)

@@ -188,6 +188,22 @@ describe("createConfig", () => {
       expect(result[1].files).toStrictEqual(["**/*.js"])
       expect(result[1].rules!["fake/rule-a"]).toBe("off")
     })
+
+    it("emits ignores on the override block when given", () => {
+      const result = createConfig({ name: "main", presets: [fakePreset] })
+        .addFileOverride("override", ["**/*.ts"], { "fake/rule-a": "off" }, ["**/*.md/**"])
+        .build()
+
+      expect(result[1].ignores).toStrictEqual(["**/*.md/**"])
+    })
+
+    it("omits the ignores key when not given", () => {
+      const result = createConfig({ name: "main", presets: [fakePreset] })
+        .addFileOverride("override", ["**/*.ts"], { "fake/rule-a": "off" })
+        .build()
+
+      expect(result[1]).not.toHaveProperty("ignores")
+    })
   })
 
   describe("preset expansion", () => {

@@ -31,12 +31,18 @@ type ConfigBuilder = {
   disableRule: (name: string) => ConfigBuilder
   /** Remove a rule entirely from output. THROWS if not found. */
   removeRule: (name: string) => ConfigBuilder
-  /** Add an extra output block with specific files and rules (not validated against preset). */
+  /**
+   * Add an extra output block with specific files and rules (not validated against preset).
+   * When `ignores` is given, it is emitted on the block to exclude matching files.
+   */
+  /* eslint-disable max-params -- Positional signature kept for existing callers; ignores is optional. */
   addFileOverride: (
     name: string,
     files: string[],
     rules: Partial<Linter.RulesRecord>,
+    ignores?: string[],
   ) => ConfigBuilder
+  /* eslint-enable max-params */
   /** Materialize into FlatConfigArray. */
   build: () => FlatConfigArray
 }
@@ -70,6 +76,7 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
     name: string
     files: string[]
     rules: Partial<Linter.RulesRecord>
+    ignores?: string[]
   }> = []
 
   const builder: ConfigBuilder = {
@@ -155,12 +162,14 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
       return builder
     },
 
+    // eslint-disable-next-line max-params -- Positional signature kept for existing callers; ignores is optional.
     addFileOverride(
       name: string,
       files: string[],
       rules: Partial<Linter.RulesRecord>,
+      ignores?: string[],
     ): ConfigBuilder {
-      fileOverrides.push({ name, files, rules })
+      fileOverrides.push({ name, files, rules, ignores })
       return builder
     },
 
@@ -231,11 +240,15 @@ export function createConfig(options: ConfigBuilderOptions): ConfigBuilder {
 
       // File override blocks
       for (const fo of fileOverrides) {
-        result.push({
+        const block: FlatConfig = {
           name: fo.name,
           files: fo.files,
           rules: fo.rules,
-        })
+        }
+        if (fo.ignores) {
+          block.ignores = fo.ignores
+        }
+        result.push(block)
       }
 
       return result
