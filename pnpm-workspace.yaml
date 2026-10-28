@@ -3,6 +3,7 @@ packages:
   - "docs"
 overrides:
   esbuild: 0.28.1
+  "toml@<5.0.1": ^5.0.1
 allowBuilds:
   esbuild: true
   unrs-resolver: true
