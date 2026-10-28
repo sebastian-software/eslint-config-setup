@@ -65,7 +65,7 @@ The overlapping React surface is split by namespace:
 
 - `react/*` rules with legacy-compatible names can shift to OxLint.
 - `jsx-a11y/*` rules shift when OxLint supports the same accessibility check.
-- Core `react-hooks/*` rules can run in OxLint while newer React Compiler checks stay in ESLint.
+- `react-hooks/*` rules, including most React Compiler checks, can run in OxLint. Only `react-hooks/config` and `react-hooks/gating` stay in ESLint.
 - `ai: true` can add extra JSX accessibility and AI-only `react-perf/*` overlap.
 
 ```
@@ -74,11 +74,12 @@ Your config                 What actually runs
 react/jsx-key        ───►   OxLint (Rust)
 react/no-danger      ───►   OxLint (Rust)
 react-hooks/rules-of-hooks ► OxLint (Rust)
+react-hooks/void-use-memo ► OxLint (React Compiler rule)
 jsx-a11y/alt-text    ───►   OxLint (Rust)
 
 react/no-leaked-timeout ──► ESLint (no OxLint equivalent yet)
 react/no-context-provider ► ESLint (React 19 rule, new)
-react-hooks/void-use-memo ► ESLint (React Compiler rule)
+react-hooks/gating   ───►   ESLint (no OxLint equivalent yet)
 ...remaining rules
 ```
 

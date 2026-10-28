@@ -18,10 +18,10 @@ When `react: true` is enabled alongside OxLint, React-related overlap is disable
 
 - `react/*` rules overlap through legacy-compatible names.
 - `jsx-a11y/*` rules overlap when OxLint supports the same accessibility check.
-- Core `react-hooks/*` rules can run in OxLint while newer React Compiler checks stay in ESLint.
+- `react-hooks/*` rules, including most React Compiler checks, can run in OxLint. Only `react-hooks/config` and `react-hooks/gating` stay in ESLint.
 - `ai: true` can add extra JSX accessibility and AI-only `react-perf/*` overlap.
 
-Rules like `react/jsx-key`, `react/no-danger`, `jsx-a11y/alt-text`, and `react-hooks/rules-of-hooks` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet, such as Web API leak detection, React 19 migration rules, and newer React Compiler checks.
+Rules like `react/jsx-key`, `react/no-danger`, `jsx-a11y/alt-text`, and `react-hooks/purity` are handled natively by OxLint while ESLint covers the rules OxLint can't handle yet, such as Web API leak detection and React 19 migration rules.
 
 As OxLint expands its React coverage, more rules can shift to Rust. A QA-gated rule-surface check reviews that drift before dependency upgrades land.
 

@@ -55,7 +55,7 @@ The compat plugin builds a unified rules object in three steps:
 
 With the current dependency baseline, 28 active `react/*` rules overlap with OxLint. When users enable `oxlint: true`, `eslint-plugin-oxlint`'s `flat/react` config sets those rules to `"off"` in ESLint — and because our compat plugin uses the exact names OxLint expects, the deduplication works automatically. ESLint only handles the React rules OxLint can't cover yet.
 
-OxLint integration also appends native `flat/react-hooks` coverage for the two core Hooks rules. When both `react: true` and `ai: true` are enabled, it appends `flat/react-perf` so the four AI-only React Perf rules run in Rust.
+OxLint integration also appends native `flat/react-hooks` coverage. It started with the two core Hooks rules and, since `eslint-plugin-oxlint` 1.89, also includes most React Compiler rules. When both `react: true` and `ai: true` are enabled, it appends `flat/react-perf` so the four AI-only React Perf rules run in Rust.
 
 ### What this means for future growth
 

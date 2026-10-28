@@ -133,6 +133,7 @@ const EXPECTED_OXLINT_REACT_RULES = [
   "react/forbid-dom-props",
   "react/forbid-elements",
   "react/forward-ref-uses-ref",
+  "react/function-component-definition",
   "react/hook-use-state",
   "react/iframe-missing-sandbox",
   "react/jsx-boolean-value",
@@ -227,8 +228,30 @@ const EXPECTED_OXLINT_JSX_A11Y_RULES = [
 ] as const
 
 const EXPECTED_OXLINT_REACT_HOOKS_RULES = [
+  "react-hooks/capitalized-calls",
+  "react-hooks/error-boundaries",
   "react-hooks/exhaustive-deps",
+  "react-hooks/exhaustive-effect-dependencies",
+  "react-hooks/globals",
+  "react-hooks/hooks",
+  "react-hooks/immutability",
+  "react-hooks/incompatible-library",
+  "react-hooks/invariant",
+  "react-hooks/memo-dependencies",
+  "react-hooks/no-deriving-state-in-effects",
+  "react-hooks/preserve-manual-memoization",
+  "react-hooks/purity",
+  "react-hooks/refs",
+  "react-hooks/rule-suppression",
   "react-hooks/rules-of-hooks",
+  "react-hooks/set-state-in-effect",
+  "react-hooks/set-state-in-render",
+  "react-hooks/static-components",
+  "react-hooks/syntax",
+  "react-hooks/todo",
+  "react-hooks/unsupported-syntax",
+  "react-hooks/use-memo",
+  "react-hooks/void-use-memo",
 ] as const
 
 const EXPECTED_OXLINT_REACT_PERF_RULES = [
