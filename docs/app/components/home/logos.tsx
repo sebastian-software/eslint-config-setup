@@ -12,7 +12,7 @@ function Icon({
   d,
   viewBox = "0 0 24 24",
   className,
-}: { d: string; viewBox?: string } & LogoProps) {
+}: LogoProps & { d: string; viewBox?: string }) {
   return (
     <svg
       viewBox={viewBox}

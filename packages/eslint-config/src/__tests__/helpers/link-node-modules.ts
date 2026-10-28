@@ -1,12 +1,42 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
-import { mkdirSync, readdirSync, realpathSync, symlinkSync } from "node:fs"
+import { mkdirSync, readdirSync, realpathSync, symlinkSync, writeFileSync } from "node:fs"
 import path from "node:path"
+import { pathToFileURL } from "node:url"
 
 /**
  * node_modules root so that the generated eslint.config.js can resolve
  * all plugin imports. We symlink from the temp dir into the real one.
  */
 const NODE_MODULES = path.resolve(import.meta.dirname, "../../../node_modules")
+
+/** Source file the generated configs' `eslint-config-setup/modules` import resolves to. */
+const IMPORT_RESOLVERS_SOURCE = path.resolve(
+  import.meta.dirname,
+  "../../configs/import-resolvers.ts",
+)
+
+/**
+ * Generated configs import `createImportXResolvers` from
+ * `eslint-config-setup/modules`. Tests run before `pnpm build`, so instead of
+ * depending on dist/ we install a stub package that re-exports the TS source
+ * (loaded via Node's native type stripping).
+ */
+function writeModulesStub(dir: string): void {
+  const stubDir = path.join(dir, "node_modules", "eslint-config-setup")
+  mkdirSync(stubDir, { recursive: true })
+  writeFileSync(
+    path.join(stubDir, "package.json"),
+    JSON.stringify({
+      name: "eslint-config-setup",
+      type: "module",
+      exports: { "./modules": "./modules.js" },
+    }),
+  )
+  writeFileSync(
+    path.join(stubDir, "modules.js"),
+    `export { createImportXResolvers } from ${JSON.stringify(pathToFileURL(IMPORT_RESOLVERS_SOURCE).href)}\n`,
+  )
+}
 
 export function linkPackageNodeModules(dir: string): void {
   const nodeModules = path.join(dir, "node_modules")
@@ -35,6 +65,12 @@ export function linkPackageNodeModules(dir: string): void {
       continue
     }
 
+    if (entry.name === "eslint-config-setup") {
+      continue
+    }
+
     symlinkSync(realpathSync(source), path.join(nodeModules, entry.name), "junction")
   }
+
+  writeModulesStub(dir)
 }

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest"
 
-import { generateConfigModule } from "../build/codegen"
+import type { FlatConfigArray } from "../types"
+
+import { collectBaseSettings, emitSettings, generateConfigModule } from "../build/codegen"
+import { createImportXResolvers } from "../configs/import-resolvers"
+import { importsConfig } from "../configs/imports"
 
 describe("generateConfigModule", () => {
   it("generates a valid ES module for base config", () => {
@@ -25,6 +29,19 @@ describe("generateConfigModule", () => {
     expect(start).toBeGreaterThan(-1)
     expect(end).toBeGreaterThan(start)
     expect(output.slice(start, end)).toContain("@cspell/spellchecker")
+  })
+
+  it("scopes the base block to JS/TS code files", () => {
+    const output = generateConfigModule({})
+    const baseBlock = /name: "eslint-config-setup\/base",\n {4}files: (\[.*\]),/.exec(output)
+    expect(baseBlock).not.toBeNull()
+    expect(JSON.parse(baseBlock?.[1] ?? "null")).toStrictEqual([
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.mts",
+      "**/*.cts",
+      "**/*.{js,mjs,cjs}",
+    ])
   })
 
   it("includes JS compat override", () => {
@@ -149,5 +166,124 @@ describe("generateConfigModule", () => {
     const baseMatch = /name: "eslint-config-setup\/base"[\s\S]*?rules: \{([\s\S]*?)\}/.exec(output)
     expect(baseMatch).not.toBeNull()
     expect(baseMatch?.[1]).not.toContain('"off"')
+  })
+})
+
+describe("collectBaseSettings", () => {
+  it("merges settings from global blocks, deep-merging objects and replacing arrays", () => {
+    const config: FlatConfigArray = [
+      { name: "one", settings: { a: { x: 1, y: [1, 2] }, keep: "yes" } },
+      { name: "two", settings: { a: { y: [3], z: true } } },
+    ]
+    expect(collectBaseSettings(config)).toStrictEqual({
+      a: { x: 1, y: [3], z: true },
+      keep: "yes",
+    })
+  })
+
+  it("keeps values by reference", () => {
+    const list = [1, 2]
+    const settings = collectBaseSettings([{ name: "one", settings: { list } }])
+    expect(settings.list).toBe(list)
+  })
+
+  it("ignores blocks without settings", () => {
+    expect(collectBaseSettings([{ name: "rules-only", rules: {} }])).toStrictEqual({})
+  })
+
+  const scoped: Array<[string, FlatConfigArray[number]]> = [
+    ["files", { files: ["**/*.ts"] }],
+    ["ignores", { ignores: ["dist"] }],
+    ["language", { language: "json/json" }],
+    ["processor", { processor: "markdown/markdown" }],
+  ]
+  for (const [kind, extra] of scoped) {
+    it(`throws for settings on a block with ${kind}`, () => {
+      const config: FlatConfigArray = [{ name: `scoped-by-${kind}`, settings: { foo: 1 }, ...extra }]
+      expect(() => collectBaseSettings(config)).toThrow(`scoped-by-${kind}`)
+    })
+  }
+})
+
+describe("emitSettings", () => {
+  it("emits plain JSON-serializable values as JSON", () => {
+    const { code, imports } = emitSettings(
+      { perfectionist: { type: "natural", list: [1, null, true] } },
+      {},
+    )
+    expect(code).toContain('"perfectionist"')
+    expect(code).toContain('"type": "natural"')
+    expect(imports).toStrictEqual([])
+  })
+
+  it("throws for non-serializable values without a mapping", () => {
+    const notSerializable = /"bad" is not JSON-serializable/
+    expect(() => emitSettings({ bad: { fn: () => 1 } }, {})).toThrow(notSerializable)
+    expect(() => emitSettings({ bad: () => 1 }, {})).toThrow(notSerializable)
+    expect(() => emitSettings({ bad: new Date() }, {})).toThrow(notSerializable)
+    expect(() => emitSettings({ bad: Number.NaN }, {})).toThrow(notSerializable)
+  })
+
+  it("emits the mapping expression and imports for a registered key", () => {
+    const mappings = {
+      custom: { expression: "makeCustom()", imports: ['import { makeCustom } from "pkg"'] },
+    }
+    const { code, imports } = emitSettings({ custom: [{ fn: () => 1 }] }, mappings)
+    expect(code).toContain("makeCustom()")
+    expect(imports).toStrictEqual(['import { makeCustom } from "pkg"'])
+  })
+
+  it("lets a mapping win over a JSON-serializable value", () => {
+    const mappings = {
+      custom: { expression: "makeCustom()", imports: ['import { makeCustom } from "pkg"'] },
+    }
+    const { code } = emitSettings({ custom: ["plain"] }, mappings)
+    expect(code).toContain("makeCustom()")
+    expect(code).not.toContain("plain")
+  })
+
+  it("throws when a registered mapping key is absent from settings", () => {
+    const mappings = { missing: { expression: "x()", imports: [] } }
+    expect(() => emitSettings({ other: 1 }, mappings)).toThrow(/"missing".*no config block defines this setting/)
+  })
+})
+
+describe("generateConfigModule settings", () => {
+  for (const [label, opts] of [
+    ["base", {}],
+    ["react + node", { react: true, node: true }],
+  ] as const) {
+    it(`emits settings in the base block: ${label}`, () => {
+      const output = generateConfigModule(opts)
+      expect(output).toContain('"type": "natural"')
+      expect(output).toContain('"order": "asc"')
+      expect(output).toContain('"partitionByNewLine": true')
+      expect(output).toContain('"import-x/extensions"')
+      expect(output).toContain('"import-x/external-module-folders"')
+      expect(output).toContain('"import-x/resolver-next": createImportXResolvers()')
+      expect(output).toContain('import { createImportXResolvers } from "eslint-config-setup/modules"')
+      expect(output).not.toContain("import-x/parsers")
+    })
+  }
+
+  it("emits settings before rules in the base block", () => {
+    const output = generateConfigModule({})
+    const start = output.indexOf('"eslint-config-setup/base"')
+    expect(start).toBeGreaterThan(-1)
+    const settingsAt = output.indexOf("settings:", start)
+    const rulesAt = output.indexOf("rules:", start)
+    expect(settingsAt).toBeGreaterThan(-1)
+    expect(settingsAt).toBeLessThan(rulesAt)
+  })
+})
+
+describe("importsConfig resolver settings", () => {
+  it("uses createImportXResolvers() for import-x/resolver-next", () => {
+    const names = (value: unknown): unknown[] =>
+      Array.isArray(value) ? value.map((r: unknown) => (typeof r === "object" && r !== null && "name" in r ? r.name : undefined)) : []
+    const resolvers = importsConfig()[0].settings?.["import-x/resolver-next"]
+    expect(Array.isArray(resolvers)).toBe(true)
+    expect(names(resolvers)).toHaveLength(names(createImportXResolvers()).length)
+    expect(names(resolvers)).toStrictEqual(names(createImportXResolvers()))
   })
 })

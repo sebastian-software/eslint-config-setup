@@ -3,6 +3,8 @@ import unusedImportsPlugin from "eslint-plugin-unused-imports"
 
 import type { FlatConfigArray } from "../types"
 
+import { createImportXResolvers } from "./import-resolvers"
+
 /**
  * Import/export config — two plugins with clear separation of concerns:
  * - `import-x` handles import **validation** (cycles, duplicates, etc.)
@@ -21,6 +23,16 @@ export function importsConfig(): FlatConfigArray {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Plugin type is compatible
         "import": importXPlugin as unknown as Record<string, unknown>,
         "unused-imports": unusedImportsPlugin,
+      },
+      // Keys keep the `import-x/` prefix: the plugin reads its settings under
+      // that name, regardless of the `import` namespace it is registered as.
+      settings: {
+        // File extensions treated as resolvable modules (TS and JS variants)
+        "import-x/extensions": [".ts", ".tsx", ".cts", ".mts", ".js", ".jsx", ".cjs", ".mjs"],
+        // Folders treated as external modules (incl. DefinitelyTyped packages)
+        "import-x/external-module-folders": ["node_modules", "node_modules/@types"],
+        // TypeScript + Node resolvers — required for graph rules like no-cycle
+        "import-x/resolver-next": createImportXResolvers(),
       },
       rules: {
         // ── Validation (import-x) ────────────────────────────────────
