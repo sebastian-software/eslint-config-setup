@@ -1,10 +1,19 @@
+import { builtinRules } from "eslint/use-at-your-own-risk"
 import { describe, expect, it } from "vitest"
 
 import type { FlatConfigArray } from "../types"
 
-import { collectBaseSettings, emitSettings, generateConfigModule } from "../build/codegen"
+import {
+  collectBaseSettings,
+  emitSettings,
+  generateConfigModule,
+  resolveRulesForFile,
+} from "../build/codegen"
+import { composeConfig } from "../build/compose"
 import { createImportXResolvers } from "../configs/import-resolvers"
 import { importsConfig } from "../configs/imports"
+import { REACT_TYPE_AWARE_RULES } from "../configs/react"
+import { allPermutations } from "../hash"
 
 describe("generateConfigModule", () => {
   it("generates a valid ES module for base config", () => {
@@ -277,4 +286,104 @@ describe("importsConfig resolver settings", () => {
     expect(names(resolvers)).toHaveLength(names(createImportXResolvers()).length)
     expect(names(resolvers)).toStrictEqual(names(createImportXResolvers()))
   })
+})
+
+describe("react type-aware rules in resolved config", () => {
+  it("keeps the configured values for TypeScript sources", () => {
+    const rules = resolveRulesForFile(composeConfig({ react: true }), "example.ts")
+    expect(rules["@typescript-eslint/no-misused-promises"]).toStrictEqual([
+      "error",
+      { checksVoidReturn: false },
+    ])
+    expect(rules["react/no-implicit-key"]).toBe("error")
+    expect(rules["react/no-unused-props"]).toBe("warn")
+    expect(rules["react/jsx-no-leaked-render"]).toBe("error")
+  })
+})
+
+/**
+ * These sonarjs rules declare `requiresTypeChecking` but degrade safely
+ * without type information (they simply do not report). Evidenced by the
+ * Markdown code-block fixture in eslint-e2e.test.ts.
+ */
+const SAFE_TYPE_AWARE_ALLOWLIST = new Set([
+  "sonarjs/prefer-immediate-return",
+  "sonarjs/no-collection-size-mischeck",
+  "sonarjs/no-ignored-return",
+  "sonarjs/no-misleading-array-reverse",
+  "sonarjs/reduce-initial-value",
+  "sonarjs/no-async-constructor",
+  "sonarjs/no-redundant-optional",
+])
+
+function isEnabled(value: unknown): boolean {
+  const severity = Array.isArray(value) ? value[0] : value
+  return severity !== undefined && severity !== "off" && severity !== 0
+}
+
+type PluginMap = Record<string, { rules?: Record<string, unknown> }>
+
+/** Resolve a rule via the longest registered plugin prefix, or ESLint core for unprefixed names. */
+function findRule(plugins: PluginMap, name: string): unknown {
+  if (!name.includes("/")) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Only public access to core rule meta in flat-config ESLint; test-only lookup.
+    return builtinRules.get(name)
+  }
+  const namespace = Object.keys(plugins)
+    .filter((key) => name.startsWith(`${key}/`))
+    .sort((a, b) => b.length - a.length)
+    .at(0)
+  return namespace === undefined ? undefined : plugins[namespace].rules?.[name.slice(namespace.length + 1)]
+}
+
+function isTypeAware(name: string, rule: unknown, reactTypeAware: ReadonlySet<string>): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Rule meta shape is plugin-defined
+  const meta = (rule as { meta?: { docs?: { requiresTypeChecking?: boolean } } }).meta
+  return (
+    (meta?.docs?.requiresTypeChecking === true && !SAFE_TYPE_AWARE_ALLOWLIST.has(name)) ||
+    reactTypeAware.has(name)
+  )
+}
+
+describe("Markdown code blocks have no type-aware rules enabled", () => {
+  it("REACT_TYPE_AWARE_RULES is populated", () => {
+    const set = new Set(REACT_TYPE_AWARE_RULES)
+    expect(set.size).toBeGreaterThan(0)
+    expect(set.has("react/no-implicit-key")).toBe(true)
+  })
+
+  for (const opts of allPermutations()) {
+    const label = Object.entries(opts)
+      .filter(([, enabled]) => enabled)
+      .map(([flag]) => flag)
+      .join(" + ") || "base"
+
+    it(`no type-aware rule is enabled for code blocks: ${label}`, () => {
+      const config = composeConfig(opts)
+      const rules = resolveRulesForFile(config, "guide.mdx/0.ts")
+      const reactTypeAware = new Set(REACT_TYPE_AWARE_RULES)
+
+      const plugins: PluginMap = {}
+      for (const block of config) {
+        Object.assign(plugins, block.plugins)
+      }
+
+      const unresolved: string[] = []
+      const offenders: string[] = []
+
+      for (const [name, value] of Object.entries(rules)) {
+        if (!isEnabled(value)) continue
+
+        const rule = findRule(plugins, name)
+        if (rule === undefined) {
+          unresolved.push(name)
+        } else if (isTypeAware(name, rule, reactTypeAware)) {
+          offenders.push(name)
+        }
+      }
+
+      expect(unresolved).toStrictEqual([])
+      expect(offenders).toStrictEqual([])
+    })
+  }
 })

@@ -12,6 +12,7 @@ import {
   AI_PROMOTED_REACT_RULES,
   AI_REACT_PERF_RULES,
   REACT_HOOKS_REPLACED_ESLINT_REACT_RULES,
+  REACT_TYPE_AWARE_RULES,
   reactConfig,
 } from "../configs/react"
 import { oxlintIntegration } from "../oxlint/integration"
@@ -87,6 +88,16 @@ const EXPECTED_REACT_CONFLICT_RULES = [
   "react/no-will-update-set-state",
   "react/prop-types",
   "react/void-dom-elements-no-children",
+] as const
+
+// Type-aware @eslint-react rules (from disable-type-checked, react/ compat names).
+// Must stay out of Markdown code blocks, which lint without type information.
+const EXPECTED_REACT_TYPE_AWARE_RULES = [
+  "react/jsx-no-leaked-render",
+  "react/no-implicit-children",
+  "react/no-implicit-key",
+  "react/no-implicit-ref",
+  "react/no-unused-props",
 ] as const
 
 const EXPECTED_REACT_HOOKS_CONFLICT_RULES = [
@@ -340,6 +351,12 @@ assertSame(
   "@eslint-react react-hooks conflict config changed; review hook namespace strategy",
   getConfigRules(eslintReactConfigs, "disable-conflict-eslint-plugin-react-hooks"),
   EXPECTED_REACT_HOOKS_CONFLICT_RULES,
+)
+
+assertSame(
+  "@eslint-react type-aware rules changed; scope new rules to the react-typescript override",
+  sorted(REACT_TYPE_AWARE_RULES),
+  EXPECTED_REACT_TYPE_AWARE_RULES,
 )
 
 const hookPresetRules = reactHooksPlugin.configs.flat["recommended-latest"].rules

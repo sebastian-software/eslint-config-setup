@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { composeConfig } from "../build/compose"
+import { MARKDOWN_CODE_BLOCK_FILES } from "../file-patterns"
 
 describe("composeConfig", () => {
   it("returns a non-empty array for base options", () => {
@@ -114,5 +115,20 @@ describe("composeConfig", () => {
 
       expect(unicornBlock?.rules?.["unicorn/prevent-abbreviations"]).toBeUndefined()
     }
+  })
+
+  it("keeps type-aware react rules out of Markdown code blocks", () => {
+    const config = composeConfig({ react: true })
+    const block = config.find((b) => b.name === "eslint-config-setup/react-typescript")
+    expect(block).toBeDefined()
+    expect(block?.ignores).toStrictEqual([...MARKDOWN_CODE_BLOCK_FILES])
+    expect(Object.keys(block?.rules ?? {})).toStrictEqual(
+      expect.arrayContaining([
+        "@typescript-eslint/no-misused-promises",
+        "react/no-implicit-key",
+        "react/no-unused-props",
+        "react/jsx-no-leaked-render",
+      ]),
+    )
   })
 })

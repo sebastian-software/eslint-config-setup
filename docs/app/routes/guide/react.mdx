@@ -53,6 +53,8 @@ Three rules guide your codebase toward React 19 patterns:
 
 React rules are based on @eslint-react's `strict-type-checked` preset — the most comprehensive level, including type-aware analysis. Hooks and React Compiler rules come from `eslint-plugin-react-hooks` `recommended-latest`. Legacy class component patterns, deprecated lifecycle methods, unsafe APIs, and compiler-invalid patterns are flagged as errors. Modern patterns like naming conventions are flagged as warnings.
 
+Type-aware React rules (`react/no-implicit-key`, `react/no-unused-props`, `react/jsx-no-leaked-render`, and the React-specific `@typescript-eslint/no-misused-promises` setting) run only on TypeScript sources. They are turned off for `.js`, `.mjs`, and `.cjs` files and for Markdown/MDX code blocks, which have no type information.
+
 ## OxLint acceleration
 
 When you enable `oxlint: true`, something powerful happens behind the scenes.

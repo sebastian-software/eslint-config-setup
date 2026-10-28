@@ -14,6 +14,7 @@ import type { FlatConfigArray } from "../types"
 
 import { createConfig } from "../build/config-builder"
 import {
+  MARKDOWN_CODE_BLOCK_FILES,
   TYPESCRIPT_SOURCE_FILES,
 } from "../file-patterns"
 import {
@@ -64,6 +65,45 @@ function filterReactHooksRules(rules: Linter.RulesRecord): Linter.RulesRecord {
 
 const presetRules = translatePresetRules(filterReactHooksRules(strictTypeCheckedRules))
 
+/**
+ * `@eslint-react` rules that need type information, in `react/` compat names.
+ * Derived from the upstream `disable-type-checked` config, which is the
+ * authoritative list (these rules carry no `requiresTypeChecking` marker).
+ */
+const disableTypeCheckedRules = typedConfigs["disable-type-checked"].rules
+
+export const REACT_TYPE_AWARE_RULES: ReadonlySet<string> = new Set(
+  Object.keys(translatePresetRules(disableTypeCheckedRules)),
+)
+
+if (REACT_TYPE_AWARE_RULES.size !== Object.keys(disableTypeCheckedRules).length) {
+  throw new Error(
+    `@eslint-react disable-type-checked has ${Object.keys(disableTypeCheckedRules).length} rules, ` +
+      `but only ${REACT_TYPE_AWARE_RULES.size} map to react/ compat names. ` +
+      `Review the compat mapping in plugins/react-compat.ts.`,
+  )
+}
+
+function getPresetRule(ruleName: string): Linter.RuleEntry {
+  if (!(ruleName in presetRules)) {
+    throw new Error(
+      `React preset rule "${ruleName}" not found in strict-type-checked. ` +
+        `Review the type-aware rule scoping in react.ts.`,
+    )
+  }
+  return presetRules[ruleName]
+}
+
+// Type-aware preset rules, scoped to TypeScript sources (see addReactFileOverrides).
+const TYPE_AWARE_PRESET_RULE_NAMES = [
+  "react/no-unused-props",
+  "react/jsx-no-leaked-render",
+] as const
+
+const TYPE_AWARE_PRESET_RULES: Linter.RulesRecord = Object.fromEntries(
+  TYPE_AWARE_PRESET_RULE_NAMES.map((ruleName) => [ruleName, getPresetRule(ruleName)]),
+)
+
 const reactHooksRecommendedLatest = reactHooksPlugin.configs.flat[
   "recommended-latest"
 ] as Linter.Config
@@ -72,7 +112,6 @@ const reactHooksPluginForEslint = reactHooksPlugin as unknown as Record<string, 
 
 const EXTRA_REACT_RULES = {
   "react/no-duplicate-key": "error",
-  "react/no-implicit-key": "error",
   "react/no-unknown-property": "error",
   "react/style-prop-object": "error",
 } satisfies Linter.RulesRecord
@@ -181,7 +220,18 @@ function applyAiReactRules(builder: Builder): void {
   }
 }
 
+function removeTypeAwarePresetRules(builder: Builder): void {
+  for (const ruleName of TYPE_AWARE_PRESET_RULE_NAMES) {
+    builder.removeRule(ruleName)
+  }
+}
+
 function addReactFileOverrides(builder: Builder): void {
+  // Type-aware rules live here, not in the main block: Markdown code blocks are
+  // linted without type information (projectService: false), so these rules
+  // must be scoped to TypeScript sources and exclude code blocks. AI-mode
+  // promotions of these rules must target this override, because removeRule
+  // drops them from the main block.
   builder.addFileOverride(
     "eslint-config-setup/react-typescript",
     [...TYPESCRIPT_SOURCE_FILES],
@@ -191,8 +241,26 @@ function addReactFileOverrides(builder: Builder): void {
         "error",
         { checksVoidReturn: false },
       ],
+      "react/no-implicit-key": "error",
+      ...TYPE_AWARE_PRESET_RULES,
     },
+    [...MARKDOWN_CODE_BLOCK_FILES],
   )
+}
+
+function assertNoTypeAwareRulesInMainBlock(config: FlatConfigArray): void {
+  const mainBlock = config.find((block) => block.name === "eslint-config-setup/react")
+  if (!mainBlock) {
+    throw new Error("React config main block \"eslint-config-setup/react\" not found.")
+  }
+  const leaked = Object.keys(mainBlock.rules ?? {}).filter((ruleName) =>
+    REACT_TYPE_AWARE_RULES.has(ruleName),
+  )
+  if (leaked.length > 0) {
+    throw new Error(
+      `Type-aware React rules must be scoped to the react-typescript override: ${leaked.join(", ")}`,
+    )
+  }
 }
 
 /**
@@ -241,6 +309,7 @@ export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
     },
   })
 
+  removeTypeAwarePresetRules(builder)
   addExtraReactRules(builder)
   addStylisticReactRules(builder)
   addReactRefreshRules(builder)
@@ -256,5 +325,7 @@ export function reactConfig(opts?: { ai?: boolean }): FlatConfigArray {
 
   addReactFileOverrides(builder)
 
-  return builder.build()
+  const config = builder.build()
+  assertNoTypeAwareRulesInMainBlock(config)
+  return config
 }
