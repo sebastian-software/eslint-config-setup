@@ -15,8 +15,10 @@ Every function operates on the config array in-place.
 | `setRuleSeverity(config, rule, severity, options?)` | Change `"off"` / `"warn"` / `"error"` while preserving options |
 | `configureRule(config, rule, options, ruleOptions?)` | Replace options while preserving severity |
 | `disableRule(config, rule, options?)` | Set to `"off"` across all config blocks |
-| `addRule(config, rule, severity, options?, ruleOptions?)` | Add a rule to the base config block |
+| `addRule(config, rule, severity, options?, ruleOptions?)` | Add a rule to the `eslint-config-setup/base` block (falls back to `config[0]` if that block is missing) |
 | `disableAllRulesBut(config, rule)` | Debug helper — disable everything except one rule |
+
+`addRule` only writes to one block. A later block that sets the same rule (for example `eslint-config-setup/complexity` or `eslint-config-setup/tests`) still overrides it. To change a rule that the config already sets, use `setRuleSeverity` or `configureRule`.
 
 ## Scoped rules
 
