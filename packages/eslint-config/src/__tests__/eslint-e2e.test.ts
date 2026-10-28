@@ -12,8 +12,20 @@ import { addRule } from "../api/rule-helpers"
 import { generateConfigModule } from "../build/codegen"
 import { linkPackageNodeModules } from "./helpers/link-node-modules"
 
-/** Minimal valid TS file — should not trigger fatal config errors. */
-const FIXTURE_TS = `const greeting: string = "hello"\nconsole.log(greeting)\n`
+/**
+ * Resolution fixture: a relative import, a node builtin and `picomatch`, which is
+ * installed in the linked node_modules but not declared by the fixture package.
+ * Only the TypeScript resolver maps `picomatch` to `@types/picomatch`, so the
+ * `import/no-extraneous-dependencies` message naming it proves the resolvers ran.
+ */
+const FIXTURE_UTIL_TS = `export const util = 1\n`
+const FIXTURE_RESOLUTION_TS = `import path from "node:path"
+import picomatch from "picomatch"
+
+import { util } from "./util"
+
+console.log(path.sep, picomatch, util)
+`
 const FIXTURE_MDX = `# Hello
 
 export const Demo = () => <button type="button">Go</button>
@@ -80,6 +92,17 @@ const EXPECTED_JSON_RULE_NAMESPACES: Record<string, string[]> = {
 function ruleNamespace(ruleName: string): string {
   const separator = ruleName.lastIndexOf("/")
   return separator === -1 ? "core" : ruleName.slice(0, separator)
+}
+
+type CalculatedConfig = {
+  rules?: Record<string, unknown>
+  settings?: Record<string, unknown>
+}
+
+function assertCalculatedConfig(value: unknown): asserts value is CalculatedConfig {
+  if (typeof value !== "object" || value === null) {
+    throw new TypeError("calculateConfigForFile returned no config object")
+  }
 }
 
 function hasRules(config: unknown): config is { rules: Record<string, unknown> } {
@@ -173,7 +196,10 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
       mkdirSync(dir, { recursive: true })
 
       writeFileSync(path.join(dir, "eslint.config.js"), moduleSource)
-      writeFileSync(path.join(dir, "test.ts"), FIXTURE_TS)
+      writeFileSync(path.join(dir, "test.ts"), FIXTURE_RESOLUTION_TS)
+      writeFileSync(path.join(dir, "util.ts"), FIXTURE_UTIL_TS)
+      // Dependency-free package.json stops import-x from walking up to the repository's package.json
+      writeFileSync(path.join(dir, "package.json"), `${JSON.stringify({ name: "fixture", private: true })}\n`)
       writeFileSync(
         path.join(dir, "tsconfig.json"),
         JSON.stringify({ compilerOptions: { strict: true }, include: ["*.ts"] }),
@@ -216,6 +242,28 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
         resolveErrors,
         `Resolve errors:\n${resolveErrors.map((m) => `  ${m.message}`).join("\n")}`,
       ).toHaveLength(0)
+
+      // Positive signal: the resolver chain is configured on the file ESLint lints.
+      const calculated: unknown = await eslint.calculateConfigForFile(path.join(dir, "test.ts"))
+      assertCalculatedConfig(calculated)
+      const resolvers = calculated.settings?.["import-x/resolver-next"]
+      expect(
+        Array.isArray(resolvers) ? resolvers.map((r: { name?: string }) => r.name) : resolvers,
+      ).toStrictEqual(["eslint-import-resolver-typescript", "eslint-plugin-import-x:node"])
+
+      // The signal rule must be enabled, otherwise the count below would be meaningless.
+      const signalRule = calculated.rules?.["import/no-extraneous-dependencies"]
+      expect(
+        Array.isArray(signalRule) && signalRule[0] !== 0,
+        "import/no-extraneous-dependencies was disabled in this permutation, so it can no longer serve as the resolution signal",
+      ).toBe(true)
+
+      const extraneous = results[0].messages.filter((m) => m.ruleId === "import/no-extraneous-dependencies")
+      expect(
+        extraneous,
+        `import/no-extraneous-dependencies messages:\n${results[0].messages.map((m) => `  ${m.ruleId}: ${m.message}`).join("\n")}`,
+      ).toHaveLength(1)
+      expect(extraneous[0].message).toContain("'@types/picomatch'")
     })
   }
 })

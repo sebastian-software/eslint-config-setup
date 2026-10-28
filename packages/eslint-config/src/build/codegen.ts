@@ -331,9 +331,10 @@ type Settings = Record<string, unknown>
 
 /**
  * Collects the settings of all fully global config blocks (no `files`,
- * `ignores`, `language` or `processor`) in composition order, merged like
- * ESLint's flat config: plain objects merge recursively, arrays and all other
- * values are replaced by the later block. Values are kept by reference.
+ * `ignores`, `basePath`, `language` or `processor`) in composition order,
+ * merged like ESLint's flat config: plain objects merge recursively, arrays
+ * and all other values are replaced by the later block. Values are kept by
+ * reference. See `deepMergeSettings` for the remaining differences.
  *
  * Settings on any other block cannot be represented in the generated base
  * block, so they are rejected instead of being silently dropped.
@@ -349,7 +350,7 @@ export function collectBaseSettings(config: FlatConfigArray): Settings {
       if (Object.keys(settings).length === 0) continue
       const label = block.name === undefined ? `#${index}` : `"${block.name}"`
       throw new Error(
-        `Config block ${label} defines settings but is not global (files, ignores, language or processor set). Generated configs only support settings on global blocks.`,
+        `Config block ${label} defines settings but is not global (files, ignores, basePath, language or processor set). Generated configs only support settings on global blocks.`,
       )
     }
 
@@ -406,11 +407,24 @@ export function emitSettings(
   return { code: body.replaceAll("\n", "\n    "), imports: [...imports].sort() }
 }
 
-/** A block is global when it applies to every file ESLint lints as JS/TS. */
+/**
+ * A block is global when it applies to every file ESLint lints as JS/TS.
+ *
+ * `basePath` is checked here only, not in `hasNonJsFields`: the latter also
+ * drives rule collection. Known limitation (non-goal): the *rules* of a
+ * `basePath` block are still merged into the global base block, because
+ * `resolveRulesForFile` and `configMatchesFile` ignore `basePath`. No composed
+ * block uses `basePath` today.
+ */
 function isGlobalBlock(block: FlatConfig): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Checking dynamic properties on config block
   const b = block as Record<string, unknown>
-  return b.files === undefined && b.ignores === undefined && !hasNonJsFields(block)
+  return (
+    b.files === undefined &&
+    b.ignores === undefined &&
+    b.basePath === undefined &&
+    !hasNonJsFields(block)
+  )
 }
 
 /** Plain object: prototype is `Object.prototype` or `null` (no arrays, no class instances). */
@@ -420,10 +434,25 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return proto === Object.prototype || proto === null
 }
 
-/** Replicates ESLint's flat-config `deepMerge` for settings (no cloning). */
+/**
+ * Replicates ESLint's flat-config `deepMerge` for settings (no cloning).
+ * Source values that are `undefined` keep the earlier value, as in ESLint, and
+ * `__proto__` keys of a source are skipped.
+ *
+ * Remaining differences from ESLint's `deepMerge`:
+ * - Only plain objects merge recursively. Class instances are replaced rather
+ *   than merged; `emitSettings` rejects them later as not JSON-serializable
+ *   unless a setting expression is registered for their key.
+ * - A key whose only values are `undefined` stays absent instead of being set
+ *   to `undefined`, which is equivalent at runtime.
+ * - An own `__proto__` key inside a value kept by reference (or copied by the
+ *   object spread below) is not removed. `isJsonSerializable` rejects it, so
+ *   the build fails instead of silently dropping the key as ESLint does.
+ */
 function deepMergeSettings(target: Settings, source: Settings): Settings {
   const result: Settings = { ...target }
   for (const [key, value] of Object.entries(source)) {
+    if (value === undefined || key === "__proto__") continue
     const existing = result[key]
     result[key] = isPlainObject(existing) && isPlainObject(value)
       ? deepMergeSettings(existing, value)
@@ -432,12 +461,19 @@ function deepMergeSettings(target: Settings, source: Settings): Settings {
   return result
 }
 
-/** Recursively: null, boolean, finite number, string, array or plain object. */
+/**
+ * Recursively: null, boolean, finite number, string, array or plain object.
+ * A plain object with an own `__proto__` key is rejected at any depth: emitted
+ * into an object literal, it would set the prototype instead of creating a key.
+ */
 function isJsonSerializable(value: unknown): boolean {
   if (value === null || typeof value === "boolean" || typeof value === "string") return true
   if (typeof value === "number") return Number.isFinite(value)
   if (Array.isArray(value)) return value.every((item) => isJsonSerializable(item))
-  if (isPlainObject(value)) return Object.values(value).every((item) => isJsonSerializable(item))
+  if (isPlainObject(value)) {
+    if (Object.hasOwn(value, "__proto__")) return false
+    return Object.values(value).every((item) => isJsonSerializable(item))
+  }
   return false
 }
 

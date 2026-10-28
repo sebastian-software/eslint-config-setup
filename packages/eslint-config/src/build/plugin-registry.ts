@@ -203,12 +203,17 @@ export type SettingExpression = {
 /**
  * Setting keys whose values are emitted as JS expressions in generated config
  * modules. The expressions import from the package itself
- * (`eslint-config-setup/modules`), so generated configs reuse the exact
- * factory used by the composed config and the options cannot drift.
+ * (`eslint-config-setup/import-resolvers`), so generated configs reuse the
+ * exact factory used by the composed config and the options cannot drift.
+ *
+ * A dedicated minimal entry is used instead of `eslint-config-setup/modules`:
+ * that entry re-exports every config factory, so loading it would evaluate
+ * every plugin regardless of the permutation and undo the per-permutation
+ * import trimming. `import-resolvers` pulls in only the two resolver packages.
  */
 export const settingExpressions: Readonly<Record<string, SettingExpression>> = {
   "import-x/resolver-next": {
     expression: "createImportXResolvers()",
-    imports: ['import { createImportXResolvers } from "eslint-config-setup/modules"'],
+    imports: ['import { createImportXResolvers } from "eslint-config-setup/import-resolvers"'],
   },
 }

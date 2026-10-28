@@ -6,6 +6,19 @@ import { collectBaseSettings, emitSettings, generateConfigModule } from "../buil
 import { createImportXResolvers } from "../configs/import-resolvers"
 import { importsConfig } from "../configs/imports"
 
+function assertRecord(value: unknown): asserts value is Record<string, unknown> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    throw new TypeError("Expected a plain object")
+  }
+}
+
+/** JSON.parse creates real own "__proto__" keys, unlike an object literal. */
+function parseRecord(json: string): Record<string, unknown> {
+  const value: unknown = JSON.parse(json)
+  assertRecord(value)
+  return value
+}
+
 describe("generateConfigModule", () => {
   it("generates a valid ES module for base config", () => {
     const output = generateConfigModule({})
@@ -203,6 +216,68 @@ describe("collectBaseSettings", () => {
       expect(() => collectBaseSettings(config)).toThrow(`scoped-by-${kind}`)
     })
   }
+
+  it("treats a block with basePath and settings as scoped and lists basePath in the error", () => {
+    const config: FlatConfigArray = [{ name: "based", basePath: "packages/app", settings: { foo: 1 } }]
+    expect(() => collectBaseSettings(config)).toThrow(/"based".*\(files, ignores, basePath, language or processor set\)/)
+  })
+
+  it("does not throw for a basePath block without settings", () => {
+    expect(collectBaseSettings([{ name: "based", basePath: "packages/app", rules: {} }])).toStrictEqual({})
+    expect(collectBaseSettings([{ name: "based", basePath: "packages/app", settings: {} }])).toStrictEqual({})
+  })
+
+  it("keeps the earlier value when a later block sets a key to undefined", () => {
+    const config: FlatConfigArray = [
+      { name: "one", settings: { a: 1, nested: { x: "keep", y: 1 } } },
+      { name: "two", settings: { a: undefined, nested: { x: undefined } } },
+    ]
+    let result: Record<string, unknown> = {}
+    expect(() => {
+      result = collectBaseSettings(config)
+    }).not.toThrow()
+    expect(result).toStrictEqual({ a: 1, nested: { x: "keep", y: 1 } })
+    expect(() => emitSettings(result, {})).not.toThrow()
+  })
+
+  it("ignores an own __proto__ key in a later source", () => {
+    // JSON.parse creates a real own "__proto__" key; an object literal would set the prototype instead.
+    const polluted = parseRecord('{"__proto__": {"polluted": true}, "safe": 1}')
+    expect(Object.hasOwn(polluted, "__proto__")).toBe(true)
+
+    const result = collectBaseSettings([
+      { name: "one", settings: { a: 1 } },
+      { name: "two", settings: polluted },
+    ])
+
+    expect(Object.hasOwn(result, "__proto__")).toBe(false)
+    expect(Object.getPrototypeOf(result)).toBe(Object.prototype)
+    expect((result as Record<string, unknown>).polluted).toBeUndefined()
+    expect(result).toStrictEqual({ a: 1, safe: 1 })
+  })
+
+  it("ignores an own __proto__ key defined via defineProperty in a nested merge", () => {
+    const nested: Record<string, unknown> = { y: 2 }
+    Object.defineProperty(nested, "__proto__", { value: { polluted: true }, enumerable: true, configurable: true })
+    expect(Object.hasOwn(nested, "__proto__")).toBe(true)
+
+    const result = collectBaseSettings([
+      { name: "one", settings: { a: { x: 1 } } },
+      { name: "two", settings: { a: nested } },
+    ])
+
+    const merged = result.a
+    assertRecord(merged)
+    expect(Object.hasOwn(merged, "__proto__")).toBe(false)
+    expect(Object.getPrototypeOf(merged)).toBe(Object.prototype)
+    expect(merged).toStrictEqual({ x: 1, y: 2 })
+  })
+
+  it("makes the JSON-serializable check throw for an own __proto__ key nested in a value", () => {
+    const nested = parseRecord('{"deep": {"__proto__": {"polluted": true}}}')
+    const settings = collectBaseSettings([{ name: "one", settings: { custom: nested } }])
+    expect(() => emitSettings(settings, {})).toThrow(/"custom" is not JSON-serializable/)
+  })
 })
 
 describe("emitSettings", () => {
@@ -261,7 +336,7 @@ describe("generateConfigModule settings", () => {
       expect(output).toContain('"import-x/extensions"')
       expect(output).toContain('"import-x/external-module-folders"')
       expect(output).toContain('"import-x/resolver-next": createImportXResolvers()')
-      expect(output).toContain('import { createImportXResolvers } from "eslint-config-setup/modules"')
+      expect(output).toContain('import { createImportXResolvers } from "eslint-config-setup/import-resolvers"')
       expect(output).not.toContain("import-x/parsers")
     })
   }

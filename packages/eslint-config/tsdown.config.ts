@@ -4,6 +4,7 @@ export default defineConfig({
   entry: {
     index: "src/index.ts",
     modules: "src/modules.ts",
+    "import-resolvers": "src/configs/import-resolvers.ts",
   },
   clean: true,
   deps: {
