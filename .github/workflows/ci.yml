@@ -72,6 +72,7 @@ jobs:
 
   package-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
 
@@ -92,6 +93,9 @@ jobs:
 
       - name: Check package payload and runtime loaders
         run: pnpm run smoke:package
+
+      - name: Lint Markdown after a fresh consumer install
+        run: pnpm run smoke:consumer
 
   test:
     runs-on: ${{ matrix.os }}

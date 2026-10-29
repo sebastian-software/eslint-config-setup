@@ -233,6 +233,34 @@ Run OxLint first, then ESLint:
 
 Use `getOxlintConfig()` for `oxlint.config.ts` and enable `oxlint: true` in `eslint.config.ts`. If ESLint runs before OxLint, the split-linting setup cannot provide the intended feedback order.
 
+### 6. Markdown files fail with "Cannot find package 'tslib'"
+
+ESLint reports `Preprocessing error: Cannot find package 'tslib'` (or a missing `__rewriteRelativeImportExtension` export) for every `.md` and `.mdx` file. The cause is `eslint-mdx@3.8.2`: it imports `tslib` but does not declare it as a dependency. `eslint-config-setup` ships `tslib` itself, which covers npm, Yarn with `node_modules`, and pnpm with its default hoisting.
+
+These setups can still fail:
+
+- pnpm with `hoist=false`
+- Yarn Plug'n'Play
+- an older `tslib` (below 2.8.0) at the top of `node_modules`, either from your project or pulled in by another dependency; check with `npm ls tslib`
+
+Add `tslib` to your project:
+
+```bash
+npm install --save-dev tslib@^2.8.0
+```
+
+Or override `eslint-mdx` to 3.8.1, which does not import `tslib`:
+
+```jsonc
+{
+  // npm: "overrides" in package.json, Yarn: "resolutions",
+  // pnpm: "overrides" in pnpm-workspace.yaml
+  "overrides": {
+    "eslint-mdx": "3.8.1"
+  }
+}
+```
+
 ## Customizing rules
 
 Every config is fully customizable:

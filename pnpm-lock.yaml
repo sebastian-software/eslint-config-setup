@@ -172,6 +172,9 @@ importers:
       globals:
         specifier: ^17.7.0
         version: 17.13.0
+      tslib:
+        specifier: ^2.8.1
+        version: 2.8.1
       typescript-eslint:
         specifier: ^8.62.1
         version: 8.72.1(eslint@10.13.0(jiti@2.7.0))(typescript@6.0.3)
