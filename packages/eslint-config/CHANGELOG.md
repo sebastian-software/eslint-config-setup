@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.6.0...eslint-config-setup-v0.6.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **deps:** declare tslib for eslint-mdx Markdown linting ([#113](https://github.com/sebastian-software/eslint-config-setup/issues/113)) ([3911350](https://github.com/sebastian-software/eslint-config-setup/commit/39113509178ccea80d4f950b014e6bf30c6a1969)), closes [#112](https://github.com/sebastian-software/eslint-config-setup/issues/112)
+
 ## [0.6.0](https://github.com/sebastian-software/eslint-config-setup/compare/eslint-config-setup-v0.5.2...eslint-config-setup-v0.6.0) (2026-10-28)
 
 
