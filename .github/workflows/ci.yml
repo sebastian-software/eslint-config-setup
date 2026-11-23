@@ -18,7 +18,7 @@ jobs:
       - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: "pnpm"
 
       - name: Install dependencies
@@ -41,7 +41,7 @@ jobs:
       - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: "pnpm"
 
       - name: Install dependencies
@@ -61,7 +61,7 @@ jobs:
       - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: "pnpm"
 
       - name: Install dependencies
@@ -82,7 +82,7 @@ jobs:
       - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: "pnpm"
 
       - name: Install dependencies
@@ -131,7 +131,7 @@ jobs:
         if: matrix.runtime == 'bun'
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: "pnpm"
 
       - name: Install dependencies
