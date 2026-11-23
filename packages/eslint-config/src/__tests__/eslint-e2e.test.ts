@@ -6,6 +6,7 @@ import path from "node:path"
 import { pathToFileURL } from "node:url"
 import { describe, expect, it } from "vitest"
 
+import type { ImportXResolver } from "../configs/import-resolvers"
 import type { ConfigOptions, FlatConfigArray } from "../types"
 
 import { addRule } from "../api/rule-helpers"
@@ -15,8 +16,8 @@ import { linkPackageNodeModules } from "./helpers/link-node-modules"
 /**
  * Resolution fixture: a relative import, a node builtin and `picomatch`, which is
  * installed in the linked node_modules but not declared by the fixture package.
- * Only the TypeScript resolver maps `picomatch` to `@types/picomatch`, so the
- * `import/no-extraneous-dependencies` message naming it proves the resolvers ran.
+ * The TypeScript resolver should find its declarations, while the dependency
+ * rule should tell the user which runtime package to add.
  */
 const FIXTURE_UTIL_TS = `export const util = 1\n`
 const FIXTURE_RESOLUTION_TS = `import path from "node:path"
@@ -102,6 +103,12 @@ type CalculatedConfig = {
 function assertCalculatedConfig(value: unknown): asserts value is CalculatedConfig {
   if (typeof value !== "object" || value === null) {
     throw new TypeError("calculateConfigForFile returned no config object")
+  }
+}
+
+function assertImportResolver(value: unknown): asserts value is ImportXResolver {
+  if (typeof value !== "object" || value === null || !("resolve" in value) || typeof value.resolve !== "function") {
+    throw new TypeError("Missing TypeScript resolver")
   }
 }
 
@@ -251,6 +258,13 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
         Array.isArray(resolvers) ? resolvers.map((r: { name?: string }) => r.name) : resolvers,
       ).toStrictEqual(["eslint-import-resolver-typescript", "eslint-plugin-import-x:node"])
 
+      const typescriptResolver: unknown = Array.isArray(resolvers) ? resolvers[0] : undefined
+      assertImportResolver(typescriptResolver)
+      expect(typescriptResolver.resolve("picomatch", path.join(dir, "test.ts"))).toMatchObject({
+        found: true,
+        path: expect.stringMatching(/[/\\]@types[/\\]picomatch[/\\].*\.d\.ts$/u),
+      })
+
       // The signal rule must be enabled, otherwise the count below would be meaningless.
       const signalRule = calculated.rules?.["import/no-extraneous-dependencies"]
       expect(
@@ -263,7 +277,7 @@ describe("ESLint E2E — generated configs load without fatal errors", () => {
         extraneous,
         `import/no-extraneous-dependencies messages:\n${results[0].messages.map((m) => `  ${m.ruleId}: ${m.message}`).join("\n")}`,
       ).toHaveLength(1)
-      expect(extraneous[0].message).toContain("'@types/picomatch'")
+      expect(extraneous[0].message).toContain("'picomatch'")
     })
   }
 })
